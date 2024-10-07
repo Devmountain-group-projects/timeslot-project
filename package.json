@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon backend/server/server.js -w server -w src",
+    "start": "vite",
+    "dev": "nodemon backend/server.js -w server -w src",
     "initdb": "dropdb --if-exists timeslot && createdb timeslot",
     "build": "vite build",
     "lint": "eslint .",
