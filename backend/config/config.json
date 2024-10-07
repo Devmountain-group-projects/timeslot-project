@@ -1,0 +1,15 @@
+{
+    "development": {
+    "username": "",
+        "password": null,
+        "database": "timeslot",
+        "host": "localhost",
+        "dialect": "postgresql",
+        "logging": false,
+        "define": {
+        "underscored": false,
+            "timestamps": false,
+            "freezeTableName": true
+    }
+}
+}
