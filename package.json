@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon backend/server/server.js -w server -w src",
+    "start": "vite",
+    "dev": "nodemon backend/server.js -w server -w src",
     "initdb": "dropdb --if-exists timeslot && createdb timeslot",
     "build": "vite build",
     "lint": "eslint .",
@@ -27,6 +28,7 @@
     "pg-hstore": "^2.3.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
     "sequelize": "^6.37.4",
     "vite-express": "^0.19.0"
   },
