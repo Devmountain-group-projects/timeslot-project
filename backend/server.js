@@ -27,7 +27,7 @@ app.use(
 )
 
 // Database and seed data
-import db from './config/db.js';
+import db from './models/db.js';
 
 db.sequelize.sync({ force: true }).then(async function () {
     console.log("Database successfully created");

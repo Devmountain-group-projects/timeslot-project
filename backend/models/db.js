@@ -1,6 +1,10 @@
 import { Sequelize } from "sequelize";
 // environment setup for db. Sets the db name and other configs
+<<<<<<< HEAD:backend/models/db.js
+import config from "../config.json" with { type: "json" };
+=======
 import config from "config.json" with { type: "json" };
+>>>>>>> f001924872a7cbdc76ee296371eb369363555557:backend/config/db.js
 
 const env = "development";
 const dbConfig = config[env];
