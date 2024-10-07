@@ -24,10 +24,10 @@ app.use(
         resave: false,
         saveUninitialized: true
     })
-);
+)
 
 // Database and seed data
-import db from './models/db.js';
+import db from './config/db.js';
 
 db.sequelize.sync({ force: true }).then(async function () {
     console.log("Database successfully created");
