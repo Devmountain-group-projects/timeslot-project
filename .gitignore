@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Set up files
+package-lock.json
+
+# API keys
+.env
+
