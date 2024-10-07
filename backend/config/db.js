@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 // environment setup for db. Sets the db name and other configs
-import config from "/config.json" with { type: "json" };
+import config from "config.json" with { type: "json" };
 
 const env = "development";
 const dbConfig = config[env];
@@ -17,13 +17,13 @@ const sequelize = new Sequelize(
 );
 
 // Importing models
-// import { User } from "./user.js";
+import { User } from "./user.js";
 
 // Associating models for use in the db
-// const user = User(sequelize, Sequelize.DataTypes);
+const user = User(sequelize, Sequelize.DataTypes);
 
 // Storing the models in the db object
-// db[role.name] = role;
+db[user.name] = user;
 
 // Setting up relationships between models
 Object.keys(db).forEach((modelName) => {
