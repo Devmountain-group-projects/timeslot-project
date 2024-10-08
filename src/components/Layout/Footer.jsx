@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { FaFacebookF, FaLinkedinIn, FaGithub } from 'react-icons/fa'
+import Logo from '../../assets/images/logowhite.png'
 
 const Footer = () => {
     return (
@@ -8,6 +9,7 @@ const Footer = () => {
             <div className="container mx-auto px-6 max-w-7xl">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14 py-8">
                     <div>
+                        <img src={Logo} alt="Timeline Slot Logo" className="h-16 mb-6" /> {/* Added logo here */}
                         <h4 className="text-lg font-semibold mb-6 text-white">About Us</h4>
                         <p className="text-white text-base">Timeline Slot is an online appointment booking system designed to help businesses and clients streamline scheduling.</p>
                     </div>
