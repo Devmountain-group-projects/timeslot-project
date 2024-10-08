@@ -1,8 +1,7 @@
-export const Service = (sequelize, Sequelize) => {
-    const service = sequelize.define(
-      "service", {
-        
-        service_id: {
+export const Availability = (sequelize, Sequelize) => {
+    const availability = sequelize.define(
+      "availability", {
+        availability_id: {
           type: Sequelize.INTEGER,
           autoIncrement: true,
           primaryKey: true,
@@ -10,19 +9,16 @@ export const Service = (sequelize, Sequelize) => {
         business_id: {
           type: Sequelize.INTEGER
         },
-        name: {
+        day_of_week: {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        description: {
-          type: Sequelize.STRING,
-        },
-        duration: {
+        start_time: {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        price: {
-          type: Sequelize.DECIMAL(10,2),
+        end_time: {
+          type: Sequelize.STRING,
           allowNull: false,
         }
       },
@@ -32,5 +28,5 @@ export const Service = (sequelize, Sequelize) => {
     )
     // Relations
   
-    return service
+    return availability
   }
