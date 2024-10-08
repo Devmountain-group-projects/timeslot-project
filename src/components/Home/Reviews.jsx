@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { FaStar, FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
 const ReviewCard = ({ image, name, title, review, rating }) => (
-    <div className="max-w-[360px] h-auto py-5 pl-14 pr-4 bg-white border-2 rounded-3xl relative">
-        <img src={image} className="w-20 h-20 rounded-full absolute -left-10 top-0 bottom-0 my-auto border-2 border-gray-300" alt={name} />
+    <div className="max-w-[360px] h-auto py-5 pl-14 pr-4 bg-gradient-gray border-2 hover:ring-2 hover:ring-primary hover:scale-105 transition-all duration-300 ease-in-out rounded-3xl relative group">
+        <img src={image} className="w-20 h-20 rounded-full absolute -left-10 top-0 bottom-0 my-auto border-2 border-gray-300 group-hover:ring-2 group-hover:ring-primary transition-all duration-300 ease-in-out" alt={name} />
         <div>
             <h4 className="text-gray-800 text-base font-bold">{name}</h4>
             <p className="mt-1 text-xs text-gray-500">{title}</p>
