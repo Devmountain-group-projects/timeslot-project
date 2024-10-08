@@ -6,7 +6,7 @@ import OutlookImg from '../../assets/images/outlook.png'
 const Hero = () => {
     return (
         <div>
-            <div className="font-sans bg-white py-24 px-6 bg-gradient-to-b from-primary to-blue-200">
+            <div className="font-sans bg-white py-24 px-6 bg-gradient-to-b from-primary to-blue-100">
                 <div className="max-w-max max-md:max-w-md mx-auto max-md:text-center">
                     <h2 className="text-white lg:text-6xl md:text-5xl text-3xl font-extrabold lg:!leading-[64px] md:max-w-4xl">Streamline Your Appointments with Ease</h2>
                     <p className="text-white text-2xl mt-6 mb-12">The ultimate solution for scheduling, managing, and growing your service-based business.</p>
