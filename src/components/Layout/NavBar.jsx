@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, forwardRef } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { FaBars, FaTimes } from 'react-icons/fa'
-import { NavLink } from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = forwardRef((props, ref) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -34,7 +33,7 @@ const NavBar = () => {
     `
 
     return (
-        <div className={`w-full bg-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
+        <div ref={ref} className={`w-full bg-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
             <header className='max-w-[1970px] mx-auto px-4 sm:px-6 lg:px-8'>
                 <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-20' : 'h-28'}`}>
                     <div className="flex items-center">
@@ -100,6 +99,6 @@ const NavBar = () => {
             )}
         </div>
     )
-}
+});
 
-export default NavBar
+export default NavBar;

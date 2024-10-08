@@ -60,7 +60,7 @@ const PricingSection = () => {
             <div className="bg-gray-100 px-4 py-24">
                 <div className="max-w-5xl max-lg:max-w-max mx-auto">
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold mb-2 text-gray-800">Choose a Subscription</h2>
+                        <h2 className="text-4xl font-bold mb-2 text-gray-800">Choose a Subscription</h2>
                         <p className="text-sm text-gray-500">choose a plan tailored to your needs</p>
                     </div>
 

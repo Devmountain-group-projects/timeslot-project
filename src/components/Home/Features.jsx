@@ -45,7 +45,7 @@ const Features = () => {
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-12">
                 {features.map((feature, index) => (
                     <div key={index} className="text-center">
-                        <feature.icon className="text-4xl mb-6 inline-block text-primary" />
+                        <feature.icon className="text-5xl mb-6 inline-block text-primary" />
                         <h3 className="text-gray-800 text-xl font-semibold mb-3">{feature.title}</h3>
                         <p className="text-gray-600 text-sm">{feature.description}</p>
                     </div>
