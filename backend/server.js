@@ -28,19 +28,19 @@ app.use(
 
 // Database and seed data
 import db from './models/db.js';
+import { createUsers } from './seeds/userSeed.js';
 
 db.sequelize.sync({ force: true }).then(async function () {
     console.log("Database successfully created");
-// Sample db data
-    // try {
-    //     // create temp data for testing, remove after testing is done
-    //     await createUser(db).then(() =>
-    //         console.log("Permissions successfully created"),
-    //     );
-    //
-    // } catch (err) {
-    //     console.error("Error during seeding:", err);
-    // }
+    try {
+        // create temp data for testing, remove after testing is done
+        await createUsers(db).then(() =>
+            console.log("Permissions successfully created"),
+        );
+
+    } catch (err) {
+        console.error("Error during seeding:", err);
+    }
 
     app.set("db", db);
 

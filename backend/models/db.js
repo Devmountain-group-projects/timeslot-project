@@ -8,11 +8,12 @@ const dbConfig = config[env];
 // Initializing an empty object to store db models
 const db = {};
 
+
 // Create a new Sequelize instance, passing in the database name, username, and password
 const sequelize = new Sequelize(
     dbConfig.database,
-    dbConfig.username,
-    dbConfig.password,
+    dbConfig.email,
+    dbConfig.password_hash,
     dbConfig,
 );
 
