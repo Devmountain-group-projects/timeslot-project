@@ -60,10 +60,10 @@ const PricingSection = () => {
 
     return (
         <div>
-            <div className="bg-gray-100 px-4 py-24">
+            <div className="bg-gradient-gray px-4 py-24">
                 <div className="max-w-5xl max-lg:max-w-max mx-auto">
                     <div className="text-center">
-                        <h2 className="sm:text-4xl text-2xl font-bold mb-2 text-gray-800">Choose a Subscription</h2>
+                        <h2 className="sm:text-4xl text-2xl font-bold mb-2 text-gray-800">Choose a Subscription<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
                         <p className="text-base text-gray-500">choose a plan tailored to your needs</p>
                     </div>
 

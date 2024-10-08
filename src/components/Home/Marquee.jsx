@@ -21,8 +21,8 @@ const Marquee = () => {
     ];
 
     return (
-        <div className='bg-gray-100 py-20'>
-            <h1 className="sm:text-4xl text-2xl font-bold text-center text-gray-800 mb-14">Who's talking about us</h1>
+        <div className='bg-gradient-gray py-20'>
+            <h1 className="title-text text-center mb-20">Who's talking about us<span className='text-primary'>.</span></h1>
             <div className="marquee-wrapper overflow-hidden whitespace-nowrap">
                 <div className="animate-marquee inline-block">
                     {logos.concat(logos).map((logo, index) => (

@@ -86,7 +86,7 @@ const Reviews = () => {
             <div className="max-w-max mx-auto">
                 <div className="grid lg:grid-cols-3 gap-6 max-lg:max-w-2xl">
                     <div className="col-span-2">
-                        <h2 className="text-gray-800 sm:text-4xl text-2xl font-extrabold">What Our Users Say</h2>
+                        <h2 className="title-text">What Our Users Say<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
                         <p className="text-base text-gray-800 mt-6 leading-relaxed">Discover how Timeline Slot has transformed the scheduling experience for businesses of all sizes. See why so many trust us to manage their appointments efficiently and grow their businesses.</p>
                     </div>
                     <div className="flex space-x-4 items-end justify-end">

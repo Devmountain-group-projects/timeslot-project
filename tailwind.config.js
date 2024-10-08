@@ -25,6 +25,12 @@ export default {
           '@apply px-4 py-2 text-base rounded-full font-medium text-white bg-primary hover:bg-white hover:text-primary hover:ring-2 ring-primary transition duration-300 ease-in-out':
             {},
         },
+        '.bg-gradient-gray': {
+          '@apply bg-gradient-to-t from-gray-200 via-gray-50 to-gray-50': {},
+        },
+        '.title-text': {
+          '@apply text-gray-800 sm:text-4xl text-2xl font-extrabold mb-10': {},
+        },
       });
     }),
   ],

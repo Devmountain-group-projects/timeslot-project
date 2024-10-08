@@ -40,7 +40,7 @@ const Features = () => {
     return (
         <div className="max-w-max mx-auto px-6 py-24">
             <h2 className="text-gray-800 sm:text-4xl text-2xl font-extrabold text-center mb-16">
-                Discover Our Exclusive Features
+                Discover Our Exclusive Features<span className='text-primary text-3xl sm:text-5xl'>.</span>
             </h2>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-12">
                 {features.map((feature, index) => (

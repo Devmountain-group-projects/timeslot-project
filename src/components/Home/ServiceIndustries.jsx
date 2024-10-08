@@ -6,7 +6,7 @@ import { FaHammer, FaChalkboardTeacher } from "react-icons/fa";
 import { GiHealthNormal } from "react-icons/gi";
 
 const ServiceCard = ({ Icon, title, description }) => (
-    <div className="text-center hover:shadow-md hover:ring-2 hover:ring-primary hover:scale-105 transition-all duration-300 rounded-xl bg-gray-100 p-8 w-full relative overflow-hidden">
+    <div className="text-center hover:shadow-md hover:ring-2 hover:ring-primary hover:scale-105 transition-all duration-300 rounded-xl bg-gradient-gray p-8 w-full relative overflow-hidden">
         <h3 className="text-gray-800 text-lg font-bold mt-4 mb-4">{title}</h3>
         <p className="text-gray-600 text-sm">{description}</p>
         <Icon className="absolute bottom-0 right-0 text-primary opacity-15 w-40 h-40 -mb-6 -mr-6" />
@@ -51,7 +51,7 @@ const ServiceIndustries = () => {
         <div className="bg-white px-6 py-24">
             <div className="grid lg:grid-cols-2 items-center gap-10 my-4 lg:max-w-max max-w-xl mx-auto">
                 <section className="max-lg:text-center">
-                    <h2 className="text-gray-800 sm:text-4xl text-2xl font-extrabold mb-10">Timeline Slot is designed to cater to a wide range of business sectors.</h2>
+                    <h2 className="title-text">Timeline Slot is designed to cater to a wide range of business sectors<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
                     <p className="text-gray-600 text-base">At Timeline Slot, we understand that every business is unique, which is why our platform is designed to support a wide range of industries. Whether you're a solo practitioner or managing a growing team, we streamline the booking process, helping you focus on what matters most—your clients.</p>
                     <button type="button" className="btn-blue mt-10">
                         Learn more
