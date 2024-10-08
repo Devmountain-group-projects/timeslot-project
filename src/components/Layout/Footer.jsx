@@ -6,7 +6,7 @@ import Logo from '../../assets/images/logowhite.png'
 const Footer = () => {
     return (
         <footer className="bg-primary py-5 mt-auto tracking-wide">
-            <div className="container mx-auto px-6 max-w-[1970px]">
+            <div className="container mx-auto px-6 max-w-[1800px]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14 py-8">
                     <div>
                         <img src={Logo} alt="Timeline Slot Logo" className="h-16 mb-12" /> {/* Added logo here */}

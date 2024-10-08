@@ -1,18 +1,46 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import SectionImg from '../../assets/images/sectionimg2.jpg';
 
 const FaqItem = ({ question, answer, isOpen, toggleOpen }) => (
-    <div className="border-b border-gray-200 pb-4">
-        <button
+    <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="border-b border-gray-200 pb-4"
+    >
+        <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             className="flex justify-between items-center w-full text-left"
             onClick={toggleOpen}
         >
             <h3 className="text-lg font-semibold text-gray-800">{question}</h3>
-            {isOpen ? <FaChevronUp className="text-primary" /> : <FaChevronDown className="text-primary" />}
-        </button>
-        {isOpen && <p className="text-sm text-gray-800 mt-4">{answer}</p>}
-    </div>
+            <motion.div
+                initial={false}
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+            >
+                {isOpen ? <FaChevronUp className="text-primary" /> : <FaChevronDown className="text-primary" />}
+            </motion.div>
+        </motion.button>
+        <AnimatePresence>
+            {isOpen && (
+                <motion.p
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-sm text-gray-800 mt-4"
+                >
+                    {answer}
+                </motion.p>
+            )}
+        </AnimatePresence>
+    </motion.div>
 );
+
 
 const Faq = () => {
     const [openIndex, setOpenIndex] = useState(null);
@@ -62,15 +90,38 @@ const Faq = () => {
 
     return (
         <div className="bg-white px-6 py-24">
-            <div className="max-w-max mx-auto">
-                <div className="grid lg:grid-cols-3 gap-12">
-                    <div>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="max-width mx-auto"
+            >
+                <div className="flex flex-col lg:flex-row gap-12 justify-between">
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="flex flex-col lg:w-5/12"
+                    >
                         <h2 className="title-text">Frequently asked questions<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
                         <p className="text-base text-gray-800 mt-6">
-                            At Timeline Slot, we understand that you may have questions as you explore our platform. This FAQ section aims to provide clear and helpful answers to the most common inquiries about our services, features, and how to get the most out of your experience. If you don’t find what you’re looking for, feel free to reach out to our support team for further assistance!
+                            At Timeline Slot, we understand that you may have questions as you explore our platform. This FAQ section aims to provide clear and helpful answers to the most common inquiries about our services, features, and how to get the most out of your experience. If you don't find what you're looking for, feel free to reach out to our support team for further assistance!
                         </p>
-                    </div>
-                    <div className="space-y-6 lg:col-span-2 max-lg:mt-6 mr-10">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            className="mt-8"
+                        >
+                            <img src={SectionImg} alt="FAQ Section" className="w-full" />
+                        </motion.div>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="space-y-6 lg:w-6/12 max-lg:mt-6"
+                    >
                         {faqItems.map((item, index) => (
                             <FaqItem
                                 key={index}
@@ -80,9 +131,9 @@ const Faq = () => {
                                 toggleOpen={() => setOpenIndex(openIndex === index ? null : index)}
                             />
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };
