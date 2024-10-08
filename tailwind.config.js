@@ -7,6 +7,9 @@ export default {
         primary: '#1574c0',
         secondary: '#17a8e5',
       },
+      width: {
+        max: 'max-w-1970px',
+      },
     },
   },
   plugins: [],
