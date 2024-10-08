@@ -1,6 +1,5 @@
 import bcryptjs from "bcryptjs";
 
-
 const users = [
     {
         name: "test",
