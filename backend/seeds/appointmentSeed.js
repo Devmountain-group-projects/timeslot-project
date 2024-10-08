@@ -1,8 +1,8 @@
 const appointment = [
     {
-        service_id: 1, // Need Foreign Key
-        business_id: 1, // Need Foreign Key
-        user_id: 1, // Need Foreign Key
+    //     service_id: 1, // Need Foreign Key
+    //     business_id: 1, // Need Foreign Key
+    //     user_id: 1, // Need Foreign Key
         appointment_date: "2022-01-01",
         appointment_start: "09:00",
         appointment_end: "10:00",
