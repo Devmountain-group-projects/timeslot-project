@@ -81,7 +81,7 @@ const PricingSection = () => {
 
                     <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-6 max-sm:max-w-sm max-sm:mx-auto mt-12">
                         {plans.map((plan, index) => (
-                            <div key={index} className="bg-white shadow rounded-3xl p-6 hover:scale-105 transition-all duration-300">
+                            <div key={index} className="bg-white shadow rounded-3xl p-10 hover:scale-105 hover:ring-2 ring-primary transition-all duration-300">
                                 <h4 className="text-gray-800 text-lg mb-3">{plan.name}</h4>
                                 <div className="flex justify-between items-center">
                                     <h3 className="text-4xl font-semibold">
@@ -102,7 +102,9 @@ const PricingSection = () => {
                                             </li>
                                         ))}
                                     </ul>
-                                    <button type="button" className="w-full mt-6 px-4 py-2 text-sm tracking-wide bg-primary hover:bg-purple-700 text-white rounded-xl">Get Started</button>
+                                    <div className="flex items-center justify-center mt-10">
+                                        <button type="button" className="px-4 py-2 text-md rounded-full font-medium text-white bg-primary hover:bg-white hover:text-primary hover:ring-2 ring-primary transition duration-300 ease-in-out">Get Started</button>
+                                    </div>
                                 </div>
                             </div>
                         ))}

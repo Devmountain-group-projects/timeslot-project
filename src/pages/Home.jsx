@@ -2,7 +2,6 @@ import React from 'react'
 import Hero from '../components/Home/Hero'
 import Features from '../components/Home/Features'
 import Marquee from '../components/Home/Marquee'
-import MakeItEasy from '../components/Home/MakeItEasy'
 import ServiceIndustries from '../components/Home/ServiceIndustries'
 import PricingSection from '../components/Home/PricingSection'
 import Reviews from '../components/Home/Reviews'
@@ -15,7 +14,6 @@ const Home = () => {
             <Hero />
             <Features />
             <Marquee />
-            <MakeItEasy />
             <ServiceIndustries />
             <PricingSection />
             <Reviews />
