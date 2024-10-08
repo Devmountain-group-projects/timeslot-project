@@ -47,7 +47,7 @@ const Features = () => {
                     <div key={index} className="text-center">
                         <feature.icon className="text-5xl mb-6 inline-block text-primary" />
                         <h3 className="text-gray-800 text-xl font-semibold mb-3">{feature.title}</h3>
-                        <p className="text-gray-600 text-sm">{feature.description}</p>
+                        <p className="text-gray-600 text-base">{feature.description}</p>
                     </div>
                 ))}
             </div>
