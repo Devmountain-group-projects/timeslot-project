@@ -33,8 +33,8 @@ import { createAppointments } from './seeds/appointmentSeed.js';
 import { createAvailability } from './seeds/availabilitySeed.js';
 import { createBusiness } from './seeds/businessSeed.js';
 import { createNotification } from './seeds/notificationSeed.js';
-import { createPayment } from './seeds/paymentSeed.js';
-import { createReview } from './seeds/reviewSeed.js';
+// import { createPayment } from './seeds/paymentSeed.js';
+// import { createReview } from './seeds/reviewSeed.js';
 import { createService } from './seeds/serviceSeed.js';
 
 db.sequelize.sync({ force: true }).then(async function () {
@@ -55,12 +55,12 @@ db.sequelize.sync({ force: true }).then(async function () {
         await createNotification(db).then(() =>
             console.log("Notifications successfully created"),
         );
-        await createPayment(db).then(() =>
-            console.log("Payments successfully created"),
-        );
-        await createReview(db).then(() =>
-            console.log("Reviews successfully created"),
-        );
+        // await createPayment(db).then(() =>
+        //     console.log("Payments successfully created"),
+        // );
+        // await createReview(db).then(() =>
+        //     console.log("Reviews successfully created"),
+        // );
         await createService(db).then(() =>
             console.log("Services successfully created"),
         );

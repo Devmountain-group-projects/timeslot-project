@@ -23,8 +23,8 @@ import { Appointment } from "./appointment.js";
 import { Availability } from "./availability.js";
 import { Business } from "./business.js";
 import { Notification } from "./notification.js";
-import { Payment } from "./payment.js";
-import { Review } from "./review.js";
+// import { Payment } from "./payment.js";
+// import { Review } from "./review.js";
 import { Service } from "./service.js";
 
 // Associating models for use in the db
@@ -33,8 +33,8 @@ const appointment = Appointment(sequelize, Sequelize.DataTypes);
 const availability = Availability(sequelize, Sequelize.DataTypes);
 const business = Business(sequelize, Sequelize.DataTypes);
 const notification = Notification(sequelize, Sequelize.DataTypes);
-const payment = Payment(sequelize, Sequelize.DataTypes);
-const review = Review(sequelize, Sequelize.DataTypes);
+// const payment = Payment(sequelize, Sequelize.DataTypes);
+// const review = Review(sequelize, Sequelize.DataTypes);
 const service = Service(sequelize, Sequelize.DataTypes);
 
 // Storing the models in the db object
@@ -43,8 +43,8 @@ db[appointment.name] = appointment;
 db[availability.name] = availability;
 db[business.name] = business;
 db[notification.name] = notification;
-db[payment.name] = payment;
-db[review.name] = review;
+// db[payment.name] = payment;
+// db[review.name] = review;
 db[service.name] = service;
 
 // Setting up relationships between models
