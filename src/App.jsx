@@ -6,6 +6,10 @@ import Login from './pages/Login'
 import NotFound from './pages/NotFound'
 import Profile from './pages/Profile'
 import Register from './pages/Register'
+import WhyUs from './pages/WhyUs'
+import Contact from './pages/Contact'
+import Features from './pages/Features'
+import Pricing from './pages/Pricing'
 import NavBar from './components/Layout/NavBar'
 import Footer from './components/Layout/Footer'
 
@@ -28,6 +32,34 @@ const App = () => {
           </>
         } />
         <Route path="/profile" element={
+          <>
+            <NavBar />
+            <Profile />
+            <Footer />
+          </>
+        } />
+        <Route path="/features" element={
+          <>
+            <NavBar />
+            <Profile />
+            <Footer />
+          </>
+        } />
+        <Route path="/pricing" element={
+          <>
+            <NavBar />
+            <Profile />
+            <Footer />
+          </>
+        } />
+        <Route path="/why-us" element={
+          <>
+            <NavBar />
+            <Profile />
+            <Footer />
+          </>
+        } />
+        <Route path="/contact" element={
           <>
             <NavBar />
             <Profile />
