@@ -33,8 +33,8 @@ const NavBar = forwardRef((props, ref) => {
     `
 
     return (
-        <div ref={ref} className={`w-full bg-white fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'shadow-md' : ''}`}>
-            <header className='max-w-[1970px] mx-auto px-4 sm:px-6 lg:px-8'>
+        <div ref={ref} className={`w-full bg-white fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>
+            <header className='max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8'>
                 <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-20' : 'h-28'}`}>
                     <div className="flex items-center">
                         <Link to="/" className="flex-shrink-0">
@@ -66,7 +66,7 @@ const NavBar = forwardRef((props, ref) => {
                         <div className="hidden lg:block">
                             <div className="ml-4 flex items-center md:ml-6">
                                 <Link to="/login" className='text-gray-500 hover:text-primary px-3 py-2 rounded-md text-base font-medium'>Login</Link>
-                                <Link to="/register" className='ml-3 px-4 py-2 text-md rounded-full font-medium text-white bg-primary hover:bg-white hover:text-primary hover:ring-2 ring-primary transition duration-300 ease-in-out'>Get Started</Link>
+                                <Link to="/register" className='btn-blue'>Get Started</Link>
                             </div>
                         </div>
 
