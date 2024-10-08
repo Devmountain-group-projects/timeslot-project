@@ -1,8 +1,8 @@
 export const User = (sequelize, Sequelize) => {
   const user = sequelize.define(
-    "user", {
-      
-      id: {
+    "user",
+    {
+      user_id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -37,8 +37,25 @@ export const User = (sequelize, Sequelize) => {
     {
       timestamps: true,
     }
-  )
+  );
   // Relations
+  user.associate = (models) => {
+    user.belongsToMany(models.business, {
+      foreignKey: "user_id",
+      onDelete: "RESTRICT",
+      through: "business"
+    });
 
-  return user
-}
+    user.hasMany(models.notification, {
+      foreignKey: "notification_id",
+      onDelete: "RESTRICT",
+    });
+
+    user.hasMany(models.appointment, {
+      foreignKey: "appointment_id",
+      onDelete: "RESTRICT",
+    });
+  };
+
+  return user;
+};

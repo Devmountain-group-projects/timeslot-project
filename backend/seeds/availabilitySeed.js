@@ -1,5 +1,5 @@
 const availability = [{
-    business_id: 1, // Need Foreign Key
+    // business_id: 1, // Need Foreign Key
     day_of_week: "Monday",
     start_time: "09:00",
     end_time: "17:00",
