@@ -17,7 +17,7 @@ export const Notification = (sequelize, Sequelize) => {
                 allowNull: false
             },
             type: {
-                type: Sequelize.ENUM('email', 'SMS', 'in-app'),
+                type: Sequelize.ENUM('email', 'SMS', 'in-app', 'test'),
                 allowNull: false
             },
             sent_at: {
@@ -25,7 +25,7 @@ export const Notification = (sequelize, Sequelize) => {
                 allowNull: false
             },
             status: {
-                type: Sequelize.ENUM('sent', 'pending', 'failed', 'unread'),
+                type: Sequelize.ENUM('sent', 'pending', 'failed', 'unread', 'test'),
                 defaultValue: 'pending',
                 allowNull: false
             }
