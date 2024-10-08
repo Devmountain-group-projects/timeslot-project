@@ -6,10 +6,10 @@ import Logo from '../../assets/images/logowhite.png'
 const Footer = () => {
     return (
         <footer className="bg-primary py-5 mt-auto tracking-wide">
-            <div className="container mx-auto px-6 max-w-7xl">
+            <div className="container mx-auto px-6 max-w-[1970px]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14 py-8">
                     <div>
-                        <img src={Logo} alt="Timeline Slot Logo" className="h-16 mb-6" /> {/* Added logo here */}
+                        <img src={Logo} alt="Timeline Slot Logo" className="h-16 mb-12" /> {/* Added logo here */}
                         <h4 className="text-lg font-semibold mb-6 text-white">About Us</h4>
                         <p className="text-white text-base">Timeline Slot is an online appointment booking system designed to help businesses and clients streamline scheduling.</p>
                     </div>
@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
 
             <div className="bg-secondary p-5 mt-12">
-                <p className='text-white text-base text-center'>© Timeline Slot Online Appointment Platform. All rights reserved. <br />Project created by Rodrigo Cobos, Brandon Cansdale and Jareth Carpenter</p>
+                <p className='text-white text-sm text-center'>© Timeline Slot Online Appointment Platform. All rights reserved. Project created by Rodrigo Cobos, Brandon Cansdale and Jareth Carpenter</p>
             </div>
         </footer>
     )

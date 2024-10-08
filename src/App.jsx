@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Home from './pages/Home'
@@ -16,15 +16,34 @@ import TermsAndConditions from './pages/TermsAndConditions'
 import NavBar from './components/Layout/NavBar'
 import Footer from './components/Layout/Footer'
 
-const MainLayout = ({ children }) => (
-  <div className="flex flex-col min-h-screen">
-    <NavBar />
-    <main className="flex-grow">
-      {children}
-    </main>
-    <Footer />
-  </div>
-)
+const MainLayout = ({ children }) => {
+  const navbarRef = useRef(null);
+  const mainContentRef = useRef(null);
+
+  useEffect(() => {
+    const updatePadding = () => {
+      if (navbarRef.current && mainContentRef.current) {
+        const navbarHeight = navbarRef.current.offsetHeight;
+        mainContentRef.current.style.paddingTop = `${navbarHeight}px`;
+      }
+    };
+
+    updatePadding();
+    window.addEventListener('resize', updatePadding);
+
+    return () => window.removeEventListener('resize', updatePadding);
+  }, []);
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <NavBar ref={navbarRef} />
+      <main ref={mainContentRef} className="flex-grow">
+        {children}
+      </main>
+      <Footer />
+    </div>
+  )
+}
 
 const App = () => {
   return (
