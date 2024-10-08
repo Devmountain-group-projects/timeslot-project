@@ -9,7 +9,7 @@ const notification = [
     }
 ]
 
-export const createNotifications = async function createNotifications(db) {
+export const createNotification = async function createNotifications(db) {
     for (const notif of notification) {
         await db.notification
             .create({

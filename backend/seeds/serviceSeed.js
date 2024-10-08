@@ -7,7 +7,7 @@ const service = [ {
 }]
 
 
-export const createServices = async function createServices(db) {
+export const createService = async function createServices(db) {
     for (const svc of service) {
         await db.service
             .create({

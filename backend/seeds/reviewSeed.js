@@ -7,7 +7,7 @@ const review = [
     }
 ]
 
-export const createReviews = async function createReviews(db) {
+export const createReview = async function createReviews(db) {
     for (const rev of review) {
         await db.review
             .create({
