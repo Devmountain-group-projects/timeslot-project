@@ -6,7 +6,7 @@ import { TbEye, TbEyeClosed } from "react-icons/tb";
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -16,7 +16,7 @@ const LoginForm = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (username === 'rodrigomcobos' && password === 'password123') {
+        if (email === 'rodrigomcobos@test.com' && password === 'password123') {
             console.log('Login successful');
             setError('');
             // Here you would typically handle the successful login,
@@ -50,13 +50,13 @@ const LoginForm = () => {
                                 <label className="text-gray-800 text-sm mb-2 block">User name</label>
                                 <div className="relative flex items-center">
                                     <input
-                                        name="username"
+                                        name="email"
                                         type="text"
                                         required
                                         className={`w-full text-sm text-gray-800 border ${error ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
                                         placeholder="Enter user name"
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                     />
                                     <FaUserCheck className="w-[18px] h-[18px] text-gray-500 absolute right-4 cursor-pointer" />
                                 </div>
