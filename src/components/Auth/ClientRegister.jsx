@@ -1,30 +1,53 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom';
 import SectionImg from '../../assets/images/sectionimg4.jpg'
 import { FaUserCheck, FaPhone } from "react-icons/fa";
 import { TbEye, TbEyeClosed } from "react-icons/tb";
 import { MdAlternateEmail } from "react-icons/md";
 
-
-const ClientRegister = () => {
+const ClientRegister = ({ onRegister }) => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        confirmPassword: ''
+    });
     const [showPassword, setShowPassword] = useState(false);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [passwordError, setPasswordError] = useState('');
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
 
-    const handleLogin = (e) => {
+    const togglePasswordVisibility = (field) => {
+        if (field === 'password') {
+            setShowPassword(!showPassword);
+        } else if (field === 'confirmPassword') {
+            setShowConfirmPassword(!showConfirmPassword);
+        }
+    };
+
+    const validatePasswords = () => {
+        if (formData.password !== formData.confirmPassword) {
+            setPasswordError("Passwords don't match");
+            return false;
+        }
+        setPasswordError('');
+        return true;
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if (email === 'rodrigomcobos@test.com' && password === 'password123') {
-            console.log('Login successful');
-            setError('');
-            // Here you would typically handle the successful login,
-            // such as setting auth state or redirecting the user
-        } else {
-            setError('Wrong credentials');
+        if (validatePasswords()) {
+            console.log('Form submitted:', formData);
+            onRegister();
         }
     };
 
@@ -38,7 +61,7 @@ const ClientRegister = () => {
                         transition={{ duration: 0.5 }}
                         className="border border-gray-300 rounded-lg p-8 max-w-md bg-white shadow-lg z-10 mx-auto md:mx-0"
                     >
-                        <form className="space-y-4" onSubmit={handleLogin}>
+                        <form className="space-y-4" onSubmit={handleSubmit}>
                             <div className="mb-8">
                                 <h3 className="text-gray-800 text-3xl font-extrabold">Join Timeline Slot<span className='text-primary text-3xl sm:text-5xl'>.</span></h3>
                                 <p className="text-gray-500 text-sm mt-4 leading-relaxed">Start managing your appointments with ease! Create your account to access powerful scheduling tools designed to simplify your business.</p>
@@ -55,14 +78,15 @@ const ClientRegister = () => {
                                         name="name"
                                         type="text"
                                         required
-                                        className={`w-full text-sm text-gray-800 border ${error ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
+                                        className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-primary"
                                         placeholder="Enter your Name"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        value={formData.name}
+                                        onChange={handleInputChange}
                                     />
                                     <FaUserCheck className="w-[18px] h-[18px] text-gray-500 absolute right-4 cursor-pointer" />
                                 </div>
                             </motion.div>
+
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -71,17 +95,18 @@ const ClientRegister = () => {
                                 <label className="text-gray-800 text-sm mb-2 block">Email</label>
                                 <div className="relative flex items-center">
                                     <input
-                                        name="Email"
+                                        name="email"
                                         type="email"
                                         required
-                                        className={`w-full text-sm text-gray-800 border ${error ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
+                                        className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-primary"
                                         placeholder="Enter your Email"
-                                        value={email}
-                                        onChange={(e) => setemail(e.target.value)}
+                                        value={formData.email}
+                                        onChange={handleInputChange}
                                     />
                                     <MdAlternateEmail className="w-[18px] h-[18px] text-gray-500 absolute right-4 cursor-pointer" />
                                 </div>
                             </motion.div>
+
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -90,17 +115,18 @@ const ClientRegister = () => {
                                 <label className="text-gray-800 text-sm mb-2 block">Add Phone Number</label>
                                 <div className="relative flex items-center">
                                     <input
-                                        name="email"
+                                        name="phoneNumber"
                                         type="tel"
                                         required
-                                        className={`w-full text-sm text-gray-800 border ${error ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
+                                        className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-primary"
                                         placeholder="Enter your Phone Number"
-                                        value={email}
-                                        onChange={(e) => setemail(e.target.value)}
+                                        value={formData.phoneNumber}
+                                        onChange={handleInputChange}
                                     />
                                     <FaPhone className="w-[18px] h-[18px] text-gray-500 absolute right-4 cursor-pointer" />
                                 </div>
                             </motion.div>
+
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -112,13 +138,13 @@ const ClientRegister = () => {
                                         name="password"
                                         type={showPassword ? "text" : "password"}
                                         required
-                                        className={`w-full text-sm text-gray-800 border ${error ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
+                                        className={`w-full text-sm text-gray-800 border ${passwordError ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
                                         placeholder="Enter your password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={formData.password}
+                                        onChange={handleInputChange}
                                     />
                                     <motion.div
-                                        onClick={togglePasswordVisibility}
+                                        onClick={() => togglePasswordVisibility('password')}
                                         className="absolute right-4 top-1/2 transform -translate-y-[50%] cursor-pointer"
                                     >
                                         {showPassword ?
@@ -127,8 +153,8 @@ const ClientRegister = () => {
                                         }
                                     </motion.div>
                                 </div>
-                                {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                             </motion.div>
+
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -137,25 +163,25 @@ const ClientRegister = () => {
                                 <label className="text-gray-800 text-sm mb-2 block">Confirm your Password</label>
                                 <div className="relative flex items-center">
                                     <input
-                                        name="password"
-                                        type={showPassword ? "text" : "password"}
+                                        name="confirmPassword"
+                                        type={showConfirmPassword ? "text" : "password"}
                                         required
-                                        className={`w-full text-sm text-gray-800 border ${error ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
+                                        className={`w-full text-sm text-gray-800 border ${passwordError ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
                                         placeholder="Reenter your password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        value={formData.confirmPassword}
+                                        onChange={handleInputChange}
                                     />
                                     <motion.div
-                                        onClick={togglePasswordVisibility}
+                                        onClick={() => togglePasswordVisibility('confirmPassword')}
                                         className="absolute right-4 top-1/2 transform -translate-y-[50%] cursor-pointer"
                                     >
-                                        {showPassword ?
+                                        {showConfirmPassword ?
                                             <TbEye className="w-[18px] h-[18px] text-gray-500" /> :
                                             <TbEyeClosed className="w-[18px] h-[18px] text-gray-500" />
                                         }
                                     </motion.div>
                                 </div>
-                                {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+                                {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                             </motion.div>
 
                             <motion.div
@@ -180,7 +206,7 @@ const ClientRegister = () => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: 0.5 }}
                             >
-                                Already a member? <a href="#" className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap">Log in</a>
+                                Already a member? <Link to="/login" className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap">Log in</Link>
                             </motion.p>
                         </form>
                     </motion.div>

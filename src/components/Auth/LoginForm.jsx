@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom';
 import SectionImg from '../../assets/images/sectionimg3.jpg'
 import { FaUserCheck } from "react-icons/fa";
 import { TbEye, TbEyeClosed } from "react-icons/tb";
@@ -47,14 +48,14 @@ const LoginForm = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.2 }}
                             >
-                                <label className="text-gray-800 text-sm mb-2 block">User name</label>
+                                <label className="text-gray-800 text-sm mb-2 block">Email</label>
                                 <div className="relative flex items-center">
                                     <input
                                         name="email"
                                         type="text"
                                         required
                                         className={`w-full text-sm text-gray-800 border ${error ? 'border-red-500' : 'border-gray-300'} px-4 py-3 rounded-lg outline-primary`}
-                                        placeholder="Enter user name"
+                                        placeholder="Enter email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
@@ -112,7 +113,7 @@ const LoginForm = () => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: 0.5 }}
                             >
-                                Don't have an account <a href="#" className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap">Register here</a>
+                                Don't have an account <Link to="/register" className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap">Register here</Link>
                             </motion.p>
                         </form>
                     </motion.div>

@@ -6,7 +6,7 @@ import { MdAddBusiness } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { TbWorldWww } from "react-icons/tb";
 
-const BusinessRegister = () => {
+const BusinessRegister = ({ onContinue }) => {
     const [formData, setFormData] = useState({
         businessName: '',
         address_line1: '',
@@ -28,7 +28,7 @@ const BusinessRegister = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
-        // Here you would typically send the data to your backend
+        onContinue(); // Call the onContinue prop to move to the next step
     };
 
     const inputVariants = {
