@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import SectionImg from '../../assets/images/sectionimg7.jpg'
-import { FaChevronRight, FaPhone } from 'react-icons/fa';
-import { MdAddBusiness } from "react-icons/md";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaChevronRight } from 'react-icons/fa';
 import { TbWorldWww } from "react-icons/tb";
 
-const BusinessDetails = () => {
+const BusinessDetails = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
         description: '',
         website: '',
@@ -49,7 +47,7 @@ const BusinessDetails = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
-        // Here you would typically send the data to your backend
+        onSubmit(); // Call the onSubmit prop to complete registration
     };
 
     const inputVariants = {
@@ -208,7 +206,7 @@ const BusinessDetails = () => {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                 >
-                                    Continue
+                                    Proceed to Dashboard
                                     <motion.div
                                         animate={{ x: [0, 4, 0] }}
                                         transition={{
@@ -220,6 +218,7 @@ const BusinessDetails = () => {
                                         <FaChevronRight className="ml-2" />
                                     </motion.div>
                                 </motion.button>
+
                             </motion.div>
                         </form>
                     </motion.div>

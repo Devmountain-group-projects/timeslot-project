@@ -4,7 +4,7 @@ import SectionImg from '../../assets/images/sectionimg5.jpg'
 import { FaUser } from "react-icons/fa";
 import { MdAddBusiness } from "react-icons/md";
 
-const Role = () => {
+const Role = ({ onRoleSelect }) => {
     const cardVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -137,7 +137,7 @@ const Role = () => {
                                     className="btn-blue w-full"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={() => handleRoleSelection('Client')}
+                                    onClick={() => onRoleSelect('Client')}
                                 >
                                     I am a Client
                                 </motion.button>
@@ -153,7 +153,7 @@ const Role = () => {
                                     className="btn-blue w-full"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={() => handleRoleSelection('Business')}
+                                    onClick={() => onRoleSelect('Business')}
                                 >
                                     I have a Business
                                 </motion.button>
