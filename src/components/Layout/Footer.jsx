@@ -5,7 +5,7 @@ import Logo from '../../assets/images/logowhite.png'
 
 const Footer = () => {
     return (
-        <footer className="bg-primary py-5 mt-auto tracking-wide">
+        <footer className="bg-gradient-to-b from-secondary to-primary py-5 mt-auto tracking-wide">
             <div className="container mx-auto px-6 max-w-[1800px]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14 py-8">
                     <div>
@@ -53,8 +53,8 @@ const Footer = () => {
                     </section>
                 </div>
             </div>
-
-            <div className="bg-secondary p-5 mt-12">
+            <hr className='border-white px-6' />
+            <div className="p-5 mt-2">
                 <p className='text-white text-sm text-center'>© Timeline Slot Online Appointment Platform. All rights reserved. Project created by Rodrigo Cobos, Brandon Cansdale and Jareth Carpenter</p>
             </div>
         </footer>

@@ -7,7 +7,7 @@ import OutlookImg from '../../assets/images/outlook.png'
 const Hero = () => {
     return (
         <div>
-            <div className="font-sans bg-white py-24 px-6 bg-gradient-to-b from-primary via-blue-400 to-white">
+            <div className="font-sans bg-white py-24 px-6 bg-gradient-to-b from-secondary via-blue-400 to-white">
                 <div className="max-width mx-auto max-md:text-center">
                     <motion.h2
                         initial={{ opacity: 0, y: -50 }}

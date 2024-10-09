@@ -38,7 +38,7 @@ const NavBar = forwardRef((props, ref) => {
                 <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-20' : 'h-28'}`}>
                     <div className="flex items-center">
                         <Link to="/" className="flex-shrink-0">
-                            <img src={Logo} alt="logo" className={`w-auto transition-all duration-300 ${isScrolled ? 'h-12' : 'h-20'}`} />
+                            <img src={Logo} alt="logo" className={`w-auto transition-all duration-300 ${isScrolled ? 'h-12' : 'h-16'}`} />
                         </Link>
                     </div>
 
