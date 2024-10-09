@@ -4,7 +4,7 @@ export const Image = (sequelize, Sequelize) => {
     const image = sequelize.define(
         "image",
         {
-            imageId: {
+            image_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false, // Foreign key, must reference a valid propertyId from Property model
                 primaryKey: true,
@@ -25,12 +25,12 @@ export const Image = (sequelize, Sequelize) => {
             foreignKey: "image_id",
         });
     };
-    image.associate = (models) => {
-        image.belongsToMany(models.user, {
-            through: "profile_image",
-            foreignKey: "image_id",
-        });
-    };
+    // image.associate = (models) => {
+    //     image.belongsToMany(models.user, {
+    //         through: "profile_image",
+    //         foreignKey: "image_id",
+    //     });
+    // };
 
     return image;
 };

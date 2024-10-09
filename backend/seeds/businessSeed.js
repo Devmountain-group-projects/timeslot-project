@@ -11,11 +11,32 @@ const business = [
         email: "Business Email",
         phone: "Business Phone",
         website: "Business Website",
+        photos: [
+            {
+                src: "https://photos.zillowstatic.com/fp/f180a30f2bdd6ffd689d1d7f85edcf81-cc_ft_1536.webp",
+                is_primary: true,
+            },
+            {
+                src: "https://photos.zillowstatic.com/fp/6c91e814756194bd0e18bfe37a552c61-cc_ft_768.webp",
+                is_primary: false,
+            },
+        ],
     }];
 
 
 export const createBusiness = async function createBusiness(db) {
     for (const biz of business) {
+
+        const profile_photos = biz.photos;
+
+        let photos = profile_photos.map((photo) => {
+            return {
+                src: photo.src,
+                property_image: {
+                    is_primary: photo.is_primary,
+                },
+            };
+        });
         await db.business
             .create({
                     user_id: biz.user_id,
@@ -29,6 +50,15 @@ export const createBusiness = async function createBusiness(db) {
                     email: biz.email,
                     phone: biz.phone,
                     website: biz.website,
+                images: photos,
+                },
+                {
+                    include: [
+                        {
+                            model: db.sequelize.models.image,
+                            as: "images",
+                        },
+                    ],
                 }
             );
     }
