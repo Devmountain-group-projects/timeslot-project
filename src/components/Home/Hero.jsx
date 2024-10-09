@@ -55,10 +55,10 @@ const Hero = () => {
                                 initial={{ opacity: 0, y: 50 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.6 }}
-                                className="mt-24 grid grid-cols-2 md:grid-cols-2 gap-2 items-center"
+                                className="mt-24 grid grid-cols-2 md:grid-cols-2 items-center"
                             >
-                                <img src={GoogleImg} className="w-44 mx-auto" alt="google-logo" />
-                                <img src={OutlookImg} className="w-44 mx-auto" alt="facebook-logo" />
+                                <img src={GoogleImg} className="w-24 sm:w-44 mx-auto" alt="google-logo" />
+                                <img src={OutlookImg} className="w-24 sm:w-44 mx-auto" alt="facebook-logo" />
                             </motion.div>
                         </motion.div>
                         <motion.div
@@ -66,7 +66,7 @@ const Hero = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
                         >
-                            <img src={PlaceholderImg} className="w-full h-full rounded-lg object-contain shadow-xl" />
+                            <img src={PlaceholderImg} className="w-full h-full rounded-lg object-contain" />
                         </motion.div>
                     </div>
                 </div>

@@ -77,7 +77,7 @@ const ServiceIndustries = () => {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="mt-10"
                     >
-                        <img src={SectionImg} alt="Service Industries" className="w-full" />
+                        <img src={SectionImg} alt="Service Industries" className="w-5/6 sm:w-full mx-auto" />
                     </motion.div>
                 </motion.section>
 
