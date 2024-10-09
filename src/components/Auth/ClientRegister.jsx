@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom';
 import SectionImg from '../../assets/images/sectionimg4.jpg'
 import { FaUserCheck, FaPhone } from "react-icons/fa";
 import { TbEye, TbEyeClosed } from "react-icons/tb";
@@ -180,7 +181,7 @@ const ClientRegister = () => {
                                 animate={{ opacity: 1 }}
                                 transition={{ duration: 0.5, delay: 0.5 }}
                             >
-                                Already a member? <a href="#" className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap">Log in</a>
+                                Already a member? <Link to="/login" className="text-primary font-semibold hover:underline ml-1 whitespace-nowrap">Log in</Link>
                             </motion.p>
                         </form>
                     </motion.div>

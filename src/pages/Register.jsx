@@ -8,10 +8,10 @@ import BusinessDetails from '../components/Auth/BusinessDetails'
 const Register = () => {
     return (
         <div>
-            {/* <ClientRegister /> */}
+            <ClientRegister />
             {/* <Role /> */}
             {/* <BusinessRegister /> */}
-            <BusinessDetails />
+            {/* <BusinessDetails /> */}
         </div>
     )
 }
