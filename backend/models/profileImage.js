@@ -5,7 +5,7 @@ export const ProfileImage = (sequelize, Sequelize) => {
         {
             business_id: {
                 type: Sequelize.INTEGER,
-                allowNull: true, // Foreign key, must reference a valid propertyId from Property model
+                allowNull: true, // Foreign key, must reference a valid businessId from Business model
             },
             user_id: {
                 type: Sequelize.INTEGER,
