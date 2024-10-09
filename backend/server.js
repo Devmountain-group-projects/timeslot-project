@@ -155,5 +155,5 @@ import auth from './routes/authRoutes.js';
 // import business from './routes/businessRoutes.js';
 // import contact from './routes/contactRoutes.js';
 
-console.log("Test")
+
 app.use("/api/auth", auth)
