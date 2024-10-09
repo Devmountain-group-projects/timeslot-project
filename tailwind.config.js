@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#1574c0',
-        secondary: '#17a8e5',
+        primary: '#007dfe',
+        secondary: '#2264ba',
       },
       width: {
         max: 'max-w-[1800px]',
