@@ -9,3 +9,11 @@ export const test = (req, res) => {
         success: true,
     });
 };
+
+// Login Route
+export const login = (req,res) => {
+    res.send({
+        message: "Hit login",
+        success: true
+    })
+}
