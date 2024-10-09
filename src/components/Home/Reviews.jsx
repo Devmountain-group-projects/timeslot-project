@@ -8,7 +8,7 @@ const ReviewCard = ({ image, name, title, review, rating }) => (
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         transition={{ duration: 0.3 }}
-        className="h-full flex flex-col py-5 ml-10 pl-14 pr-6 bg-gradient-gray border-2 hover:ring-2 hover:ring-primary hover:scale-105 transition-all duration-300 ease-in-out rounded-3xl relative group"
+        className="h-full flex flex-col py-5 ml-10 pl-14 pr-6 bg-gradient-gray border-2 hover:ring-2 hover:ring-primary transition-all duration-300 ease-in-out rounded-3xl relative group"
     >
         <img src={image} className="w-20 h-20 rounded-full absolute -left-10 top-0 bottom-0 my-auto border-2 border-gray-300 group-hover:ring-2 group-hover:ring-primary transition-all duration-300 ease-in-out" alt={name} />
         <div>
@@ -150,7 +150,7 @@ const Reviews = () => {
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16 mt-16"
                 >
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence>
                         {getDisplayedReviews()}
                     </AnimatePresence>
                 </motion.section>

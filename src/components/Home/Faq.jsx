@@ -4,12 +4,7 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import SectionImg from '../../assets/images/sectionimg2.jpg';
 
 const FaqItem = ({ question, answer, isOpen, toggleOpen }) => (
-    <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="border-b border-gray-200 pb-4"
-    >
+    <div className="border-b border-gray-200 pb-4">
         <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -25,20 +20,30 @@ const FaqItem = ({ question, answer, isOpen, toggleOpen }) => (
                 {isOpen ? <FaChevronUp className="text-primary" /> : <FaChevronDown className="text-primary" />}
             </motion.div>
         </motion.button>
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
             {isOpen && (
-                <motion.p
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
+                <motion.div
+                    key="content"
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
+                    variants={{
+                        open: { opacity: 1, height: "auto" },
+                        collapsed: { opacity: 0, height: 0 }
+                    }}
                     transition={{ duration: 0.3 }}
-                    className="text-sm text-gray-800 mt-4"
                 >
-                    {answer}
-                </motion.p>
+                    <motion.p
+                        variants={{ collapsed: { opacity: 0 }, open: { opacity: 1 } }}
+                        transition={{ duration: 0.2 }}
+                        className="text-sm text-gray-800 mt-4"
+                    >
+                        {answer}
+                    </motion.p>
+                </motion.div>
             )}
         </AnimatePresence>
-    </motion.div>
+    </div>
 );
 
 
@@ -113,7 +118,7 @@ const Faq = () => {
                             transition={{ duration: 0.5, delay: 0.3 }}
                             className="mt-8"
                         >
-                            <img src={SectionImg} alt="FAQ Section" className="w-full" />
+                            <img src={SectionImg} alt="FAQ Section" className="w-5/6 sm:w-full mx-auto" />
                         </motion.div>
                     </motion.div>
                     <motion.div

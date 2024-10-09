@@ -35,10 +35,10 @@ const NavBar = forwardRef((props, ref) => {
     return (
         <div ref={ref} className={`w-full bg-white fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>
             <header className='max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8'>
-                <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-20' : 'h-28'}`}>
+                <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-16' : 'h-20 sm:h-24'}`}>
                     <div className="flex items-center">
                         <Link to="/" className="flex-shrink-0">
-                            <img src={Logo} alt="logo" className={`w-auto transition-all duration-300 ${isScrolled ? 'h-12' : 'h-16'}`} />
+                            <img src={Logo} alt="logo" className={`w-auto transition-all duration-300 ${isScrolled ? 'h-8 sm:h-10' : 'h-10 sm:h-14'}`} />
                         </Link>
                     </div>
 
@@ -64,7 +64,7 @@ const NavBar = forwardRef((props, ref) => {
 
                     <div className="flex items-center space-x-2">
                         <div className="hidden lg:block">
-                            <div className="ml-4 flex items-center md:ml-6">
+                            <div className="flex items-center space-x-4">
                                 <Link to="/login" className='text-gray-500 hover:text-primary px-3 py-2 rounded-md text-base font-medium'>Login</Link>
                                 <Link to="/register" className='btn-blue'>Get Started</Link>
                             </div>
@@ -72,7 +72,7 @@ const NavBar = forwardRef((props, ref) => {
 
                         <div className="flex lg:hidden items-center space-x-2">
                             <Link to="/login" className='text-gray-500 hover:text-secondary px-3 py-2 rounded-md text-base font-medium'>Login</Link>
-                            <Link to="/register" className='px-3 py-2 text-md rounded-md font-medium text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-150 ease-in-out'>Sign up</Link>
+                            <Link to="/register" className='px-3 py-2 text-md rounded-full font-medium text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-150 ease-in-out'>Sign Up</Link>
                             <button onClick={toggleMenu} className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                                 <span className="sr-only">Open main menu</span>
                                 {!isMenuOpen ? (
