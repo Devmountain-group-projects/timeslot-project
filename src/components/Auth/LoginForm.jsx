@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SectionImg from '../../assets/images/sectionimg3.jpg'
 import { FaUserCheck } from "react-icons/fa";
 import { TbEye, TbEyeClosed } from "react-icons/tb";
 import { login } from '../../context/AuthContext';
+import { useDispatch } from 'react-redux';
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const dispatch = useDispatch()
+    const nav = useNavigate()
 
     // const { login } = AuthProvider()
     // const login = login()
@@ -24,10 +27,14 @@ const LoginForm = () => {
         e.preventDefault();
         if(email && password){
             login(email, password).then((res) => {
-                const { message, succeess } = res.data
-                if (succeess) {
+                const { message, success } = res.data
+                if (success) {
                     console.log("User Logged in")
                     console.log(message)
+                    dispatch({
+                        type: "USER_LOGIN"
+                    })
+                    nav("/dashboard")
                 } else {
                     console.log("Failed login")
                     console.log(message)
