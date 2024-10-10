@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import SectionImg from '../../assets/images/sectionimg3.jpg'
 import { FaUserCheck } from "react-icons/fa";
 import { TbEye, TbEyeClosed } from "react-icons/tb";
-import { AuthProvider, login } from '../../context/AuthContext';
+import { login } from '../../context/AuthContext';
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
