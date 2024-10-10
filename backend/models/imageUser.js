@@ -18,9 +18,9 @@ export const ImageUser = (sequelize, Sequelize) => {
                     key: 'image_id',
                 },
             },
-            is_primary: {
-                type: Sequelize.BOOLEAN,
-                defaultValue: false,
+            image_type: {
+                type: Sequelize.ENUM('user_profile', 'user_banner'),
+                allowNull: false, // Or true if you allow null types
             },
         },
         {}

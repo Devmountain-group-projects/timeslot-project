@@ -18,9 +18,9 @@ export const ImageBusiness = (sequelize, Sequelize) => {
                     key: 'image_id',
                 },
             },
-            is_primary: {
-                type: Sequelize.BOOLEAN,
-                defaultValue: false,
+            image_type: {
+                type: Sequelize.ENUM('business_profile', 'business_banner'),
+                allowNull: false,
             },
         },
         {}
