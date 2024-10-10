@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
 import Dashboard from './pages/Dashboard'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -47,21 +49,23 @@ const MainLayout = ({ children }) => {
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-      <Route path="/dashboard" element={<MainLayout><Dashboard /></MainLayout>} />
-      <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
-      <Route path="/features" element={<MainLayout><Features /></MainLayout>} />
-      <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />
-      <Route path="/why-us" element={<MainLayout><WhyUs /></MainLayout>} />
-      <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
-      <Route path="/about-this-project" element={<MainLayout><AboutThisProject /></MainLayout>} />
-      <Route path="/privacy-policy" element={<MainLayout><PrivacyPolicy /></MainLayout>} />
-      <Route path="/terms-and-conditions" element={<MainLayout><TermsAndConditions /></MainLayout>} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Provider store={store}>
+      <Routes>
+        <Route path="/" element={<MainLayout><Home /></MainLayout>} />
+        <Route path="/dashboard" element={<MainLayout><Dashboard /></MainLayout>} />
+        <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
+        <Route path="/features" element={<MainLayout><Features /></MainLayout>} />
+        <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />
+        <Route path="/why-us" element={<MainLayout><WhyUs /></MainLayout>} />
+        <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
+        <Route path="/about-this-project" element={<MainLayout><AboutThisProject /></MainLayout>} />
+        <Route path="/privacy-policy" element={<MainLayout><PrivacyPolicy /></MainLayout>} />
+        <Route path="/terms-and-conditions" element={<MainLayout><TermsAndConditions /></MainLayout>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Provider>
   )
 }
 

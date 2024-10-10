@@ -1,8 +1,13 @@
 import React from 'react'
+import BusinessDashboard from '../components/Dashboard/BusinessDashboard'
+import ClientDashboard from '../components/Dashboard/ClientDashboard'
 
 const Dashboard = () => {
     return (
-        <div>Dashboard</div>
+        <div>
+            <ClientDashboard />
+            <BusinessDashboard />
+        </div>
     )
 }
 
