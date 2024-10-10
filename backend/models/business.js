@@ -10,6 +10,10 @@ export const Business = (sequelize, Sequelize) => {
             user_id: {
                 type: Sequelize.INTEGER,
             },
+            availability_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
             business_name: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -57,35 +61,30 @@ export const Business = (sequelize, Sequelize) => {
     );
     // Relations
     business.associate = (models) => {
-        business.belongsToMany(models.user, {
-            foreignKey: "user_id",
+        // business.belongsToMany(models.appointment, {
+        //     foreignKey: 'business_id',
+        //     onDelete: "RESTRICT",
+        //     through: "appointment"
+        // });
+        business.belongsTo(models.availability, {
+            foreignKey: "availability_id",
             onDelete: "RESTRICT",
-            through: "user"
         });
-
-        business.belongsToMany(models.service, {
-            foreignKey: "business_id",
-            onDelete: "RESTRICT",
-            through: "service"
-        });
-
-        business.belongsToMany(models.availability, {
-            foreignKey: "business_id",
-            onDelete: "RESTRICT",
-            through: "availability"
-        });
-
         business.belongsToMany(models.image, {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
             through: "image_business"
         });
-
-        business.belongsToMany(models.appointment, {
-            foreignKey: 'business_id',
-            onDelete: "RESTRICT",
-            through: "appointment"
-        });
+        // business.belongsToMany(models.user, {
+        //     foreignKey: "user_id",
+        //     onDelete: "RESTRICT",
+        //     through: "user"
+        // });
+        // business.belongsToMany(models.service, {
+        //     foreignKey: "business_id",
+        //     onDelete: "RESTRICT",
+        //     through: "service"
+        // });
     };
 
     return business;

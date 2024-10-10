@@ -1,6 +1,5 @@
 const business = [
     {
-        user_id: 1, // Need Foreign Key
         business_name: "Business Name",
         description: "Business Description",
         address_line1: "Business Address",
@@ -11,6 +10,11 @@ const business = [
         email: "Business Email",
         phone: "Business Phone",
         website: "Business Website",
+        availability: {
+            day_of_week: "Monday",
+            start_time: "09:00",
+            end_time: "17:00",
+        },
         images: [
             {
                 src: "https://example.com/profile.jpg",
@@ -37,9 +41,9 @@ export const createBusiness = async function createBusiness(db) {
                 },
             };
         });
+
         await db.business
             .create({
-                    user_id: biz.user_id,
                     business_name: biz.business_name,
                     description: biz.description,
                     address_line1: biz.address_line1,
@@ -50,6 +54,11 @@ export const createBusiness = async function createBusiness(db) {
                     email: biz.email,
                     phone: biz.phone,
                     website: biz.website,
+                    availability: {
+                        day_of_week: biz.availability.day_of_week,
+                        start_time: biz.availability.start_time,
+                        end_time: biz.availability.end_time,
+                    },
                     images: images,
                 },
                 {
@@ -57,6 +66,10 @@ export const createBusiness = async function createBusiness(db) {
                         {
                             model: db.sequelize.models.image,
                             as: "images",
+                        },
+                        {
+                            model: db.sequelize.models.availability,
+                            as: "availability",
                         },
                     ],
                 }
