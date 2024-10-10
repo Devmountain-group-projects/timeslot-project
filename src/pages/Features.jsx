@@ -11,6 +11,7 @@ import CustomBranding from '../components/Features/CustomBranding'
 import AnalyticsPerfomance from '../components/Features/AnalyticsPerfomance'
 import SecurityProtection from '../components/Features/SecurityProtection'
 import SupportAndCustomerSuccess from '../components/Features/SupportAndCustomerSuccess'
+import Subscribe from '../components/Home/Subscribe'
 
 const Features = () => {
     return (
@@ -27,6 +28,7 @@ const Features = () => {
             <AnalyticsPerfomance />
             <SecurityProtection />
             <SupportAndCustomerSuccess />
+            <Subscribe />
         </div>
     )
 }
