@@ -50,7 +50,7 @@ export const createBusiness = async function createBusiness(db) {
                     email: biz.email,
                     phone: biz.phone,
                     website: biz.website,
-                images: photos,
+                    images: photos,
                 },
                 {
                     include: [
