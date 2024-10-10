@@ -34,14 +34,14 @@ app.use(
 import db from './models/db.js';
 import {createUsers} from './seeds/userSeed.js';
 import {createAppointments} from './seeds/appointmentSeed.js';
-import {createAvailability} from './seeds/availabilitySeed.js';
+// import {createAvailability} from './seeds/availabilitySeed.js';
 import {createBusiness} from './seeds/businessSeed.js';
-import {createNotification} from './seeds/notificationSeed.js';
+// import {createNotification} from './seeds/notificationSeed.js';
 // import { createPayment } from './seeds/paymentSeed.js';
 // import { createReview } from './seeds/reviewSeed.js';
-import {createService} from './seeds/serviceSeed.js';
-import {createRoles} from './seeds/roleSeed.js';
-import {createPermissions} from './seeds/permissionSeed.js';
+// import {createService} from './seeds/serviceSeed.js';
+// import {createRoles} from './seeds/roleSeed.js';
+// import {createPermissions} from './seeds/permissionSeed.js';
 
 db.sequelize.sync({force: true}).then(async function () {
     console.log("Database successfully created");
@@ -52,30 +52,30 @@ db.sequelize.sync({force: true}).then(async function () {
         await createAppointments(db).then(() =>
             console.log("Appointments successfully created"),
         );
-        await createAvailability(db).then(() =>
-            console.log("Businesses successfully created"),
-        );
+        // await createAvailability(db).then(() =>
+        //     console.log("Businesses successfully created"),
+        // );
         await createBusiness(db).then(() =>
             console.log("Contacts successfully created"),
         );
-        await createNotification(db).then(() =>
-            console.log("Notifications successfully created"),
-        );
+        // await createNotification(db).then(() =>
+        //     console.log("Notifications successfully created"),
+        // );
         // await createPayment(db).then(() =>
         //     console.log("Payments successfully created"),
         // );
         // await createReview(db).then(() =>
         //     console.log("Reviews successfully created"),
         // );
-        await createService(db).then(() =>
-            console.log("Services successfully created"),
-        );
-        await createPermissions(db).then(() =>
-            console.log("Permissions successfully created"),
-        );
-        await createRoles(db).then(() =>
-            console.log("Roles successfully created"),
-        );
+        // await createService(db).then(() =>
+        //     console.log("Services successfully created"),
+        // );
+        // await createPermissions(db).then(() =>
+        //     console.log("Permissions successfully created"),
+        // );
+        // await createRoles(db).then(() =>
+        //     console.log("Roles successfully created"),
+        // );
     } catch (err) {
         console.error("Error during seeding:", err);
     }
