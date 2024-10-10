@@ -8,7 +8,7 @@ const users = [
         role: "test",
         password_hash: "test",
         profile_picture: "test",
-        photos: [
+        images: [
             {
                 src: "https://example.com/profile.jpg",
                 image_type: 'user_profile',
@@ -28,13 +28,13 @@ export const createUsers = async function createUsers(db) {
             bcryptjs.genSaltSync(10),
         );
 
-        const profile_photos = user.photos;
+        const profile_photos = user.images;
 
-        let photos = profile_photos.map((photo) => {
+        let images = profile_photos.map((image) => {
             return {
-                src: photo.src,
-                profile_image: {
-                    image_type: photo.image_type,
+                src: image.src,
+                image_user: {
+                    image_type: image.image_type,
                 },
             };
         });
@@ -47,7 +47,7 @@ export const createUsers = async function createUsers(db) {
                     role: user.role,
                     password_hash: hashedPassword,
                     profile_picture: user.profile_picture,
-                    images: photos,
+                    images: images,
                 },
                 {
                     include: [
