@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SectionImg from '../../assets/images/sectionimg3.jpg'
 import { FaUserCheck } from "react-icons/fa";
 import { TbEye, TbEyeClosed } from "react-icons/tb";
+import { AuthProvider, login } from '../../context/AuthContext';
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -11,13 +12,30 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    // const { login } = AuthProvider()
+    // const login = login()
+    // console.log("This is Login", login("test@test.com", "password123"))
+
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (email === 'rodrigomcobos@test.com' && password === 'password123') {
+        if(email && password){
+            login(email, password).then((res) => {
+                const { message, succeess } = res.data
+                if (succeess) {
+                    console.log("User Logged in")
+                    console.log(message)
+                } else {
+                    console.log("Failed login")
+                    console.log(message)
+                }
+            })
+        }
+        // See if The log in was a success
+        if (email === 'test@test.com' && password === 'test') {
             console.log('Login successful');
             setError('');
             // Here you would typically handle the successful login,
