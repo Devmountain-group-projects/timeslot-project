@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import SoftwareIntegrationImg from '../../assets/images/softwareintegrationimg.jpg'
+import CalendarIntegrationImg from '../../assets/images/calendarintegrationimg.jpg'
 import GoogleCalendarLogo from '../../assets/images/googlecalendarlogo.jpg'
 import OutlookCalendarLogo from '../../assets/images/outlookcalendarlogo.png'
 
@@ -18,7 +18,7 @@ const CalendarManagement = () => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                        <img src={SoftwareIntegrationImg} alt="Software integration" className="object-contain w-full h-full" />
+                        <img src={CalendarIntegrationImg} alt="Software integration" className="object-contain w-full h-full" />
                     </motion.div>
                     <motion.div
                         className="text-left"
