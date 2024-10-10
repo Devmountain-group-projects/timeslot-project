@@ -11,7 +11,7 @@ const business = [
         email: "Business Email",
         phone: "Business Phone",
         website: "Business Website",
-        photos: [
+        images: [
             {
                 src: "https://example.com/profile.jpg",
                 image_type: 'business_profile',
@@ -27,13 +27,13 @@ const business = [
 export const createBusiness = async function createBusiness(db) {
     for (const biz of business) {
 
-        const profile_photos = biz.photos;
+        const profile_photos = biz.images;
 
-        let photos = profile_photos.map((photo) => {
+        let images = profile_photos.map((image) => {
             return {
-                src: photo.src,
-                profile_image: {
-                    image_type: photo.image_type,
+                src: image.src,
+                image_business: {
+                    image_type: image.image_type,
                 },
             };
         });
@@ -50,7 +50,7 @@ export const createBusiness = async function createBusiness(db) {
                     email: biz.email,
                     phone: biz.phone,
                     website: biz.website,
-                    images: photos,
+                    images: images,
                 },
                 {
                     include: [
@@ -63,3 +63,4 @@ export const createBusiness = async function createBusiness(db) {
             );
     }
 };
+
