@@ -70,7 +70,7 @@ const PricingSection = () => {
                         className="text-center"
                     >
                         <h2 className="sm:text-4xl text-2xl font-bold mb-2 text-gray-800">Choose a Subscription<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
-                        <p className="text-base text-gray-500">choose a plan tailored to your needs</p>
+                        <p className="text-base text-gray-800">choose a plan tailored to your needs</p>
                     </motion.div>
 
                     <motion.div
@@ -82,7 +82,7 @@ const PricingSection = () => {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className={`w-full text-base py-2 px-4 tracking-wide rounded-full ${!isYearly ? 'bg-primary text-white' : 'bg-transparent text-gray-800'}`}
+                            className={`w-full text-base py-2 px-4 tracking-wide rounded-full ${!isYearly ? 'bg-secondary text-white' : 'bg-transparent text-gray-800'}`}
                             onClick={() => setIsYearly(false)}
                         >
                             Monthly
@@ -90,7 +90,7 @@ const PricingSection = () => {
                         <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className={`w-full text-base py-2 px-4 tracking-wide rounded-full ${isYearly ? 'bg-primary text-white' : 'bg-transparent text-gray-800'}`}
+                            className={`w-full text-base py-2 px-4 tracking-wide rounded-full ${isYearly ? 'bg-secondary text-white' : 'bg-transparent text-gray-800'}`}
                             onClick={() => setIsYearly(true)}
                         >
                             Yearly
@@ -110,10 +110,10 @@ const PricingSection = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.1 * index + 0.4 }}
                                 whileHover={{ scale: 1.05 }}
-                                className="bg-white shadow rounded-3xl p-10 hover:ring-2 ring-primary transition-all duration-300 flex flex-col h-full"
+                                className="bg-white shadow-lg rounded-3xl p-10 hover:ring-2 ring-primary transition-all duration-300 flex flex-col h-full"
                             >
                                 <div className="flex-grow">
-                                    <h4 className="text-gray-800 text-lg mb-3">{plan.name}</h4>
+                                    <p className="text-gray-950 text-lg mb-3">{plan.name}</p>
                                     <div className="flex justify-between items-center">
                                         <div className="flex items-baseline">
                                             <AnimatePresence>
@@ -123,7 +123,7 @@ const PricingSection = () => {
                                                     animate={{ opacity: 1, y: 0 }}
                                                     exit={{ opacity: 0, y: 20 }}
                                                     transition={{ duration: 0.2 }}
-                                                    className="text-4xl font-semibold"
+                                                    className="text-4xl font-bold"
                                                 >
                                                     ${isYearly ? plan.yearlyPrice.toFixed(2) : plan.monthlyPrice.toFixed(2)}
                                                 </motion.span>

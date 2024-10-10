@@ -13,7 +13,7 @@ const Hero = () => {
                         initial={{ opacity: 0, y: -50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="text-white lg:text-6xl md:text-5xl text-3xl font-extrabold lg:!leading-[64px] md:max-w-4xl"
+                        className="text-white lg:text-6xl md:text-5xl text-3xl font-extrabold md:max-w-4xl"
                     >
                         Streamline Your Appointments with Ease
                     </motion.h2>
@@ -66,7 +66,7 @@ const Hero = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
                         >
-                            <img src={PlaceholderImg} className="w-full h-full rounded-lg object-contain" />
+                            <img src={PlaceholderImg} alt="picture of the online booking appointment software" className="w-full h-full rounded-lg object-contain" />
                         </motion.div>
                     </div>
                 </div>

@@ -10,12 +10,12 @@ const Footer = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-14 py-8">
                     <div>
                         <img src={Logo} alt="Timeline Slot Logo" className="h-16 mb-12" /> {/* Added logo here */}
-                        <h4 className="text-lg font-semibold mb-6 text-white">About Us</h4>
+                        <h2 className="text-lg font-semibold mb-6 text-white">About Us</h2>
                         <p className="text-white text-base">Timeline Slot is an online appointment booking system designed to help businesses and clients streamline scheduling.</p>
                     </div>
 
                     <section>
-                        <h4 className="text-lg font-semibold mb-6 text-white">Quick Links</h4>
+                        <h2 className="text-lg font-semibold mb-6 text-white">Quick Links</h2>
                         <ul className="space-y-4">
                             <li><Link to="/features" className="text-white hover:text-secondary text-base">Features</Link></li>
                             <li><Link to="/pricing" className="text-white hover:text-secondary text-base">Pricing</Link></li>
@@ -29,7 +29,7 @@ const Footer = () => {
 
                     <section>
                         <div className="space-y-4 mb-8">
-                            <h4 className="text-lg font-semibold mb-6 text-white">Contact Us</h4>
+                            <h2 className="text-lg font-semibold mb-6 text-white">Contact Us</h2>
                             <p className="text-white text-base">1550 Digital Dr #400</p>
                             <p className="text-white text-base">Lehi, UT 84043</p>
                             <p className="text-white text-base">contact@example.com</p>
@@ -37,17 +37,35 @@ const Footer = () => {
                         </div>
 
                         <div>
-                            <h4 className="text-lg font-semibold mb-6 text-white">Follow Us</h4>
+                            <h2 className="text-lg font-semibold mb-6 text-white">Follow Us</h2>
                             <ul className="flex flex-wrap gap-x-5 gap-4">
-                                <li><a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-xl">
-                                    <FaLinkedinIn className="inline w-6 h-6 text-white hover:text-secondary transition-colors duration-300" />
-                                </a></li>
-                                <li><a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="text-xl">
-                                    <FaFacebookF className="inline w-6 h-6 text-white hover:text-secondary transition-colors duration-300" />
-                                </a></li>
-                                <li><a href="https://www.github.com" target="_blank" rel="noopener noreferrer" className="text-xl">
-                                    <FaGithub className="inline w-6 h-6 text-white hover:text-secondary transition-colors duration-300" />
-                                </a></li>
+                                <li>
+                                    <a href="https://www.linkedin.com"
+                                        target="_blank"
+                                        aria-label="Visit our LinkedIn page"
+                                        rel="noopener noreferrer"
+                                        className="text-xl">
+                                        <FaLinkedinIn className="inline w-6 h-6 text-white hover:text-secondary transition-colors duration-300" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.facebook.com"
+                                        target="_blank"
+                                        aria-label="Visit our Facebook page"
+                                        rel="noopener noreferrer"
+                                        className="text-xl">
+                                        <FaFacebookF className="inline w-6 h-6 text-white hover:text-secondary transition-colors duration-300" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.github.com"
+                                        target="_blank"
+                                        aria-label="Visit our GitHub repository"
+                                        rel="noopener noreferrer"
+                                        className="text-xl">
+                                        <FaGithub className="inline w-6 h-6 text-white hover:text-secondary transition-colors duration-300" />
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </section>

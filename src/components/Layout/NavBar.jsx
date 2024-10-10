@@ -28,7 +28,7 @@ const NavBar = forwardRef((props, ref) => {
     };
 
     const linkClass = (isActive) => `
-        ${isActive ? 'text-primary border-b-2 border-primary' : 'text-gray-500'}
+        ${isActive ? 'text-secondary border-b-2 border-secondary' : 'text-gray-500'}
         hover:text-primary px-4 py-2 text-base transition duration-150 ease-in-out
     `
 

@@ -25,7 +25,7 @@ const Subscribe = () => {
                         transition={{ duration: 0.5, delay: 0.4 }}
                         className="mt-8"
                     >
-                        <p className="text-base text-gray-500 leading-relaxed">Join our community to receive the latest news, tips, and exclusive offers straight to your inbox. Whether you're a service provider looking to streamline your bookings or a client seeking seamless appointment management, we've got you covered!</p>
+                        <p className="text-base text-gray-950 leading-relaxed">Join our community to receive the latest news, tips, and exclusive offers straight to your inbox. Whether you're a service provider looking to streamline your bookings or a client seeking seamless appointment management, we've got you covered!</p>
                     </motion.div>
 
                     <motion.div

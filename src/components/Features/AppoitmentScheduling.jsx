@@ -59,7 +59,7 @@ const FeatureSection = ({ title, description, image, blurhash }) => {
             transition={{ duration: 0.5 }}
         >
             <motion.div
-                className="w-72 h-w-72 mb-4 rounded-full overflow-hidden"
+                className="w-72 h-w-72 mb-4 overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
             >
@@ -106,10 +106,10 @@ const FeatureSection = ({ title, description, image, blurhash }) => {
 const AppoitmentScheduling = () => {
     return (
         <div>
-            <div className="px-6 my-24">
+            <div className="my-24">
                 <div className="max-width mx-auto">
                     <motion.div
-                        className="grid md:grid-cols-2 gap-6"
+                        className="grid md:grid-cols-2 gap-6 px-6 py-12 sm:py-24"
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
@@ -146,7 +146,7 @@ const AppoitmentScheduling = () => {
                     </motion.div>
 
                     <motion.div
-                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-16 p-6"
+                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-16 px-6 "
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8, duration: 0.5 }}

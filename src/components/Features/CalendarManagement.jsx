@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import CalendarIntegrationImg from '../../assets/images/calendarintegrationimg.jpg'
 import GoogleCalendarLogo from '../../assets/images/googlecalendarlogo.jpg'
 import OutlookCalendarLogo from '../../assets/images/outlookcalendarlogo.png'
+import { FaCheckCircle } from "react-icons/fa";
 
 const CalendarManagement = () => {
     return (
@@ -11,7 +12,7 @@ const CalendarManagement = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
         >
-            <div className="px-6 py-12">
+            <div className="px-6 py-24">
                 <div className="grid lg:grid-cols-2 gap-12 max-width mx-auto">
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -44,16 +45,36 @@ const CalendarManagement = () => {
                             For even greater convenience, Timeline Slot integrates with external calendars like Google Calendar and Outlook, allowing you to sync your appointments automatically. Stay on top of your schedule across all platforms, ensuring you never miss a booking, and enjoy the flexibility of managing your calendar from anywhere.
                         </motion.p>
                         <motion.ul
-                            className='list-disc mt-8 pl-6'
+                            className='mt-8'
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 1 }}
                         >
-                            <li className="mb-4 text-sm text-gray-500">Real-time updates for appointment changes.</li>
-                            <li className="mb-4 text-sm text-gray-500">Drag-and-drop rescheduling for quick modifications.</li>
-                            <li className="mb-4 text-sm text-gray-500">Calendar views (daily, weekly, monthly) to provide a clear overview of your schedule.</li>
-                            <li className="mb-4 text-sm text-gray-500">Integration with Google Calendar and Outlook for automatic syncing.</li>
-                            <li className="mb-4 text-sm text-gray-500">Multi-location and team calendar management (if applicable).</li>
+                            <li className="mb-4 text-sm text-gray-500">
+                                <FaCheckCircle className="inline-block text-primary mr-2" />
+                                Real-time updates for appointment changes.
+
+                            </li>
+                            <li className="mb-4 text-sm text-gray-500">
+                                <FaCheckCircle className="inline-block text-primary mr-2" />
+                                Drag-and-drop rescheduling for quick modifications.
+
+                            </li>
+                            <li className="mb-4 text-sm text-gray-500">
+                                <FaCheckCircle className="inline-block text-primary mr-2" />
+                                Calendar views (daily, weekly, monthly) to provide a clear overview of your schedule.
+
+                            </li>
+                            <li className="mb-4 text-sm text-gray-500">
+                                <FaCheckCircle className="inline-block text-primary mr-2" />
+                                Integration with Google Calendar and Outlook for automatic syncing.
+
+                            </li>
+                            <li className="mb-4 text-sm text-gray-500">
+                                <FaCheckCircle className="inline-block text-primary mr-2" />
+                                Multi-location and team calendar management (if applicable).
+
+                            </li>
                         </motion.ul>
                         <motion.p
                             className="mb-4 text-md font-bold mt-14 text-gray-500"
@@ -69,8 +90,8 @@ const CalendarManagement = () => {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 1.4 }}
                         >
-                            <img src={GoogleCalendarLogo} alt="Google Calendar logo" className="h-20 w-auto object-contain" />
-                            <img src={OutlookCalendarLogo} alt="Outlook Calendar logo" className="h-20 w-auto object-contain" />
+                            <img src={GoogleCalendarLogo} alt="Google Calendar logo" className="h-12 md:h-16 sm:h-20 w-auto object-contain" />
+                            <img src={OutlookCalendarLogo} alt="Outlook Calendar logo" className="h-12 md:h-16 sm:h-20 w-auto object-contain" />
                         </motion.div>
                     </motion.div>
                 </div>
