@@ -18,7 +18,7 @@ const Intro = () => {
                         transition={{ duration: 0.5 }}
                     >
                         <motion.h2
-                            className="text-gray-800 md:text-5xl text-3xl font-extrabold mb-4 md:!leading-[55px]"
+                            className="title-text"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.2, duration: 0.5 }}
