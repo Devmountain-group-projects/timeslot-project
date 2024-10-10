@@ -63,3 +63,4 @@ export const createBusiness = async function createBusiness(db) {
             );
     }
 };
+
