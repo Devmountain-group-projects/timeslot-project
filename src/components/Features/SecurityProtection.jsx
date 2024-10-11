@@ -38,12 +38,12 @@ const SecurityProtection = () => {
                             With Timeline Slot, your data is in safe hands. We continuously monitor and update our systems to meet the highest security standards, allowing you to manage your business confidently without worrying about your information being compromised.
                         </motion.p>
                         <motion.div
-                            className='mt-8'
+                            className='mt-8 ml-8'
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 1 }}
                         >
-                            <h3 className="font-bold text-lg mb-4">Key Security Features:</h3>
+                            <h3 className="font-bold text-lg mb-4 text-secondary">Key Security Features:</h3>
                             <div className="space-y-4">
                                 <div>
                                     <h4 className="font-semibold mb-2 flex items-center">
