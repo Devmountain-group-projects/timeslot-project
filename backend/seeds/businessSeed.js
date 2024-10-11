@@ -11,7 +11,7 @@ const business = [
         phone: "Business Phone",
         website: "Business Website",
         availability: {
-            day_of_week: "Monday",
+            day_of_week: "tues",
             start_time: "09:00",
             end_time: "17:00",
         },
