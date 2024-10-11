@@ -7,13 +7,6 @@ export const Business = (sequelize, Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            user_id: {
-                type: Sequelize.INTEGER,
-            },
-            availability_id: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-            },
             business_name: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -59,36 +52,27 @@ export const Business = (sequelize, Sequelize) => {
             timestamps: true,
         }
     );
+
     // Relations
     business.associate = (models) => {
-        // business.belongsToMany(models.appointment, {
-        //     foreignKey: 'business_id',
-        //     onDelete: "RESTRICT",
-        //     through: "appointment"
-        // });
-        business.belongsTo(models.availability, {
-            foreignKey: "availability_id",
+        business.hasMany(models.availability, {
+            foreignKey: "business_id",
             onDelete: "RESTRICT",
         });
+
         business.belongsToMany(models.image, {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
             through: "image_business"
         });
+
         business.belongsToMany(models.user, {
             foreignKey: "user_id",
             onDelete: "RESTRICT",
             through: "user_business",
             as: "business"
         });
-        // business.belongsToMany(models.service, {
-        //     foreignKey: "business_id",
-        //     onDelete: "RESTRICT",
-        //     through: "service"
-        // });
     };
 
     return business;
 };
-
-

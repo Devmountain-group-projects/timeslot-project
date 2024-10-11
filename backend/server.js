@@ -52,12 +52,6 @@ db.sequelize.sync({force: true}).then(async function () {
         // await createAppointments(db).then(() =>
         //     console.log("Appointments successfully created"),
         // );
-        // await createAvailability(db).then(() =>
-        //     console.log("Businesses successfully created"),
-        // );
-        // await createBusiness(db).then(() =>
-        //     console.log("Business successfully created"),
-        // );
         // await createNotification(db).then(() =>
         //     console.log("Notifications successfully created"),
         // );
