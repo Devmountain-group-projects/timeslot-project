@@ -62,7 +62,7 @@ const Intro = () => {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1, duration: 0.5 }}
                         >
-                            <h4 className="text-gray-800 font-bold text-base mb-10">Trusted by Teams & Businesses Nationwide</h4>
+                            <h2 className="text-gray-800 font-bold text-base mb-10">Trusted by Teams & Businesses Nationwide</h2>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
                                 {[Google, Hubspot, Zapier, Devmountain].map((logo, index) => (
                                     <motion.img

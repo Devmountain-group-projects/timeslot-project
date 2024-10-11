@@ -29,7 +29,7 @@ const CalendarManagement = () => {
                     >
                         <h2 className="title-text mb-6">Stay Organized with Advanced Calendar Management<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
                         <motion.p
-                            className="mb-4 text-sm text-gray-500"
+                            className="mb-4 text-sm text-gray-700"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.6 }}
@@ -37,7 +37,7 @@ const CalendarManagement = () => {
                             Easily manage your schedule with Timeline Slot's powerful calendar management tools. View and update your appointments in real-time, reschedule with drag-and-drop functionality, and set your availability for each day. Whether you're managing multiple team members or just your own appointments, our intuitive interface makes it simple to keep everything on track.
                         </motion.p>
                         <motion.p
-                            className="mb-4 text-sm text-gray-500"
+                            className="mb-4 text-sm text-gray-700"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.8 }}
@@ -50,34 +50,34 @@ const CalendarManagement = () => {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 1 }}
                         >
-                            <li className="mb-4 text-sm text-gray-500">
+                            <li className="mb-4 text-sm text-gray-700">
                                 <FaCheckCircle className="inline-block text-primary mr-2" />
                                 Real-time updates for appointment changes.
 
                             </li>
-                            <li className="mb-4 text-sm text-gray-500">
+                            <li className="mb-4 text-sm text-gray-700">
                                 <FaCheckCircle className="inline-block text-primary mr-2" />
                                 Drag-and-drop rescheduling for quick modifications.
 
                             </li>
-                            <li className="mb-4 text-sm text-gray-500">
+                            <li className="mb-4 text-sm text-gray-700">
                                 <FaCheckCircle className="inline-block text-primary mr-2" />
                                 Calendar views (daily, weekly, monthly) to provide a clear overview of your schedule.
 
                             </li>
-                            <li className="mb-4 text-sm text-gray-500">
+                            <li className="mb-4 text-sm text-gray-700">
                                 <FaCheckCircle className="inline-block text-primary mr-2" />
                                 Integration with Google Calendar and Outlook for automatic syncing.
 
                             </li>
-                            <li className="mb-4 text-sm text-gray-500">
+                            <li className="mb-4 text-sm text-gray-700">
                                 <FaCheckCircle className="inline-block text-primary mr-2" />
                                 Multi-location and team calendar management (if applicable).
 
                             </li>
                         </motion.ul>
                         <motion.p
-                            className="mb-4 text-md font-bold mt-14 text-gray-500"
+                            className="mb-4 text-lg font-bold mt-14 text-secondary"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 1.2 }}

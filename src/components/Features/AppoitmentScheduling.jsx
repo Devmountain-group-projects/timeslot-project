@@ -83,7 +83,7 @@ const FeatureSection = ({ title, description, image, blurhash }) => {
             </motion.div>
             <div className="text-center">
                 <motion.h3
-                    className="text-lg font-bold text-gray-600 mb-2"
+                    className="text-xl font-bold text-secondary mb-2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
@@ -91,7 +91,7 @@ const FeatureSection = ({ title, description, image, blurhash }) => {
                     {title}
                 </motion.h3>
                 <motion.p
-                    className="text-gray-500 text-sm"
+                    className="text-gray-700 text-sm w-5/6 mx-auto"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
@@ -116,7 +116,7 @@ const AppoitmentScheduling = () => {
                     >
                         <div>
                             <motion.h2
-                                className="title-text mb-3 mr-0 sm:mr-10"
+                                className="title-text mr-0 sm:mr-10"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
@@ -146,7 +146,7 @@ const AppoitmentScheduling = () => {
                     </motion.div>
 
                     <motion.div
-                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 mt-16 px-6 "
+                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 px-6 "
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8, duration: 0.5 }}
