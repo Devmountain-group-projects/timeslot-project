@@ -144,9 +144,6 @@ export const createUsers = async function createUsers(db) {
                     user_id: createdUser.user_id,
                     business_id: createdBusiness.business_id,
                 },
-                defaults: {
-                    availability_id: createdAvailability.availability_id, // Add availability_id if needed
-                },
             });
         }
     }
