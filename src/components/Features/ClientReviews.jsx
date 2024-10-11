@@ -43,8 +43,11 @@ const ClientReviews = () => {
                     >
                         <div>
                             <h2 className="title-text">Collect Valuable Client Feedback with Reviews<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
-                            <p className="text-base text-gray-800 leading-relaxed mt-6">
+                            <p className="text-sm sm:text-base text-gray-800 leading-relaxed mt-6">
                                 Empower your clients to share their experiences with your business by enabling them to leave reviews after their appointments. Client reviews not only help you improve your services but also build trust and credibility for new customers considering your offerings.
+                            </p>
+                            <p className="text-sm sm:text-base text-gray-800 leading-relaxed mt-6">
+                                With Timeline Slot, managing client reviews is simple. After each appointment, clients can leave feedback directly through the platform. Businesses can easily review and respond to comments, making it a powerful tool for building long-term relationships with customers.
                             </p>
                         </div>
 
@@ -58,7 +61,7 @@ const ClientReviews = () => {
                                     transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                                 >
                                     <h3 className="text-lg font-semibold text-secondary mb-2">{feature.title}</h3>
-                                    <p className="text-base text-gray-600">{feature.description}</p>
+                                    <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
                                 </motion.div>
                             ))}
                         </div>

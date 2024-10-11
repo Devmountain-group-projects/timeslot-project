@@ -58,7 +58,7 @@ const PowerfulFeatures = () => {
                                 Powerful Features to Simplify Your Business Operations
                                 <span className='text-primary text-3xl sm:text-5xl'>.</span>
                             </h2>
-                            <p className="text-gray-800 mt-6 text-base leading-relaxed">
+                            <p className="text-gray-800 mt-6 text-sm sm:text-base leading-relaxed">
                                 Timeline Slot offers a suite of integrated features designed to make managing your business easier than ever. From automated notifications that keep clients informed, to detailed service listings, secure payments, and multi-user access, our platform provides everything you need to run your business smoothly and efficiently.
                             </p>
                         </motion.div>
@@ -69,7 +69,7 @@ const PowerfulFeatures = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
                         >
-                            <img src={AppointmentImg} className="w-full h-full object-cover rounded-lg" alt="a dog at a vet" />
+                            <img src={AppointmentImg} className="w-full h-full object-cover rounded-lg mb-8 sm:mb-0" alt="a dog at a vet" />
                         </motion.div>
                     </div>
 

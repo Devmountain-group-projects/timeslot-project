@@ -127,7 +127,7 @@ const AppoitmentScheduling = () => {
                         </div>
                         <div>
                             <motion.p
-                                className="mb-3 text-base text-gray-600"
+                                className="mb-3 text-sm sm:text-base text-gray-600"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -135,7 +135,7 @@ const AppoitmentScheduling = () => {
                                 Scheduling appointments has never been easier for your business or clients. With our seamless, user-friendly system, businesses can manage their availability in real-time, reducing scheduling conflicts and keeping operations running smoothly. Clients can quickly find available time slots and book appointments without any back-and-forth communication.
                             </motion.p>
                             <motion.p
-                                className="text-base text-gray-600"
+                                className="text-sm sm:text-base text-gray-600"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.6, duration: 0.5 }}

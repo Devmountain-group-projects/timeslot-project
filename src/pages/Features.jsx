@@ -17,7 +17,7 @@ const Features = () => {
             <CalendarManagement />
             <PowerfulFeatures />
             <ClientReviews />
-            <CustomBranding />
+            {/* <CustomBranding /> */}
             <SecurityProtection />
             <SupportAndCustomerSuccess />
             <Subscribe />

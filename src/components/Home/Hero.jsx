@@ -6,16 +6,16 @@ import OutlookImg from '../../assets/images/outlook.png'
 
 const Hero = () => {
     return (
-        <div className="px-4 sm:px-6 lg:px-6 pb-12">
+        <div className="px-4 sm:px-6 lg:px-6 pb-12 mt-4 sm:mt-8">
             <div className="max-width mx-auto">
-                <div className="font-sans bg-gradient-to-b from-secondary via-blue-400 to-blue-100 rounded-3xl overflow-hidden">
-                    <div className="py-24 px-6 sm:px-12">
+                <div className="bg-gradient-to-b from-secondary via-blue-400 to-blue-100 rounded-3xl overflow-hidden">
+                    <div className="py-12 sm:py-24 px-6 sm:px-12">
                         <div className="max-md:text-center">
                             <motion.h2
                                 initial={{ opacity: 0, y: -50 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5 }}
-                                className="text-white lg:text-6xl md:text-5xl text-3xl font-extrabold md:max-w-4xl"
+                                className="text-white lg:text-6xl md:text-5xl text-4xl font-extrabold md:max-w-4xl"
                             >
                                 Streamline Your Appointments with Ease
                             </motion.h2>
@@ -23,7 +23,7 @@ const Hero = () => {
                                 initial={{ opacity: 0, y: -30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.2 }}
-                                className="text-white text-xl mt-6 mb-8 uppercase font-bold"
+                                className="text-white text-base sm:text-xl mt-6 mb-8 uppercase font-bold"
                             >
                                 The ultimate solution for scheduling, managing, and growing your service-based business.
                             </motion.p>
@@ -33,7 +33,7 @@ const Hero = () => {
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.5, delay: 0.4 }}
                                 >
-                                    <p className="text-white text-base leading-relaxed">Book, track, and manage appointments in real time. Whether you're a client or a provider, Timeline Slot simplifies your scheduling process—all in one platform.</p>
+                                    <p className="text-white text-sm sm:text-base leading-relaxed">Book, track, and manage appointments in real time. Whether you're a client or a provider, Timeline Slot simplifies your scheduling process—all in one platform.</p>
                                     <div className="mt-12 flex gap-4 items-center flex-wrap max-md:justify-center">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}

@@ -5,7 +5,7 @@ const Subscribe = () => {
     return (
         <div className="bg-white py-6 px-6">
             <div className="max-width mx-auto">
-                <div className="bg-gradient-gray rounded-3xl p-20">
+                <div className="bg-gradient-gray rounded-3xl p-8 sm:p-20">
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -26,7 +26,7 @@ const Subscribe = () => {
                             transition={{ duration: 0.5, delay: 0.4 }}
                             className="mt-8"
                         >
-                            <p className="text-base text-gray-950 leading-relaxed">Join our community to receive the latest news, tips, and exclusive offers straight to your inbox. Whether you're a service provider looking to streamline your bookings or a client seeking seamless appointment management, we've got you covered!</p>
+                            <p className="text-sm sm:text-base text-gray-950 leading-relaxed">Join our community to receive the latest news, tips, and exclusive offers straight to your inbox. Whether you're a service provider looking to streamline your bookings or a client seeking seamless appointment management, we've got you covered!</p>
                         </motion.div>
 
                         <motion.div

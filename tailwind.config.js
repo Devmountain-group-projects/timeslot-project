@@ -30,7 +30,7 @@ export default {
           '@apply bg-[#f5f5f5]': {},
         },
         '.title-text': {
-          '@apply text-gray-800 sm:text-4xl text-2xl font-extrabold mb-10': {},
+          '@apply text-gray-800 sm:text-3xl text-2xl font-extrabold mb-10': {},
         },
         '.max-width': {
           '@apply max-w-[1800px]': {},

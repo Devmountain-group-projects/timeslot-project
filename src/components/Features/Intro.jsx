@@ -10,7 +10,7 @@ import Devmountain from '../../assets/images/devmountain.png'
 const Intro = () => {
     return (
         <div className="w-full">
-            <div className="max-width mx-auto px-6">
+            <div className="max-width mx-auto px-6 mt-4 sm:mt-8">
                 <div className="bg-gradient-gray rounded-3xl p-6">
                     <div className="grid md:grid-cols-2 items-center gap-12">
                         <motion.div
@@ -28,7 +28,7 @@ const Intro = () => {
                                 Schedule meetings effortlessly<span className='text-primary text-3xl sm:text-5xl'>.</span>
                             </motion.h2>
                             <motion.p
-                                className="mt-4 text-base text-gray-600 leading-relaxed"
+                                className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.4, duration: 0.5 }}
@@ -66,13 +66,13 @@ const Intro = () => {
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1, duration: 0.5 }}
                             >
-                                <h2 className="text-gray-800 font-bold text-xl mb-10">Trusted by Teams & Businesses Nationwide</h2>
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                                <h2 className="text-gray-800 font-bold text-base sm:text-xl mb-10">Trusted by Teams & Businesses Nationwide</h2>
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center mb-8 sm:mb-0">
                                     {[Google, Hubspot, Zapier, Devmountain].map((logo, index) => (
                                         <motion.img
                                             key={index}
                                             src={logo}
-                                            className="w-28 mx-auto"
+                                            className="w-20 sm:w-28 mx-auto"
                                             alt={`logo-${index}`}
                                             initial={{ opacity: 0, y: 20 }}
                                             animate={{ opacity: 1, y: 0 }}
