@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import ClientRegister from '../components/Auth/ClientRegister'
 import Role from '../components/Auth/Role'
 import BusinessRegister from '../components/Auth/BusinessRegister'
@@ -11,6 +12,7 @@ const Register = () => {
     const [userType, setUserType] = useState(null)
     const [form, setForm] = useState(null)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleClientRegister = (formData) => {
         setForm(formData)
@@ -28,9 +30,15 @@ const Register = () => {
                 if (success) {
                     console.log("Registered")
                     console.log(message)
+                    dispatch({
+                        type: "USER_LOGIN"
+                    })
+                    navigate('/dashboard') // Assuming you have a dashboard route
+                } else {
+                    throw new Error("Failed to Register")
                 }
             })
-            navigate('/dashboard') // Assuming you have a dashboard route
+            
         } else {
             setStep(3) // Move to Business Registration
         }
