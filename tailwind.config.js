@@ -27,7 +27,7 @@ export default {
             {},
         },
         '.bg-gradient-gray': {
-          '@apply bg-[#f5f5f5]': {},
+          '@apply bg-[#ededed]': {},
         },
         '.title-text': {
           '@apply text-gray-800 sm:text-3xl text-2xl font-extrabold mb-10': {},

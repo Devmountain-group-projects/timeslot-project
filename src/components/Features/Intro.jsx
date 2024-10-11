@@ -19,14 +19,14 @@ const Intro = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5 }}
                         >
-                            <motion.h2
-                                className="title-text"
+                            <motion.h1
+                                className="title-text  text-3xl sm:text-5xl"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
                             >
                                 Schedule meetings effortlessly<span className='text-primary text-3xl sm:text-5xl'>.</span>
-                            </motion.h2>
+                            </motion.h1>
                             <motion.p
                                 className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed"
                                 initial={{ opacity: 0 }}
