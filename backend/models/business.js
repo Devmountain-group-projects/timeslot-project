@@ -89,3 +89,5 @@ export const Business = (sequelize, Sequelize) => {
 
     return business;
 };
+
+

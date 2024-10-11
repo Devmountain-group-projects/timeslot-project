@@ -65,3 +65,5 @@ export const User = (sequelize, Sequelize) => {
 
     return user;
 };
+
+
