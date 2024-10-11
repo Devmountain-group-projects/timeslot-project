@@ -12,7 +12,7 @@ export const Business = (sequelize, Sequelize) => {
             },
             availability_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             business_name: {
                 type: Sequelize.STRING,
