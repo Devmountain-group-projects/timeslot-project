@@ -26,6 +26,13 @@ import { Notification } from "./notification.js";
 // import { Payment } from "./payment.js";
 // import { Review } from "./review.js";
 import { Service } from "./service.js";
+import { Image } from "./image.js";
+import { ImageUser } from "./imageUser.js";
+import { ImageBusiness } from "./imageBusiness.js";
+import { Role } from "./role.js";
+import { RolePermission } from "./rolePermission.js";
+import { Permission } from "./permission.js";
+
 
 // Associating models for use in the db
 const user = User(sequelize, Sequelize.DataTypes);
@@ -36,6 +43,13 @@ const notification = Notification(sequelize, Sequelize.DataTypes);
 // const payment = Payment(sequelize, Sequelize.DataTypes);
 // const review = Review(sequelize, Sequelize.DataTypes);
 const service = Service(sequelize, Sequelize.DataTypes);
+const image = Image(sequelize, Sequelize.DataTypes);
+const imageUser = ImageUser(sequelize, Sequelize.DataTypes);
+const imageBusiness = ImageBusiness(sequelize, Sequelize.DataTypes);
+const role = Role(sequelize, Sequelize.DataTypes);
+const rolePermission = RolePermission(sequelize, Sequelize.DataTypes);
+const permission = Permission(sequelize, Sequelize.DataTypes);
+
 
 // Storing the models in the db object
 db[user.name] = user;
@@ -46,6 +60,12 @@ db[notification.name] = notification;
 // db[payment.name] = payment;
 // db[review.name] = review;
 db[service.name] = service;
+db[image.name] = image;
+db[imageUser.name] = imageUser;
+db[imageBusiness.name] = imageBusiness;
+db[role.name] = role;
+db[rolePermission.name] = rolePermission;
+db[permission.name] = permission;
 
 // Setting up relationships between models
 Object.keys(db).forEach((modelName) => {
