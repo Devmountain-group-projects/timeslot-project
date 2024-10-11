@@ -5,7 +5,6 @@ import CalendarManagement from '../components/Features/CalendarManagement'
 import PowerfulFeatures from '../components/Features/PowerfulFeatures'
 import ClientReviews from '../components/Features/ClientReviews'
 import CustomBranding from '../components/Features/CustomBranding'
-import AnalyticsPerformance from '../components/Features/AnalyticsPerformance'
 import SecurityProtection from '../components/Features/SecurityProtection'
 import SupportAndCustomerSuccess from '../components/Features/SupportAndCustomerSuccess'
 import Subscribe from '../components/Home/Subscribe'
@@ -19,7 +18,6 @@ const Features = () => {
             <PowerfulFeatures />
             <ClientReviews />
             <CustomBranding />
-            <AnalyticsPerformance />
             <SecurityProtection />
             <SupportAndCustomerSuccess />
             <Subscribe />

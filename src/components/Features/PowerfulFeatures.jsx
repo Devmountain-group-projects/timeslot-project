@@ -44,8 +44,8 @@ const FeatureCard = ({ icon: Icon, title, description, index }) => (
 
 const PowerfulFeatures = () => {
     return (
-        <div className="w-full py-12">
-            <div className="max-width mx-auto px-6">
+        <div className="w-full">
+            <div className="max-width mx-auto px-6 pb-12">
                 <div className="bg-gradient-gray rounded-3xl p-6">
                     <div className="grid lg:grid-cols-2 items-center lg:gap-y-6">
                         <motion.div
