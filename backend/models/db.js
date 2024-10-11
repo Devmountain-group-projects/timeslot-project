@@ -19,6 +19,7 @@ const sequelize = new Sequelize(
 
 // Importing models
 import { User } from "./user.js";
+import { UserBusiness } from "./userBusiness.js";
 import { Appointment } from "./appointment.js";
 import { Availability } from "./availability.js";
 import { Business } from "./business.js";
@@ -36,6 +37,7 @@ import { Permission } from "./permission.js";
 
 // Associating models for use in the db
 const user = User(sequelize, Sequelize.DataTypes);
+const userBusiness = UserBusiness(sequelize, Sequelize.DataTypes);
 const appointment = Appointment(sequelize, Sequelize.DataTypes);
 const availability = Availability(sequelize, Sequelize.DataTypes);
 const business = Business(sequelize, Sequelize.DataTypes);
@@ -53,6 +55,7 @@ const permission = Permission(sequelize, Sequelize.DataTypes);
 
 // Storing the models in the db object
 db[user.name] = user;
+db[userBusiness.name] = userBusiness;
 db[appointment.name] = appointment;
 db[availability.name] = availability;
 db[business.name] = business;
@@ -80,3 +83,5 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 export default db;
+
+

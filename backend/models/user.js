@@ -41,9 +41,9 @@ export const User = (sequelize, Sequelize) => {
     // Relations
     user.associate = (models) => {
         user.belongsToMany(models.business, {
-            foreignKey: "user_id",
+            foreignKey: "business_id",
             onDelete: "RESTRICT",
-            through: "business"
+            through: "user_business",
         });
 
         user.hasMany(models.notification, {
@@ -65,3 +65,5 @@ export const User = (sequelize, Sequelize) => {
 
     return user;
 };
+
+
