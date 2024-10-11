@@ -30,8 +30,46 @@ export const login = async (req, res) => {
 
     return res.send({
       message: "Hit login",
-      userId: user.user_id,
+      userId: user,
       success: true,
     });
   }
 };
+
+// Register Route
+export const register = async (req,res) => {
+  const db = req.app.get("db")
+
+  const { name, email, phone, password } = req.body
+  const hashedPassword = bcryptjs.hashSync(password, bcryptjs.genSaltSync(10))
+
+  console.log(req.body)
+
+  if (await db.user.findOne({ where: { email: email}})) {
+    console.log("Email aready exists")
+    return res.send({
+      message: "Email already exists",
+      success: false
+    })
+  } else {
+    console.log("Creating a new User")
+
+    const newUser = await db.user.create({
+      name,
+      email,
+      phone,
+      password_hash: hashedPassword,
+      profile_picture: "Default"
+    })
+
+    console.log(newUser)
+
+    return res.send({
+      message: "Temp endpoint",
+      success: true,
+      newUserInfo: newUser
+    })
+  }
+
+  
+}

@@ -21,18 +21,22 @@ const Marquee = () => {
     ];
 
     return (
-        <div className='bg-gradient-gray py-20'>
-            <h1 className="title-text text-center mb-20">Who's talking about us<span className='text-primary'>.</span></h1>
-            <div className="marquee-wrapper overflow-hidden whitespace-nowrap">
-                <div className="animate-marquee inline-block">
-                    {logos.concat(logos).map((logo, index) => (
-                        <img
-                            key={index}
-                            src={logo.src}
-                            alt={logo.alt}
-                            className="inline-block h-10 mx-14 opacity-70"
-                        />
-                    ))}
+        <div className='bg-white py-12 px-6'>
+            <div className="max-width mx-auto">
+                <div className='bg-gradient-gray rounded-3xl px-10 py-10 sm:py-20'>
+                    <h1 className="title-text text-center mb-20">Who's talking about us<span className='text-primary'>.</span></h1>
+                    <div className="marquee-wrapper overflow-hidden whitespace-nowrap">
+                        <div className="animate-marquee inline-block">
+                            {logos.concat(logos).map((logo, index) => (
+                                <img
+                                    key={index}
+                                    src={logo.src}
+                                    alt={logo.alt}
+                                    className="inline-block h-8 sm:h-10 mx-6 sm:mx-14 opacity-80"
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
