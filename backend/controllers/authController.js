@@ -65,7 +65,7 @@ export const register = async (req,res) => {
     console.log(newUser)
 
     return res.send({
-      message: "Temp endpoint",
+      message: "New User created",
       success: true,
       newUserInfo: newUser
     })

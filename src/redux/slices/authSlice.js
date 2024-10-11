@@ -1,7 +1,9 @@
 const initialState = {
   userId: null,
+  role: null,
   loggedIn: false,
 };
+
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,12 +14,23 @@ const userReducer = (state = initialState, action) => {
         loggedIn: false,
       };
 
-    case 'USER_LOGIN':
-      console.log('Reducer has logged in the user');
+
+    case "USER_LOGIN":
+      console.log("Reducer has logged in a user");
+
       return {
         ...state,
         loggedIn: true,
+        role: "user"
       };
+
+    case "BUSINESS_LOGIN":
+        console.log("Reducer has logged in a Business");
+        return {
+            ...state,
+            loggedIn: true,
+            role: "business"
+        }
 
     default:
       console.log('DEFAULT');
