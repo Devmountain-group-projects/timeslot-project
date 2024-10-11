@@ -4,7 +4,7 @@ import SectionImg from '../../assets/images/sectionimg5.jpg'
 import { FaUser } from "react-icons/fa";
 import { MdAddBusiness } from "react-icons/md";
 
-const Role = ({ onRoleSelect }) => {
+const Role = ({ onRoleSelect, formData }) => {
     const cardVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -137,7 +137,7 @@ const Role = ({ onRoleSelect }) => {
                                     className="btn-blue w-full"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={() => onRoleSelect('Client')}
+                                    onClick={() => onRoleSelect('Client', formData)}
                                 >
                                     I am a Client
                                 </motion.button>
