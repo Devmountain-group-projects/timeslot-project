@@ -47,7 +47,14 @@ const ClientRegister = ({ onRegister }) => {
         e.preventDefault();
         if (validatePasswords()) {
             console.log('Form submitted:', formData);
-            onRegister();
+            // register(formData.name, formData.email, formData.phoneNumber, formData.password).then((res) => {
+            //     const { message, success } = res.data
+            //     if (success) {
+            //         console.log("Registered")
+            //         console.log(message)
+            //     }
+            // })
+            onRegister(formData);
         }
     };
 
