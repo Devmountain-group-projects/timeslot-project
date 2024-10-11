@@ -47,12 +47,22 @@ const MainLayout = ({ children }) => {
   )
 }
 
+const DashboardLayout = ({ children }) => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-grow">
+        {children}
+      </main>
+    </div>
+  )
+}
+
 const App = () => {
   return (
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<MainLayout><Home /></MainLayout>} />
-        <Route path="/dashboard" element={<MainLayout><Dashboard /></MainLayout>} />
+        <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />
         <Route path="/profile" element={<MainLayout><Profile /></MainLayout>} />
         <Route path="/features" element={<MainLayout><Features /></MainLayout>} />
         <Route path="/pricing" element={<MainLayout><Pricing /></MainLayout>} />

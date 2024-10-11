@@ -9,9 +9,11 @@ const Dashboard = () => {
     console.log("Here is isLoggedIn: ", isLoggedIn, "and here is role: ", role)
     return (
         <div>
-            {isLoggedIn}
+            {/* {isLoggedIn} */}
             {role === "user" && <ClientDashboard />}
             {role === "business" && <BusinessDashboard />}
+            {role === null && <BusinessDashboard />}
+
         </div>
     )
 }
