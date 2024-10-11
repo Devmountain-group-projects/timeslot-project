@@ -3,8 +3,8 @@ import * as crypto from "node:crypto";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Test Route
-export const test = (req, res) => {
+// User check Route
+export const userCheck = (req, res) => {
   res.send({
     message: "Auth controller works",
     success: true,
@@ -26,12 +26,13 @@ export const login = async (req, res) => {
       success: false,
     });
   } else {
-    req.session.userID = user.user_id;
+    req.session.userId = user.user_id;
 
     return res.send({
       message: "Hit login",
-      userId: user,
+      userId: user.id,
       success: true,
+      userinfo: user,
     });
   }
 };
@@ -63,6 +64,7 @@ export const register = async (req,res) => {
     })
 
     console.log(newUser)
+    req.session.userId = newUser.user_id;
 
     return res.send({
       message: "New User created",
