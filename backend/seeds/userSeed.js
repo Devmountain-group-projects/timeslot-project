@@ -24,6 +24,11 @@ const users = [
             phone: "test",
             website: "test",
         },
+        availability: {
+            day_of_week: "Monday",
+            start_time: "08:00",
+            end_time: "17:00",
+        },
         images: [
             {
                 src: "https://example.com/profile.jpg",
@@ -55,6 +60,7 @@ export const createUsers = async function createUsers(db) {
             };
         });
 
+        // Create user
         await db.user
             .create({
                 name: user.name.toLowerCase(),
@@ -65,29 +71,42 @@ export const createUsers = async function createUsers(db) {
                 profile_picture: user.profile_picture,
                 images: images,
             })
-            .then(async (user) => {
-                const user_business = user.user_business;
-                    await db.user_business.create({
-                        user_id: user_business.user_id,
-                        business_id: user_business.business_id,
-                    });
-                },
-                {
-                    include: [
-                        {
-                            model: db.sequelize.models.image,
-                            as: "images",
-                        },
-                        {
-                            model: db.sequelize.models.user_business,
-                            as: "user_business",
-                        },
-                    ],
-                }
-            );
+            .then(async (createdUser) => {
+                // Create availability before the business
+                const availability = await db.availability.create({
+                    day_of_week: user.availability.day_of_week,
+                    start_time: user.availability.start_time,
+                    end_time: user.availability.end_time,
+                });
+
+                // Create business and link the availability_id
+                const business = user.business;
+                const createdBusiness = await db.business.create({
+                    business_name: business.business_name,
+                    description: business.description,
+                    address_line1: business.address_line1,
+                    address_line2: business.address_line2,
+                    city: business.city,
+                    state: business.state,
+                    zip_code: business.zip_code,
+                    email: business.email,
+                    phone: business.phone,
+                    website: business.website,
+                    availability_id: availability.availability_id, // Link availability_id
+                });
+
+                // Create the user_business relationship
+                await db.user_business.create({
+                    user_id: createdUser.user_id,  // Use the createdUser's user_id
+                    business_id: createdBusiness.business_id,  // Use the createdBusiness's business_id
+                });
+            }, {
+                include: [
+                    {
+                        model: db.sequelize.models.image,
+                        as: "images",
+                    },
+                ],
+            });
     }
 };
-
-
-
-
