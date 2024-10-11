@@ -1,39 +1,91 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import PlaceholderImg from '../../assets/images/placeholder.png'
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import GoogleImg from '../../assets/images/google.png'
 import OutlookImg from '../../assets/images/outlook.png'
+
+const Slider = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const totalSlides = 6;
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
+        }, 5000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    return (
+        <div className="relative w-full h-full">
+            {/* Bottom layer */}
+            <AnimatePresence mode="wait">
+                <motion.img
+                    key={`slide-${currentSlide}`}
+                    src={`/src/assets/images/slides/slide${currentSlide + 1}.png`}
+                    alt={`Slide ${currentSlide + 1}`}
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                />
+            </AnimatePresence>
+
+            {/* Middle layer */}
+            <img
+                src="/src/assets/images/slides/baseimg.png"
+                alt="Base layer"
+                className="absolute top-0 left-0 w-full h-full object-cover"
+            />
+
+            {/* Top layer */}
+            <AnimatePresence mode="wait">
+                <motion.img
+                    key={`slide-info-${currentSlide}`}
+                    src={`/src/assets/images/slides/slide${currentSlide + 1}info.png`}
+                    alt={`Slide ${currentSlide + 1} info`}
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
+                />
+            </AnimatePresence>
+        </div>
+    );
+};
 
 const Hero = () => {
     return (
         <div className="px-4 sm:px-6 lg:px-6 pb-12 mt-4 sm:mt-8">
             <div className="max-width mx-auto">
-                <div className="bg-gradient-to-b from-secondary via-blue-400 to-blue-100 rounded-3xl overflow-hidden">
+                <div className="bg-gradient-gray rounded-3xl overflow-hidden">
                     <div className="py-12 sm:py-24 px-6 sm:px-12">
-                        <div className="max-md:text-center">
-                            <motion.h2
-                                initial={{ opacity: 0, y: -50 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5 }}
-                                className="text-white lg:text-6xl md:text-5xl text-4xl font-extrabold md:max-w-4xl"
-                            >
-                                Streamline Your Appointments with Ease
-                            </motion.h2>
-                            <motion.p
-                                initial={{ opacity: 0, y: -30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                                className="text-white text-base sm:text-xl mt-6 mb-8 uppercase font-bold"
-                            >
-                                The ultimate solution for scheduling, managing, and growing your service-based business.
-                            </motion.p>
-                            <div className="grid md:grid-cols-2 gap-12 mt-6">
+                        <div className="grid md:grid-cols-2 gap-12 items-center">
+                            <div className="max-md:text-center">
+                                <motion.h2
+                                    initial={{ opacity: 0, y: -50 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="text-black lg:text-5xl md:text-5xl text-4xl font-extrabold md:max-w-4xl"
+                                >
+                                    Streamline Your Appointments with Ease
+                                    <span className='text-primary text-xl sm:text-3xl md:text-5xl'>.</span>
+                                </motion.h2>
+                                <motion.p
+                                    initial={{ opacity: 0, y: -30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                    className="text-secondary text-base sm:text-xl mt-6 mb-8 uppercase font-bold"
+                                >
+                                    The ultimate solution for scheduling, managing, and growing your service-based business.
+                                </motion.p>
                                 <motion.div
                                     initial={{ opacity: 0, x: -50 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.5, delay: 0.4 }}
                                 >
-                                    <p className="text-white text-sm sm:text-base leading-relaxed">Book, track, and manage appointments in real time. Whether you're a client or a provider, Timeline Slot simplifies your scheduling process—all in one platform.</p>
+                                    <p className="text-gray-700 text-sm sm:text-base leading-relaxed">Book, track, and manage appointments in real time. Whether you're a client or a provider, Timeline Slot simplifies your scheduling process—all in one platform.</p>
                                     <div className="mt-12 flex gap-4 items-center flex-wrap max-md:justify-center">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
@@ -60,17 +112,18 @@ const Hero = () => {
                                         className="mt-24 grid grid-cols-2 md:grid-cols-2 items-center"
                                     >
                                         <img src={GoogleImg} className="w-24 sm:w-44 mx-auto" alt="google-logo" />
-                                        <img src={OutlookImg} className="w-24 sm:w-44 mx-auto" alt="facebook-logo" />
+                                        <img src={OutlookImg} className="w-24 sm:w-44 mx-auto" alt="outlook-logo" />
                                     </motion.div>
                                 </motion.div>
-                                <motion.div
-                                    initial={{ opacity: 0, x: 50 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.4 }}
-                                >
-                                    <img src={PlaceholderImg} alt="picture of the online booking appointment software" className="w-full h-full rounded-lg object-contain" />
-                                </motion.div>
                             </div>
+                            <motion.div
+                                initial={{ opacity: 0, x: 50 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5, delay: 0.4 }}
+                                className="w-full h-full aspect-square"
+                            >
+                                <Slider />
+                            </motion.div>
                         </div>
                     </div>
                 </div>
