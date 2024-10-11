@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaStar, FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import User1 from '../../assets/images/user1.png'
+import User2 from '../../assets/images/user2.png'
+import User3 from '../../assets/images/user3.png'
+import User4 from '../../assets/images/user4.png'
+import User5 from '../../assets/images/user5.png'
+import User6 from '../../assets/images/user6.png'
 
 const ReviewCard = ({ image, name, title, review, rating }) => (
     <motion.div
@@ -12,11 +18,11 @@ const ReviewCard = ({ image, name, title, review, rating }) => (
     >
         <img src={image} className="w-20 h-20 rounded-full absolute -left-10 top-0 bottom-0 my-auto border-2 border-gray-300 group-hover:ring-2 group-hover:ring-primary transition-all duration-300 ease-in-out" alt={name} />
         <div>
-            <h4 className="text-gray-800 text-base font-bold">{name}</h4>
-            <p className="mt-1 text-xs text-gray-500">{title}</p>
+            <p className="text-secondary text-base font-bold">{name}</p>
+            <p className="mt-1 text-xs text-gray-950">{title}</p>
         </div>
         <div className="mt-4 flex-grow">
-            <p className="text-gray-800 text-sm leading-relaxed">{review}</p>
+            <p className="text-black text-sm leading-relaxed">{review}</p>
         </div>
         <div className="flex space-x-1 mt-4">
             {[...Array(5)].map((_, i) => (
@@ -29,42 +35,42 @@ const ReviewCard = ({ image, name, title, review, rating }) => (
 const Reviews = () => {
     const reviews = [
         {
-            image: "https://readymadeui.com/team-4.webp",
+            image: User1,
             name: "Emily Clarkson",
             title: "CEO of Beauty & Beyond",
             review: "I can't express how much time Timeline Slot has saved my team. Clients can easily book their own appointments, and the calendar sync is flawless.",
             rating: 5
         },
         {
-            image: "https://readymadeui.com/team-2.webp",
+            image: User4,
             name: "Michael Stevens",
             title: "Owner of Stevens Consulting",
             review: "The platform is incredibly intuitive, even for someone who's not tech-savvy. I only wish the reporting features in the Free plan were more comprehensive.",
             rating: 3
         },
         {
-            image: "https://readymadeui.com/team-5.webp",
+            image: User3,
             name: "David Keegan",
             title: "Founder of Wellness Works",
             review: "Switching to Timeline Slot was the best decision I made for my business. The ability to track client appointments and payments in one place is a game-changer.",
             rating: 5
         },
         {
-            image: "https://readymadeui.com/team-1.webp",
+            image: User5,
             name: "Josh Thompson",
             title: "CEO of TechStart",
             review: "Exceptional service! The platform's intuitive design made scheduling a breeze. It's transformed how we manage our appointments.",
             rating: 5
         },
         {
-            image: "https://readymadeui.com/team-3.webp",
+            image: User2,
             name: "Michaela Chen",
             title: "Director at HealthPlus",
             review: "This scheduling tool has been a game-changer for our clinic. Patients love the easy booking process, and we've seen a significant reduction in no-shows.",
             rating: 4
         },
         {
-            image: "https://readymadeui.com/team-6.webp",
+            image: User6,
             name: "Sarah Johnson",
             title: "Owner of Yoga Zen",
             review: "As a yoga instructor, managing classes and private sessions used to be a hassle. This platform has simplified everything, giving me more time to focus on my students.",

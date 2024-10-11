@@ -53,7 +53,7 @@ const ServiceIndustries = () => {
     ];
 
     return (
-        <div className="bg-white px-6 py-24">
+        <div className="bg-white px-6 py-12 sm:py-24">
             <div className="grid lg:grid-cols-2 items-start gap-10 my-4 max-width mx-auto">
                 <motion.section
                     initial={{ opacity: 0, x: -50 }}
@@ -62,7 +62,7 @@ const ServiceIndustries = () => {
                     className="max-lg:text-center"
                 >
                     <h2 className="title-text">Timeline Slot is designed to cater to a wide range of business sectors<span className='text-primary text-3xl sm:text-5xl'>.</span></h2>
-                    <p className="text-gray-600 text-base">At Timeline Slot, we understand that every business is unique, which is why our platform is designed to support a wide range of industries. Whether you're a solo practitioner or managing a growing team, we streamline the booking process, helping you focus on what matters most—your clients.</p>
+                    <p className="text-gray-600 text-sm sm:text-base">At Timeline Slot, we understand that every business is unique, which is why our platform is designed to support a wide range of industries. Whether you're a solo practitioner or managing a growing team, we streamline the booking process, helping you focus on what matters most—your clients.</p>
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
