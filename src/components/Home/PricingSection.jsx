@@ -60,9 +60,9 @@ const PricingSection = () => {
     ];
 
     return (
-        <div>
-            <div className="bg-gradient-gray px-4 py-24">
-                <div className="max-w-5xl max-lg:max-w-max mx-auto">
+        <div className="bg-white py-12 px-6">
+            <div className="max-width max-lg:max-w-max mx-auto">
+                <div className="bg-gradient-gray rounded-3xl p-20">
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -116,29 +116,22 @@ const PricingSection = () => {
                                     <p className="text-gray-950 text-lg mb-3">{plan.name}</p>
                                     <div className="flex justify-between items-center">
                                         <div className="flex items-baseline">
-                                            <AnimatePresence>
-                                                <motion.span
+                                            <AnimatePresence mode="wait">
+                                                <motion.div
                                                     key={isYearly ? 'yearly' : 'monthly'}
-                                                    initial={{ opacity: 0, y: -20 }}
-                                                    animate={{ opacity: 1, y: 0 }}
-                                                    exit={{ opacity: 0, y: 20 }}
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    exit={{ opacity: 0 }}
                                                     transition={{ duration: 0.2 }}
-                                                    className="text-4xl font-bold"
+                                                    className="flex items-baseline"
                                                 >
-                                                    ${isYearly ? plan.yearlyPrice.toFixed(2) : plan.monthlyPrice.toFixed(2)}
-                                                </motion.span>
-                                            </AnimatePresence>
-                                            <AnimatePresence>
-                                                <motion.sub
-                                                    key={isYearly ? 'yearly-sub' : 'monthly-sub'}
-                                                    initial={{ opacity: 0, x: -10 }}
-                                                    animate={{ opacity: 1, x: 0 }}
-                                                    exit={{ opacity: 0, x: 10 }}
-                                                    transition={{ duration: 0.2 }}
-                                                    className="text-gray-500 font-medium text-base ml-1"
-                                                >
-                                                    / {isYearly ? 'year' : 'month'}
-                                                </motion.sub>
+                                                    <span className="text-4xl font-bold">
+                                                        ${isYearly ? plan.yearlyPrice.toFixed(2) : plan.monthlyPrice.toFixed(2)}
+                                                    </span>
+                                                    <sub className="text-gray-500 font-medium text-base ml-1">
+                                                        / {isYearly ? 'year' : 'month'}
+                                                    </sub>
+                                                </motion.div>
                                             </AnimatePresence>
                                         </div>
                                         <plan.icon className="text-6xl opacity-20 text-primary" />

@@ -38,7 +38,7 @@ const ContactForm = () => {
                         <motion.h2 className="title-text mb-4" variants={itemVariants}>Get in Touch with Us<span className='text-primary text-3xl sm:text-5xl'>.</span></motion.h2>
                         <motion.p className="text-sm text-gray-600 mb-8 leading-relaxed" variants={itemVariants}>Have questions or need assistance? We're here to help! Whether you're a current user or just exploring Timeline Slot, feel free to reach out to our team. We're committed to providing you with the support you need to make the most of our platform.</motion.p>
 
-                        <motion.form className="bg-white rounded-xl p-6 shadow-lg space-y-4" variants={containerVariants}>
+                        <motion.form className="bg-gradient-gray rounded-xl p-6 space-y-4" variants={containerVariants}>
                             {['Name', 'Email', 'Subject'].map((placeholder, index) => (
                                 <motion.input
                                     key={index}

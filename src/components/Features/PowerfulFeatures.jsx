@@ -31,30 +31,25 @@ const featureData = [
 
 const FeatureCard = ({ icon: Icon, title, description, index }) => (
     <motion.div
-        className="bg-gray-100 p-6 rounded-md"
+        className="p-6"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: index * 0.1 }}
     >
         <Icon size={70} className="mb-4 inline-block text-primary p-2" />
         <h3 className="text-lg font-bold mb-2 text-gray-800">{title}</h3>
-        <p className="text-sm text-gray-600">{description}</p>
+        <p className="text-sm text-gray-800">{description}</p>
     </motion.div>
 )
 
 const PowerfulFeatures = () => {
     return (
-        <div>
-            <motion.div
-                className="w-full bg-gradient-gray"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-            >
-                <div className="max-width mx-auto">
+        <div className="w-full py-12">
+            <div className="max-width mx-auto px-6">
+                <div className="bg-gradient-gray rounded-3xl p-6">
                     <div className="grid lg:grid-cols-2 items-center lg:gap-y-6">
                         <motion.div
-                            className="max-lg:order-1 max-lg:text-center sm:p-12 p-4"
+                            className="max-lg:order-1 max-lg:text-center pl-0 sm:pl-6 pr-0 sm:pr-16"
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: 0.2 }}
@@ -74,17 +69,15 @@ const PowerfulFeatures = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
                         >
-                            <img src={AppointmentImg} className="w-full h-full object-cover" alt="a dog at a vet" />
+                            <img src={AppointmentImg} className="w-full h-full object-cover rounded-lg" alt="a dog at a vet" />
                         </motion.div>
                     </div>
-                </div>
-            </motion.div>
 
-            <div className="max-width mx-auto">
-                <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6 px-6 my-12">
-                    {featureData.map((feature, index) => (
-                        <FeatureCard key={index} {...feature} index={index} />
-                    ))}
+                    <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mt-12">
+                        {featureData.map((feature, index) => (
+                            <FeatureCard key={index} {...feature} index={index} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
