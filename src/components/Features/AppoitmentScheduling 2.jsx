@@ -1,4 +1,5 @@
 import React from 'react'
+import { Blurhash } from "react-blurhash";
 import { motion } from "framer-motion";
 
 import TimeImg from '../../assets/images/timeimg.jpg'
@@ -12,36 +13,44 @@ const features = [
     {
         title: "Real-Time Availability",
         description: "Keep your schedule up to date with real-time availability updates. Clients can book open slots instantly, ensuring smooth and conflict-free appointments.",
-        image: TimeImg
+        image: TimeImg,
+        blurhash: "L9C%pVs:0KIU?waeWBay4.oL%2ax" // You'll need to generate this
     },
     {
         title: "Client Self-Booking",
         description: "Empower your clients to book appointments directly through your customized booking page. With a few clicks, they can find the perfect time that fits into their schedule.",
-        image: ClientSelfImg
+        image: ClientSelfImg,
+        blurhash: "LFHx%@Io0KRj?wj[M{ay9FWBxuof" // You'll need to generate this
     },
     {
         title: "Recurring Appointments",
         description: "Set up recurring appointments with ease, so clients can book their favorite services on a regular basis. Perfect for maintaining client loyalty and steady bookings.",
-        image: RecurringImg
+        image: RecurringImg,
+        blurhash: "L6EygmRj00%M?bxu%MRjD%xu%Mof" // You'll need to generate this
     },
     {
         title: "Calendar Integration",
         description: "Sync appointments with Google Calendar, Outlook, and more to ensure your bookings are always in sync with your personal schedule. Stay organized and never miss a booking!",
-        image: IntegrationImg
+        image: IntegrationImg,
+        blurhash: "LDH2D[%M00%M~qxu%MRjIU%M%Mof" // You'll need to generate this
     },
     {
         title: "Easy Rescheduling and Cancellations",
         description: "Need to make a change? Clients can quickly reschedule or cancel appointments directly from their confirmation email or through their account, making the process seamless.",
-        image: RescheduleImg
+        image: RescheduleImg,
+        blurhash: "L5H2EC%M00WB~qxu%MRjM{%M%Mof" // You'll need to generate this
     },
     {
         title: "Time Zone Support",
         description: "Never worry about time zone confusion. Timeline Slot automatically adjusts appointment times based on the location of your clients, ensuring smooth global scheduling.",
-        image: TimeZoneImg
+        image: TimeZoneImg,
+        blurhash: "L6HLU[%M00%M~qxu%MRj%M%M%Mof" // You'll need to generate this
     }
 ];
 
-const FeatureSection = ({ title, description, image }) => {
+const FeatureSection = ({ title, description, image, blurhash }) => {
+    const [imageLoaded, setImageLoaded] = React.useState(false);
+
     return (
         <motion.section
             className="flex flex-col items-center"
@@ -50,14 +59,26 @@ const FeatureSection = ({ title, description, image }) => {
             transition={{ duration: 0.5 }}
         >
             <motion.div
-                className="w-72 h-72 mb-4 overflow-hidden"
+                className="w-72 h-w-72 mb-4 overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
             >
+                {!imageLoaded && (
+                    <Blurhash
+                        hash={blurhash}
+                        width={128}
+                        height={128}
+                        resolutionX={32}
+                        resolutionY={32}
+                        punch={1}
+                    />
+                )}
                 <img
                     src={image}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                     alt={title}
+                    onLoad={() => setImageLoaded(true)}
+                    style={{ display: imageLoaded ? 'block' : 'none' }}
                 />
             </motion.div>
             <div className="text-center">

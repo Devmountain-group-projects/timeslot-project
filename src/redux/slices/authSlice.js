@@ -1,20 +1,23 @@
-const inittalState = {
+const initialState = {
   userId: null,
   role: null,
   loggedIn: false,
 };
 
-const authReducer = (state = inittalState, action) => {
+
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "USER_LOGOUT":
-      console.log("Reducer has logged out a user");
+    case 'USER_LOGOUT':
+      console.log('Reducer has logged out the user');
       return {
         ...state,
         loggedIn: false,
       };
 
+
     case "USER_LOGIN":
       console.log("Reducer has logged in a user");
+
       return {
         ...state,
         loggedIn: true,
@@ -30,7 +33,7 @@ const authReducer = (state = inittalState, action) => {
         }
 
     default:
-      console.log("DEFAULT");
+      console.log('DEFAULT');
       return state;
   }
 };
