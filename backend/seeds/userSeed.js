@@ -8,6 +8,10 @@ const users = [
         role: "test",
         password_hash: "test",
         profile_picture: "test",
+        user_business: {
+            user_id: 1,
+            business_id: 1,
+        },
         business: {
             business_name: "test",
             description: "test",
@@ -53,25 +57,20 @@ export const createUsers = async function createUsers(db) {
 
         await db.user
             .create({
-                    name: user.name.toLowerCase(),
-                    email: user.email.toLowerCase(),
-                    phone: user.phone,
-                    role: user.role,
-                    password_hash: hashedPassword,
-                    profile_picture: user.profile_picture,
-                    images: images,
-                    business: {
-                        business_name: user.business.business_name,
-                        description: user.business.description,
-                        address_line1: user.business.address_line1,
-                        address_line2: user.business.address_line2,
-                        city: user.business.city,
-                        state: user.business.state,
-                        zip_code: user.business.zip_code,
-                        email: user.business.email,
-                        phone: user.business.phone,
-                        website: user.business.website,
-                    }
+                name: user.name.toLowerCase(),
+                email: user.email.toLowerCase(),
+                phone: user.phone,
+                role: user.role,
+                password_hash: hashedPassword,
+                profile_picture: user.profile_picture,
+                images: images,
+            })
+            .then(async (user) => {
+                const user_business = user.user_business;
+                    await db.user_business.create({
+                        user_id: user_business.user_id,
+                        business_id: user_business.business_id,
+                    });
                 },
                 {
                     include: [
@@ -80,8 +79,8 @@ export const createUsers = async function createUsers(db) {
                             as: "images",
                         },
                         {
-                            model: db.sequelize.models.business,
-                            as: "businesses",
+                            model: db.sequelize.models.user_business,
+                            as: "user_business",
                         },
                     ],
                 }
