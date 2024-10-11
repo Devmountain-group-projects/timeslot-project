@@ -47,17 +47,17 @@ db.sequelize.sync({force: true}).then(async function () {
     console.log("Database successfully created");
     try {
         await createUsers(db).then(() =>
-            console.log("Permissions successfully created"),
+            console.log("Users successfully created"),
         );
-        await createAppointments(db).then(() =>
-            console.log("Appointments successfully created"),
-        );
+        // await createAppointments(db).then(() =>
+        //     console.log("Appointments successfully created"),
+        // );
         // await createAvailability(db).then(() =>
         //     console.log("Businesses successfully created"),
         // );
-        await createBusiness(db).then(() =>
-            console.log("Contacts successfully created"),
-        );
+        // await createBusiness(db).then(() =>
+        //     console.log("Business successfully created"),
+        // );
         // await createNotification(db).then(() =>
         //     console.log("Notifications successfully created"),
         // );

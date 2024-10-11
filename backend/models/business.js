@@ -12,7 +12,7 @@ export const Business = (sequelize, Sequelize) => {
             },
             availability_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             business_name: {
                 type: Sequelize.STRING,
@@ -75,11 +75,12 @@ export const Business = (sequelize, Sequelize) => {
             onDelete: "RESTRICT",
             through: "image_business"
         });
-        // business.belongsToMany(models.user, {
-        //     foreignKey: "user_id",
-        //     onDelete: "RESTRICT",
-        //     through: "user"
-        // });
+        business.belongsToMany(models.user, {
+            foreignKey: "user_id",
+            onDelete: "RESTRICT",
+            through: "user_business",
+            as: "business"
+        });
         // business.belongsToMany(models.service, {
         //     foreignKey: "business_id",
         //     onDelete: "RESTRICT",
@@ -89,3 +90,5 @@ export const Business = (sequelize, Sequelize) => {
 
     return business;
 };
+
+
