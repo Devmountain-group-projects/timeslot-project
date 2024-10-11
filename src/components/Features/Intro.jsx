@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import FeaturesImg1 from '../../assets/images/featuresimg1.jpg'
+import { Link } from 'react-router-dom'
+import FeaturesImg1 from '../../assets/images/featuresheadimg.jpg'
 import Google from '../../assets/images/google.png'
 import Hubspot from '../../assets/images/hubspot.png'
 import Zapier from '../../assets/images/zapier.svg'
@@ -8,9 +9,9 @@ import Devmountain from '../../assets/images/devmountain.png'
 
 const Intro = () => {
     return (
-        <div>
-            <div className="max-width mx-auto px-6 my-8">
-                <div className="grid md:grid-cols-2 items-center">
+        <div className="w-full bg-gradient-gray">
+            <div className="max-width mx-auto px-6 sm:px-0 pl-0 sm:pl-6 mb-8">
+                <div className="grid md:grid-cols-2 items-center gap-12">
                     <motion.div
                         className="max-md:order-1 max-md:text-center"
                         initial={{ opacity: 0, y: 50 }}
@@ -39,14 +40,16 @@ const Intro = () => {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.6, duration: 0.5 }}
                         >
-                            <motion.button
-                                type='button'
-                                className="btn-blue"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                Get started
-                            </motion.button>
+                            <Link to="/login">
+                                <motion.button
+                                    type='button'
+                                    className="btn-blue"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    Get started
+                                </motion.button>
+                            </Link>
                         </motion.div>
 
                         <motion.hr
@@ -81,7 +84,7 @@ const Intro = () => {
                     <motion.img
                         src={FeaturesImg1}
                         className="lg:w-full md:w-11/12"
-                        alt="Dining Experience"
+                        alt="Image of a girl working on her phone"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
