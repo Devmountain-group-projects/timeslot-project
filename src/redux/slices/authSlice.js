@@ -38,4 +38,4 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
-export default authReducer;
+export default userReducer;
