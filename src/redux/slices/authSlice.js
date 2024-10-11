@@ -5,7 +5,7 @@ const initialState = {
 };
 
 
-const userReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'USER_LOGOUT':
       console.log('Reducer has logged out the user');
@@ -38,4 +38,4 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
-export default userReducer;
+export default authReducer;
