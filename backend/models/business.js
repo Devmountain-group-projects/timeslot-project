@@ -7,13 +7,6 @@ export const Business = (sequelize, Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true,
             },
-            user_id: {
-                type: Sequelize.INTEGER,
-            },
-            availability_id: {
-                type: Sequelize.INTEGER,
-                allowNull: true,
-            },
             business_name: {
                 type: Sequelize.STRING,
                 allowNull: false,
@@ -67,8 +60,9 @@ export const Business = (sequelize, Sequelize) => {
         //     through: "appointment"
         // });
         business.belongsTo(models.availability, {
-            foreignKey: "availability_id",
+            foreignKey: "business_id",
             onDelete: "RESTRICT",
+            // through: "availability_business"
         });
         business.belongsToMany(models.image, {
             foreignKey: "business_id",

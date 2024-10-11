@@ -1,5 +1,5 @@
 export const Availability = (sequelize, Sequelize) => {
-  return sequelize.define(
+  const availability = sequelize.define(
     "availability",
     {
       availability_id: {
@@ -7,21 +7,34 @@ export const Availability = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
+      business_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       day_of_week: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       start_time: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       end_time: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
     },
     {
       timestamps: true,
     }
   );
+
+  availability.associate = (models) => {
+      availability.belongsTo(models.business, {
+          foreignKey: "availability_id",
+          onDelete: "RESTRICT",
+          // through: "availability_business"
+      });
+  };
+  return availability;
 };
