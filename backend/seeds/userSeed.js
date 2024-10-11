@@ -30,7 +30,22 @@ const users = [
                 day_of_week: "Tuesday",
                 start_time: "08:00",
                 end_time: "17:00",
-            }
+            },
+            {
+                day_of_week: "Wednesday",
+                start_time: "08:00",
+                end_time: "17:00",
+            },
+            {
+                day_of_week: "Thursday",
+                start_time: "08:00",
+                end_time: "17:00",
+            },
+            {
+                day_of_week: "Friday",
+                start_time: "08:00",
+                end_time: "17:00",
+            },
         ],
         images: [
             {
@@ -129,15 +144,14 @@ export const createUsers = async function createUsers(db) {
             ? user.availability
             : [user.availability]; // Convert to array if it's a single object
 
+        // Loop through the user's availability
         for (const availability of biz_availabilities) {
-            // Create availability and link it to the business
-            const createdAvailability = await db.availability.create({
+            await db.availability.create({
+                business_id: createdBusiness.business_id,
                 day_of_week: availability.day_of_week,
                 start_time: availability.start_time,
                 end_time: availability.end_time,
-                business_id: createdBusiness.business_id, // Pass the business_id here
             });
-
             // Associate user with business using findOrCreate to avoid duplicates
             await db.user_business.findOrCreate({
                 where: {
