@@ -15,8 +15,8 @@ const ProgressBar = ({ value, max }) => {
 const InfoContainer = ({ label, value, max }) => (
     <div className="w-1/2 py-2 px-4 border-2 border-gray-300 rounded-lg">
         <div className="flex justify-between items-center my-2">
-            <span className="text-sm font-medium">{label}</span>
-            <span className="text-sm font-bold">{value}/{max}</span>
+            <span className="text-sm font-normal">{label}</span>
+            <span className="text-sm font-normal">{value}/{max}</span>
         </div>
         <ProgressBar value={value} max={max} />
     </div>
@@ -44,7 +44,7 @@ const CalendarOverview = () => {
             </section>
             <hr className='border-gray-300 border-2 w-full' />
             <section className="h-[88%] p-4 overflow-y-auto">
-                <div className="flex gap-4 mb-4">
+                <div className="flex gap-4 mb-3">
                     <InfoContainer label="New Clients" value={3} max={29} />
                     <InfoContainer label="Follow-Up Clients" value={0} max={17} />
                 </div>
