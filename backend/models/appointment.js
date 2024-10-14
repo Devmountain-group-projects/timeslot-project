@@ -10,9 +10,6 @@ export const Appointment = (sequelize, Sequelize) => {
       service_id: {
         type: Sequelize.INTEGER,
       },
-      business_id: {
-        type: Sequelize.INTEGER,
-      },
       user_id: {
         type: Sequelize.INTEGER,
       },

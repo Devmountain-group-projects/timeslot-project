@@ -41,7 +41,7 @@ export const User = (sequelize, Sequelize) => {
     // Relations
     user.associate = (models) => {
         user.belongsToMany(models.business, {
-            foreignKey: "business_id",
+            foreignKey: "user_id",
             onDelete: "RESTRICT",
             through: "user_business",
             as: "business",

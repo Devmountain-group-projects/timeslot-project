@@ -24,6 +24,20 @@ const businesses = [
                 end_time: "17:00",
             },
         ],
+        service: [
+            {
+                service_name: "Service 1",
+                description: "Service 1 Description",
+                duration: "60 minutes",
+                price: 100.00
+            },
+            {
+                service_name: "Service 2",
+                description: "Service 2 Description",
+                duration: "30 minutes",
+                price: 50.00
+            }
+        ],
         images: [
             {
                 src: "https://example.com/profile.jpg",
@@ -34,6 +48,28 @@ const businesses = [
                 image_type: 'business_banner',
             },
         ],
+        appointments: [
+            {
+                user_id: 1, // Example user ID (ensure this user exists in your database)
+                service_index: 0, // Refers to the first service (index-based)
+                appointment_date: new Date(), // Current date
+                appointment_start: "09:00",
+                appointment_end: "10:00",
+                status: "confirmed",
+                notes: "Testing appointment",
+                payment_status: "pending"
+            },
+            {
+                user_id: 2, // Another user ID
+                service_index: 1, // Refers to the second service
+                appointment_date: new Date(),
+                appointment_start: "11:00",
+                appointment_end: "11:30",
+                status: "pending",
+                notes: "Another test appointment",
+                payment_status: "sent"
+            }
+        ]
     }
 ];
 
@@ -56,7 +92,7 @@ export const createBusiness = async function createBusiness(db) {
         // Handle the availability
         const biz_availabilities = Array.isArray(biz.availability)
             ? biz.availability
-            : [biz.availability]; // Convert to array if it's a single object
+            : [biz.availability];
 
         for (const availability of biz_availabilities) {
             await db.availability.create({
@@ -65,6 +101,23 @@ export const createBusiness = async function createBusiness(db) {
                 start_time: availability.start_time,
                 end_time: availability.end_time,
             });
+        }
+
+        // Handle services and associate them with the business
+        const services = Array.isArray(biz.service)
+            ? biz.service
+            : [biz.service];
+
+        const createdServices = [];
+        for (const service of services) {
+            const createdService = await db.service.create({
+                business_id: createdBusiness.business_id,
+                name: service.service_name,
+                description: service.description,
+                duration: service.duration,
+                price: service.price,
+            });
+            createdServices.push(createdService);
         }
 
         // Handle images and associate them with the business using the junction table
@@ -79,11 +132,31 @@ export const createBusiness = async function createBusiness(db) {
                 image_type: image.image_type,
             });
 
-            // Explicitly associate the created image with the business via the junction table
             await db.image_business.create({
                 business_id: createdBusiness.business_id,
                 image_id: createdImage.image_id,
-                image_type: image.image_type, // If the junction table needs the image type
+                image_type: image.image_type,
+            });
+        }
+
+        // Handle appointments and associate them with the business, services, and users
+        const appointments = Array.isArray(biz.appointments)
+            ? biz.appointments
+            : [biz.appointments];
+
+        for (const appointment of appointments) {
+            const service = createdServices[appointment.service_index];
+
+            await db.appointment.create({
+                business_id: createdBusiness.business_id,
+                service_id: service.service_id,
+                user_id: appointment.user_id,
+                appointment_date: appointment.appointment_date,
+                appointment_start: appointment.appointment_start,
+                appointment_end: appointment.appointment_end,
+                status: appointment.status,
+                notes: appointment.notes,
+                payment_status: appointment.payment_status,
             });
         }
     }

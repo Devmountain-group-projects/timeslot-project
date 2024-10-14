@@ -15,7 +15,7 @@ export const Service = (sequelize, Sequelize) => {
         allowNull: false,
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       duration: {
         type: Sequelize.STRING,
