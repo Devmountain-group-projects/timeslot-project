@@ -6,7 +6,7 @@ import Graph1 from '../../assets/images/graph2.png'
 const RevenueOverview = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-lg border-2 border-gray-300">
-            <section className="h-[40%] flex justify-between items-center p-4 bg-gradient-gray">
+            <section className="h-[35%] flex justify-between items-center p-4 bg-gradient-gray">
                 <div className="w-[10%]">
                     <FaMoneyBillTrendUp className="text-3xl text-[#e03800]" />
                 </div>
@@ -16,12 +16,12 @@ const RevenueOverview = () => {
                 </div>
             </section>
             <hr className='border-gray-300 border-2 w-full' />
-            <section className="h-[60%] flex justify-between items-center p-4">
+            <section className="h-[65%] flex justify-between items-center p-4">
                 <div className="w-[70%]">
                     <p className="text-3xl font-bold">$3,000</p>
-                    <p className="text-sm text-gray-500">Earned this week</p>
+                    <p className="text-sm text-gray-500">Collected</p>
                 </div>
-                <img src={Graph1} className="w-[30%]" alt="" />
+                <img src={Graph1} className="w-[30%]" alt="Graph image icon" />
             </section>
         </div>
     );
