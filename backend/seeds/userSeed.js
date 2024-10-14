@@ -78,6 +78,25 @@ const users = [
             },
         ],
     },
+    {
+        // Sample user without a business
+        name: "test_no_business",
+        email: "no_business@test.com",
+        phone: "1234567890",
+        role: "client",
+        password_hash: "password123",
+        profile_picture: "no_business_profile.jpg",
+        images: [
+            {
+                src: "https://example.com/no_business_profile.jpg",
+                image_type: 'user_profile',
+            },
+            {
+                src: "https://example.com/no_business_banner.jpg",
+                image_type: 'user_banner',
+            },
+        ],
+    },
 ];
 
 export const createUsers = async function createUsers(db) {
@@ -118,40 +137,102 @@ export const createUsers = async function createUsers(db) {
             });
         }
 
-        // Create associated business
-        const business = user.business;
-        const createdBusiness = await db.business.create({
-            business_name: business.business_name,
-            description: business.description,
-            address_line1: business.address_line1,
-            address_line2: business.address_line2,
-            city: business.city,
-            state: business.state,
-            zip_code: business.zip_code,
-            email: business.email,
-            phone: business.phone,
-            website: business.website,
-        });
+        // Check if the user has a business
+        if (user.business) {
+            // Create associated business
+            const business = user.business;
+            const createdBusiness = await db.business.create({
+                business_name: business.business_name,
+                description: business.description,
+                address_line1: business.address_line1,
+                address_line2: business.address_line2,
+                city: business.city,
+                state: business.state,
+                zip_code: business.zip_code,
+                email: business.email,
+                phone: business.phone,
+                website: business.website,
+            });
 
-        // Handle availability (array and single object cases)
-        const biz_availabilities = Array.isArray(user.availability)
-            ? user.availability
-            : [user.availability];
+            // Handle availability (array and single object cases)
+            const biz_availabilities = Array.isArray(user.availability)
+                ? user.availability
+                : [user.availability];
 
-        // Create availability and associate with business
-        for (const availability of biz_availabilities) {
-            await db.availability.create({
+            // Create availability and associate with business
+            for (const availability of biz_availabilities) {
+                await db.availability.create({
+                    business_id: createdBusiness.business_id,
+                    day_of_week: availability.day_of_week,
+                    start_time: availability.start_time,
+                    end_time: availability.end_time,
+                });
+            }
+
+            // Associate user with business via the junction table (only once per user)
+            await db.user_business.create({
+                user_id: createdUser.user_id,
                 business_id: createdBusiness.business_id,
-                day_of_week: availability.day_of_week,
-                start_time: availability.start_time,
-                end_time: availability.end_time,
+            });
+
+            // Create services for the business
+            const services = [
+                {
+                    service_name: "Service 1",
+                    description: "Service 1 Description",
+                    duration: "60 minutes",
+                    price: 100.0,
+                },
+                {
+                    service_name: "Service 2",
+                    description: "Service 2 Description",
+                    duration: "30 minutes",
+                    price: 50.0,
+                },
+            ];
+
+            const createdServices = [];
+            for (const service of services) {
+                const createdService = await db.service.create({
+                    business_id: createdBusiness.business_id,
+                    name: service.service_name,
+                    description: service.description,
+                    duration: service.duration,
+                    price: service.price,
+                });
+                createdServices.push(createdService);
+            }
+
+            // Create appointment for a service (use the service's ID)
+            const appointment = await db.appointment.create({
+                service_id: createdServices[0].service_id, // Example: Use the first created service ID
+                appointment_date: new Date(),
+                appointment_start: "09:00",
+                appointment_end: "10:00",
+                status: "confirmed",
+                notes: `Appointment for ${createdUser.name}`,
+                payment_status: "pending",
+            });
+
+            // Send notification to the user
+            await db.notification.create({
+                user_id: createdUser.user_id,
+                appointment_id: appointment.appointment_id,
+                message: `Your appointment for ${createdBusiness.business_name} has been confirmed.`,
+                type: "in-app",
+                sent_at: new Date(),
+                status: "sent",
+            });
+
+            // Send notification to the business
+            await db.notification.create({
+                user_id: createdBusiness.business_id, // Notify the business
+                appointment_id: appointment.appointment_id,
+                message: `New appointment for ${createdUser.name} at ${appointment.appointment_start}.`,
+                type: "in-app",
+                sent_at: new Date(),
+                status: "sent",
             });
         }
-
-        // Associate user with business via the junction table (only once per user)
-        await db.user_business.create({
-            user_id: createdUser.user_id,
-            business_id: createdBusiness.business_id,
-        });
     }
 };

@@ -3,13 +3,24 @@ import * as crypto from "node:crypto";
 import dotenv from "dotenv";
 dotenv.config();
 
-// Test Route
-export const test = (req, res) => {
-  res.send({
-    message: "Auth controller works",
-    success: true,
-    session: req.session
-  });
+// User check Route
+export const userCheck = async (req, res) => {
+  const db = req.app.get("db");
+  const id = req.session.userId
+  console.log("Session: ", req.session)
+  if(req.session.userId) {
+    const user = await db.user.findOne({ where: { user_id: id } });
+    res.send({
+      message: "User logged in",
+      success: true,
+      user,
+    });
+  } else {
+    res.send({
+      message: "No user logged in",
+      success: false,
+    });
+  }
 };
 
 // Login Route
@@ -26,12 +37,14 @@ export const login = async (req, res) => {
       success: false,
     });
   } else {
-    req.session.userID = user.user_id;
+    req.session.userId = user.user_id;
+    req.session.name = user.name;
 
     return res.send({
       message: "Hit login",
-      userId: user,
+      userId: user.id,
       success: true,
+      userinfo: user,
     });
   }
 };
@@ -63,6 +76,8 @@ export const register = async (req,res) => {
     })
 
     console.log(newUser)
+    req.session.userId = newUser.user_id;
+    req.session.name = newUser.name;
 
     return res.send({
       message: "New User created",
@@ -72,4 +87,19 @@ export const register = async (req,res) => {
   }
 
   
+}
+
+// Register Logout
+export const logout = async (req, res) => {
+  if (!req.session.userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      console.log("Logout Failed");
+      console.log("req.session.userId: ", req.session.userId);
+    } else {
+      req.session.destroy()
+      res.send({
+        message: "User Logged out",
+        success: true,
+      })
+    }
 }
