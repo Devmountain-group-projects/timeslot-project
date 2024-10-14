@@ -31,21 +31,6 @@ const users = [
                 start_time: "08:00",
                 end_time: "17:00",
             },
-            {
-                day_of_week: "Wednesday",
-                start_time: "08:00",
-                end_time: "17:00",
-            },
-            {
-                day_of_week: "Thursday",
-                start_time: "08:00",
-                end_time: "17:00",
-            },
-            {
-                day_of_week: "Friday",
-                start_time: "08:00",
-                end_time: "17:00",
-            },
         ],
         images: [
             {
@@ -97,23 +82,13 @@ const users = [
 
 export const createUsers = async function createUsers(db) {
     for (const user of users) {
+        // Hash the password
         const hashedPassword = bcryptjs.hashSync(
             user.password_hash,
             bcryptjs.genSaltSync(10)
         );
 
-        const profile_photos = user.images;
-
-        let images = profile_photos.map((image) => {
-            return {
-                src: image.src,
-                image_user: {
-                    image_type: image.image_type,
-                },
-            };
-        });
-
-        // Create user
+        // Create the user
         const createdUser = await db.user.create({
             name: user.name.toLowerCase(),
             email: user.email.toLowerCase(),
@@ -121,10 +96,29 @@ export const createUsers = async function createUsers(db) {
             role: user.role,
             password_hash: hashedPassword,
             profile_picture: user.profile_picture,
-            images: images,
         });
 
-        // Create business
+        // Handle images and associate them with the user using the junction table
+        const profile_photos = user.images.map((image) => ({
+            src: image.src,
+            image_type: image.image_type,
+        }));
+
+        for (const image of profile_photos) {
+            const createdImage = await db.image.create({
+                src: image.src,
+                image_type: image.image_type,
+            });
+
+            // Explicitly associate the created image with the user via the junction table
+            await db.image_user.create({
+                user_id: createdUser.user_id,
+                image_id: createdImage.image_id,
+                image_type: image.image_type,
+            });
+        }
+
+        // Create associated business
         const business = user.business;
         const createdBusiness = await db.business.create({
             business_name: business.business_name,
@@ -139,12 +133,12 @@ export const createUsers = async function createUsers(db) {
             website: business.website,
         });
 
-        // Loop through the user's availability (handle both array and single object cases)
+        // Handle availability (array and single object cases)
         const biz_availabilities = Array.isArray(user.availability)
             ? user.availability
-            : [user.availability]; // Convert to array if it's a single object
+            : [user.availability];
 
-        // Loop through the user's availability
+        // Create availability and associate with business
         for (const availability of biz_availabilities) {
             await db.availability.create({
                 business_id: createdBusiness.business_id,
@@ -152,13 +146,12 @@ export const createUsers = async function createUsers(db) {
                 start_time: availability.start_time,
                 end_time: availability.end_time,
             });
-            // Associate user with business using findOrCreate to avoid duplicates
-            await db.user_business.findOrCreate({
-                where: {
-                    user_id: createdUser.user_id,
-                    business_id: createdBusiness.business_id,
-                },
-            });
         }
+
+        // Associate user with business via the junction table (only once per user)
+        await db.user_business.create({
+            user_id: createdUser.user_id,
+            business_id: createdBusiness.business_id,
+        });
     }
 };

@@ -7,7 +7,7 @@ export const ImageUser = (sequelize, Sequelize) => {
                 allowNull: false,
                 references: {
                     model: 'user', // or models.User
-                    key: 'id',
+                    key: 'user_id',  // updated to match user primary key
                 },
             },
             image_id: {
@@ -20,7 +20,7 @@ export const ImageUser = (sequelize, Sequelize) => {
             },
             image_type: {
                 type: Sequelize.ENUM('user_profile', 'user_banner'),
-                allowNull: false, // Or true if you allow null types
+                allowNull: false,
             },
         },
         {}
