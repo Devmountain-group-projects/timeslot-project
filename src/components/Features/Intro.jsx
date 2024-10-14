@@ -10,7 +10,7 @@ import Devmountain from '../../assets/images/devmountain.png'
 const Intro = () => {
     return (
         <div className="w-full">
-            <div className="max-width mx-auto px-6 mt-4 sm:mt-8">
+            <div className="max-width mx-auto px-6">
                 <div className="bg-gradient-gray rounded-3xl p-6">
                     <div className="grid md:grid-cols-2 items-center gap-12">
                         <motion.div
