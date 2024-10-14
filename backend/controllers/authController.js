@@ -88,3 +88,18 @@ export const register = async (req,res) => {
 
   
 }
+
+// Register Logout
+export const logout = async (req, res) => {
+  if (!req.session.userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      console.log("Logout Failed");
+      console.log("req.session.userId: ", req.session.userId);
+    } else {
+      req.session.destroy()
+      res.send({
+        message: "User Logged out",
+        success: true,
+      })
+    }
+}
