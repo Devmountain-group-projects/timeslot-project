@@ -4,7 +4,6 @@ import Logo from '../../assets/images/logo.png'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import { userCheck } from '../../context/AuthContext'
-import axios from 'axios'
 
 const NavBar = forwardRef((props, ref) => {
     const isLoggedIn = useSelector((state) => state.loggedIn)
