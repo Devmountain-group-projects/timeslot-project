@@ -13,10 +13,10 @@ const ProgressBar = ({ value, max }) => {
 };
 
 const InfoContainer = ({ label, value, max }) => (
-    <div className="w-1/2 py-2 px-4 border-2 border-gray-300 rounded-lg">
+    <div className="w-1/2 py-2 px-4 ring-1 ring-gray-300 rounded-lg">
         <div className="flex justify-between items-center my-2">
-            <span className="text-sm font-normal">{label}</span>
-            <span className="text-sm font-normal">{value}/{max}</span>
+            <span className="text-xs font-normal">{label}</span>
+            <span className="text-xs font-normal">{value}/{max}</span>
         </div>
         <ProgressBar value={value} max={max} />
     </div>
@@ -31,18 +31,18 @@ const CalendarOverview = () => {
 
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300">
-            <section className="h-[12%] flex justify-between items-center p-4 bg-tertiary">
-                <h2 className="w-[90%] text-base text-lefty font-medium">Calendar Overview</h2>
+            <section className="h-[10%] flex justify-between items-center p-4 bg-tertiary">
+                <h2 className="w-[90%] text-xs md:text-sm text-lefty font-medium">Calendar Overview</h2>
                 <div className="w-[10%] flex justify-end">
                     <button
                         className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                         aria-label="Add to calendar"
                     >
-                        <FaCalendarPlus className="text-xl" />
+                        <FaCalendarPlus className="text-lg" />
                     </button>
                 </div>
             </section>
-            <hr className='border-gray-300 border-2 w-full' />
+            <hr className='border-gray-300 border-1 w-full' />
             <section className="h-[88%] p-4 overflow-y-auto">
                 <div className="flex gap-4 mb-3">
                     <InfoContainer label="New Clients" value={3} max={29} />

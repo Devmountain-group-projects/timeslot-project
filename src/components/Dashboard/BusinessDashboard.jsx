@@ -40,30 +40,30 @@ const BusinessDashboard = () => {
                 <Sidebar />
             </div>
             <motion.div
-                className="w-[86%] py-4 pr-4"
+                className="w-[86%] py-2 md:py-4 pr-2 md:pr-4"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
-                <div className="h-full flex flex-col gap-4 rounded-xl p-4 bg-gradient-to-br from-gray-100 to-gray-300">
-                    <motion.div className="h-[15%] flex gap-4" variants={rowVariants}>
+                <div className="h-full flex flex-col gap-2 md:gap-4 rounded-xl p-4 bg-gradient-to-br from-gray-100 to-gray-300">
+                    <motion.div className="h-[15%] flex gap-2 md:gap-4" variants={rowVariants}>
                         <Card className="w-[25%]"><UpcomingAppts /></Card>
                         <Card className="w-[25%]"><RevenueOverview /></Card>
                         <Card className="w-[25%]"><ClientReviews /></Card>
                         <Card className="w-[25%]"><Notifications /></Card>
                     </motion.div>
-                    <motion.div className="h-[50%] flex gap-4" variants={rowVariants}>
+                    <motion.div className="h-[50%] flex gap-2 md:gap-4" variants={rowVariants}>
                         <Card className="w-[33.33%]"><CalendarOverview /></Card>
-                        <div className="w-[66.66%] flex flex-col gap-4">
+                        <div className="w-[66.66%] flex flex-col gap-2 md:gap-4">
                             <Card className="h-[100%]"><OngoingAppts /></Card>
                             {/* These won't go here, no need for them on the main dashboard */}
-                            {/* <div className="h-[50%] flex gap-4">
+                            {/* <div className="h-[50%] flex gap-2 md:gap-4">
                                 <Card className="w-[50%]"><ServiceMgmt /></Card>
                                 <Card className="w-[50%]"><ClientMgmt /></Card>
                             </div> */}
                         </div>
                     </motion.div>
-                    <motion.div className="h-[35%] flex gap-4" variants={rowVariants}>
+                    <motion.div className="h-[35%] flex gap-2 md:gap-4" variants={rowVariants}>
                         <Card className="w-[50%]"><Analytics /></Card>
                         <Card className="w-[50%]"><FollowUp /></Card>
                     </motion.div>

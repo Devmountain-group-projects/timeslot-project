@@ -5,30 +5,31 @@ import User3Img from '../../assets/images/user3.png';
 const OngoingAppts = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300">
-            <section className="h-[12%] flex justify-between items-center p-4 bg-tertiary">
-                <h2 className="w-[90%] text-base font-medium text-left">On Going Appointments</h2>
+            <section className="h-[10%] flex justify-between items-center p-4 bg-tertiary">
+                <h2 className="w-[90%] text-xs md:text-sm font-medium text-left">On Going Appointments</h2>
                 <div className="w-[10%] flex justify-end">
                     <button
                         className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                         aria-label="Expand"
                     >
-                        <FaExpandAlt className="text-xl" />
+                        <FaExpandAlt className="text-lg" />
                     </button>
                 </div>
             </section>
-            <hr className='border-gray-300 border-2 w-full' />
+            <hr className='border-gray-300 border-1 w-full' />
+
             <section className="flex-grow p-4 overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center">
                         <img src={User3Img} alt="Josh Simmons" className="w-12 h-12 rounded-full mr-3" />
                         <div>
-                            <h3 className="font-semibold">Joshua Simmons</h3>
-                            <p className="text-sm text-gray-500">Service Type: Therapy Session</p>
+                            <h3 className="font-semibold text-sm md:text-base">Joshua Simmons</h3>
+                            <p className="text-xs md:text-sm text-gray-500">Service Type: Therapy Session</p>
                         </div>
                     </div>
                     <div className="flex items-center">
-                        <span className='text-base text-gray-500 font-medium'>11:00 - 12:00</span>
-                        <FaClock size={36} className="text-primary ml-2 border-2 border-primary rounded-full p-[.4rem] bg-gradient-gray" />
+                        <span className='text-xs md:text-sm text-gray-500 font-medium'>11:00 - 12:00</span>
+                        <FaClock size={36} className="text-primary ml-2 ring-1 ring-primary rounded-full p-[.4rem] bg-gradient-gray" />
                     </div>
                 </div>
                 <hr className='border-gray-300 border-1 w-full my-4' />
@@ -53,7 +54,7 @@ const OngoingAppts = () => {
                         <label htmlFor="notes" className="text-secondary text-xs font-medium uppercase mb-2">Appointment Notes</label>
                         <textarea
                             id="notes"
-                            className="flex-grow border-2 border-gray-300 rounded-lg p-2 mb-2"
+                            className="flex-grow border-2 border-gray-300 rounded-lg p-2 mb-2 text-xs md:text-sm"
                             placeholder="Enter appointment notes here..."
                         />
                         <div className="flex justify-end gap-2 mt-2">
@@ -74,7 +75,7 @@ const OngoingAppts = () => {
 const InfoItem = ({ label, value }) => (
     <div className="mb-2">
         <p className="text-secondary text-xs font-medium uppercase mb-1">{label}</p>
-        <p className="text-sm text-gray-600 mb-4">{value}</p>
+        <p className="text-xs md:text-sm text-gray-600 mb-4">{value}</p>
     </div>
 );
 
