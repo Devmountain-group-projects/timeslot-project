@@ -5,7 +5,7 @@ import Graph1 from '../../assets/images/graph2.png'
 
 const RevenueOverview = () => {
     return (
-        <div className="bg-white w-full h-full flex flex-col rounded-lg border-2 border-gray-300">
+        <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300">
             <section className="h-[35%] flex justify-between items-center p-4 bg-gradient-gray">
                 <div className="w-[10%]">
                     <FaMoneyBillTrendUp className="text-3xl text-[#e03800]" />

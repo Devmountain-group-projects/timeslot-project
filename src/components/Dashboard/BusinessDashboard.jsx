@@ -55,11 +55,12 @@ const BusinessDashboard = () => {
                     <motion.div className="h-[50%] flex gap-4" variants={rowVariants}>
                         <Card className="w-[33.33%]"><CalendarOverview /></Card>
                         <div className="w-[66.66%] flex flex-col gap-4">
-                            <Card className="h-[50%]"><OngoingAppts /></Card>
-                            <div className="h-[50%] flex gap-4">
+                            <Card className="h-[100%]"><OngoingAppts /></Card>
+                            {/* These won't go here, no need for them on the main dashboard */}
+                            {/* <div className="h-[50%] flex gap-4">
                                 <Card className="w-[50%]"><ServiceMgmt /></Card>
                                 <Card className="w-[50%]"><ClientMgmt /></Card>
-                            </div>
+                            </div> */}
                         </div>
                     </motion.div>
                     <motion.div className="h-[35%] flex gap-4" variants={rowVariants}>
@@ -73,7 +74,7 @@ const BusinessDashboard = () => {
 }
 
 const Card = ({ children, className = '' }) => (
-    <div className={`bg-white border border-gray-200 rounded-lg flex items-center justify-center shadow-sm ${className}`}>
+    <div className={`bg-white rounded-xl flex items-center justify-center shadow-sm ${className}`}>
         {children}
     </div>
 )
