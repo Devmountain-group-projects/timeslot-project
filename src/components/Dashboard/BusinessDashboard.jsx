@@ -45,26 +45,26 @@ const BusinessDashboard = () => {
                 initial="hidden"
                 animate="visible"
             >
-                <div className="h-full grid grid-rows-[1fr_2fr_1fr] gap-4 rounded-lg p-4 bg-gradient-to-br from-gray-100 to-gray-300">
-                    <motion.div className="grid grid-cols-4 gap-4" variants={rowVariants}>
-                        <Card><UpcomingAppts /></Card>
-                        <Card><RevenueOverview /></Card>
-                        <Card><ClientReviews /></Card>
-                        <Card><Notifications /></Card>
+                <div className="h-full flex flex-col gap-4 rounded-xl p-4 bg-gradient-to-br from-gray-100 to-gray-300">
+                    <motion.div className="h-[15%] flex gap-4" variants={rowVariants}>
+                        <Card className="w-[25%]"><UpcomingAppts /></Card>
+                        <Card className="w-[25%]"><RevenueOverview /></Card>
+                        <Card className="w-[25%]"><ClientReviews /></Card>
+                        <Card className="w-[25%]"><Notifications /></Card>
                     </motion.div>
-                    <motion.div className="grid grid-cols-3 gap-4" variants={rowVariants}>
-                        <Card className="col-span-1"><CalendarOverview /></Card>
-                        <div className="col-span-2 grid grid-rows-2 gap-4">
-                            <Card><OngoingAppts /></Card>
-                            <div className="grid grid-cols-2 gap-4">
-                                <Card><ServiceMgmt /></Card>
-                                <Card><ClientMgmt /></Card>
+                    <motion.div className="h-[50%] flex gap-4" variants={rowVariants}>
+                        <Card className="w-[33.33%]"><CalendarOverview /></Card>
+                        <div className="w-[66.66%] flex flex-col gap-4">
+                            <Card className="h-[50%]"><OngoingAppts /></Card>
+                            <div className="h-[50%] flex gap-4">
+                                <Card className="w-[50%]"><ServiceMgmt /></Card>
+                                <Card className="w-[50%]"><ClientMgmt /></Card>
                             </div>
                         </div>
                     </motion.div>
-                    <motion.div className="grid grid-cols-2 gap-4" variants={rowVariants}>
-                        <Card><Analytics /></Card>
-                        <Card><FollowUp /></Card>
+                    <motion.div className="h-[35%] flex gap-4" variants={rowVariants}>
+                        <Card className="w-[50%]"><Analytics /></Card>
+                        <Card className="w-[50%]"><FollowUp /></Card>
                     </motion.div>
                 </div>
             </motion.div>
@@ -73,7 +73,7 @@ const BusinessDashboard = () => {
 }
 
 const Card = ({ children, className = '' }) => (
-    <div className={`bg-white border border-gray-200 rounded-lg p-4 flex items-center justify-center shadow-sm ${className}`}>
+    <div className={`bg-white border border-gray-200 rounded-lg flex items-center justify-center shadow-sm ${className}`}>
         {children}
     </div>
 )

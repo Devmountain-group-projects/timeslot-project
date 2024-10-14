@@ -20,7 +20,9 @@ const SideBar = () => {
         <div className="flex flex-col h-full py-4 px-3">
             {/* Logo */}
             <div className="mb-14 mt-4">
-                <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
+                <Link to="/">
+                    <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
+                </Link>
             </div>
 
             {/* Menu Items */}
