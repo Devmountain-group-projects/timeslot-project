@@ -59,18 +59,21 @@ export const Business = (sequelize, Sequelize) => {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
         });
-
         business.belongsToMany(models.image, {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
             through: "image_business"
         });
-
         business.belongsToMany(models.user, {
-            foreignKey: "user_id",
+            foreignKey: "business_id",
             onDelete: "RESTRICT",
             through: "user_business",
             as: "business"
+        });
+        business.belongsToMany(models.appointment, {
+            foreignKey: "business_id",
+            onDelete: "RESTRICT",
+            through: "service",
         });
     };
 
