@@ -61,11 +61,6 @@ export const Appointment = (sequelize, Sequelize) => {
             onDelete: "RESTRICT",
         });
 
-        // Appointment has many notifications (users are notified about this appointment)
-        appointment.hasMany(models.notification, {
-            foreignKey: "appointment_id",
-            onDelete: "RESTRICT",
-        });
     };
 
     return appointment;
