@@ -35,7 +35,7 @@ const OngoingAppts = () => {
 
 
                 {/* Appointment Details */}
-                <div className="flex gap-4">
+                <div className="flex gap-5">
                     <div className="w-[25%] space-y-4">
                         <InfoItem label="Username" value="John Doe" />
                         <InfoItem label="Service ID" value="#12345" />
@@ -50,13 +50,13 @@ const OngoingAppts = () => {
                         <InfoItem label="Address" value="795 Ave No Name, Lehi, UT" />
                     </div>
                     <div className="w-[50%] flex flex-col">
-                        <label htmlFor="notes" className="text-sm font-medium text-secondary mb-2">Appointment Notes</label>
+                        <label htmlFor="notes" className="text-secondary text-xs font-medium uppercase mb-2">Appointment Notes</label>
                         <textarea
                             id="notes"
                             className="flex-grow border-2 border-gray-300 rounded-lg p-2 mb-2"
                             placeholder="Enter appointment notes here..."
                         />
-                        <div className="flex justify-end gap-2">
+                        <div className="flex justify-end gap-2 mt-2">
                             <button className="text-sm bg-white text-secondary px-4 py-2 ring-2 ring-secondary rounded-full hover:bg-primary hover:text-white hover:ring-2 hover:ring-primary transition-colors duration-300">
                                 Reschedule
                             </button>
@@ -73,8 +73,8 @@ const OngoingAppts = () => {
 
 const InfoItem = ({ label, value }) => (
     <div className="mb-2">
-        <p className="text-secondary text-sm font-medium">{label}</p>
-        <p className="text-sm text-gray-600">{value}</p>
+        <p className="text-secondary text-xs font-medium uppercase mb-1">{label}</p>
+        <p className="text-sm text-gray-600 mb-4">{value}</p>
     </div>
 );
 
