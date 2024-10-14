@@ -16,11 +16,11 @@ export const Availability = (sequelize, Sequelize) => {
                 allowNull: true,
             },
             start_time: {
-                type: Sequelize.STRING,
+                type: Sequelize.TIME,
                 allowNull: true,
             },
             end_time: {
-                type: Sequelize.STRING,
+                type: Sequelize.TIME,
                 allowNull: true,
             },
         },

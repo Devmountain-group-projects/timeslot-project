@@ -7,7 +7,7 @@ export const ImageBusiness = (sequelize, Sequelize) => {
                 allowNull: false,
                 references: {
                     model: 'business', // or models.Business
-                    key: 'id',
+                    key: 'business_id', // updated to match business primary key
                 },
             },
             image_id: {

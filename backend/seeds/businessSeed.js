@@ -1,4 +1,6 @@
-const business = [
+import bcryptjs from "bcryptjs";
+
+const businesses = [
     {
         business_name: "Business Name",
         description: "Business Description",
@@ -10,11 +12,18 @@ const business = [
         email: "Business Email",
         phone: "Business Phone",
         website: "Business Website",
-        availability: {
-            day_of_week: "tues",
-            start_time: "09:00",
-            end_time: "17:00",
-        },
+        availability: [
+            {
+                day_of_week: "Monday",
+                start_time: "09:00",
+                end_time: "17:00",
+            },
+            {
+                day_of_week: "Tuesday",
+                start_time: "09:00",
+                end_time: "17:00",
+            },
+        ],
         images: [
             {
                 src: "https://example.com/profile.jpg",
@@ -25,57 +34,57 @@ const business = [
                 image_type: 'business_banner',
             },
         ],
-    }];
-
+    }
+];
 
 export const createBusiness = async function createBusiness(db) {
-    for (const biz of business) {
-
-        const profile_photos = biz.images;
-
-        let images = profile_photos.map((image) => {
-            return {
-                src: image.src,
-                image_business: {
-                    image_type: image.image_type,
-                },
-            };
+    for (const biz of businesses) {
+        // Create the business
+        const createdBusiness = await db.business.create({
+            business_name: biz.business_name,
+            description: biz.description,
+            address_line1: biz.address_line1,
+            address_line2: biz.address_line2,
+            city: biz.city,
+            state: biz.state,
+            zip_code: biz.zip_code,
+            email: biz.email,
+            phone: biz.phone,
+            website: biz.website,
         });
 
-        await db.business
-            .create({
-                    business_name: biz.business_name,
-                    description: biz.description,
-                    address_line1: biz.address_line1,
-                    address_line2: biz.address_line2,
-                    city: biz.city,
-                    state: biz.state,
-                    zip_code: biz.zip_code,
-                    email: biz.email,
-                    phone: biz.phone,
-                    website: biz.website,
-                    availability: {
-                        day_of_week: biz.availability.day_of_week,
-                        start_time: biz.availability.start_time,
-                        end_time: biz.availability.end_time,
-                    },
-                    images: images,
-                },
-                {
-                    include: [
-                        {
-                            model: db.sequelize.models.image,
-                            as: "images",
-                        },
-                        {
-                            model: db.sequelize.models.availability,
-                            as: "availability",
-                        },
-                    ],
-                }
-            );
+        // Handle the availability
+        const biz_availabilities = Array.isArray(biz.availability)
+            ? biz.availability
+            : [biz.availability]; // Convert to array if it's a single object
+
+        for (const availability of biz_availabilities) {
+            await db.availability.create({
+                business_id: createdBusiness.business_id,
+                day_of_week: availability.day_of_week,
+                start_time: availability.start_time,
+                end_time: availability.end_time,
+            });
+        }
+
+        // Handle images and associate them with the business using the junction table
+        const profile_photos = biz.images.map((image) => ({
+            src: image.src,
+            image_type: image.image_type,
+        }));
+
+        for (const image of profile_photos) {
+            const createdImage = await db.image.create({
+                src: image.src,
+                image_type: image.image_type,
+            });
+
+            // Explicitly associate the created image with the business via the junction table
+            await db.image_business.create({
+                business_id: createdBusiness.business_id,
+                image_id: createdImage.image_id,
+                image_type: image.image_type, // If the junction table needs the image type
+            });
+        }
     }
 };
-
-
-
