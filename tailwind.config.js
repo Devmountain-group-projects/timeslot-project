@@ -12,7 +12,7 @@ export default {
       colors: {
         primary: '#007dfe',
         secondary: '#2264ba',
-        tertiary: '#d7def4',
+        tertiary: '#EFF2F8',
       },
       width: {
         max: 'max-w-[1800px]',
