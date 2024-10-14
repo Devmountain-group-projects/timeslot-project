@@ -19,7 +19,7 @@ const UpcomingAppts = () => {
             <section className="h-[60%] flex justify-between items-center p-4">
                 <div className="w-[70%]">
                     <p className="text-3xl font-bold">5</p>
-                    <p className="text-sm text-gray-500">This week</p>
+                    <p className="text-sm text-gray-500">Appointments</p>
                 </div>
                 <img src={Graph1} className="w-[30%]" alt="" />
             </section>
