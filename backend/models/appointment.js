@@ -11,15 +11,7 @@ export const Appointment = (sequelize, Sequelize) => {
                 type: Sequelize.INTEGER,
                 references: {
                     model: 'service',
-                    key: 'service_id'
-                },
-                onDelete: "RESTRICT",
-            },
-            user_id: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'user',
-                    key: 'user_id'
+                    key: 'service_id',
                 },
                 onDelete: "RESTRICT",
             },
@@ -69,9 +61,9 @@ export const Appointment = (sequelize, Sequelize) => {
             onDelete: "RESTRICT",
         });
 
-        // Appointment belongs to user
-        appointment.belongsTo(models.user, {
-            foreignKey: "user_id",
+        // Appointment has many notifications (users are notified about this appointment)
+        appointment.hasMany(models.notification, {
+            foreignKey: "appointment_id",
             onDelete: "RESTRICT",
         });
     };

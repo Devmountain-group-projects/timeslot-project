@@ -1,5 +1,7 @@
 import bcryptjs from "bcryptjs";
 
+// Example data for seeding businesses, services, users, appointments, and notifications
+
 const businesses = [
     {
         business_name: "Business Name",
@@ -24,18 +26,18 @@ const businesses = [
                 end_time: "17:00",
             },
         ],
-        service: [
+        services: [
             {
                 service_name: "Service 1",
                 description: "Service 1 Description",
                 duration: "60 minutes",
-                price: 100.00
+                price: 100.00,
             },
             {
                 service_name: "Service 2",
                 description: "Service 2 Description",
                 duration: "30 minutes",
-                price: 50.00
+                price: 50.00,
             }
         ],
         images: [
@@ -48,30 +50,10 @@ const businesses = [
                 image_type: 'business_banner',
             },
         ],
-        appointments: [
-            {
-                user_id: 1, // Example user ID (ensure this user exists in your DB)
-                service_index: 0, // First service in the service array
-                appointment_date: new Date(), // Current date
-                appointment_start: "09:00",
-                appointment_end: "10:00",
-                status: "confirmed",
-                notes: "First appointment for testing",
-                payment_status: "pending"
-            },
-            {
-                user_id: 2, // Reference another user ID
-                service_index: 1, // Second service in the service array
-                appointment_date: new Date(),
-                appointment_start: "11:00",
-                appointment_end: "11:30",
-                status: "pending",
-                notes: "Second appointment for testing",
-                payment_status: "sent"
-            }
-        ]
     }
 ];
+
+// Seed logic for creating businesses, services, and appointments
 
 export const createBusiness = async function createBusiness(db) {
     for (const biz of businesses) {
@@ -92,7 +74,7 @@ export const createBusiness = async function createBusiness(db) {
         // Handle the availability
         const biz_availabilities = Array.isArray(biz.availability)
             ? biz.availability
-            : [biz.availability]; // Convert to array if it's a single object
+            : [biz.availability];
 
         for (const availability of biz_availabilities) {
             await db.availability.create({
@@ -104,9 +86,9 @@ export const createBusiness = async function createBusiness(db) {
         }
 
         // Handle services and associate them with the business
-        const services = Array.isArray(biz.service)
-            ? biz.service
-            : [biz.service]; // Convert to array if it's a single object
+        const services = Array.isArray(biz.services)
+            ? biz.services
+            : [biz.services];
 
         const createdServices = [];
         for (const service of services) {
@@ -140,23 +122,54 @@ export const createBusiness = async function createBusiness(db) {
             });
         }
 
-        // Handle appointments and associate them with the business, services, and users
-        const appointments = Array.isArray(biz.appointments)
-            ? biz.appointments
-            : [biz.appointments]; // Convert to array if it's a single object
+        // Create appointments and generate notifications for users
+        const appointments = [
+            {
+                user_id: 1, // Replace with actual user IDs
+                service_id: createdServices[0].service_id, // First service
+                appointment_date: new Date(),
+                appointment_start: "09:00",
+                appointment_end: "10:00",
+                status: "confirmed",
+                notes: "Appointment for Service 1",
+                payment_status: "pending",
+            },
+            {
+                user_id: 2, // Replace with actual user IDs
+                service_id: createdServices[1].service_id, // Second service
+                appointment_date: new Date(),
+                appointment_start: "11:00",
+                appointment_end: "11:30",
+                status: "pending",
+                notes: "Appointment for Service 2",
+                payment_status: "sent",
+            },
+        ];
 
         for (const appointment of appointments) {
-            const service = createdServices[appointment.service_index]; // Get the service by index
-
-            await db.appointment.create({
-                service_id: service.service_id,          // Correct association
+            // Create the appointment
+            const createdAppointment = await db.appointment.create({
                 user_id: appointment.user_id,
+                service_id: appointment.service_id,
                 appointment_date: appointment.appointment_date,
                 appointment_start: appointment.appointment_start,
                 appointment_end: appointment.appointment_end,
                 status: appointment.status,
                 notes: appointment.notes,
                 payment_status: appointment.payment_status,
+            });
+
+            // Fetch the user to notify
+            const user = await db.user.findByPk(appointment.user_id);
+
+            // Create a notification for the user about the appointment
+            await db.notification.create({
+                user_id: user.user_id,
+                appointment_id: createdAppointment.appointment_id,
+                message: `Your appointment for ${appointment.notes} has been confirmed.`,
+                type: "in-app", // or "email" depending on your setup
+                sent_at: new Date().toISOString(),
+                status: "pending",
             });
         }
     }
