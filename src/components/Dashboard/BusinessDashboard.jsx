@@ -74,7 +74,7 @@ const BusinessDashboard = () => {
 }
 
 const Card = ({ children, className = '' }) => (
-    <div className={`bg-white rounded-xl flex items-center justify-center shadow- ${className}`}>
+    <div className={`bg-white rounded-xl flex items-center justify-center shadow-sm ${className}`}>
         {children}
     </div>
 )
