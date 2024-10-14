@@ -29,7 +29,7 @@ const OngoingAppts = () => {
                     </div>
                     <div className="flex items-center">
                         <span className='text-xs md:text-sm text-gray-500 font-medium'>11:00 - 12:00</span>
-                        <FaClock size={36} className="text-primary ml-2 border-2 border-primary rounded-full p-[.4rem] bg-gradient-gray" />
+                        <FaClock size={36} className="text-primary ml-2 ring-1 ring-primary rounded-full p-[.4rem] bg-gradient-gray" />
                     </div>
                 </div>
                 <hr className='border-gray-300 border-1 w-full my-4' />
