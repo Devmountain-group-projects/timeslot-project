@@ -35,7 +35,7 @@ const BusinessDashboard = () => {
     }
 
     return (
-        <div className="flex h-screen bg-gradient-to-b from-secondary via:secondary to-primary">
+        <div className="flex h-screen bg-secondary">
             <div className="w-[14%] text-white">
                 <Sidebar />
             </div>

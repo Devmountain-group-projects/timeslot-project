@@ -5,8 +5,8 @@ import User3Img from '../../assets/images/user3.png';
 const OngoingAppts = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300">
-            <section className="h-[12%] flex justify-between items-center p-4 bg-gradient-gray">
-                <h2 className="w-[90%] text-base text-left">On Going Appointments</h2>
+            <section className="h-[12%] flex justify-between items-center p-4 bg-tertiary">
+                <h2 className="w-[90%] text-base font-medium text-left">On Going Appointments</h2>
                 <div className="w-[10%] flex justify-end">
                     <button
                         className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
@@ -23,7 +23,7 @@ const OngoingAppts = () => {
                         <img src={User3Img} alt="Josh Simmons" className="w-12 h-12 rounded-full mr-3" />
                         <div>
                             <h3 className="font-semibold">Joshua Simmons</h3>
-                            <p className="text-sm text-gray-500">New Client - Therapy Session</p>
+                            <p className="text-sm text-gray-500">Service Type: Therapy Session</p>
                         </div>
                     </div>
                     <div className="flex items-center">
@@ -37,7 +37,7 @@ const OngoingAppts = () => {
                 {/* Appointment Details */}
                 <div className="flex gap-5">
                     <div className="w-[25%] space-y-4">
-                        <InfoItem label="Username" value="John Doe" />
+                        <InfoItem label="Business User" value="John Doe" />
                         <InfoItem label="Service ID" value="#12345" />
                         <InfoItem label="Created at" value="10/14/2024" />
                         <InfoItem label="Updated at" value="10/14/2024" />

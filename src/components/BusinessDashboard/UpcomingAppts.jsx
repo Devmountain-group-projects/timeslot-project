@@ -6,11 +6,11 @@ import Graph1 from '../../assets/images/graph1.png'
 const UpcomingAppts = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300">
-            <section className="h-[35%] flex justify-between items-center p-4 bg-gradient-gray">
+            <section className="h-[35%] flex justify-between items-center p-4 bg-tertiary">
                 <div className="w-[10%]">
                     <BsCalendar2WeekFill className="text-3xl text-[#35485e]" />
                 </div>
-                <h2 className="w-[80%] text-base text-center">Upcoming Appointments</h2>
+                <h2 className="w-[80%] text-base text-center font-medium">Upcoming Appointments</h2>
                 <div className="w-[10%] flex justify-end">
                     <FaChevronRight className="text-gray-400" />
                 </div>

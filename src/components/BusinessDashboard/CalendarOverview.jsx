@@ -31,8 +31,8 @@ const CalendarOverview = () => {
 
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300">
-            <section className="h-[12%] flex justify-between items-center p-4 bg-gradient-gray">
-                <h2 className="w-[90%] text-base text-left">Calendar Overview</h2>
+            <section className="h-[12%] flex justify-between items-center p-4 bg-tertiary">
+                <h2 className="w-[90%] text-base text-lefty font-medium">Calendar Overview</h2>
                 <div className="w-[10%] flex justify-end">
                     <button
                         className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
