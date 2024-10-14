@@ -49,6 +49,9 @@ db.sequelize.sync({force: true}).then(async function () {
         await createUsers(db).then(() =>
             console.log("Users successfully created"),
         );
+        await createBusiness(db).then(() =>
+            console.log("Businesses successfully created"),
+        );
         // await createAppointments(db).then(() =>
         //     console.log("Appointments successfully created"),
         // );

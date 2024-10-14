@@ -44,6 +44,7 @@ export const User = (sequelize, Sequelize) => {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
             through: "user_business",
+            as: "business",
         });
 
         user.hasMany(models.notification, {
