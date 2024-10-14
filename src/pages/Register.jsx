@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import ClientRegister from '../components/Auth/ClientRegister'
 import Role from '../components/Auth/Role'
 import BusinessRegister from '../components/Auth/BusinessRegister'
 import BusinessDetails from '../components/Auth/BusinessDetails'
 import { register } from '../context/AuthContext'
+import { useDispatch } from 'react-redux'
 
 const Register = () => {
     const [step, setStep] = useState(1)
     const [userType, setUserType] = useState(null)
-    const [form, setForm] = useState(null)
+    const [formData, setFormData] = useState(null)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const handleClientRegister = (formData) => {
-        setForm(formData)
+    const handleClientRegister = (data) => {
+        setFormData(data)
         setStep(2) // Move to Role selection
     }
 
@@ -35,6 +35,7 @@ const Register = () => {
                     })
                     navigate('/dashboard') // Assuming you have a dashboard route
                 } else {
+                    setStep(1)
                     throw new Error("Failed to Register")
                 }
             })
@@ -57,7 +58,7 @@ const Register = () => {
     return (
         <div>
             {step === 1 && <ClientRegister onRegister={handleClientRegister} />}
-            {step === 2 && <Role onRoleSelect={handleRoleSelection} formData={form} />}
+            {step === 2 && <Role onRoleSelect={handleRoleSelection} formData={formData} />}
             {step === 3 && <BusinessRegister onContinue={handleBusinessRegister} />}
             {step === 4 && <BusinessDetails onSubmit={handleBusinessDetails} />}
         </div>
