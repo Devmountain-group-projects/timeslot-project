@@ -14,8 +14,13 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { MdLiveHelp } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { userLogout } from '../../context/AuthContext';
 
 const SideBar = () => {
+    const logoutTrigger = () => {
+        console.log("logging user out")
+        userLogout()
+    }
     return (
         <div className="flex flex-col h-full py-4 px-3">
             {/* Logo */}
@@ -43,7 +48,8 @@ const SideBar = () => {
                 <MenuSection title="Help & Settings">
                     <MenuItem href="/settings" icon={<IoMdSettings />}>Account Settings</MenuItem>
                     <MenuItem href="/help" icon={<MdLiveHelp />}>Help & Support</MenuItem>
-                    <MenuItem href="/logout" icon={<RiLogoutBoxFill />}>Logout</MenuItem>
+                    {/* <MenuItem href="/" icon={<RiLogoutBoxFill />} >Logout</MenuItem> */}
+                    <Link onClick={logoutTrigger} to="/" className="flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors, mb-1 text-sm"><RiLogoutBoxFill  className="mr-2 text-lg"/>Logout</Link>
                 </MenuSection>
             </nav>
 

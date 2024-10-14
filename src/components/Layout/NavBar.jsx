@@ -30,8 +30,15 @@ const NavBar = forwardRef((props, ref) => {
 
     const sessionCheck = async () => {
         const res = await userCheck()
-        setName(res.user.name)
-        setloggedIn(res.success)
+        console.log("Test: ", res)
+        if (res.success) {
+            setName(res.user.name)
+            setloggedIn(res.success)    
+        } else {
+            setName("")
+            setloggedIn(res.success) 
+        }
+        
     }
 
     const toggleMenu = () => {
