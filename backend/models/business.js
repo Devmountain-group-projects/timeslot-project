@@ -70,9 +70,10 @@ export const Business = (sequelize, Sequelize) => {
             through: "user_business",
             as: "business"
         });
-        business.hasMany(models.service, {
+        business.belongsToMany(models.appointment, {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
+            through: "service",
         });
     };
 

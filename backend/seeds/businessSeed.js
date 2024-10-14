@@ -50,23 +50,23 @@ const businesses = [
         ],
         appointments: [
             {
-                user_id: 1, // Example user ID (ensure this user exists in your database)
-                service_index: 0, // Refers to the first service (index-based)
+                user_id: 1, // Example user ID (ensure this user exists in your DB)
+                service_index: 0, // First service in the service array
                 appointment_date: new Date(), // Current date
                 appointment_start: "09:00",
                 appointment_end: "10:00",
                 status: "confirmed",
-                notes: "Testing appointment",
+                notes: "First appointment for testing",
                 payment_status: "pending"
             },
             {
-                user_id: 2, // Another user ID
-                service_index: 1, // Refers to the second service
+                user_id: 2, // Reference another user ID
+                service_index: 1, // Second service in the service array
                 appointment_date: new Date(),
                 appointment_start: "11:00",
                 appointment_end: "11:30",
                 status: "pending",
-                notes: "Another test appointment",
+                notes: "Second appointment for testing",
                 payment_status: "sent"
             }
         ]
@@ -92,7 +92,7 @@ export const createBusiness = async function createBusiness(db) {
         // Handle the availability
         const biz_availabilities = Array.isArray(biz.availability)
             ? biz.availability
-            : [biz.availability];
+            : [biz.availability]; // Convert to array if it's a single object
 
         for (const availability of biz_availabilities) {
             await db.availability.create({
@@ -106,7 +106,7 @@ export const createBusiness = async function createBusiness(db) {
         // Handle services and associate them with the business
         const services = Array.isArray(biz.service)
             ? biz.service
-            : [biz.service];
+            : [biz.service]; // Convert to array if it's a single object
 
         const createdServices = [];
         for (const service of services) {
@@ -132,6 +132,7 @@ export const createBusiness = async function createBusiness(db) {
                 image_type: image.image_type,
             });
 
+            // Explicitly associate the created image with the business via the junction table
             await db.image_business.create({
                 business_id: createdBusiness.business_id,
                 image_id: createdImage.image_id,
@@ -142,14 +143,13 @@ export const createBusiness = async function createBusiness(db) {
         // Handle appointments and associate them with the business, services, and users
         const appointments = Array.isArray(biz.appointments)
             ? biz.appointments
-            : [biz.appointments];
+            : [biz.appointments]; // Convert to array if it's a single object
 
         for (const appointment of appointments) {
-            const service = createdServices[appointment.service_index];
+            const service = createdServices[appointment.service_index]; // Get the service by index
 
             await db.appointment.create({
-                business_id: createdBusiness.business_id,
-                service_id: service.service_id,
+                service_id: service.service_id,          // Correct association
                 user_id: appointment.user_id,
                 appointment_date: appointment.appointment_date,
                 appointment_start: appointment.appointment_start,
