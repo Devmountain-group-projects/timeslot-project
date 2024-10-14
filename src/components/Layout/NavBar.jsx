@@ -2,11 +2,16 @@ import React, { useState, useEffect, forwardRef } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import Logo from '../../assets/images/logo.png'
 import { FaBars, FaTimes } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
+import { userCheck } from '../../context/AuthContext'
+import axios from 'axios'
 
 const NavBar = forwardRef((props, ref) => {
+    const isLoggedIn = useSelector((state) => state.loggedIn)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-
+    const [name, setName] = useState(null)
+    const [loggedIn, setloggedIn] = useState(isLoggedIn)
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 50) {
@@ -15,6 +20,7 @@ const NavBar = forwardRef((props, ref) => {
                 setIsScrolled(false);
             }
         };
+        sessionCheck()
 
         window.addEventListener('scroll', handleScroll);
 
@@ -23,12 +29,18 @@ const NavBar = forwardRef((props, ref) => {
         };
     }, []);
 
+    const sessionCheck = async () => {
+        const res = await userCheck()
+        setName(res.user.name)
+        setloggedIn(res.success)
+    }
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
     const linkClass = (isActive) => `
-        ${isActive ? 'text-secondary border-b-2 border-secondary' : 'text-gray-500'}
+        ${isActive ? 'text-primary border-b-2 border-primary' : 'text-gray-500'}
         hover:text-primary px-4 py-2 text-base transition duration-150 ease-in-out
     `
 
@@ -65,14 +77,15 @@ const NavBar = forwardRef((props, ref) => {
                     <div className="flex items-center space-x-2">
                         <div className="hidden lg:block">
                             <div className="flex items-center space-x-4">
-                                <Link to="/login" className='text-gray-500 hover:text-primary px-3 py-2 rounded-md text-base font-medium'>Login</Link>
-                                <Link to="/register" className='btn-blue'>Get Started</Link>
+                                {loggedIn && <Link to="/dashboard" className='text-gray-500 hover:text-primary px-3 py-2 rounded-md text-base font-medium'>{name}</Link>}
+                                {!loggedIn && <Link to="/login" className='text-gray-500 hover:text-primary px-3 py-2 rounded-md text-base font-medium'>Login</Link>}
+                                {!loggedIn && <Link to="/register" className='btn-blue'>Get Started</Link>}
                             </div>
                         </div>
 
                         <div className="flex lg:hidden items-center space-x-2">
                             <Link to="/login" className='text-gray-500 hover:text-secondary px-3 py-2 rounded-md text-base font-medium'>Login</Link>
-                            <Link to="/register" className='px-3 py-2 text-md rounded-full font-medium text-white bg-secondary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-150 ease-in-out'>Sign Up</Link>
+                            <Link to="/register" className='px-3 py-2 text-md rounded-full font-medium text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-150 ease-in-out'>Sign Up</Link>
                             <button onClick={toggleMenu} className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500">
                                 <span className="sr-only">Open main menu</span>
                                 {!isMenuOpen ? (

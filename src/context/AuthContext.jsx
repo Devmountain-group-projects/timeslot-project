@@ -30,3 +30,9 @@ export async function register(name, email, phone, password) {
   return res;
   
 }
+
+export async function userCheck() {
+  const res = await axios.get("api/auth/userCheck")
+  console.log("AuthContext: ", res)
+  return res.data
+}

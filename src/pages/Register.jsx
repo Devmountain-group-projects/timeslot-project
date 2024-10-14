@@ -4,22 +4,42 @@ import ClientRegister from '../components/Auth/ClientRegister'
 import Role from '../components/Auth/Role'
 import BusinessRegister from '../components/Auth/BusinessRegister'
 import BusinessDetails from '../components/Auth/BusinessDetails'
+import { register } from '../context/AuthContext'
+import { useDispatch } from 'react-redux'
 
 const Register = () => {
     const [step, setStep] = useState(1)
     const [userType, setUserType] = useState(null)
+    const [formData, setFormData] = useState(null)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const handleClientRegister = () => {
+    const handleClientRegister = (data) => {
+        setFormData(data)
         setStep(2) // Move to Role selection
     }
 
-    const handleRoleSelection = (role) => {
+    const handleRoleSelection = (role, data) => {
         setUserType(role)
         if (role === 'Client') {
             // For now, just log. In the future, you might want to redirect to a client dashboard or complete registration
             console.log('Client registration complete')
-            navigate('/dashboard') // Assuming you have a dashboard route
+            console.log('Data: ', data)
+            register(data.name, data.email, data.phoneNumber, data.password).then((res) => {
+                const { message, success } = res.data
+                if (success) {
+                    console.log("Registered")
+                    console.log(message)
+                    dispatch({
+                        type: "USER_LOGIN"
+                    })
+                    navigate('/dashboard') // Assuming you have a dashboard route
+                } else {
+                    setStep(1)
+                    throw new Error("Failed to Register")
+                }
+            })
+            
         } else {
             setStep(3) // Move to Business Registration
         }
@@ -38,7 +58,7 @@ const Register = () => {
     return (
         <div>
             {step === 1 && <ClientRegister onRegister={handleClientRegister} />}
-            {step === 2 && <Role onRoleSelect={handleRoleSelection} />}
+            {step === 2 && <Role onRoleSelect={handleRoleSelection} formData={formData} />}
             {step === 3 && <BusinessRegister onContinue={handleBusinessRegister} />}
             {step === 4 && <BusinessDetails onSubmit={handleBusinessDetails} />}
         </div>

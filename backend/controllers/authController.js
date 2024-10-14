@@ -4,12 +4,23 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // User check Route
-export const userCheck = (req, res) => {
-  res.send({
-    message: "Auth controller works",
-    success: true,
-    session: req.session
-  });
+export const userCheck = async (req, res) => {
+  const db = req.app.get("db");
+  const id = req.session.userId
+  console.log("Session: ", req.session)
+  if(req.session.userId) {
+    const user = await db.user.findOne({ where: { user_id: id } });
+    res.send({
+      message: "User logged in",
+      success: true,
+      user,
+    });
+  } else {
+    res.send({
+      message: "No user logged in",
+      success: false,
+    });
+  }
 };
 
 // Login Route
@@ -27,6 +38,7 @@ export const login = async (req, res) => {
     });
   } else {
     req.session.userId = user.user_id;
+    req.session.name = user.name;
 
     return res.send({
       message: "Hit login",
@@ -65,6 +77,7 @@ export const register = async (req,res) => {
 
     console.log(newUser)
     req.session.userId = newUser.user_id;
+    req.session.name = newUser.name;
 
     return res.send({
       message: "New User created",
