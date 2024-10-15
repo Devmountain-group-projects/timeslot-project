@@ -43,7 +43,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
 
                 <MenuSection title="Other Menu">
                     <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView}>Payments & Invoicing</MenuItem>
-                    <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Calendar</MenuItem>
+                    <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Schedule</MenuItem>
                 </MenuSection>
 
                 <MenuSection title="Help & Settings">

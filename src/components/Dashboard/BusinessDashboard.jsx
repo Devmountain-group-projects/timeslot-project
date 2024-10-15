@@ -16,7 +16,7 @@ import ReviewReport from '../BusinessDashboard/ReviewReport'
 // Sidebar Links
 import AccountSettings from '../BusinessDashboard/AccountSettings'
 import HelpSupport from '../BusinessDashboard/HelpSupport'
-import AllCalendar from '../BusinessDashboard/AllCalendar'
+import Schedule from '../BusinessDashboard/Schedule'
 import AllReviews from '../BusinessDashboard/AllReviews'
 import AllClients from '../BusinessDashboard/AllClients'
 import AllAppointments from '../BusinessDashboard/AllAppointments'
@@ -85,7 +85,7 @@ const BusinessDashboard = () => {
             case 'payments':
                 return <PaymentsInvoicing />
             case 'calendar':
-                return <AllCalendar />
+                return <Schedule />
             case 'settings':
                 return <AccountSettings />
             case 'help':

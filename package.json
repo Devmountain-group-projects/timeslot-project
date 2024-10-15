@@ -12,7 +12,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aldabil/react-scheduler": "^2.9.5",
     "@canvasjs/react-charts": "^1.0.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.4",
+    "@mui/x-date-pickers": "^7.20.0",
     "@reduxjs/toolkit": "^2.2.8",
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
