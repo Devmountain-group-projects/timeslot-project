@@ -82,7 +82,7 @@ const MenuItem = ({ view, icon, children, currentView, setCurrentView }) => {
         <li className="mb-1 text-sm">
             <button
                 onClick={() => setCurrentView(view)}
-                className={`flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors w-full text-left ${isActive ? 'bg-white bg-opacity-20 text-white' : ''}`}
+                className={`flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors w-full text-left ${isActive ? 'bg-white bg-opacity-75 text-secondary' : ''}`}
             >
                 {icon && <span className="mr-2 text-lg">{icon}</span>}
                 {children}
