@@ -44,24 +44,46 @@ const SharedScheduler = ({ isOverview = false, selectedDate }) => {
 
     if (isOverview) {
         return (
-            <Scheduler
-                {...commonProps}
-                view="month"
-                height={300}
-                month={{
-                    weekDays: [0, 1, 2, 3, 4, 5],
-                    weekStartOn: 1,
-                    navigation: true,
-                    disableGoToDay: true,
-                }}
-                navigationPickerProps={{
-                    showToolbar: true,
-                    showTabs: false,
-                    views: ['month'],
-                }}
-                viewerExtraComponent={() => null}
-                customViewer={() => null}
-            />
+            <div className="w-[98%] mx-auto calendar-overview">
+                <style>]
+                    {`
+                    .calendar-overview .rs__cell {
+                        font-size: .75rem !important;
+                    }
+                    .calendar-overview .rs__event {
+                        font-size: .75rem !important;
+                    }
+                    .calendar-overview .rs__cell--day {
+                        font-size: .75rem !important;
+                    }
+                    .calendar-overview .rs__more_popup {
+                        font-size: .75rem !important;
+                    }
+                    `}
+                </style>
+                <Scheduler
+                    {...commonProps}
+                    view="month"
+                    height={300}
+                    month={{
+                        weekDays: [0, 1, 2, 3, 4, 5],
+                        weekStartOn: 1,
+                        navigation: false,
+                        disableGoToDay: true,
+                    }}
+                    navigationPickerProps={{
+                        showToolbar: false,
+                        showTabs: false,
+                        views: ['month'],
+                    }}
+                    viewerExtraComponent={() => null}
+                    customViewer={() => null}
+                    fields={[]}
+                    draggable={false}
+                    editable={false}
+                    deletable={false}
+                />
+            </div>
         );
     } else {
         return (

@@ -23,50 +23,54 @@ const Schedule = () => {
 
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
+            <section className="flex-none flex justify-between items-center py-2 px-3 bg-tertiary">
                 <h2 className="text-lg md:text-xl font-medium">Full Schedule</h2>
             </section>
             <hr className='border-t border-gray-300 w-full m-0' />
-            <section className="flex-grow overflow-y-auto p-4">
-                <Scheduler
-                    events={events}
-                    view="week"
-                    selectedDate={selectedDate}
-                    week={{
-                        weekDays: [0, 1, 2, 3, 4, 5],
-                        weekStartOn: 1,
-                        startHour: 9,
-                        endHour: 17,
-                    }}
-                    day={{
-                        startHour: 9,
-                        endHour: 17,
-                    }}
-                    month={{
-                        weekDays: [0, 1, 2, 3, 4, 5],
-                        weekStartOn: 1,
-                    }}
-                    fields={[
-                        {
-                            name: "client",
-                            type: "input",
-                            default: "No Client",
-                            config: { label: "Client Name", required: true, min: 3, variant: "outlined" }
-                        },
-                        {
-                            name: "service",
-                            type: "select",
-                            default: "Haircut",
-                            options: [
-                                { id: 1, text: "Haircut", value: "Haircut" },
-                                { id: 2, text: "Coloring", value: "Coloring" },
-                                { id: 3, text: "Styling", value: "Styling" },
-                            ],
-                            config: { label: "Service Type", required: true, variant: "outlined" }
-                        }
-                    ]}
-                    height={700}
-                />
+            <section className="flex-grow overflow-hidden">
+                <div className="h-full overflow-y-auto">
+                    <Scheduler
+                        events={events}
+                        view="week"
+                        selectedDate={selectedDate}
+                        week={{
+                            weekDays: [0, 1, 2, 3, 4, 5],
+                            weekStartOn: 1,
+                            startHour: 9,
+                            endHour: 22,
+                            step: 60,
+                        }}
+                        day={{
+                            startHour: 9,
+                            endHour: 22,
+                            step: 60,
+                        }}
+                        month={{
+                            weekDays: [0, 1, 2, 3, 4, 5],
+                            weekStartOn: 1,
+                        }}
+                        fields={[
+                            {
+                                name: "client",
+                                type: "input",
+                                default: "No Client",
+                                config: { label: "Client Name", required: true, min: 3, variant: "outlined" }
+                            },
+                            {
+                                name: "service",
+                                type: "select",
+                                default: "Haircut",
+                                options: [
+                                    { id: 1, text: "Haircut", value: "Haircut" },
+                                    { id: 2, text: "Coloring", value: "Coloring" },
+                                    { id: 3, text: "Styling", value: "Styling" },
+                                ],
+                                config: { label: "Service Type", required: true, variant: "outlined" }
+                            }
+                        ]}
+                        hourFormat="24"
+                    />
+                </div>
             </section>
         </div>
     )
