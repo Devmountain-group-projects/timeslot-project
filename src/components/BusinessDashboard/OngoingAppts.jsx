@@ -61,7 +61,7 @@ const OngoingAppts = () => {
                             <button className="text-sm bg-white text-secondary px-4 py-2 ring-2 ring-secondary rounded-full hover:bg-primary hover:text-white hover:ring-2 hover:ring-primary transition-colors duration-300">
                                 Reschedule
                             </button>
-                            <button className="btn-blue text-sm px-4 py-2">
+                            <button className="btn-blue ring-2 ring-secondary text-sm px-4 py-2">
                                 Finish Appointment
                             </button>
                         </div>

@@ -11,6 +11,7 @@ import ServiceMgmt from '../BusinessDashboard/ServiceMgmt'
 import ClientMgmt from '../BusinessDashboard/ClientMgmt'
 import CalendarOverview from '../BusinessDashboard/CalendarOverview'
 import FollowUp from '../BusinessDashboard/FollowUp'
+import ReviewReport from '../BusinessDashboard/ReviewReport'
 
 const BusinessDashboard = () => {
     const containerVariants = {
@@ -54,18 +55,14 @@ const BusinessDashboard = () => {
                     </motion.div>
                     <motion.div className="h-[50%] flex gap-2 md:gap-4" variants={rowVariants}>
                         <Card className="w-[33.33%]"><CalendarOverview /></Card>
-                        <div className="w-[66.66%] flex flex-col gap-2 md:gap-4">
+                        <div className="w-[66.67%] flex flex-col gap-2 md:gap-4">
                             <Card className="h-[100%]"><OngoingAppts /></Card>
-                            {/* These won't go here, no need for them on the main dashboard */}
-                            {/* <div className="h-[50%] flex gap-2 md:gap-4">
-                                <Card className="w-[50%]"><ServiceMgmt /></Card>
-                                <Card className="w-[50%]"><ClientMgmt /></Card>
-                            </div> */}
                         </div>
                     </motion.div>
                     <motion.div className="h-[35%] flex gap-2 md:gap-4" variants={rowVariants}>
-                        <Card className="w-[50%]"><Analytics /></Card>
-                        <Card className="w-[50%]"><FollowUp /></Card>
+                        <Card className="w-[33.33%]"><Analytics /></Card>
+                        <Card className="w-[33.33%]"><FollowUp /></Card>
+                        <Card className="w-[33.33%]"><ReviewReport /></Card>
                     </motion.div>
                 </div>
             </motion.div>
