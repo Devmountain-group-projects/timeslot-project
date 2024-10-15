@@ -32,8 +32,8 @@ app.use(
 
 // Database and seed data
 import db from './models/db.js';
-import {createRoles} from './seeds/roleSeed.js';
 import {createPermissions} from './seeds/permissionSeed.js';
+import {createRoles} from './seeds/roleSeed.js';
 import {createUsers} from './seeds/userSeed.js';
 import {createBusiness} from './seeds/businessSeed.js';
 

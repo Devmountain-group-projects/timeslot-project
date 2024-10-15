@@ -18,9 +18,9 @@ const sequelize = new Sequelize(
 );
 
 // Importing models
+import { Permission } from "./permission.js";
 import { Role } from "./role.js";
 import { RolePermission } from "./rolePermission.js";
-import { Permission } from "./permission.js";
 import { User } from "./user.js";
 import { UserBusiness } from "./userBusiness.js";
 import { Appointment } from "./appointment.js";
@@ -35,9 +35,9 @@ import { ImageUser } from "./imageUser.js";
 import { ImageBusiness } from "./imageBusiness.js";
 
 // Associating models for use in the db
+const permission = Permission(sequelize, Sequelize.DataTypes);
 const role = Role(sequelize, Sequelize.DataTypes);
 const rolePermission = RolePermission(sequelize, Sequelize.DataTypes);
-const permission = Permission(sequelize, Sequelize.DataTypes);
 const user = User(sequelize, Sequelize.DataTypes);
 const business = Business(sequelize, Sequelize.DataTypes);
 const userBusiness = UserBusiness(sequelize, Sequelize.DataTypes);
@@ -53,9 +53,9 @@ const imageBusiness = ImageBusiness(sequelize, Sequelize.DataTypes);
 
 
 // Storing the models in the db object
+db[permission.name] = permission;
 db[role.name] = role;
 db[rolePermission.name] = rolePermission;
-db[permission.name] = permission;
 db[user.name] = user;
 db[business.name] = business;
 db[userBusiness.name] = userBusiness;
