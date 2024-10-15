@@ -52,39 +52,96 @@ export const login = async (req, res) => {
 // Register Route
 export const register = async (req,res) => {
   const db = req.app.get("db")
+  console.log("Req.body: ", req.body)
+  console.log("Req: ", req.body.userData)
 
-  const { name, email, phone, password } = req.body
+  const { name, email, phoneNumber, password } = req.body.userData
   const hashedPassword = bcryptjs.hashSync(password, bcryptjs.genSaltSync(10))
 
-  console.log(req.body)
 
-  if (await db.user.findOne({ where: { email: email}})) {
-    console.log("Email aready exists")
-    return res.send({
-      message: "Email already exists",
-      success: false
-    })
+  if (!req.body.registerData) {
+
+
+    if (await db.user.findOne({ where: { email: email}})) {
+      console.log("Email aready exists")
+      return res.send({
+        message: "Email already exists",
+        success: false
+      })
+    } else {
+      console.log("Creating a new User")
+
+      const newUser = await db.user.create({
+        name,
+        email,
+        phone: phoneNumber,
+        role_id: 1,
+        password_hash: hashedPassword,
+        profile_picture: "Default"
+      })
+
+      console.log(newUser)
+      req.session.userId = newUser.user_id;
+      req.session.name = newUser.name;
+
+      return res.send({
+        message: "New User created",
+        success: true,
+        newUserInfo: newUser
+      })
+    }
   } else {
-    console.log("Creating a new User")
+    const { businessName, address_line1, address_line2, city, zipCode, contactInfo } = req.body.registerData
+    const { website, serviceName, serviceDescription, serviceDuration, servicePrice, availability } = req.body.detailsData
+    console.log("businessName: ", businessName)
+    console.log("registerData", req.body.registerData)
+    console.log("detailsData", req.body.detailsData)
+    console.log(await db.business.findOne( { where: { business_name: businessName } } ))
 
-    const newUser = await db.user.create({
-      name,
-      email,
-      phone,
-      password_hash: hashedPassword,
-      profile_picture: "Default"
-    })
+    if ((!await db.business.findOne( { where: { business_name: businessName } } )) === null && await db.user.findOne({ where: { email: email}}) === null) {
+      console.log("Business Already exists")
+      return res.send({
+        message: "Failed to create New Business",
+        success: false,
+      })
+    } else {
 
-    console.log(newUser)
-    req.session.userId = newUser.user_id;
-    req.session.name = newUser.name;
+      console.log("Creating a new User")
 
-    return res.send({
-      message: "New User created",
-      success: true,
-      newUserInfo: newUser
-    })
+      const newUser = await db.user.create({
+        name,
+        email,
+        phone: phoneNumber,
+        role_id: 3,
+        password_hash: hashedPassword,
+        profile_picture: "Default"
+      })
+
+      console.log("Create Business")
+      const newBusiness = db.business.create({
+        business_name: businessName,
+        description: serviceDescription,
+        address_line1,
+        address_line2,
+        city,
+        state: "Utah",
+        zip_code: zipCode,
+        email,
+        phone: contactInfo,
+        website,
+      })
+      return res.send({
+        message: "New Business created",
+        success: true,
+        newBusiness,
+        newUser,
+      })
+    }
+    
   }
+  
+
+  console.log("This Test shouldn't show up")
 
   
 }
