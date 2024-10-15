@@ -38,7 +38,7 @@ const OngoingAppts = () => {
                 <div className="p-4">
                     <div className="flex gap-5">
                         <div className="w-[25%] space-y-4">
-                            <InfoItem label="Business User" value="John Doe" />
+                            <InfoItem label="Service Provider" value="John Doe" />
                             <InfoItem label="Service ID" value="#12345" />
                             <InfoItem label="Created at" value="10/14/2024" />
                             <InfoItem label="Updated at" value="10/14/2024" />

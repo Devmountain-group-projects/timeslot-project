@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import LogoWhite from '../../assets/images/logowhite.png'
 import User6 from '../../assets/images/user6.png'
 
@@ -16,40 +15,43 @@ import { MdLiveHelp } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
 import { userLogout } from '../../context/AuthContext';
 
-const SideBar = () => {
+const SideBar = ({ currentView, setCurrentView }) => {
     const logoutTrigger = () => {
         console.log("logging user out")
         userLogout()
     }
+
     return (
         <div className="flex flex-col h-full py-4 px-3">
             {/* Logo */}
             <div className="mb-14 mt-4">
-                <Link to="/">
+                <button onClick={() => setCurrentView('dashboard')}>
                     <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
-                </Link>
+                </button>
             </div>
 
             {/* Menu Items */}
             <nav className="flex-grow">
                 <MenuSection title="Main Menu">
-                    <MenuItem href="/dashboard" icon={<HiMiniSquares2X2 />}>Dashboard</MenuItem>
-                    <MenuItem href="/appointments" icon={<FaRegCalendarCheck />}>Appointments</MenuItem>
-                    <MenuItem href="/services" icon={<MdHomeRepairService />}>Services</MenuItem>
-                    <MenuItem href="/clients" icon={<FaUsers />}>Clients</MenuItem>
-                    <MenuItem href="/reviews" icon={<MdRateReview />}>Reviews & Feedback</MenuItem>
+                    <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView}>Dashboard</MenuItem>
+                    <MenuItem view="appointments" icon={<FaRegCalendarCheck />} currentView={currentView} setCurrentView={setCurrentView}>Appointments</MenuItem>
+                    <MenuItem view="services" icon={<MdHomeRepairService />} currentView={currentView} setCurrentView={setCurrentView}>Services</MenuItem>
+                    <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView}>Clients</MenuItem>
+                    <MenuItem view="reviews" icon={<MdRateReview />} currentView={currentView} setCurrentView={setCurrentView}>Reviews & Feedback</MenuItem>
                 </MenuSection>
 
                 <MenuSection title="Other Menu">
-                    <MenuItem href="/payments" icon={<RiMoneyDollarCircleFill />}>Payments & Invoicing</MenuItem>
-                    <MenuItem href="/calendar" icon={<FaRegCalendarAlt />}>Calendar</MenuItem>
+                    <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView}>Payments & Invoicing</MenuItem>
+                    <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Calendar</MenuItem>
                 </MenuSection>
 
                 <MenuSection title="Help & Settings">
-                    <MenuItem href="/settings" icon={<IoMdSettings />}>Account Settings</MenuItem>
-                    <MenuItem href="/help" icon={<MdLiveHelp />}>Help & Support</MenuItem>
-                    {/* <MenuItem href="/" icon={<RiLogoutBoxFill />} >Logout</MenuItem> */}
-                    <Link onClick={logoutTrigger} to="/" className="flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors, mb-1 text-sm"><RiLogoutBoxFill  className="mr-2 text-lg"/>Logout</Link>
+                    <MenuItem view="settings" icon={<IoMdSettings />} currentView={currentView} setCurrentView={setCurrentView}>Account Settings</MenuItem>
+                    <MenuItem view="help" icon={<MdLiveHelp />} currentView={currentView} setCurrentView={setCurrentView}>Help & Support</MenuItem>
+                    <button onClick={logoutTrigger} className="flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors mb-1 text-sm w-full">
+                        <RiLogoutBoxFill className="mr-2 text-lg" />
+                        Logout
+                    </button>
                 </MenuSection>
             </nav>
 
@@ -74,13 +76,19 @@ const MenuSection = ({ title, children }) => (
     </div>
 )
 
-const MenuItem = ({ href, icon, children }) => (
-    <li className="mb-1 text-sm">
-        <Link to={href} className="flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors">
-            {icon && <span className="mr-2 text-lg">{icon}</span>}
-            {children}
-        </Link>
-    </li>
-)
+const MenuItem = ({ view, icon, children, currentView, setCurrentView }) => {
+    const isActive = currentView === view;
+    return (
+        <li className="mb-1 text-sm">
+            <button
+                onClick={() => setCurrentView(view)}
+                className={`flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors w-full text-left ${isActive ? 'bg-white bg-opacity-20 text-white' : ''}`}
+            >
+                {icon && <span className="mr-2 text-lg">{icon}</span>}
+                {children}
+            </button>
+        </li>
+    )
+}
 
 export default SideBar

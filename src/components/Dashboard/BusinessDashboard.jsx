@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Sidebar from '../Layout/SideBar'
 import UpcomingAppts from '../BusinessDashboard/UpcomingAppts'
@@ -13,7 +13,19 @@ import CalendarOverview from '../BusinessDashboard/CalendarOverview'
 import FollowUp from '../BusinessDashboard/FollowUp'
 import ReviewReport from '../BusinessDashboard/ReviewReport'
 
+// Sidebar Links
+import AccountSettings from '../BusinessDashboard/AccountSettings'
+import HelpSupport from '../BusinessDashboard/HelpSupport'
+import AllCalendar from '../BusinessDashboard/AllCalendar'
+import AllReviews from '../BusinessDashboard/AllReviews'
+import AllClients from '../BusinessDashboard/AllClients'
+import AllAppointments from '../BusinessDashboard/AllAppointments'
+import PaymentsInvoicing from '../BusinessDashboard/PaymentsInvoicing'
+import AllServices from '../BusinessDashboard/AllServices'
+
 const BusinessDashboard = () => {
+    const [currentView, setCurrentView] = useState('dashboard')
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -35,11 +47,59 @@ const BusinessDashboard = () => {
         }
     }
 
+    const renderContent = () => {
+        switch (currentView) {
+            case 'dashboard':
+                return (
+                    <>
+                        {/* Top 4 Cards */}
+                        <motion.div className="h-[15%] flex gap-2 md:gap-4" variants={rowVariants}>
+                            <Card className="w-[25%]"><UpcomingAppts /></Card>
+                            <Card className="w-[25%]"><RevenueOverview /></Card>
+                            <Card className="w-[25%]"><ClientReviews /></Card>
+                            <Card className="w-[25%]"><Notifications /></Card>
+                        </motion.div>
+                        {/* Middle 2 Cards */}
+                        <motion.div className="h-[50%] flex gap-2 md:gap-4" variants={rowVariants}>
+                            <Card className="w-[33.33%]"><CalendarOverview /></Card>
+                            <div className="w-[66.67%] flex flex-col gap-2 md:gap-4">
+                                <Card className="h-[100%]"><OngoingAppts /></Card>
+                            </div>
+                        </motion.div>
+                        {/* Bottom 3 Cards */}
+                        <motion.div className="h-[35%] flex gap-2 md:gap-4 overflow-hidden" variants={rowVariants}>
+                            <Card className="w-[33.33%] overflow-hidden"><Analytics /></Card>
+                            <Card className="w-[33.33%] overflow-hidden"><FollowUp /></Card>
+                            <Card className="w-[33.33%] overflow-hidden"><ReviewReport /></Card>
+                        </motion.div>
+                    </>
+                )
+            case 'appointments':
+                return <AllAppointments />
+            case 'services':
+                return <AllServices />
+            case 'clients':
+                return <AllClients />
+            case 'reviews':
+                return <AllReviews />
+            case 'payments':
+                return <PaymentsInvoicing />
+            case 'calendar':
+                return <AllCalendar />
+            case 'settings':
+                return <AccountSettings />
+            case 'help':
+                return <HelpSupport />
+            default:
+                return <div>404: Page not found</div>
+        }
+    }
+
     return (
         <div className="flex h-screen bg-secondary">
             {/* Sidebar Container */}
             <div className="w-[14%] text-white">
-                <Sidebar />
+                <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
             </div>
             {/* Right Main Container */}
             <motion.div
@@ -49,26 +109,7 @@ const BusinessDashboard = () => {
                 animate="visible"
             >
                 <div className="h-full flex flex-col gap-2 md:gap-4 rounded-xl p-4 bg-gradient-to-br from-gray-100 to-gray-300 overflow-hidden">
-                    {/* Top 4 Cards */}
-                    <motion.div className="h-[15%] flex gap-2 md:gap-4" variants={rowVariants}>
-                        <Card className="w-[25%]"><UpcomingAppts /></Card>
-                        <Card className="w-[25%]"><RevenueOverview /></Card>
-                        <Card className="w-[25%]"><ClientReviews /></Card>
-                        <Card className="w-[25%]"><Notifications /></Card>
-                    </motion.div>
-                    {/* Middle 2 Cards */}
-                    <motion.div className="h-[50%] flex gap-2 md:gap-4" variants={rowVariants}>
-                        <Card className="w-[33.33%]"><CalendarOverview /></Card>
-                        <div className="w-[66.67%] flex flex-col gap-2 md:gap-4">
-                            <Card className="h-[100%]"><OngoingAppts /></Card>
-                        </div>
-                    </motion.div>
-                    {/* Bottom 3 Cards */}
-                    <motion.div className="h-[35%] flex gap-2 md:gap-4 overflow-hidden" variants={rowVariants}>
-                        <Card className="w-[33.33%] overflow-hidden"><Analytics /></Card>
-                        <Card className="w-[33.33%] overflow-hidden"><FollowUp /></Card>
-                        <Card className="w-[33.33%] overflow-hidden"><ReviewReport /></Card>
-                    </motion.div>
+                    {renderContent()}
                 </div>
             </motion.div>
         </div>
