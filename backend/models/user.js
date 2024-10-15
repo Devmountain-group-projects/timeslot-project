@@ -47,11 +47,6 @@ export const User = (sequelize, Sequelize) => {
             as: "business",
         });
 
-        user.hasMany(models.notification, {
-            foreignKey: "notification_id",
-            onDelete: "RESTRICT",
-        });
-
         user.hasMany(models.appointment, {
             foreignKey: "appointment_id",
             onDelete: "RESTRICT",
@@ -62,6 +57,25 @@ export const User = (sequelize, Sequelize) => {
             onDelete: "RESTRICT",
             through: "image_user",
         });
+
+        user.hasMany(models.conversation, {
+            foreignKey: "user_id_created",
+            onDelete: "RESTRICT",
+            as: "created_conversations",  // Change alias here
+        });
+        user.belongsToMany(models.conversation, {
+            through: "user_conversation",
+            foreignKey: "user_id",
+            as: "participating_conversations",  // Change alias here
+        });
+        user.hasMany(models.conversation_message, {
+            foreignKey: "sender_id",
+            onDelete: "RESTRICT",
+        });
+        // user.hasMany(models.review, {
+        //     foreignKey: "user_id",
+        //     onDelete: "RESTRICT",
+        // });
     };
 
     return user;

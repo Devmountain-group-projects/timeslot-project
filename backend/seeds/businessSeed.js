@@ -85,23 +85,6 @@ export const createBusiness = async function createBusiness(db) {
             });
         }
 
-        // Handle services and associate them with the business
-        const services = Array.isArray(biz.services)
-            ? biz.services
-            : [biz.services];
-
-        const createdServices = [];
-        for (const service of services) {
-            const createdService = await db.service.create({
-                business_id: createdBusiness.business_id,
-                name: service.service_name,
-                description: service.description,
-                duration: service.duration,
-                price: service.price,
-            });
-            createdServices.push(createdService);
-        }
-
         // Handle images and associate them with the business using the junction table
         const profile_photos = biz.images.map((image) => ({
             src: image.src,
@@ -122,55 +105,72 @@ export const createBusiness = async function createBusiness(db) {
             });
         }
 
-        // Create appointments and generate notifications for users
-        const appointments = [
-            {
-                user_id: 1, // Replace with actual user IDs
-                service_id: createdServices[0].service_id, // First service
-                appointment_date: new Date(),
-                appointment_start: "09:00",
-                appointment_end: "10:00",
-                status: "confirmed",
-                notes: "Appointment for Service 1",
-                payment_status: "pending",
-            },
-            {
-                user_id: 2, // Replace with actual user IDs
-                service_id: createdServices[1].service_id, // Second service
-                appointment_date: new Date(),
-                appointment_start: "11:00",
-                appointment_end: "11:30",
-                status: "pending",
-                notes: "Appointment for Service 2",
-                payment_status: "sent",
-            },
-        ];
+        // Handle services and associate them with the business
+        const services = Array.isArray(biz.services)
+            ? biz.services
+            : [biz.services];
 
-        for (const appointment of appointments) {
-            // Create the appointment
-            const createdAppointment = await db.appointment.create({
-                user_id: appointment.user_id,
-                service_id: appointment.service_id,
-                appointment_date: appointment.appointment_date,
-                appointment_start: appointment.appointment_start,
-                appointment_end: appointment.appointment_end,
-                status: appointment.status,
-                notes: appointment.notes,
-                payment_status: appointment.payment_status,
+        const createdServices = [];
+        for (const service of services) {
+            const createdService = await db.service.create({
+                business_id: createdBusiness.business_id,
+                name: service.service_name,
+                description: service.description,
+                duration: service.duration,
+                price: service.price,
             });
-
-            // Fetch the user to notify
-            const user = await db.user.findByPk(appointment.user_id);
-
-            // Create a notification for the user about the appointment
-            await db.notification.create({
-                user_id: user.user_id,
-                appointment_id: createdAppointment.appointment_id,
-                message: `Your appointment for ${appointment.notes} has been confirmed.`,
-                type: "in-app", // or "email" depending on your setup
-                sent_at: new Date().toISOString(),
-                status: "pending",
-            });
+            createdServices.push(createdService);
         }
+
+        // // Create appointments and generate notifications for users
+        // const appointments = [
+        //     {
+        //         user_id: 1, // Replace with actual user IDs
+        //         service_id: createdServices[0].service_id, // First service
+        //         appointment_date: new Date(),
+        //         appointment_start: "09:00",
+        //         appointment_end: "10:00",
+        //         status: "confirmed",
+        //         notes: "Appointment for Service 1",
+        //         payment_status: "pending",
+        //     },
+        //     {
+        //         user_id: 2, // Replace with actual user IDs
+        //         service_id: createdServices[1].service_id, // Second service
+        //         appointment_date: new Date(),
+        //         appointment_start: "11:00",
+        //         appointment_end: "11:30",
+        //         status: "pending",
+        //         notes: "Appointment for Service 2",
+        //         payment_status: "sent",
+        //     },
+        // ];
+
+        // for (const appointment of appointments) {
+        //     // Create the appointment
+        //     const createdAppointment = await db.appointment.create({
+        //         user_id: appointment.user_id,
+        //         service_id: appointment.service_id,
+        //         appointment_date: appointment.appointment_date,
+        //         appointment_start: appointment.appointment_start,
+        //         appointment_end: appointment.appointment_end,
+        //         status: appointment.status,
+        //         notes: appointment.notes,
+        //         payment_status: appointment.payment_status,
+        //     });
+        //
+        //     // Fetch the user to notify
+        //     const user = await db.user.findByPk(appointment.user_id);
+        //
+        //     // Create a notification for the user about the appointment
+        //     await db.notification.create({
+        //         user_id: user.user_id,
+        //         appointment_id: createdAppointment.appointment_id,
+        //         message: `Your appointment for ${appointment.notes} has been confirmed.`,
+        //         type: "in-app", // or "email" depending on your setup
+        //         sent_at: new Date().toISOString(),
+        //         status: "pending",
+        //     });
+        // }
     }
 };

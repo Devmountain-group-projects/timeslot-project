@@ -46,9 +46,6 @@ db.sequelize.sync({force: true}).then(async function () {
         await createBusiness(db).then(() =>
             console.log("Businesses successfully created"),
         );
-        // await createReview(db).then(() =>
-        //     console.log("Reviews successfully created"),
-        // );
         await createPermissions(db).then(() =>
             console.log("Permissions successfully created"),
         );

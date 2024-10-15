@@ -59,21 +59,28 @@ export const Business = (sequelize, Sequelize) => {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
         });
+        business.hasMany(models.conversation, {
+            foreignKey: "business_id",
+            onDelete: "RESTRICT",
+        });
         business.belongsToMany(models.image, {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
             through: "image_business"
+        });
+        // business.hasMany(models.review, {
+        //     foreignKey: "business_id",
+        //     onDelete: "RESTRICT",
+        // });
+        business.hasMany(models.service, {
+            foreignKey: "business_id",
+            onDelete: "RESTRICT",
         });
         business.belongsToMany(models.user, {
             foreignKey: "business_id",
             onDelete: "RESTRICT",
             through: "user_business",
             as: "business"
-        });
-        business.belongsToMany(models.appointment, {
-            foreignKey: "business_id",
-            onDelete: "RESTRICT",
-            through: "service",
         });
     };
 

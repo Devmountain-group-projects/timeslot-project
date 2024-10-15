@@ -206,32 +206,33 @@ export const createUsers = async function createUsers(db) {
             // Create appointment for a service (use the service's ID)
             const appointment = await db.appointment.create({
                 service_id: createdServices[0].service_id, // Example: Use the first created service ID
+                user_id: createdUser.user_id,
                 appointment_date: new Date(),
                 appointment_start: "09:00",
                 appointment_end: "10:00",
                 status: "confirmed",
                 notes: `Appointment for ${createdUser.name}`,
+                user_id_created: createdUser.user_id,
                 payment_status: "pending",
             });
 
-            // Send notification to the user
-            await db.notification.create({
-                user_id: createdUser.user_id,
-                appointment_id: appointment.appointment_id,
-                message: `Your appointment for ${createdBusiness.business_name} has been confirmed.`,
-                type: "in-app",
-                sent_at: new Date(),
-                status: "sent",
+            // New logic: Create a conversation related to the appointment
+            const conversation = await db.conversation.create({
+                user_id_created: createdUser.user_id,
+                business_id: createdBusiness.business_id,
             });
 
-            // Send notification to the business
-            await db.notification.create({
-                user_id: createdBusiness.business_id, // Notify the business
-                appointment_id: appointment.appointment_id,
-                message: `New appointment for ${createdUser.name} at ${appointment.appointment_start}.`,
-                type: "in-app",
-                sent_at: new Date(),
-                status: "sent",
+            // Associate user with the conversation
+            await db.conversation_user.create({
+                conversation_id: conversation.conversation_id,
+                user_id: createdUser.user_id,
+            });
+
+            // Add a message to the conversation related to the appointment
+            await db.conversation_message.create({
+                conversation_id: conversation.conversation_id,
+                sender_id: createdUser.user_id,
+                message: `Appointment booked for ${createdUser.name} for the service ${createdServices[0].name}.`,
             });
         }
     }
