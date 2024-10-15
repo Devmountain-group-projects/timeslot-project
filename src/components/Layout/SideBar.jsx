@@ -1,6 +1,7 @@
 import React from 'react'
 import LogoWhite from '../../assets/images/logowhite.png'
 import User6 from '../../assets/images/user6.png'
+import { Link } from 'react-router-dom'
 
 // Sidebar Icons
 import { HiMiniSquares2X2 } from "react-icons/hi2";
@@ -25,9 +26,9 @@ const SideBar = ({ currentView, setCurrentView }) => {
         <div className="flex flex-col h-full py-4 px-3">
             {/* Logo */}
             <div className="mb-14 mt-4">
-                <button onClick={() => setCurrentView('dashboard')}>
+                <Link to="/">
                     <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
-                </button>
+                </Link>
             </div>
 
             {/* Menu Items */}
@@ -58,10 +59,10 @@ const SideBar = ({ currentView, setCurrentView }) => {
             {/* User Profile */}
             <div className="mt-auto">
                 <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
-                    <img src={User6} alt="User" className="w-12 h-12 rounded-full" />
+                    <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
                     <div>
-                        <div className="text-base font-semibold">John Doe</div>
-                        <div className="text-sm opacity-75">Business Owner</div>
+                        <div className="text-sm font-semibold">John Doe</div>
+                        <div className="text-xs opacity-75">Business Owner</div>
                     </div>
                 </div>
             </div>
