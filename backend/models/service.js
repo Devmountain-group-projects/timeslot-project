@@ -37,16 +37,15 @@ export const Service = (sequelize, Sequelize) => {
     );
 
     service.associate = (models) => {
-        // Service belongs to a business
-        service.belongsTo(models.business, {
-            foreignKey: "business_id",
-            onDelete: "RESTRICT",
-        });
-
         // Service has many appointments
         service.hasMany(models.appointment, {
             foreignKey: 'service_id',  // Link to appointment table via service_id
             onDelete: "RESTRICT"
+        });
+        // Service belongs to a business
+        service.belongsTo(models.business, {
+            foreignKey: "business_id",
+            onDelete: "RESTRICT",
         });
     };
 

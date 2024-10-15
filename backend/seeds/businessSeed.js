@@ -105,22 +105,22 @@ export const createBusiness = async function createBusiness(db) {
             });
         }
 
-        // // Handle services and associate them with the business
-        // const services = Array.isArray(biz.services)
-        //     ? biz.services
-        //     : [biz.services];
-        //
-        // const createdServices = [];
-        // for (const service of services) {
-        //     const createdService = await db.service.create({
-        //         business_id: createdBusiness.business_id,
-        //         name: service.service_name,
-        //         description: service.description,
-        //         duration: service.duration,
-        //         price: service.price,
-        //     });
-        //     createdServices.push(createdService);
-        // }
+        // Handle services and associate them with the business
+        const services = Array.isArray(biz.services)
+            ? biz.services
+            : [biz.services];
+
+        const createdServices = [];
+        for (const service of services) {
+            const createdService = await db.service.create({
+                business_id: createdBusiness.business_id,
+                name: service.service_name,
+                description: service.description,
+                duration: service.duration,
+                price: service.price,
+            });
+            createdServices.push(createdService);
+        }
 
         // // Create appointments and generate notifications for users
         // const appointments = [

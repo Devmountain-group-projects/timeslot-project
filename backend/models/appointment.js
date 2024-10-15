@@ -7,6 +7,14 @@ export const Appointment = (sequelize, Sequelize) => {
                 autoIncrement: true,
                 primaryKey: true,
             },
+            user_id: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'user',
+                    key: 'user_id',
+                },
+                onDelete: "RESTRICT",
+            },
             service_id: {
                 type: Sequelize.INTEGER,
                 references: {
@@ -42,6 +50,14 @@ export const Appointment = (sequelize, Sequelize) => {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
+            user_id_created: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'user',
+                    key: 'user_id',
+                },
+                onDelete: "RESTRICT",
+            },
             payment_status: {
                 type: Sequelize.ENUM("sent", "pending", "failed", "test"),
                 defaultValue: "pending",
@@ -55,12 +71,20 @@ export const Appointment = (sequelize, Sequelize) => {
 
     // Relations
     appointment.associate = (models) => {
+        // Appointment belongs to user
+        appointment.belongsTo(models.user, {
+            foreignKey: "user_id_created",
+            onDelete: "RESTRICT",
+        });
+        appointment.belongsTo(models.user, {
+            foreignKey: "user_id",
+            onDelete: "RESTRICT",
+        })
         // Appointment belongs to service
         appointment.belongsTo(models.service, {
             foreignKey: "service_id",
             onDelete: "RESTRICT",
         });
-
     };
 
     return appointment;

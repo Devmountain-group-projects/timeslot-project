@@ -175,64 +175,46 @@ export const createUsers = async function createUsers(db) {
                 business_id: createdBusiness.business_id,
             });
 
-                // // Create services for the business
-                // const services = [
-                //     {
-                //         service_name: "Service 1",
-                //         description: "Service 1 Description",
-                //         duration: "60 minutes",
-                //         price: 100.0,
-                //     },
-                //     {
-                //         service_name: "Service 2",
-                //         description: "Service 2 Description",
-                //         duration: "30 minutes",
-                //         price: 50.0,
-                //     },
-                // ];
-                //
-                // const createdServices = [];
-                // for (const service of services) {
-                //     const createdService = await db.service.create({
-                //         business_id: createdBusiness.business_id,
-                //         name: service.service_name,
-                //         description: service.description,
-                //         duration: service.duration,
-                //         price: service.price,
-                //     });
-                //     createdServices.push(createdService);
-                // }
-                //
-                // // Create appointment for a service (use the service's ID)
-                // const appointment = await db.appointment.create({
-                //     service_id: createdServices[0].service_id, // Example: Use the first created service ID
-                //     appointment_date: new Date(),
-                //     appointment_start: "09:00",
-                //     appointment_end: "10:00",
-                //     status: "confirmed",
-                //     notes: `Appointment for ${createdUser.name}`,
-                //     payment_status: "pending",
-                // });
-                //
-                // // Send notification to the user
-                // await db.notification.create({
-                //     user_id: createdUser.user_id,
-                //     appointment_id: appointment.appointment_id,
-                //     message: `Your appointment for ${createdBusiness.business_name} has been confirmed.`,
-                //     type: "in-app",
-                //     sent_at: new Date(),
-                //     status: "sent",
-                // });
-                //
-                // // Send notification to the business
-                // await db.notification.create({
-                //     user_id: createdBusiness.business_id, // Notify the business
-                //     appointment_id: appointment.appointment_id,
-                //     message: `New appointment for ${createdUser.name} at ${appointment.appointment_start}.`,
-                //     type: "in-app",
-                //     sent_at: new Date(),
-                //     status: "sent",
-                // });
+            // Create services for the business
+            const services = [
+                {
+                    service_name: "Service 1",
+                    description: "Service 1 Description",
+                    duration: "60 minutes",
+                    price: 100.0,
+                },
+                {
+                    service_name: "Service 2",
+                    description: "Service 2 Description",
+                    duration: "30 minutes",
+                    price: 50.0,
+                },
+            ];
+
+            const createdServices = [];
+            for (const service of services) {
+                const createdService = await db.service.create({
+                    business_id: createdBusiness.business_id,
+                    name: service.service_name,
+                    description: service.description,
+                    duration: service.duration,
+                    price: service.price,
+                });
+                createdServices.push(createdService);
+            }
+
+            // Create appointment for a service (use the service's ID)
+            const appointment = await db.appointment.create({
+                service_id: createdServices[0].service_id, // Example: Use the first created service ID
+                user_id: createdUser.user_id,
+                appointment_date: new Date(),
+                appointment_start: "09:00",
+                appointment_end: "10:00",
+                status: "confirmed",
+                notes: `Appointment for ${createdUser.name}`,
+                user_id_created: createdUser.user_id,
+                payment_status: "pending",
+            });
         }
     }
 };

@@ -1,6 +1,6 @@
 export const ConversationUser = (sequelize, Sequelize) => {
     const conversationUser = sequelize.define(
-        "conversationUser",
+        "conversation_user",
         {
             conversation_id: {
                 type: Sequelize.INTEGER,
