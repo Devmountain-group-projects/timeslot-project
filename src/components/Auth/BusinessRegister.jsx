@@ -4,7 +4,6 @@ import SectionImg from '../../assets/images/sectionimg6.jpg'
 import { FaChevronRight, FaPhone } from 'react-icons/fa';
 import { MdAddBusiness } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import { TbWorldWww } from "react-icons/tb";
 
 const BusinessRegister = ({ onContinue }) => {
     const [formData, setFormData] = useState({
@@ -12,9 +11,9 @@ const BusinessRegister = ({ onContinue }) => {
         address_line1: '',
         address_line2: '',
         city: '',
+        state: '',
         zipCode: '',
         contactInfo: '',
-        // website: ''
     });
 
     const handleInputChange = (e) => {
@@ -28,7 +27,7 @@ const BusinessRegister = ({ onContinue }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
-        onContinue(); // Call the onContinue prop to move to the next step
+        onContinue();
     };
 
     const inputVariants = {
@@ -97,21 +96,20 @@ const BusinessRegister = ({ onContinue }) => {
                                 </div>
                             </motion.div>
 
-                            <motion.div variants={inputVariants} initial="hidden" animate="visible">
-                                <label className="text-gray-800 text-sm mb-2 block">Unit or Suite (optional)</label>
-                                <div className="relative flex items-center">
-                                    <input
-                                        name="address_line2"
-                                        type="text"
-                                        className="w-full text-sm text-gray-800 border px-4 py-3 rounded-lg outline-primary"
-                                        placeholder="Enter unit number"
-                                        value={formData.address_line2}
-                                        onChange={handleInputChange}
-                                    />
-                                </div>
-                            </motion.div>
-
                             <motion.div variants={inputVariants} initial="hidden" animate="visible" className="flex space-x-4">
+                                <div className="flex-1">
+                                    <label className="text-gray-800 text-sm mb-2 block">Unit or Suite (optional)</label>
+                                    <div className="relative flex items-center">
+                                        <input
+                                            name="address_line2"
+                                            type="text"
+                                            className="w-full text-sm text-gray-800 border px-4 py-3 rounded-lg outline-primary"
+                                            placeholder="Enter unit number"
+                                            value={formData.address_line2}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
                                 <div className="flex-1">
                                     <label className="text-gray-800 text-sm mb-2 block">City</label>
                                     <div className="relative flex items-center">
@@ -122,6 +120,23 @@ const BusinessRegister = ({ onContinue }) => {
                                             className="w-full text-sm text-gray-800 border px-4 py-3 rounded-lg outline-primary"
                                             placeholder="Enter your city"
                                             value={formData.city}
+                                            onChange={handleInputChange}
+                                        />
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            <motion.div variants={inputVariants} initial="hidden" animate="visible" className="flex space-x-4">
+                                <div className="flex-1">
+                                    <label className="text-gray-800 text-sm mb-2 block">State</label>
+                                    <div className="relative flex items-center">
+                                        <input
+                                            name="state"
+                                            type="text"
+                                            required
+                                            className="w-full text-sm text-gray-800 border px-4 py-3 rounded-lg outline-primary"
+                                            placeholder="Enter state"
+                                            value={formData.state}
                                             onChange={handleInputChange}
                                         />
                                     </div>
@@ -142,7 +157,6 @@ const BusinessRegister = ({ onContinue }) => {
                                 </div>
                             </motion.div>
 
-
                             <motion.div variants={inputVariants} initial="hidden" animate="visible">
                                 <label className="text-gray-800 text-sm mb-2 block">What is your Business Phone Number?</label>
                                 <div className="relative flex items-center">
@@ -158,22 +172,6 @@ const BusinessRegister = ({ onContinue }) => {
                                     <FaPhone className="w-[18px] h-[18px] text-gray-500 absolute right-4 cursor-pointer" />
                                 </div>
                             </motion.div>
-
-                            {/* <motion.div variants={inputVariants} initial="hidden" animate="visible">
-                                <label className="text-gray-800 text-sm mb-2 block">What is your Website?</label>
-                                <div className="relative flex items-center">
-                                    <input
-                                        name="website"
-                                        type="text"
-                                        required
-                                        className="w-full text-sm text-gray-800 border px-4 py-3 rounded-lg outline-primary"
-                                        placeholder="Enter your Website"
-                                        value={formData.website}
-                                        onChange={handleInputChange}
-                                    />
-                                    <TbWorldWww className="w-[18px] h-[18px] text-gray-500 absolute right-4 cursor-pointer" />
-                                </div>
-                            </motion.div> */}
 
                             <motion.div
                                 className="flex items-center justify-center !mt-8"

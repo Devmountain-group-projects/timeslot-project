@@ -1,7 +1,10 @@
 import React from 'react';
 import { Scheduler } from "@aldabil/react-scheduler";
+import { useNavigate } from 'react-router-dom';
 
-const SharedScheduler = ({ isOverview = false }) => {
+const SharedScheduler = ({ isOverview = false, selectedDate }) => {
+    const navigate = useNavigate();
+
     const events = [
         {
             event_id: 1,
@@ -17,67 +20,94 @@ const SharedScheduler = ({ isOverview = false }) => {
         },
     ];
 
-    return (
-        <Scheduler
-            events={events}
-            view="month"
-            week={{
-                weekDays: [0, 1, 2, 3, 4, 5],
-                weekStartOn: 1,
-                startHour: 9,
-                endHour: 17,
-            }}
-            day={{
-                startHour: 9,
-                endHour: 17,
-            }}
-            month={{
-                weekDays: [0, 1, 2, 3, 4, 5],
-                weekStartOn: 1,
-            }}
-            viewerExtraComponent={(fields, event) => {
-                return (
-                    <div>
-                        {/* Add any extra fields you want to display in the event viewer */}
-                    </div>
-                );
-            }}
-            fields={[
-                {
-                    name: "client",
-                    type: "input",
-                    default: "No Client",
-                    config: { label: "Client Name", required: true, min: 3, variant: "outlined" }
-                },
-                {
-                    name: "service",
-                    type: "select",
-                    default: "Haircut",
-                    options: [
-                        { id: 1, text: "Haircut", value: "Haircut" },
-                        { id: 2, text: "Coloring", value: "Coloring" },
-                        { id: 3, text: "Styling", value: "Styling" },
-                    ],
-                    config: { label: "Service Type", required: true, variant: "outlined" }
-                }
-            ]}
-            resourceFields={[
-                {
-                    name: "stylist",
-                    type: "select",
-                    default: "John",
-                    options: [
-                        { id: 1, text: "John", value: "John" },
-                        { id: 2, text: "Sarah", value: "Sarah" },
-                        { id: 3, text: "Emma", value: "Emma" },
-                    ],
-                    config: { label: "Stylist", required: true, variant: "outlined" }
-                }
-            ]}
-            resourceViewMode="tabs"
-            height={isOverview ? 400 : 700}
-        />
-    );
+    const handleNavigation = (date) => {
+        if (isOverview) {
+            navigate('/schedule', { state: { selectedDate: date } });
+        }
+    };
+
+    const commonProps = {
+        events: events,
+        onCellClick: handleNavigation,
+        selectedDate: selectedDate,
+        week: {
+            weekDays: [0, 1, 2, 3, 4, 5],
+            weekStartOn: 1,
+            startHour: 9,
+            endHour: 17,
+        },
+        day: {
+            startHour: 9,
+            endHour: 17,
+        },
+    };
+
+    if (isOverview) {
+        return (
+            <Scheduler
+                {...commonProps}
+                view="month"
+                height={300}
+                month={{
+                    weekDays: [0, 1, 2, 3, 4, 5],
+                    weekStartOn: 1,
+                    navigation: true,
+                    disableGoToDay: true,
+                }}
+                navigationPickerProps={{
+                    showToolbar: true,
+                    showTabs: false,
+                    views: ['month'],
+                }}
+                viewerExtraComponent={() => null}
+                customViewer={() => null}
+            />
+        );
+    } else {
+        return (
+            <Scheduler
+                {...commonProps}
+                view="week"
+                height={700}
+                month={{
+                    weekDays: [0, 1, 2, 3, 4, 5],
+                    weekStartOn: 1,
+                }}
+                fields={[
+                    {
+                        name: "client",
+                        type: "input",
+                        default: "No Client",
+                        config: { label: "Client Name", required: true, min: 3, variant: "outlined" }
+                    },
+                    {
+                        name: "service",
+                        type: "select",
+                        default: "Haircut",
+                        options: [
+                            { id: 1, text: "Haircut", value: "Haircut" },
+                            { id: 2, text: "Coloring", value: "Coloring" },
+                            { id: 3, text: "Styling", value: "Styling" },
+                        ],
+                        config: { label: "Service Type", required: true, variant: "outlined" }
+                    }
+                ]}
+                resourceFields={[
+                    {
+                        name: "stylist",
+                        type: "select",
+                        default: "John",
+                        options: [
+                            { id: 1, text: "John", value: "John" },
+                            { id: 2, text: "Sarah", value: "Sarah" },
+                            { id: 3, text: "Emma", value: "Emma" },
+                        ],
+                        config: { label: "Stylist", required: true, variant: "outlined" }
+                    }
+                ]}
+            />
+        );
+    }
 }
 
 export default SharedScheduler;
