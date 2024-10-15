@@ -5,7 +5,7 @@ import User3Img from '../../assets/images/user3.png';
 const OngoingAppts = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center p-4 bg-tertiary">
+            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">On Going Appointments</h2>
                 <button
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
