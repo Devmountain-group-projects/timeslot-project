@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaCalendarPlus } from "react-icons/fa6";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import SharedScheduler from './SharedScheduler';
 
 const ProgressBar = ({ value, max }) => {
     const percentage = (value / max) * 100;
@@ -23,12 +22,6 @@ const InfoContainer = ({ label, value, max }) => (
 );
 
 const CalendarOverview = () => {
-    const [date, setDate] = useState(new Date());
-
-    const onChange = (newDate) => {
-        setDate(newDate);
-    };
-
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
@@ -50,16 +43,7 @@ const CalendarOverview = () => {
                 </div>
                 <hr className='border-t border-gray-300 w-full m-0' />
                 <div className="p-4">
-                    <Calendar
-                        onChange={onChange}
-                        value={date}
-                        className="w-full border-none"
-                        tileClassName={({ date, view }) =>
-                            view === 'month' && date.getDate() === new Date().getDate() && date.getMonth() === new Date().getMonth()
-                                ? 'bg-secondary text-white rounded'
-                                : ''
-                        }
-                    />
+                    <SharedScheduler isOverview={true} />
                 </div>
             </section>
         </div>
