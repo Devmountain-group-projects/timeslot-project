@@ -21,5 +21,13 @@ export const ConversationUser = (sequelize, Sequelize) => {
         },
         {}
     );
+    conversationUser.associate = (models) => {
+        conversationUser.belongsTo(models.conversation, {
+            foreignKey: "conversation_id",
+        });
+        conversationUser.belongsTo(models.user, {
+            foreignKey: "user_id",
+        });
+    }
     return conversationUser;
 }

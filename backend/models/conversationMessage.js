@@ -32,5 +32,15 @@ export const ConversationMessage = (sequelize, Sequelize) => {
             timestamps: true,
         }
     );
+    conversationMessage.associate = (models) => {
+        conversationMessage.belongsTo(models.user, {
+            foreignKey: "sender_id",
+            as: "sender",
+        });
+        conversationMessage.belongsTo(models.conversation, {
+            foreignKey: "conversation_id",
+            as: "conversation",
+        });
+    }
     return conversationMessage;
 }

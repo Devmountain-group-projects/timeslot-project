@@ -215,6 +215,25 @@ export const createUsers = async function createUsers(db) {
                 user_id_created: createdUser.user_id,
                 payment_status: "pending",
             });
+
+            // New logic: Create a conversation related to the appointment
+            const conversation = await db.conversation.create({
+                user_id_created: createdUser.user_id,
+                business_id: createdBusiness.business_id,
+            });
+
+            // Associate user with the conversation
+            await db.conversation_user.create({
+                conversation_id: conversation.conversation_id,
+                user_id: createdUser.user_id,
+            });
+
+            // Add a message to the conversation related to the appointment
+            await db.conversation_message.create({
+                conversation_id: conversation.conversation_id,
+                sender_id: createdUser.user_id,
+                message: `Appointment booked for ${createdUser.name} for the service ${createdServices[0].name}.`,
+            });
         }
     }
 };

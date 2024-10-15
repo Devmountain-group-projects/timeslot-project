@@ -28,5 +28,21 @@ export const Conversation = (sequelize, Sequelize) => {
             timestamps: true,
         }
     );
+
+    conversation.associate = function (models) {
+        conversation.belongsTo(models.user, {
+            foreignKey: "user_id_created",
+            as: "creator",
+        })
+        conversation.belongsToMany(models.user, {
+            through: "user_conversation",
+            foreignKey: "conversation_id",
+            as: "users",
+        });
+        conversation.hasMany(models.conversation_message, {
+            foreignKey: "conversation_id",
+            as: "messages",
+        });
+    };
     return conversation;
 }
