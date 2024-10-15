@@ -7,16 +7,22 @@ import User4Img from '../../assets/images/user4.png';
 const ClientSection = ({ image, name, date, sessionType, notes, isLast }) => (
     <div className={`${!isLast ? 'border-b border-gray-300' : ''}`}>
         <div className="flex items-center py-4 px-4">
-            <div className="w-1/6">
-                <img src={image} alt={name} className="w-12 h-12 md:w-16 md:h-16 rounded-full" />
+            <div className="w-[22%] flex-shrink-0">
+                <div className="w-12 h-12 md:w-16 md:h-16 relative">
+                    <img
+                        src={image}
+                        alt={name}
+                        className="rounded-full object-cover absolute inset-0 w-full h-full"
+                    />
+                </div>
             </div>
-            <div className="w-3/6 pr-2">
+            <div className="w-[50%] flex flex-col justify-center items-start text-left">
                 <h3 className="font-semibold text-sm md:text-base">{name}</h3>
                 <p className="text-xs text-gray-500 mb-1">{date}</p>
                 <p className="text-xs md:text-sm font-medium">{sessionType}</p>
                 <p className="text-xs text-gray-400">{notes}</p>
             </div>
-            <div className="w-2/6 flex justify-end items-center space-x-2">
+            <div className="w-[27%] flex justify-end items-center space-x-2">
                 <button className="bg-gradient-gray text-primary p-1.5 md:p-2 rounded-full ring-1 ring-primary hover:bg-secondary hover:text-white hover:ring-1 hover:ring-secondary transition-colors duration-300">
                     <FaPhone className="text-base md:text-lg" />
                 </button>

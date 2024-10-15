@@ -113,44 +113,46 @@ const Analytics = () => {
                 </button>
             </section>
             <hr className='border-t border-gray-300 w-full m-0' />
-            <section className="flex-grow flex p-4">
-                <div className="w-1/2 flex flex-col items-center justify-center">
-                    <h3 className="text-lg font-semibold mb-2">
-                        {busiestDaysState.clicked ? `Hourly Breakdown - ${busiestDaysState.label}` : 'Busiest Days'}
-                    </h3>
-                    <div className="w-full aspect-square">
-                        <Doughnut
-                            data={busiestDaysState.clicked ? busiestDaysDrilldownData : busiestDaysData}
-                            options={chartOptions(busiestDaysState.clicked ? null : handleBusiestDaysClick)}
-                        />
+            <section className="flex-grow overflow-y-auto">
+                <div className="flex flex-col md:flex-row p-4">
+                    <div className="w-full md:w-1/2 flex flex-col items-center justify-center mb-4 md:mb-0">
+                        <h3 className="text-base font-medium mb-1">
+                            {busiestDaysState.clicked ? `Hourly Breakdown - ${busiestDaysState.label}` : 'Busiest Days'}
+                        </h3>
+                        <div className="w-full aspect-square max-w-[300px]">
+                            <Doughnut
+                                data={busiestDaysState.clicked ? busiestDaysDrilldownData : busiestDaysData}
+                                options={chartOptions(busiestDaysState.clicked ? null : handleBusiestDaysClick)}
+                            />
+                        </div>
+                        {busiestDaysState.clicked && (
+                            <button
+                                className="mt-4 p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
+                                onClick={() => setBusiestDaysState({ clicked: false, label: '' })}
+                            >
+                                Back to Overview
+                            </button>
+                        )}
                     </div>
-                    {busiestDaysState.clicked && (
-                        <button
-                            className="mt-4 p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
-                            onClick={() => setBusiestDaysState({ clicked: false, label: '' })}
-                        >
-                            Back to Overview
-                        </button>
-                    )}
-                </div>
-                <div className="w-1/2 flex flex-col items-center justify-center">
-                    <h3 className="text-lg font-semibold mb-2">
-                        {appointmentTypesState.clicked ? `${appointmentTypesState.label} Breakdown` : 'Appointment Types'}
-                    </h3>
-                    <div className="w-full aspect-square">
-                        <Doughnut
-                            data={appointmentTypesState.clicked ? appointmentTypesDrilldownData : appointmentTypesData}
-                            options={chartOptions(appointmentTypesState.clicked ? null : handleAppointmentTypesClick)}
-                        />
+                    <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
+                        <h3 className="text-base font-medium mb-1">
+                            {appointmentTypesState.clicked ? `${appointmentTypesState.label} Breakdown` : 'Appointment Types'}
+                        </h3>
+                        <div className="w-full aspect-square max-w-[300px]">
+                            <Doughnut
+                                data={appointmentTypesState.clicked ? appointmentTypesDrilldownData : appointmentTypesData}
+                                options={chartOptions(appointmentTypesState.clicked ? null : handleAppointmentTypesClick)}
+                            />
+                        </div>
+                        {appointmentTypesState.clicked && (
+                            <button
+                                className="mt-4 p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
+                                onClick={() => setAppointmentTypesState({ clicked: false, label: '' })}
+                            >
+                                Back to Overview
+                            </button>
+                        )}
                     </div>
-                    {appointmentTypesState.clicked && (
-                        <button
-                            className="mt-4 p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
-                            onClick={() => setAppointmentTypesState({ clicked: false, label: '' })}
-                        >
-                            Back to Overview
-                        </button>
-                    )}
                 </div>
             </section>
         </div>
