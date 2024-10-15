@@ -36,9 +36,9 @@ const AccountSettings = () => {
     return (
         <div className="flex h-full">
             {/* Sidebar */}
-            <div className="w-[17%] pr-2">
+            <div className="w-[17%] pr-3">
                 <h2 className="text-lg font-bold mb-4">
-                    <IoMdSettings size={24} className='inline mr-2 animate-spin duration-1000' />
+                    <IoMdSettings size={24} className="inline mr-2 animate-spin" />
                     Account Settings
                 </h2>
                 <nav>
@@ -46,43 +46,43 @@ const AccountSettings = () => {
                         active={activeView === 'basicInfo'}
                         onClick={() => setActiveView('basicInfo')}
                     >
-                        <FaUserGear size={16} className='inline mr-2' />
-                        Basic Information
+                        <FaUserGear size={18} className='inline mr-2' />
+                        Basic Info
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'businessInfo'}
                         onClick={() => setActiveView('businessInfo')}
                     >
-                        <BsBuildingFillGear size={16} className='inline mr-2' />
-                        Business Information
+                        <BsBuildingFillGear size={18} className='inline mr-2' />
+                        Business Info
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'availability'}
                         onClick={() => setActiveView('availability')}
                     >
-                        <FaBusinessTime size={16} className='inline mr-2' />
+                        <FaBusinessTime size={18} className='inline mr-2' />
                         Availability
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'security'}
                         onClick={() => setActiveView('security')}
                     >
-                        <GrShieldSecurity size={16} className='inline mr-2' />
+                        <GrShieldSecurity size={18} className='inline mr-2' />
                         Security
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'deleteAccount'}
                         onClick={() => setActiveView('deleteAccount')}
                     >
-                        <MdDeleteForever size={16} className='inline mr-2' />
-                        Delete your Account
+                        <MdDeleteForever size={18} className='inline mr-2 text-red-500' />
+                        Delete Account
                     </SidebarLink>
                 </nav>
             </div>
 
             {/* Content Area */}
             <div className="w-[83%]">
-                <div className="bg-white rounded-xl shadow-lg p-6 h-full overflow-y-auto">
+                <div className="bg-white rounded-xl shadow-lg h-full overflow-y-auto">
                     {/* <h2 className="text-2xl font-bold mb-4">
                         {activeView === 'basicInfo' && 'Basic Information'}
                         {activeView === 'businessInfo' && 'Business Information'}
