@@ -5,7 +5,7 @@ const users = [
         name: "test",
         email: "test@test.com",
         phone: "2222222",
-        role: "test",
+        role_id: 1,  // Role ID for the user
         password_hash: "test",
         profile_picture: "test",
         business: {
@@ -47,7 +47,7 @@ const users = [
         name: "test2",
         email: "test2@test.com",
         phone: "2222222",
-        role: "test2",
+        role_id: 2,  // Role ID for the user
         password_hash: "test2",
         profile_picture: "test2",
         business: {
@@ -83,7 +83,7 @@ const users = [
         name: "test_no_business",
         email: "no_business@test.com",
         phone: "1234567890",
-        role: "client",
+        role_id: 3,  // Role ID for the user
         password_hash: "password123",
         profile_picture: "no_business_profile.jpg",
         images: [
@@ -107,12 +107,12 @@ export const createUsers = async function createUsers(db) {
             bcryptjs.genSaltSync(10)
         );
 
-        // Create the user
+        // Create the user with the role
         const createdUser = await db.user.create({
             name: user.name.toLowerCase(),
             email: user.email.toLowerCase(),
             phone: user.phone,
-            role: user.role,
+            role_id: user.role_id,  // Associate role with user
             password_hash: hashedPassword,
             profile_picture: user.profile_picture,
         });

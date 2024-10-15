@@ -1,19 +1,18 @@
-//
 export const Role = (sequelize, Sequelize) => {
     const role = sequelize.define(
         "role",
         {
             role_id: {
                 type: Sequelize.INTEGER,
-                autoIncrement: true, // Enables auto-increment
-                primaryKey: true,
+                autoIncrement: true,  // Ensure auto-increment is enabled
+                primaryKey: true,     // Set as primary key
             },
             role_name: {
                 type: Sequelize.STRING(35),
                 allowNull: false,
             },
         },
-        {},
+        {}
     );
 
     role.associate = (models) => {
@@ -25,6 +24,3 @@ export const Role = (sequelize, Sequelize) => {
 
     return role;
 };
-
-//INSERT INTO "role" ("roleId", "roleName")
-// VALUES (3, 'test');
