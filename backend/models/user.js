@@ -20,10 +20,14 @@ export const User = (sequelize, Sequelize) => {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            role: {
-                type: Sequelize.STRING,
-                defaultValue: "client",
-                allowNull: false,
+            role_id: {
+                type: Sequelize.INTEGER,  // Correct the type to INTEGER, not STRING
+                references: {
+                    model: 'role',  // Refer to the role model
+                    key: 'role_id',
+                },
+                allowNull: false,  // Ensuring that every user must have a role
+                onDelete: "RESTRICT",
             },
             password_hash: {
                 type: Sequelize.STRING,
@@ -31,40 +35,69 @@ export const User = (sequelize, Sequelize) => {
             },
             profile_picture: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,  // Allow null if some users might not have a profile picture
             },
         },
         {
             timestamps: true,
         }
     );
-    // Relations
+
+    // Defining associations between the User model and other models
     user.associate = (models) => {
+        // User belongs to a role
+        user.belongsTo(models.role, {
+            foreignKey: "role_id",
+            onDelete: "RESTRICT",  // Don't allow role deletion if users exist with that role
+        });
+
+        // User can belong to many businesses
         user.belongsToMany(models.business, {
+            through: "user_business",  // Junction table for user and business relationship
             foreignKey: "user_id",
             onDelete: "RESTRICT",
-            through: "user_business",
             as: "business",
         });
 
-        user.hasMany(models.notification, {
-            foreignKey: "notification_id",
-            onDelete: "RESTRICT",
-        });
-
+        // User has many appointments
         user.hasMany(models.appointment, {
-            foreignKey: "appointment_id",
-            onDelete: "RESTRICT",
-        });
-
-        user.belongsToMany(models.image, {
             foreignKey: "user_id",
             onDelete: "RESTRICT",
-            through: "image_user",
         });
+
+        // User can have many images
+        user.belongsToMany(models.image, {
+            through: "image_user",  // Junction table for user and image relationship
+            foreignKey: "user_id",
+            onDelete: "RESTRICT",
+        });
+
+        // User has created many conversations
+        user.hasMany(models.conversation, {
+            foreignKey: "user_id_created",
+            onDelete: "RESTRICT",
+            as: "created_conversations",
+        });
+
+        // User participates in many conversations
+        user.belongsToMany(models.conversation, {
+            through: "user_conversation",
+            foreignKey: "user_id",
+            as: "participating_conversations",
+        });
+
+        // User has sent many messages in conversations
+        user.hasMany(models.conversation_message, {
+            foreignKey: "sender_id",
+            onDelete: "RESTRICT",
+        });
+
+        // Other potential relations (commented out if not in use)
+        // user.hasMany(models.review, {
+        //     foreignKey: "user_id",
+        //     onDelete: "RESTRICT",
+        // });
     };
 
     return user;
 };
-
-

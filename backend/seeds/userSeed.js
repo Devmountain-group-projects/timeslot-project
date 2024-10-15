@@ -5,7 +5,7 @@ const users = [
         name: "test",
         email: "test@test.com",
         phone: "2222222",
-        role: "test",
+        role_id: 1,  // Role ID for the user
         password_hash: "test",
         profile_picture: "test",
         business: {
@@ -47,7 +47,7 @@ const users = [
         name: "test2",
         email: "test2@test.com",
         phone: "2222222",
-        role: "test2",
+        role_id: 2,  // Role ID for the user
         password_hash: "test2",
         profile_picture: "test2",
         business: {
@@ -83,7 +83,7 @@ const users = [
         name: "test_no_business",
         email: "no_business@test.com",
         phone: "1234567890",
-        role: "client",
+        role_id: 3,  // Role ID for the user
         password_hash: "password123",
         profile_picture: "no_business_profile.jpg",
         images: [
@@ -107,12 +107,12 @@ export const createUsers = async function createUsers(db) {
             bcryptjs.genSaltSync(10)
         );
 
-        // Create the user
+        // Create the user with the role
         const createdUser = await db.user.create({
             name: user.name.toLowerCase(),
             email: user.email.toLowerCase(),
             phone: user.phone,
-            role: user.role,
+            role_id: user.role_id,  // Associate role with user
             password_hash: hashedPassword,
             profile_picture: user.profile_picture,
         });
@@ -206,32 +206,33 @@ export const createUsers = async function createUsers(db) {
             // Create appointment for a service (use the service's ID)
             const appointment = await db.appointment.create({
                 service_id: createdServices[0].service_id, // Example: Use the first created service ID
+                user_id: createdUser.user_id,
                 appointment_date: new Date(),
                 appointment_start: "09:00",
                 appointment_end: "10:00",
                 status: "confirmed",
                 notes: `Appointment for ${createdUser.name}`,
+                user_id_created: createdUser.user_id,
                 payment_status: "pending",
             });
 
-            // Send notification to the user
-            await db.notification.create({
-                user_id: createdUser.user_id,
-                appointment_id: appointment.appointment_id,
-                message: `Your appointment for ${createdBusiness.business_name} has been confirmed.`,
-                type: "in-app",
-                sent_at: new Date(),
-                status: "sent",
+            // New logic: Create a conversation related to the appointment
+            const conversation = await db.conversation.create({
+                user_id_created: createdUser.user_id,
+                business_id: createdBusiness.business_id,
             });
 
-            // Send notification to the business
-            await db.notification.create({
-                user_id: createdBusiness.business_id, // Notify the business
-                appointment_id: appointment.appointment_id,
-                message: `New appointment for ${createdUser.name} at ${appointment.appointment_start}.`,
-                type: "in-app",
-                sent_at: new Date(),
-                status: "sent",
+            // Associate user with the conversation
+            await db.conversation_user.create({
+                conversation_id: conversation.conversation_id,
+                user_id: createdUser.user_id,
+            });
+
+            // Add a message to the conversation related to the appointment
+            await db.conversation_message.create({
+                conversation_id: conversation.conversation_id,
+                sender_id: createdUser.user_id,
+                message: `Appointment booked for ${createdUser.name} for the service ${createdServices[0].name}.`,
             });
         }
     }

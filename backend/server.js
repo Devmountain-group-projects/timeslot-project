@@ -32,28 +32,26 @@ app.use(
 
 // Database and seed data
 import db from './models/db.js';
-import {createUsers} from './seeds/userSeed.js';
-import {createBusiness} from './seeds/businessSeed.js';
 import {createRoles} from './seeds/roleSeed.js';
 import {createPermissions} from './seeds/permissionSeed.js';
+import {createUsers} from './seeds/userSeed.js';
+import {createBusiness} from './seeds/businessSeed.js';
+
 
 db.sequelize.sync({force: true}).then(async function () {
     console.log("Database successfully created");
     try {
-        await createUsers(db).then(() =>
-            console.log("Users successfully created"),
-        );
-        await createBusiness(db).then(() =>
-            console.log("Businesses successfully created"),
-        );
-        // await createReview(db).then(() =>
-        //     console.log("Reviews successfully created"),
-        // );
         await createPermissions(db).then(() =>
             console.log("Permissions successfully created"),
         );
         await createRoles(db).then(() =>
             console.log("Roles successfully created"),
+        );
+        await createUsers(db).then(() =>
+            console.log("Users successfully created"),
+        );
+        await createBusiness(db).then(() =>
+            console.log("Businesses successfully created"),
         );
     } catch (err) {
         console.error("Error during seeding:", err);
