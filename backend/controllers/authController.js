@@ -106,7 +106,7 @@ export const register = async (req,res) => {
       })
     } else {
 
-      console.log("Creating a new User")
+      console.log("Creating a new User and Business")
 
       const newUser = await db.user.create({
         name,
@@ -114,27 +114,47 @@ export const register = async (req,res) => {
         phone: phoneNumber,
         role_id: 3,
         password_hash: hashedPassword,
-        profile_picture: "Default"
+        profile_picture: "Default",
       })
+      console.log(newUser)
 
-      console.log("Create Business")
-      const newBusiness = db.business.create({
-        business_name: businessName,
-        description: serviceDescription,
-        address_line1,
-        address_line2,
-        city,
-        state: "Utah",
-        zip_code: zipCode,
-        email,
-        phone: contactInfo,
-        website,
+      const newBusiness = await db.business.create({
+          business_name: businessName,
+          description: serviceDescription,
+          address_line1,
+          address_line2,
+          city,
+          state: "Utah",
+          zip_code: zipCode,
+          email,
+          phone: contactInfo,
+          website,
       })
+      console.log(newBusiness)
+
+      console.log("Connecting Business and User")
+
+      const user = await db.user.findOne({ where: { email: email}})
+      const business = await db.business.findOne( { where: { business_name: businessName } })
+      console.log("user", user)
+      console.log("user_id", user.user_id)
+      console.log("business", business)
+      console.log("businessName", businessName)
+      console.log("business_id", business.business_id)
+
+      // if(!business === null){
+        const connectBusiness = await db.user_business.create({
+          user_id: user.user_id,
+          business_id: business.business_id,
+        })
+        console.log(connectBusiness)
+      // }
+
+      
+
       return res.send({
         message: "New Business created",
         success: true,
-        newBusiness,
-        newUser,
       })
     }
     
