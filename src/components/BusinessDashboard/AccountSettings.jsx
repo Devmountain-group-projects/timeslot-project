@@ -11,8 +11,6 @@ import { FaBusinessTime } from "react-icons/fa";
 import { GrShieldSecurity } from "react-icons/gr";
 import { MdDeleteForever } from "react-icons/md";
 
-
-
 const AccountSettings = () => {
     const [activeView, setActiveView] = useState('basicInfo')
 
@@ -37,44 +35,44 @@ const AccountSettings = () => {
         <div className="flex h-full">
             {/* Sidebar */}
             <div className="w-[17%] pr-3">
-                <h2 className="text-lg font-bold mb-4">
-                    <IoMdSettings size={24} className="inline mr-2 animate-spin" />
+                <h2 className="text-lg font-bold mb-4 flex items-center">
+                    <IoMdSettings size={24} className="mr-2 animate-spin" />
                     Account Settings
                 </h2>
                 <nav>
                     <SidebarLink
                         active={activeView === 'basicInfo'}
                         onClick={() => setActiveView('basicInfo')}
+                        icon={<FaUserGear size={18} />}
                     >
-                        <FaUserGear size={18} className='inline mr-2' />
                         Basic Info
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'businessInfo'}
                         onClick={() => setActiveView('businessInfo')}
+                        icon={<BsBuildingFillGear size={18} />}
                     >
-                        <BsBuildingFillGear size={18} className='inline mr-2' />
                         Business Info
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'availability'}
                         onClick={() => setActiveView('availability')}
+                        icon={<FaBusinessTime size={18} />}
                     >
-                        <FaBusinessTime size={18} className='inline mr-2' />
                         Availability
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'security'}
                         onClick={() => setActiveView('security')}
+                        icon={<GrShieldSecurity size={18} />}
                     >
-                        <GrShieldSecurity size={18} className='inline mr-2' />
                         Security
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'deleteAccount'}
                         onClick={() => setActiveView('deleteAccount')}
+                        icon={<MdDeleteForever size={18} className="text-red-500" />}
                     >
-                        <MdDeleteForever size={18} className='inline mr-2 text-red-500' />
                         Delete Account
                     </SidebarLink>
                 </nav>
@@ -82,14 +80,7 @@ const AccountSettings = () => {
 
             {/* Content Area */}
             <div className="w-[83%]">
-                <div className="bg-white rounded-xl shadow-lg h-full overflow-y-auto">
-                    {/* <h2 className="text-2xl font-bold mb-4">
-                        {activeView === 'basicInfo' && 'Basic Information'}
-                        {activeView === 'businessInfo' && 'Business Information'}
-                        {activeView === 'availability' && 'Availability'}
-                        {activeView === 'security' && 'Security'}
-                        {activeView === 'deleteAccount' && 'Delete your Account'}
-                    </h2> */}
+                <div className="bg-white rounded-xl ring-2 ring-gray-300 shadow-lg h-full overflow-y-auto">
                     {renderContent()}
                 </div>
             </div>
@@ -97,14 +88,15 @@ const AccountSettings = () => {
     )
 }
 
-const SidebarLink = ({ active, onClick, children }) => (
+const SidebarLink = ({ active, onClick, children, icon }) => (
     <button
-        className={`block w-full text-left text-xs md:text-sm py-2 px-4 mb-2 rounded transition-colors duration-200 ${active
-            ? 'bg-primary text-white'
+        className={`flex items-center w-full text-left text-xs md:text-sm py-2 px-3 mb-2 rounded transition-colors duration-200 ${active
+            ? 'bg-secondary text-white'
             : 'hover:bg-gray-200'
             }`}
         onClick={onClick}
     >
+        <span className="mr-2">{icon}</span>
         {children}
     </button>
 )
