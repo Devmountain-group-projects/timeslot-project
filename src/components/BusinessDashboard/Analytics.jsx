@@ -76,7 +76,7 @@ const Analytics = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
-                <h2 className="text-xs md:text-sm font-medium">Analytics</h2>
+                <h2 className="text-xs md:text-sm font-medium">Analytics <span className="text-gray-400 text-[.70rem]">(Hover to Show)</span></h2>
                 <button
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                     aria-label="Expand"
@@ -85,29 +85,31 @@ const Analytics = () => {
                 </button>
             </section>
             <hr className='border-t border-gray-300 w-full' />
-            <section className="flex-grow p-4 grid grid-cols-2">
-                <div className="flex flex-col items-center">
-                    <h3 className="text-xs font-medium mb-2 text-center">Appointment Types</h3>
-                    <div className="w-[75%] aspect-square">
-                        <Doughnut data={appointmentTypesData} options={chartOptions} />
+            <section className="flex-grow overflow-y-auto p-4">
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="flex flex-col items-center">
+                        <h3 className="text-xs font-medium mb-2 text-center">Appointment Types</h3>
+                        <div className="w-full aspect-square">
+                            <Doughnut data={appointmentTypesData} options={chartOptions} />
+                        </div>
                     </div>
-                </div>
-                <div className="flex flex-col items-center">
-                    <h3 className="text-xs font-medium mb-2 text-center">Revenue Sources</h3>
-                    <div className="w-[75%] aspect-square">
-                        <Doughnut data={revenueData} options={chartOptions} />
+                    <div className="flex flex-col items-center">
+                        <h3 className="text-xs font-medium mb-2 text-center">Revenue Sources</h3>
+                        <div className="w-full aspect-square">
+                            <Doughnut data={revenueData} options={chartOptions} />
+                        </div>
                     </div>
-                </div>
-                <div className="flex flex-col items-center">
-                    <h3 className="text-xs font-medium mb-2 text-center">Customer Satisfaction</h3>
-                    <div className="w-[75%] aspect-square">
-                        <Doughnut data={customerSatisfactionData} options={chartOptions} />
+                    <div className="flex flex-col items-center">
+                        <h3 className="text-xs font-medium mb-2 text-center">Customer Satisfaction</h3>
+                        <div className="w-full aspect-square">
+                            <Doughnut data={customerSatisfactionData} options={chartOptions} />
+                        </div>
                     </div>
-                </div>
-                <div className="flex flex-col items-center">
-                    <h3 className="text-xs font-medium mb-2 text-center">Client Retention</h3>
-                    <div className="w-[75%] aspect-square">
-                        <Doughnut data={clientRetentionData} options={chartOptions} />
+                    <div className="flex flex-col items-center">
+                        <h3 className="text-xs font-medium mb-2 text-center">Client Retention</h3>
+                        <div className="w-full aspect-square">
+                            <Doughnut data={clientRetentionData} options={chartOptions} />
+                        </div>
                     </div>
                 </div>
             </section>
