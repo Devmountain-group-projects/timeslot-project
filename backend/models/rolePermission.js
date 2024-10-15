@@ -11,7 +11,6 @@ export const RolePermission = (sequelize, Sequelize) => {
                 allowNull: false,
             },
         },
-        {
-        }
+        {}
     );
 };

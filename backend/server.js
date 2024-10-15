@@ -6,6 +6,7 @@ import session from 'express-session';
 import ViteExpress from 'vite-express';
 import {google} from "googleapis";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 // Express Setup
@@ -121,9 +122,8 @@ app.get('/auth/google/calendar', (req, res) => {
             console.log('No upcoming events found.');
         }
     });
-    res.json(calendar)
+    res.json(calendar);
 });
-
 
 
 // Routes
@@ -133,4 +133,4 @@ import auth from './routes/authRoutes.js';
 // import contact from './routes/contactRoutes.js';
 
 
-app.use("/api/auth", auth)
+app.use("/api/auth", auth);

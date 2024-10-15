@@ -1,7 +1,7 @@
 const permissions = [
-    { permission_name: "read" },
-    { permission_name: "create" },
-    { permission_name: "manage" },
+    {permission_name: "read"},
+    {permission_name: "create"},
+    {permission_name: "manage"},
 ];
 
 export const createPermissions = async function createPermissions(db) {

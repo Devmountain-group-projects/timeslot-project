@@ -1,7 +1,7 @@
 const roles = [
-    { role_name: "client", permissions: [1] },    // Assuming permission_id 1 exists
-    { role_name: "business", permissions: [2] },  // Assuming permission_id 1 and 2 exist
-    { role_name: "manager", permissions: [3] } // Assuming permission_id 1 and 3 exist
+    {role_name: "client", permissions: [1]},    // Assuming permission_id 1 exists
+    {role_name: "business", permissions: [2]},  // Assuming permission_id 1 and 2 exist
+    {role_name: "manager", permissions: [3]} // Assuming permission_id 1 and 3 exist
 ];
 
 export const createRoles = async function createRoles(db) {
