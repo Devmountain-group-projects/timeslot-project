@@ -1,6 +1,6 @@
-import { Sequelize } from "sequelize";
+import {Sequelize} from "sequelize";
 // environment setup for db. Sets the db name and other configs
-import config from "../config.json" with { type: "json" };
+import config from "../config.json" with {type: "json"};
 
 const env = "development";
 const dbConfig = config[env];
@@ -18,26 +18,26 @@ const sequelize = new Sequelize(
 );
 
 // Importing models
-import { Role } from "./role.js";
-import { RolePermission } from "./rolePermission.js";
-import { Permission } from "./permission.js";
-import { User } from "./user.js";
-import { UserBusiness } from "./userBusiness.js";
-import { Appointment } from "./appointment.js";
-import { Availability } from "./availability.js";
-import { Business } from "./business.js";
-import { Conversation } from "./conversation.js";
-import { ConversationUser } from "./conversationUser.js";
-import { ConversationMessage} from "./conversationMessage.js";
-import { Service } from "./service.js";
-import { Image } from "./image.js";
-import { ImageUser } from "./imageUser.js";
-import { ImageBusiness } from "./imageBusiness.js";
+import {Permission} from "./permission.js";
+import {Role} from "./role.js";
+import {RolePermission} from "./rolePermission.js";
+import {User} from "./user.js";
+import {UserBusiness} from "./userBusiness.js";
+import {Appointment} from "./appointment.js";
+import {Availability} from "./availability.js";
+import {Business} from "./business.js";
+import {Conversation} from "./conversation.js";
+import {ConversationUser} from "./conversationUser.js";
+import {ConversationMessage} from "./conversationMessage.js";
+import {Service} from "./service.js";
+import {Image} from "./image.js";
+import {ImageUser} from "./imageUser.js";
+import {ImageBusiness} from "./imageBusiness.js";
 
 // Associating models for use in the db
+const permission = Permission(sequelize, Sequelize.DataTypes);
 const role = Role(sequelize, Sequelize.DataTypes);
 const rolePermission = RolePermission(sequelize, Sequelize.DataTypes);
-const permission = Permission(sequelize, Sequelize.DataTypes);
 const user = User(sequelize, Sequelize.DataTypes);
 const business = Business(sequelize, Sequelize.DataTypes);
 const userBusiness = UserBusiness(sequelize, Sequelize.DataTypes);
@@ -53,9 +53,9 @@ const imageBusiness = ImageBusiness(sequelize, Sequelize.DataTypes);
 
 
 // Storing the models in the db object
+db[permission.name] = permission;
 db[role.name] = role;
 db[rolePermission.name] = rolePermission;
-db[permission.name] = permission;
 db[user.name] = user;
 db[business.name] = business;
 db[userBusiness.name] = userBusiness;

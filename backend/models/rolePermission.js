@@ -1,6 +1,4 @@
-//
 export const RolePermission = (sequelize, Sequelize) => {
-    //
     return sequelize.define(
         "role_permission",
         {
@@ -13,6 +11,6 @@ export const RolePermission = (sequelize, Sequelize) => {
                 allowNull: false,
             },
         },
-        {},
+        {}
     );
 };

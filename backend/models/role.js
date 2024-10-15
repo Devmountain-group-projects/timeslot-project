@@ -4,8 +4,8 @@ export const Role = (sequelize, Sequelize) => {
         {
             role_id: {
                 type: Sequelize.INTEGER,
-                autoIncrement: true,  // Ensure auto-increment is enabled
-                primaryKey: true,     // Set as primary key
+                autoIncrement: true,
+                primaryKey: true,
             },
             role_name: {
                 type: Sequelize.STRING(35),
@@ -16,9 +16,11 @@ export const Role = (sequelize, Sequelize) => {
     );
 
     role.associate = (models) => {
+        // Many-to-many relationship between roles and permissions
         role.belongsToMany(models.permission, {
             through: "role_permission",
             foreignKey: "role_id",
+            otherKey: "permission_id",
         });
     };
 
