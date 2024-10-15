@@ -30,34 +30,37 @@ const CalendarOverview = () => {
     };
 
     return (
-        <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300">
-            <section className="h-[10%] flex justify-between items-center p-4 bg-tertiary">
-                <h2 className="w-[90%] text-xs md:text-sm text-lefty font-medium">Calendar Overview</h2>
-                <div className="w-[10%] flex justify-end">
-                    <button
-                        className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
-                        aria-label="Add to calendar"
-                    >
-                        <FaCalendarPlus className="text-lg" />
-                    </button>
-                </div>
+        <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
+            <section className="flex justify-between items-center p-4 bg-tertiary">
+                <h2 className="text-xs md:text-sm font-medium">Calendar Overview</h2>
+                <button
+                    className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
+                    aria-label="Add to calendar"
+                >
+                    <FaCalendarPlus className="text-lg" />
+                </button>
             </section>
-            <hr className='border-gray-300 border-1 w-full' />
-            <section className="h-[88%] p-4 overflow-y-auto">
-                <div className="flex gap-4 mb-3">
-                    <InfoContainer label="New Clients" value={3} max={29} />
-                    <InfoContainer label="Follow-Up Clients" value={0} max={17} />
+            <hr className='border-t border-gray-300 w-full m-0' />
+            <section className="flex-grow overflow-y-auto">
+                <div className="p-4">
+                    <div className="flex gap-4 mb-1">
+                        <InfoContainer label="New Clients" value={3} max={29} />
+                        <InfoContainer label="Follow-Up Clients" value={0} max={17} />
+                    </div>
                 </div>
-                <Calendar
-                    onChange={onChange}
-                    value={date}
-                    className="w-full border-none"
-                    tileClassName={({ date, view }) =>
-                        view === 'month' && date.getDate() === new Date().getDate() && date.getMonth() === new Date().getMonth()
-                            ? 'bg-secondary text-white rounded'
-                            : ''
-                    }
-                />
+                <hr className='border-t border-gray-300 w-full m-0' />
+                <div className="p-4">
+                    <Calendar
+                        onChange={onChange}
+                        value={date}
+                        className="w-full border-none"
+                        tileClassName={({ date, view }) =>
+                            view === 'month' && date.getDate() === new Date().getDate() && date.getMonth() === new Date().getMonth()
+                                ? 'bg-secondary text-white rounded'
+                                : ''
+                        }
+                    />
+                </div>
             </section>
         </div>
     );
