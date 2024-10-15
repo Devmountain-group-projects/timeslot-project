@@ -81,7 +81,7 @@ export const User = (sequelize, Sequelize) => {
 
         // User participates in many conversations
         user.belongsToMany(models.conversation, {
-            through: "user_conversation",
+            through: "conversation_user",
             foreignKey: "user_id",
             as: "participating_conversations",
         });

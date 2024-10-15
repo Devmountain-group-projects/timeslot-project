@@ -35,7 +35,7 @@ export const Conversation = (sequelize, Sequelize) => {
             as: "creator",
         })
         conversation.belongsToMany(models.user, {
-            through: "user_conversation",
+            through: "conversation_user",
             foreignKey: "conversation_id",
             as: "users",
         });

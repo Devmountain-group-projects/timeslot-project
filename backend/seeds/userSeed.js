@@ -1,11 +1,13 @@
 import bcryptjs from "bcryptjs";
 
+// Data Definitions Moved Above
+
 const users = [
     {
         name: "test",
         email: "test@test.com",
         phone: "2222222",
-        role_id: 1,  // Role ID for the user
+        role_id: 1,
         password_hash: "test",
         profile_picture: "test",
         business: {
@@ -42,12 +44,16 @@ const users = [
                 image_type: 'user_banner',
             },
         ],
+        review: {
+            rating: 5,
+            comment: "Excellent service!"
+        },
     },
     {
         name: "test2",
         email: "test2@test.com",
         phone: "2222222",
-        role_id: 2,  // Role ID for the user
+        role_id: 2,
         password_hash: "test2",
         profile_picture: "test2",
         business: {
@@ -77,13 +83,16 @@ const users = [
                 image_type: 'user_banner',
             },
         ],
+        review: {
+            rating: 4,
+            comment: "Good service, but can improve."
+        },
     },
     {
-        // Sample user without a business
         name: "test_no_business",
         email: "no_business@test.com",
         phone: "1234567890",
-        role_id: 3,  // Role ID for the user
+        role_id: 3,
         password_hash: "password123",
         profile_picture: "no_business_profile.jpg",
         images: [
@@ -96,8 +105,14 @@ const users = [
                 image_type: 'user_banner',
             },
         ],
+        review: {
+            rating: 3,
+            comment: "Decent experience."
+        },
     },
 ];
+
+// Function to create users, businesses, reviews, appointments, conversations, and messages
 
 export const createUsers = async function createUsers(db) {
     for (const user of users) {
@@ -112,12 +127,12 @@ export const createUsers = async function createUsers(db) {
             name: user.name.toLowerCase(),
             email: user.email.toLowerCase(),
             phone: user.phone,
-            role_id: user.role_id,  // Associate role with user
+            role_id: user.role_id,
             password_hash: hashedPassword,
             profile_picture: user.profile_picture,
         });
 
-        // Handle images and associate them with the user using the junction table
+        // Handle images and associate them with the user
         const profile_photos = user.images.map((image) => ({
             src: image.src,
             image_type: image.image_type,
@@ -129,7 +144,6 @@ export const createUsers = async function createUsers(db) {
                 image_type: image.image_type,
             });
 
-            // Explicitly associate the created image with the user via the junction table
             await db.image_user.create({
                 user_id: createdUser.user_id,
                 image_id: createdImage.image_id,
@@ -139,7 +153,6 @@ export const createUsers = async function createUsers(db) {
 
         // Check if the user has a business
         if (user.business) {
-            // Create associated business
             const business = user.business;
             const createdBusiness = await db.business.create({
                 business_name: business.business_name,
@@ -154,12 +167,11 @@ export const createUsers = async function createUsers(db) {
                 website: business.website,
             });
 
-            // Handle availability (array and single object cases)
+            // Handle availability
             const biz_availabilities = Array.isArray(user.availability)
                 ? user.availability
                 : [user.availability];
 
-            // Create availability and associate with business
             for (const availability of biz_availabilities) {
                 await db.availability.create({
                     business_id: createdBusiness.business_id,
@@ -169,7 +181,7 @@ export const createUsers = async function createUsers(db) {
                 });
             }
 
-            // Associate user with business via the junction table (only once per user)
+            // Associate user with business
             await db.user_business.create({
                 user_id: createdUser.user_id,
                 business_id: createdBusiness.business_id,
@@ -205,7 +217,7 @@ export const createUsers = async function createUsers(db) {
 
             // Create appointment for a service (use the service's ID)
             const appointment = await db.appointment.create({
-                service_id: createdServices[0].service_id, // Example: Use the first created service ID
+                service_id: createdServices[0].service_id,  // Example: Use the first created service ID
                 user_id: createdUser.user_id,
                 appointment_date: new Date(),
                 appointment_start: "09:00",
@@ -216,7 +228,7 @@ export const createUsers = async function createUsers(db) {
                 payment_status: "pending",
             });
 
-            // New logic: Create a conversation related to the appointment
+            // Create a conversation related to the appointment
             const conversation = await db.conversation.create({
                 user_id_created: createdUser.user_id,
                 business_id: createdBusiness.business_id,
@@ -233,6 +245,14 @@ export const createUsers = async function createUsers(db) {
                 conversation_id: conversation.conversation_id,
                 sender_id: createdUser.user_id,
                 message: `Appointment booked for ${createdUser.name} for the service ${createdServices[0].name}.`,
+            });
+
+            // Create a review for the business
+            await db.review.create({
+                user_id: createdUser.user_id,
+                business_id: createdBusiness.business_id,
+                rating: user.review.rating,
+                comment: user.review.comment,
             });
         }
     }
