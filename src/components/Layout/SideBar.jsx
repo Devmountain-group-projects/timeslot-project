@@ -58,10 +58,10 @@ const SideBar = ({ currentView, setCurrentView }) => {
             {/* User Profile */}
             <div className="mt-auto">
                 <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
-                    <img src={User6} alt="User" className="w-12 h-12 rounded-full" />
+                    <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
                     <div>
-                        <div className="text-base font-semibold">John Doe</div>
-                        <div className="text-sm opacity-75">Business Owner</div>
+                        <div className="text-sm font-semibold">John Doe</div>
+                        <div className="text-xs opacity-75">Business Owner</div>
                     </div>
                 </div>
             </div>
