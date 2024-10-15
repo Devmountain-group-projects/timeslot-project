@@ -28,7 +28,7 @@ const BusinessRegister = ({ onContinue }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
-        onContinue(); // Call the onContinue prop to move to the next step
+        onContinue(formData); // Call the onContinue prop to move to the next step
     };
 
     const inputVariants = {

@@ -153,7 +153,7 @@ const Role = ({ onRoleSelect, formData }) => {
                                     className="btn-blue w-full"
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={() => onRoleSelect('Business')}
+                                    onClick={() => onRoleSelect('Business', formData)}
                                 >
                                     I have a Business
                                 </motion.button>

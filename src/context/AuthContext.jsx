@@ -15,12 +15,12 @@ export async function login(email, password) {
 }
 
 export async function register(name, email, phone, password) {
-  const res = await axios.post("/api/auth/register", {
+  const res = await axios.post("/api/auth/register", { userData: {
     name,
     email,
-    phone,
+    phoneNumber: phone,
     password,
-  })
+  }})
 
   if (res.data.success) {
     console.log("Register Successful");
@@ -29,6 +29,16 @@ export async function register(name, email, phone, password) {
   }
   return res;
   
+}
+
+export async function businessRegister({ userData, registerData, detailsData }) {
+  const res = await axios.post("/api/auth/register", {userData, registerData, detailsData})
+  if (res.data.success) {
+    console.log("Register Successful");
+  } else {
+    console.log("Register failed")
+  }
+  return res;
 }
 
 export async function userCheck() {

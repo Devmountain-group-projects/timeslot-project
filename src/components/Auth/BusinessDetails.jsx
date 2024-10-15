@@ -47,7 +47,7 @@ const BusinessDetails = ({ onSubmit }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form Data:', formData);
-        onSubmit(); // Call the onSubmit prop to complete registration
+        onSubmit(formData); // Call the onSubmit prop to complete registration
     };
 
     const inputVariants = {
