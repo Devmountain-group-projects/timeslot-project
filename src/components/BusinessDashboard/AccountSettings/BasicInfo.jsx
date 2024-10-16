@@ -12,7 +12,6 @@ const BasicInfo = () => {
         city: 'Lehi',
         state: 'UT',
         created_At: 'October 17, 2022',
-        profileCompletion: 75,
     }
 
     const handleUpdate = (field) => {
@@ -27,7 +26,7 @@ const BasicInfo = () => {
                     {/* Row 1.1 */}
                     <div className="relative h-40 mb-16">
                         {/* Cover image placeholder */}
-                        <img src={CoverImg} alt="CoverImg" className="w-full h-[125%] object-cover rounded-t-lg" />
+                        <img src={CoverImg} alt="CoverImg" className="w-full h-[125%] object-cover rounded-lg" />
                         {/* Profile image placeholder */}
                         <div className="absolute -bottom-[60%] left-1/2 transform -translate-x-[50%] w-32 h-32">
                             <div className="relative w-full h-full">
@@ -55,27 +54,13 @@ const BasicInfo = () => {
                     </div>
 
                     {/* Row 1.3 */}
-                    <div className="flex justify-between items-center">
-                        <div className="w-1/3">
-                            <div className="flex justify-between items-center mb-2">
-                                <p className='text-sm'>Profile Completion</p>
-                                <span className="text-blue-600 font-semibold">{basicInfoData.profileCompletion}%</span>
-                            </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2">
-                                <div
-                                    className="bg-blue-600 h-2 rounded-full"
-                                    style={{ width: `${basicInfoData.profileCompletion}%` }}
-                                ></div>
-                            </div>
-                        </div>
-                        <div className="space-x-2">
-                            <button className="btn-blue-dashboard">
-                                Follow
-                            </button>
-                            <button className="btn-blue-dashboard">
-                                Hire Me
-                            </button>
-                        </div>
+                    <div className="flex justify-end items-center space-x-2">
+                        <button className="btn-blue-dashboard">
+                            Follow
+                        </button>
+                        <button className="btn-blue-dashboard">
+                            Hire Me
+                        </button>
                     </div>
                 </div>
             </div>

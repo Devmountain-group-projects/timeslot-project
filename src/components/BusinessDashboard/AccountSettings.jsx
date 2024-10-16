@@ -80,7 +80,7 @@ const AccountSettings = () => {
 
             {/* Content Area */}
             <div className="w-[83%]">
-                <div className="h-full overflow-y-auto">
+                <div className="h-full rounded-xl overflow-y-auto">
                     {renderContent()}
                 </div>
             </div>
