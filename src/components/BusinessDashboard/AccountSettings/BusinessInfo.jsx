@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import { userCheck } from '../../../context/AuthContext';
 
 const BusinessInfo = () => {
     const [services, setServices] = useState([
@@ -8,6 +9,49 @@ const BusinessInfo = () => {
         { id: 3, description: 'Service 3', duration: '2 hours', price: '$200' },
     ]);
     const [editingService, setEditingService] = useState(null);
+    const [business, setBusiness] = useState(null);
+    const [newBusiness, setNewBusiness] = useState(null);
+    const [address, setAddress] = useState(null);
+    const [newAddress, setNewAddress] = useState(null);
+    const [address2, setAddress2] = useState("Enter New Unit or Suite Number");
+    const [newAddress2, setNewAddress2] = useState(null);
+    const [city, setCity] = useState(null);
+    const [newCity, setNewCity] = useState(null);
+    const [state, setState] = useState(null);
+    const [newState, setNewState] = useState(null);
+    const [zip, setZip] = useState(null);
+    const [newZip, setNewZip] = useState(null);
+    const [phone, setPhone] = useState(null);
+    const [newPhone, setNewPhone] = useState(null);
+    const [website, setWebsite] = useState(null);
+    const [newWebsite, setNewWebsite] = useState(null);
+
+
+    useEffect(() => {
+        sessionCheck()
+    }, [])
+
+    const sessionCheck = async () => {
+        const res = await userCheck()
+        console.log("Test: ", res)
+        if (res.success) {
+            console.log("Testing: ", res.user.business[0].city)
+            setBusiness(res.user.business[0].business_name)
+            setAddress(res.user.business[0].address_line1)
+            if(res.user.business[0].address_line2){
+                setAddress2(res.user.business[0].address_line2)
+            } else {
+                setAddress2("Enter New Unit or Suite Number")
+            }
+            setCity(res.user.business[0].city)
+            setState(res.user.business[0].state)
+            setZip(res.user.business[0].zip_code)
+            setPhone(res.user.business[0].phone)
+            setWebsite(res.user.business[0].website)
+        } else {
+            setBusiness("Enter Your New Business Name")
+        }
+    }
 
     const handleAddService = () => {
         const newService = {
@@ -31,8 +75,12 @@ const BusinessInfo = () => {
         setServices(services.filter(service => service.id !== id));
     };
 
-    const handleUpdate = (field) => {
-        console.log(`${field} has been updated`);
+    const handleUpdate = (field, input) => {
+        if(input){
+            console.log(`${field} has been updated to ${input}`); 
+         } else {
+             console.log("Feild is Empty")
+         }
     };
 
     const [availability, setAvailability] = useState({
@@ -69,13 +117,14 @@ const BusinessInfo = () => {
                             <input
                                 id="businessName"
                                 type="text"
-                                placeholder="Enter Your New Business Name"
+                                placeholder={business}
+                                onChange={(e) => setNewBusiness(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Business Name')}
+                                    onClick={() => handleUpdate('Business Name', newBusiness)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Business Name
@@ -87,13 +136,14 @@ const BusinessInfo = () => {
                             <input
                                 id="addressLine1"
                                 type="text"
-                                placeholder="Enter New Address"
+                                placeholder={address}
+                                onChange={(e) => setNewAddress(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Address Line 1')}
+                                    onClick={() => handleUpdate('Address Line 1', newAddress)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Address
@@ -106,12 +156,13 @@ const BusinessInfo = () => {
                                 <input
                                     id="addressLine2"
                                     type="text"
-                                    placeholder="Enter New Unit or Suite Number"
+                                    placeholder={address2}
+                                    onChange={(e) => setNewAddress2(e.target.value)}
                                     className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Unit or Suite Number')}
+                                    onClick={() => handleUpdate('Unit or Suite Number', newAddress2)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update Unit/Suite
@@ -122,12 +173,13 @@ const BusinessInfo = () => {
                                 <input
                                     id="city"
                                     type="text"
-                                    placeholder="Enter city"
+                                    placeholder={city}
+                                    onChange={(e) => setNewCity(e.target.value)}
                                     className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('City')}
+                                    onClick={() => handleUpdate('City', newCity)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update City
@@ -141,13 +193,14 @@ const BusinessInfo = () => {
                                     <input
                                         id="state"
                                         type="text"
-                                        placeholder="Enter state"
+                                        placeholder={state}
+                                        onChange={(e) => setNewState(e.target.value)}
                                         className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                     />
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('State')}
+                                    onClick={() => handleUpdate('State', newState)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update State
@@ -159,13 +212,14 @@ const BusinessInfo = () => {
                                     <input
                                         id="zipCode"
                                         type="text"
-                                        placeholder="Enter zip code"
+                                        placeholder={zip}
+                                        onChange={(e) => setNewZip(e.target.value)}
                                         className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                     />
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Zip Code')}
+                                    onClick={() => handleUpdate('Zip Code', newZip)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update Zip
@@ -177,13 +231,14 @@ const BusinessInfo = () => {
                             <input
                                 id="contactInfo"
                                 type="tel"
-                                placeholder="Enter contact phone number"
+                                placeholder={phone}
+                                onChange={(e) => setNewPhone(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Contact Info')}
+                                    onClick={() => handleUpdate('Contact Info', newPhone)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Contact Info
@@ -195,13 +250,14 @@ const BusinessInfo = () => {
                             <input
                                 id="website"
                                 type="url"
-                                placeholder="Enter website URL"
+                                placeholder={website}
+                                onChange={(e) => setNewWebsite(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Website')}
+                                    onClick={() => handleUpdate('Website', newWebsite)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Website
