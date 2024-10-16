@@ -30,7 +30,6 @@ const BasicInfo = () => {
     const sessionCheck = async () => {
         const res = await userCheck()
         if (res.success) {
-            console.log("Testing: ", res.user.business[0].description)
             setName(res.user.name)
             setNewName(res.user.name)
             setBusiness(res.user.business[0].business_name)
