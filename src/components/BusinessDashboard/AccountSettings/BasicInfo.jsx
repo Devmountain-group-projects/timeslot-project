@@ -10,10 +10,17 @@ const BasicInfo = () => {
     const [showModal, setShowModal] = useState(false);
     const [uploadType, setUploadType] = useState('');
     const [name, setName] = useState(null)
+    const [email, setEmail] = useState(null)
+    const [phone, setPhone] = useState(null)
+    const [bio, setBio] = useState("Tell us about yourself")
     const [business, setBusiness] = useState(null)
     const [city, setCity] = useState(null)
     const [state, setState] = useState(null)
     const [created_At, setCreated_At] = useState(null)
+    const [newName, setNewName] = useState(name)
+    const [newEmail, setNewEmail] = useState(email)
+    const [newPhone, setNewPhone] = useState(phone)
+    const [newBio, setNewBio] = useState(null)
 
     useEffect(() => {
         sessionCheck()
@@ -22,12 +29,18 @@ const BasicInfo = () => {
     const sessionCheck = async () => {
         const res = await userCheck()
         if (res.success) {
+            console.log("Testing: ", res.user.business[0].description)
             setName(res.user.name)
+            setNewName(res.user.name)
             setBusiness(res.user.business[0].business_name)
             setCity(res.user.business[0].city)
             setState(res.user.business[0].state)
             const formatData = res.user.createdAt.split("T")
             setCreated_At(formatData[0])
+            setBio(res.user.business[0].description)
+            setEmail(res.user.email)
+            setPhone(res.user.phone)
+            
         } else {
             setName("User Not logged in")
             setBusiness("No business")
@@ -43,8 +56,13 @@ const BasicInfo = () => {
         created_At,
     }
 
-    const handleUpdate = (field) => {
-        console.log(`${field} has been updated`);
+    const handleUpdate = (field, input) => {
+        if(input){
+           console.log(`${field} has been updated to ${input}`); 
+        } else {
+            console.log("Feild is Empty")
+        }
+        
     }
 
     const handleImageUpload = (type) => {
@@ -123,13 +141,14 @@ const BasicInfo = () => {
                             <input
                                 id="name"
                                 type="text"
-                                placeholder="Enter your name"
+                                placeholder={name}
+                                onChange={(e) => setNewName(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Name')}
+                                    onClick={() => handleUpdate('Name', newName)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Name
@@ -141,13 +160,14 @@ const BasicInfo = () => {
                             <input
                                 id="email"
                                 type="email"
-                                placeholder="Enter your email"
+                                placeholder={email}
+                                onChange={(e) => setNewEmail(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Email')}
+                                    onClick={() => handleUpdate('Email', newEmail)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Email
@@ -159,13 +179,14 @@ const BasicInfo = () => {
                             <input
                                 id="phone"
                                 type="tel"
-                                placeholder="Enter your phone number"
+                                placeholder={phone}
+                                onChange={(e) => setNewPhone(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             />
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Phone')}
+                                    onClick={() => handleUpdate('Phone', newPhone)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Phone
@@ -177,13 +198,14 @@ const BasicInfo = () => {
                             <textarea
                                 id="bio"
                                 rows="6"
-                                placeholder="Tell us about yourself"
+                                placeholder={bio}
+                                onChange={(e) => setNewBio(e.target.value)}
                                 className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                             ></textarea>
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('About you')}
+                                    onClick={() => handleUpdate('About you', newBio)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update About you
