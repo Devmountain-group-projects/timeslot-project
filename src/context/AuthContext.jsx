@@ -47,6 +47,10 @@ export async function userCheck() {
   return res.data
 }
 
+export async function businessCheck() {
+  
+}
+
 export async function userLogout() {
   const res = await axios.post("api/auth/logout")
   console.log("AuthContext: ", res)

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import LogoWhite from '../../assets/images/logowhite.png'
 import User6 from '../../assets/images/user6.png'
 import { Link } from 'react-router-dom'
@@ -14,12 +15,34 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { MdLiveHelp } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
-import { userLogout } from '../../context/AuthContext';
+import { userLogout, userCheck } from '../../context/AuthContext';
 
 const SideBar = ({ currentView, setCurrentView }) => {
+    const isLoggedIn = useSelector((state) => state.loggedIn)
+    const [name, setName] = useState(null)
+    const [business, setBusiness] = useState(null)
+    const [loggedIn, setloggedIn] = useState(isLoggedIn)
+
+    useEffect(() => {
+        sessionCheck()
+    }, [])
+
     const logoutTrigger = () => {
         console.log("logging user out")
         userLogout()
+    }
+
+    const sessionCheck = async () => {
+        const res = await userCheck()
+        console.log("Test: ", res)
+        if (res.success) {
+            setName(res.user.name)
+            setBusiness(res.user.business[0].business_name)
+            setloggedIn(res.success)    
+        } else {
+            setName("User Not logged in")
+            setloggedIn(res.success) 
+        }
     }
 
     return (
@@ -61,8 +84,8 @@ const SideBar = ({ currentView, setCurrentView }) => {
                 <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
                     <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
                     <div>
-                        <div className="text-sm font-semibold">John Doe</div>
-                        <div className="text-xs opacity-75">Business Owner</div>
+                        <div className="text-sm font-semibold">{name}</div>
+                        <div className="text-xs opacity-75">{business}</div>
                     </div>
                 </div>
             </div>

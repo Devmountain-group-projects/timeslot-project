@@ -1,21 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaCamera } from 'react-icons/fa';
 import { BiSolidPencil } from "react-icons/bi";
 import User6 from '../../../assets/images/user6.png'
 import CoverImg from '../../../assets/images/coverimg.jpeg'
 import ImageUploadModal from './ImageUploadModal';
+import { userCheck } from '../../../context/AuthContext';
 
 const BasicInfo = () => {
     const [showModal, setShowModal] = useState(false);
     const [uploadType, setUploadType] = useState('');
+    const [name, setName] = useState(null)
+    const [business, setBusiness] = useState(null)
+    const [city, setCity] = useState(null)
+    const [state, setState] = useState(null)
+    const [created_At, setCreated_At] = useState(null)
+
+    useEffect(() => {
+        sessionCheck()
+    }, [])
+
+    const sessionCheck = async () => {
+        const res = await userCheck()
+        if (res.success) {
+            setName(res.user.name)
+            setBusiness(res.user.business[0].business_name)
+            setCity(res.user.business[0].city)
+            setState(res.user.business[0].state)
+            const formatData = res.user.createdAt.split("T")
+            setCreated_At(formatData[0])
+        } else {
+            setName("User Not logged in")
+            setBusiness("No business")
+        }
+    }
 
     const basicInfoData = {
-        name: 'John Doe',
+        name,
         profileImg: User6,
         coverImg: CoverImg,
-        city: 'Lehi',
-        state: 'UT',
-        created_At: 'October 17, 2022',
+        city,
+        state,
+        created_At,
     }
 
     const handleUpdate = (field) => {
