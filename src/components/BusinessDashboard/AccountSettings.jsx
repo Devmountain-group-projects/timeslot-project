@@ -36,7 +36,7 @@ const AccountSettings = () => {
             {/* Sidebar */}
             <div className="w-[17%] pr-3">
                 <h2 className="text-lg font-bold mb-4 flex items-center">
-                    <IoMdSettings size={24} className="mr-2 animate-spin" />
+                    <IoMdSettings size={24} className="mr-2" />
                     Account Settings
                 </h2>
                 <nav>
@@ -80,7 +80,7 @@ const AccountSettings = () => {
 
             {/* Content Area */}
             <div className="w-[83%]">
-                <div className="bg-white rounded-xl ring-2 ring-gray-300 shadow-lg h-full overflow-y-auto">
+                <div className="h-full overflow-y-auto">
                     {renderContent()}
                 </div>
             </div>

@@ -26,6 +26,10 @@ export default {
           '@apply px-6 py-3 text-base rounded-full font-medium text-white bg-secondary hover:bg-white hover:text-primary hover:ring-2 ring-primary transition duration-300 ease-in-out':
             {},
         },
+        '.btn-blue-dashboard': {
+          '@apply px-4 py-2 text-sm rounded-full font-medium text-white bg-secondary hover:bg-white hover:text-primary hover:ring-2 ring-primary transition duration-300 ease-in-out':
+            {},
+        },
         '.bg-gradient-gray': {
           '@apply bg-[#ededed]': {},
         },
