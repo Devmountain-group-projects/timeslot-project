@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Availability from './AccountSettings/Availability'
 import BasicInfo from './AccountSettings/BasicInfo'
 import BusinessInfo from './AccountSettings/BusinessInfo'
 import Security from './AccountSettings/Security'
@@ -7,7 +6,6 @@ import DeleteAccount from './AccountSettings/DeleteAccount'
 import { IoMdSettings } from "react-icons/io";
 import { FaUserGear } from "react-icons/fa6";
 import { BsBuildingFillGear } from "react-icons/bs";
-import { FaBusinessTime } from "react-icons/fa";
 import { GrShieldSecurity } from "react-icons/gr";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -20,8 +18,6 @@ const AccountSettings = () => {
                 return <BasicInfo />
             case 'businessInfo':
                 return <BusinessInfo />
-            case 'availability':
-                return <Availability />
             case 'security':
                 return <Security />
             case 'deleteAccount':
@@ -53,13 +49,6 @@ const AccountSettings = () => {
                         icon={<BsBuildingFillGear size={18} />}
                     >
                         Business Info
-                    </SidebarLink>
-                    <SidebarLink
-                        active={activeView === 'availability'}
-                        onClick={() => setActiveView('availability')}
-                        icon={<FaBusinessTime size={18} />}
-                    >
-                        Availability
                     </SidebarLink>
                     <SidebarLink
                         active={activeView === 'security'}
