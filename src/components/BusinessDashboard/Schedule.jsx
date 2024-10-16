@@ -6,20 +6,42 @@ const Schedule = () => {
     const location = useLocation();
     const selectedDate = location.state?.selectedDate || new Date();
 
+    // function validateEvent(events, newEvent) {
+    //     for (const event of events) {
+    //         if (newEvent.start < event.end && newEvent.end > event.start) {
+    //             return false; // events overlap
+    //         }
+    //     }
+    //     return true; // no overlap
+    // }
+
     const events = [
         {
             event_id: 1,
             title: "Event 1",
-            start: new Date(new Date().setHours(new Date().getHours() - 3)),
-            end: new Date(new Date().setHours(new Date().getHours() + 3)),
+            start: new Date(new Date().setHours(new Date().getHours())),
+            end: new Date(new Date().setHours(new Date().getHours() + 1)),
         },
-        {
-            event_id: 2,
-            title: "Event 2",
-            start: new Date(new Date().setHours(new Date().getHours() - 2)),
-            end: new Date(new Date().setHours(new Date().getHours() + 2)),
-        },
+        // {
+        //     event_id: 2,
+        //     title: "Event 2",
+        //     start: new Date(new Date().setHours(new Date().getHours())),
+        //     end: new Date(new Date().setHours(new Date().getHours() + 1)),
+        // },
     ];
+
+    // const newEvent = {
+    //     event_id: 3,
+    //     title: "Event 3",
+    //     start: new Date(new Date().setHours(new Date().getHours() + 2)),
+    //     end: new Date(new Date().setHours(new Date().getHours() + 3)),
+    // };
+    //
+    // if (validateEvent(events, newEvent)) {
+    //     events.push(newEvent);
+    // } else {
+    //     console.log("Event time frames overlap");
+    // }
 
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
@@ -53,13 +75,13 @@ const Schedule = () => {
                             {
                                 name: "client",
                                 type: "input",
-                                default: "No Client",
+                                default: "",
                                 config: { label: "Client Name", required: true, min: 3, variant: "outlined" }
                             },
                             {
                                 name: "service",
                                 type: "select",
-                                default: "Haircut",
+                                default: "",
                                 options: [
                                     { id: 1, text: "Haircut", value: "Haircut" },
                                     { id: 2, text: "Coloring", value: "Coloring" },
