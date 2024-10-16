@@ -6,9 +6,11 @@ const DeleteAccount = () => {
     const [showModal, setShowModal] = useState(false);
     const [confirmationStep, setConfirmationStep] = useState(0);
     const [confirmationText, setConfirmationText] = useState('');
+    const [isInputError, setIsInputError] = useState(false);
     const modalRef = useRef();
 
-    const businessName = 'ABC Business';
+    // Here we need to add the business name from the database
+    const businessName = 'Big Business';
 
     const handleDeleteClick = () => {
         setShowModal(true);
@@ -19,12 +21,12 @@ const DeleteAccount = () => {
     };
 
     const handleFinalDelete = () => {
-        if (confirmationText === 'ABC Business') {
+        if (confirmationText === businessName) {
             console.log('Account deleted');
             setShowModal(false);
             // Here you would typically call an API to delete the account
         } else {
-            alert('Incorrect confirmation text. Please try again.');
+            setIsInputError(true);
         }
     };
 
@@ -32,6 +34,12 @@ const DeleteAccount = () => {
         setShowModal(false);
         setConfirmationStep(0);
         setConfirmationText('');
+        setIsInputError(false);
+    };
+
+    const handleInputChange = (e) => {
+        setConfirmationText(e.target.value);
+        setIsInputError(false);
     };
 
     useEffect(() => {
@@ -67,7 +75,7 @@ const DeleteAccount = () => {
             </div>
 
             {showModal && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+                <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
                     <div ref={modalRef} className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full relative">
                         <button
                             onClick={closeModal}
@@ -93,10 +101,14 @@ const DeleteAccount = () => {
                                     <input
                                         type="text"
                                         value={confirmationText}
-                                        onChange={(e) => setConfirmationText(e.target.value)}
-                                        className="w-full text-sm px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 mb-4"
+                                        onChange={handleInputChange}
+                                        className={`w-full text-sm px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 mb-2 ${isInputError ? 'border-red-500' : 'border-gray-300'
+                                            }`}
                                         placeholder="Enter your Business Name"
                                     />
+                                    {isInputError && (
+                                        <p className="text-red-500 text-xs mb-2">Incorrect business name. Please try again.</p>
+                                    )}
                                     <button
                                         className="btn-red block mx-auto"
                                         onClick={handleFinalDelete}
