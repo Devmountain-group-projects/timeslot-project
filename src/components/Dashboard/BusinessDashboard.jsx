@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
 import Sidebar from '../Layout/SideBar'
 import UpcomingAppts from '../BusinessDashboard/UpcomingAppts'
 import RevenueOverview from '../BusinessDashboard/RevenueOverview'
@@ -24,7 +25,16 @@ import PaymentsInvoicing from '../BusinessDashboard/PaymentsInvoicing'
 import AllServices from '../BusinessDashboard/AllServices'
 
 const BusinessDashboard = () => {
+    const location = useLocation();
     const [currentView, setCurrentView] = useState('dashboard')
+
+
+    useEffect(() => {
+        if (location.state?.view === 'calendar') {
+            setCurrentView('calendar');
+        }
+    }, [location]);
+
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -85,7 +95,7 @@ const BusinessDashboard = () => {
             case 'payments':
                 return <PaymentsInvoicing />
             case 'calendar':
-                return <Schedule />
+                return <Schedule selectedDate={location.state?.selectedDate} />
             case 'settings':
                 return <AccountSettings />
             case 'help':

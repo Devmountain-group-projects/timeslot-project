@@ -5,26 +5,26 @@ import { useNavigate } from 'react-router-dom';
 const SharedScheduler = ({ isOverview = false, selectedDate }) => {
     const navigate = useNavigate();
 
+    const handleNavigation = (date) => {
+        if (isOverview) {
+            navigate('/dashboard', { state: { selectedDate: date, view: 'calendar' } });
+        }
+    };
+
     const events = [
         {
             event_id: 1,
             title: "Event 1",
-            start: new Date(new Date().setHours(new Date().getHours() - 3)),
-            end: new Date(new Date().setHours(new Date().getHours() + 3)),
+            start: new Date(new Date().setHours(new Date().getHours())),
+            end: new Date(new Date().setHours(new Date().getHours() + 1)),
         },
-        {
-            event_id: 2,
-            title: "Event 2",
-            start: new Date(new Date().setHours(new Date().getHours() - 2)),
-            end: new Date(new Date().setHours(new Date().getHours() + 2)),
-        },
+        // {
+        //     event_id: 2,
+        //     title: "Event 2",
+        //     start: new Date(new Date().setHours(new Date().getHours())),
+        //     end: new Date(new Date().setHours(new Date().getHours() + 1)),
+        // },
     ];
-
-    const handleNavigation = (date) => {
-        if (isOverview) {
-            navigate('/schedule', { state: { selectedDate: date } });
-        }
-    };
 
     const commonProps = {
         events: events,
@@ -34,11 +34,11 @@ const SharedScheduler = ({ isOverview = false, selectedDate }) => {
             weekDays: [0, 1, 2, 3, 4, 5],
             weekStartOn: 1,
             startHour: 9,
-            endHour: 17,
+            endHour: 22,
         },
         day: {
             startHour: 9,
-            endHour: 17,
+            endHour: 22,
         },
     };
 
