@@ -58,8 +58,8 @@ export const register = async (req,res) => {
   const { name, email, phoneNumber, password } = req.body.userData
   const hashedPassword = bcryptjs.hashSync(password, bcryptjs.genSaltSync(10))
 
-
-  if (!req.body.registerData) {
+  // Are they Registering a Business or a User
+  if (!req.body.registerData) { // user
 
 
     if (await db.user.findOne({ where: { email: email}})) {
@@ -90,14 +90,15 @@ export const register = async (req,res) => {
         newUserInfo: newUser
       })
     }
-  } else {
-    const { businessName, address_line1, address_line2, city, zipCode, contactInfo } = req.body.registerData
+  } else { // business
+    const { businessName, address_line1, address_line2, city, state, zipCode, contactInfo } = req.body.registerData
     const { website, serviceName, serviceDescription, serviceDuration, servicePrice, availability } = req.body.detailsData
     console.log("businessName: ", businessName)
     console.log("registerData", req.body.registerData)
     console.log("detailsData", req.body.detailsData)
     console.log(await db.business.findOne( { where: { business_name: businessName } } ))
 
+    // Does this Email already exist
     if ((!await db.business.findOne( { where: { business_name: businessName } } )) === null && await db.user.findOne({ where: { email: email}}) === null) {
       console.log("Business Already exists")
       return res.send({
@@ -116,21 +117,23 @@ export const register = async (req,res) => {
         password_hash: hashedPassword,
         profile_picture: "Default",
       })
-      console.log(newUser)
+      console.log("New User: ", newUser)
 
       const newBusiness = await db.business.create({
           business_name: businessName,
-          description: serviceDescription,
+          description: serviceName,
           address_line1,
           address_line2,
           city,
-          state: "Utah",
+          state,
           zip_code: zipCode,
           email,
           phone: contactInfo,
           website,
       })
-      console.log(newBusiness)
+      console.log("New Business: ", newBusiness)
+
+      
 
       console.log("Connecting Business and User")
 
@@ -142,15 +145,35 @@ export const register = async (req,res) => {
       console.log("businessName", businessName)
       console.log("business_id", business.business_id)
 
-      // if(!business === null){
-        const connectBusiness = await db.user_business.create({
-          user_id: user.user_id,
-          business_id: business.business_id,
-        })
-        console.log(connectBusiness)
-      // }
-
       
+      const connectBusiness = await db.user_business.create({
+        user_id: user.user_id,
+        business_id: business.business_id,
+      })
+      console.log("DB connection: ", connectBusiness)
+      
+      const newService = await db.service.create({
+        business_id: business.business_id,
+        name: serviceName,
+        description: serviceDescription,
+        duration: serviceDuration,
+        price: servicePrice,
+      })
+      console.log("New Service: ", newService)
+
+      console.log("Availability", availability.monday)
+      for (const day in availability) {
+        if(!(availability[day].start === '') && !(availability[day].end === '')) {
+          const newAvailability = await db.availability.create({
+            business_id: business.business_id,
+            day_of_week: day,
+            start_time: availability[day].start,
+            end_time: availability[day].end,
+          })
+          console.log("Added ", day)
+        }
+      }
+
 
       return res.send({
         message: "New Business created",
@@ -159,11 +182,7 @@ export const register = async (req,res) => {
     }
     
   }
-  
-
   console.log("This Test shouldn't show up")
-
-  
 }
 
 // Register Logout
