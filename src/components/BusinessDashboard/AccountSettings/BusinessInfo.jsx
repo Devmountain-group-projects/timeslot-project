@@ -124,7 +124,7 @@ const BusinessInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Business Name', newBusiness)}
+                                    onClick={() => handleUpdate('businessName', newBusiness)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Business Name
@@ -143,7 +143,7 @@ const BusinessInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Address Line 1', newAddress)}
+                                    onClick={() => handleUpdate('address1', newAddress)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Address
@@ -162,7 +162,7 @@ const BusinessInfo = () => {
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Unit or Suite Number', newAddress2)}
+                                    onClick={() => handleUpdate('address2', newAddress2)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update Unit/Suite
@@ -179,7 +179,7 @@ const BusinessInfo = () => {
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('City', newCity)}
+                                    onClick={() => handleUpdate('city', newCity)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update City
@@ -200,7 +200,7 @@ const BusinessInfo = () => {
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('State', newState)}
+                                    onClick={() => handleUpdate('state', newState)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update State
@@ -219,7 +219,7 @@ const BusinessInfo = () => {
                                 </div>
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Zip Code', newZip)}
+                                    onClick={() => handleUpdate('zip', newZip)}
                                     className="btn-blue-dashboard whitespace-nowrap float-end"
                                 >
                                     Update Zip
@@ -238,7 +238,7 @@ const BusinessInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Contact Info', newPhone)}
+                                    onClick={() => handleUpdate('businessPhone', newPhone)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Contact Info
@@ -257,7 +257,7 @@ const BusinessInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Website', newWebsite)}
+                                    onClick={() => handleUpdate('website', newWebsite)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Website

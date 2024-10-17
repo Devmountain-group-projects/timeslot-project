@@ -13,8 +13,8 @@ export const userCheck = async (req, res) => {
       where: { user_id: id },
       include: {
         model: db.business,
-        as: 'business'
-      }
+        as: "business",
+      },
     });
     res.send({
       message: "User logged in",
@@ -36,6 +36,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await db.user.findOne({ where: { email: email } });
+  const business = await db.business.findOne({ where: { email: email } });
 
   if (!user || !bcryptjs.compareSync(password, user.password_hash)) {
     return res.send({
@@ -44,6 +45,7 @@ export const login = async (req, res) => {
     });
   } else {
     req.session.userId = user.user_id;
+    req.session.businessId = business.business_id;
     req.session.name = user.name;
 
     return res.send({
@@ -160,6 +162,10 @@ export const register = async (req, res) => {
         website,
       });
       console.log("New Business: ", newBusiness);
+
+      req.session.userId = newUser.user_id;
+      req.session.name = newUser.name;
+      req.session.businessId = newBusiness.business_id
 
       console.log("Connecting Business and User");
 
