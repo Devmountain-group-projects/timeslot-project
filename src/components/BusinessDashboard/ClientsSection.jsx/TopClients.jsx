@@ -1,5 +1,7 @@
 import React from 'react'
 import { FaStar } from 'react-icons/fa'
+import User8 from '/src/assets/images/user8.png';
+
 
 const TopClients = () => {
     return (
@@ -13,7 +15,7 @@ const TopClients = () => {
             <hr className='border-t border-gray-300 w-full m-0' />
             <section className="flex-grow flex items-center justify-center p-4">
                 <div className="flex items-center">
-                    <img src="/src/assets/images/placeholderavatar.png" alt="Jane Smith" className="w-12 h-12 rounded-full mr-3" />
+                    <img src={User8} alt="Jane Smith" className="w-12 h-12 rounded-full mr-3" />
                     <div className="text-left">
                         <p className="text-sm font-medium">Jane Smith</p>
                         <p className="text-xs text-gray-500 mt-1">10 Appointments</p>

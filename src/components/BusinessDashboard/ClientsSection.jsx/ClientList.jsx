@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { FaPlus, FaTimes, FaChevronRight } from 'react-icons/fa';
 import PlaceholderAvatar from '/src/assets/images/placeholderavatar.png';
+import User8 from '/src/assets/images/user8.png';
+import User9 from '/src/assets/images/user9.png';
+import User10 from '/src/assets/images/user10.png';
 
 const ClientItem = ({ client, onEdit }) => (
     <div className="border-b border-gray-300 last:border-b-0">
@@ -256,7 +259,7 @@ const ClientList = () => {
             email: "john.doe@example.com",
             phone: "(555) 123-4567",
             dateCreated: "October 1, 2024",
-            photo: null
+            photo: User9
         },
         {
             id: 2,
@@ -264,15 +267,15 @@ const ClientList = () => {
             email: "jane.smith@example.com",
             phone: "(555) 987-6543",
             dateCreated: "October 5, 2024",
-            photo: null
+            photo: User8
         },
         {
             id: 3,
-            name: "Mike Johnson",
-            email: "mike.johnson@example.com",
+            name: "Yasmin Abdulaziz",
+            email: "yazmin.abdulaziz@example.com",
             phone: "(555) 456-7890",
             dateCreated: "October 3, 2024",
-            photo: null
+            photo: User10
         }
     ]);
 
