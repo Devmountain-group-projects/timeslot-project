@@ -1,17 +1,17 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 // Row 1
-import TotalClients from './ClientsSection.jsx/TotalClients'
-import NewClients from './ClientsSection.jsx/NewClients'
-import TopClients from './ClientsSection.jsx/TopClients'
-import InactiveClients from './ClientsSection.jsx/InactiveClients'
+import TotalClients from './ClientsSection/TotalClients'
+import NewClients from './ClientsSection/NewClients'
+import TopClients from './ClientsSection/TopClients'
+import InactiveClients from './ClientsSection/InactiveClients'
 // Row 2
-import ClientList from './ClientsSection.jsx/ClientList'
-import AddAppointment from './ClientsSection.jsx/AddAppointment'
+import ClientList from './ClientsSection/ClientList'
+import AddAppointment from './ClientsSection/AddAppointment'
 // Row 3
-import ReturningClients from './ClientsSection.jsx/ReturningClients'
-import ClientSatisfaction from './ClientsSection.jsx/ClientSatisfaction'
-import ClientRetention from './ClientsSection.jsx/ClientRetention'
+import ReturningClients from './ClientsSection/ReturningClients'
+import ClientSatisfaction from './ClientsSection/ClientSatisfaction'
+import ClientRetention from './ClientsSection/ClientRetention'
 
 const AllClients = () => {
     const containerVariants = {
@@ -37,7 +37,7 @@ const AllClients = () => {
 
     return (
         <motion.div
-            className="h-full flex flex-col gap-4"
+            className="h-full flex flex-col gap-4 relative"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
