@@ -82,12 +82,12 @@ if (process.env.REFRESH_TOKEN) {
 
 
 // Routes
-// import appointment from './routes/appointmentRoutes.js';
+import appointment from './routes/appointmentRoutes.js';
 import auth from './routes/authRoutes.js';
 // import business from './routes/businessRoutes.js';
 // import contact from './routes/contactRoutes.js';
 import googleRoutes from './routes/googleRoutes.js';
 
 app.use(googleRoutes);
-// app.use("/api/appointments", appointment);
+app.use("/api/appointments", appointment);
 app.use("/api/auth", auth);
