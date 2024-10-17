@@ -51,13 +51,13 @@ const AllClients = () => {
             </motion.div>
 
             {/* Row 2 */}
-            <motion.div className="h-[45%] flex gap-4" variants={rowVariants}>
+            <motion.div className="h-[55%] flex gap-4" variants={rowVariants}>
                 <Card className="w-[32%]"><RecentBookings /></Card>
                 <Card className="w-[68%]"><ClientList /></Card>
             </motion.div>
 
             {/* Row 3 */}
-            <motion.div className="h-[40%] flex gap-4" variants={rowVariants}>
+            <motion.div className="h-[30%] flex gap-4" variants={rowVariants}>
                 <Card className="w-[33.33%]"><ReturningClients /></Card>
                 <Card className="w-[33.33%]"><ClientSatisfaction /></Card>
                 <Card className="w-[33.33%]"><ClientRetention /></Card>
