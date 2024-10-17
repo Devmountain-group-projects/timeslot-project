@@ -38,10 +38,10 @@ const SideBar = ({ currentView, setCurrentView }) => {
         if (res.success) {
             setName(res.user.name)
             setBusiness(res.user.business[0].business_name)
-            setloggedIn(res.success)    
+            setloggedIn(res.success)
         } else {
             setName("User Not logged in")
-            setloggedIn(res.success) 
+            setloggedIn(res.success)
         }
     }
 
@@ -58,16 +58,16 @@ const SideBar = ({ currentView, setCurrentView }) => {
             <nav className="flex-grow">
                 <MenuSection title="Main Menu">
                     <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView}>Dashboard</MenuItem>
-                    <MenuItem view="appointments" icon={<FaRegCalendarCheck />} currentView={currentView} setCurrentView={setCurrentView}>Appointments</MenuItem>
-                    <MenuItem view="services" icon={<MdHomeRepairService />} currentView={currentView} setCurrentView={setCurrentView}>Services</MenuItem>
+                    {/* <MenuItem view="appointments" icon={<FaRegCalendarCheck />} currentView={currentView} setCurrentView={setCurrentView}>Appointments</MenuItem> */}
+                    {/* <MenuItem view="services" icon={<MdHomeRepairService />} currentView={currentView} setCurrentView={setCurrentView}>Services</MenuItem> */}
                     <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView}>Clients</MenuItem>
+                    <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Schedule</MenuItem>
                     <MenuItem view="reviews" icon={<MdRateReview />} currentView={currentView} setCurrentView={setCurrentView}>Reviews & Feedback</MenuItem>
                 </MenuSection>
 
-                <MenuSection title="Other Menu">
+                {/* <MenuSection title="Other Menu">
                     <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView}>Payments & Invoicing</MenuItem>
-                    <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Schedule</MenuItem>
-                </MenuSection>
+                </MenuSection> */}
 
                 <MenuSection title="Help & Settings">
                     <MenuItem view="settings" icon={<IoMdSettings />} currentView={currentView} setCurrentView={setCurrentView}>Account Settings</MenuItem>

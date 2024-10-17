@@ -6,8 +6,8 @@ import NewClients from './ClientsSection.jsx/NewClients'
 import TopClients from './ClientsSection.jsx/TopClients'
 import InactiveClients from './ClientsSection.jsx/InactiveClients'
 // Row 2
-import RecentBookings from './ClientsSection.jsx/RecentBookings'
 import ClientList from './ClientsSection.jsx/ClientList'
+import AddAppointment from './ClientsSection.jsx/AddAppointment'
 // Row 3
 import ReturningClients from './ClientsSection.jsx/ReturningClients'
 import ClientSatisfaction from './ClientsSection.jsx/ClientSatisfaction'
@@ -52,8 +52,8 @@ const AllClients = () => {
 
             {/* Row 2 */}
             <motion.div className="h-[55%] flex gap-4" variants={rowVariants}>
-                <Card className="w-[32%]"><RecentBookings /></Card>
-                <Card className="w-[68%]"><ClientList /></Card>
+                <Card className="w-[32%]"><ClientList /></Card>
+                <Card className="w-[68%]"><AddAppointment /></Card>
             </motion.div>
 
             {/* Row 3 */}
