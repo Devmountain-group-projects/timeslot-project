@@ -2,8 +2,8 @@ import React from 'react'
 import ContactImg from '../../assets/images/contactimg.jpg'
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 const ContactForm = () => {
     const containerVariants = {
@@ -28,25 +28,25 @@ const ContactForm = () => {
         }
     };
 
-    const sendCustomEmail = (details) => {
-        emailjs.init(import.meta.env.VITE_EMAILJS_USER_ID);
-        emailjs.send(
-            import.meta.env.VITE_EMAILJS_SERVICE_ID,
-            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-            {
-                to_email: details.to_email,
-                subject: details.subject,
-                message: details.message
-            }
-        )
-            .then((response) => {
-                console.log(response);
-                alert("Email sent successfully!");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
+    // const sendCustomEmail = (details) => {
+    //     emailjs.init(import.meta.env.VITE_EMAILJS_USER_ID);
+    //     emailjs.send(
+    //         import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    //         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+    //         {
+    //             to_email: details.to_email,
+    //             subject: details.subject,
+    //             message: details.message
+    //         }
+    //     )
+    //         .then((response) => {
+    //             console.log(response);
+    //             alert("Email sent successfully!");
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //         });
+    // }
 
     return (
         <motion.div
