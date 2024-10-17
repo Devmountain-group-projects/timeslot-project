@@ -37,8 +37,11 @@ const SideBar = ({ currentView, setCurrentView }) => {
         console.log("Test: ", res)
         if (res.success) {
             setName(res.user.name)
-            setBusiness(res.user.business[0].business_name)
+            
             setloggedIn(res.success)    
+            if(res.user.business[0]) {
+                setBusiness(res.user.business[0].business_name)
+            }
         } else {
             setName("User Not logged in")
             setloggedIn(res.success) 

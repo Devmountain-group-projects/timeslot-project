@@ -5,6 +5,7 @@ import User6 from '../../../assets/images/placeholderavatar.png'
 import CoverImg from '../../../assets/images/placeholdercover.png'
 import ImageUploadModal from './ImageUploadModal';
 import { userCheck } from '../../../context/AuthContext';
+import { testing, updateBusiness } from '../../../context/businessContext';
 
 
 const BasicInfo = () => {
@@ -15,15 +16,15 @@ const BasicInfo = () => {
     const [phone, setPhone] = useState(null)
     const [bio, setBio] = useState("Tell us about yourself")
     const [business, setBusiness] = useState(null)
-    const [city, setCity] = useState(null)
-    const [state, setState] = useState(null)
+    const [city, setCity] = useState("No")
+    const [state, setState] = useState("Address")
     const [created_At, setCreated_At] = useState(null)
     const [newName, setNewName] = useState(name)
     const [newEmail, setNewEmail] = useState(email)
     const [newPhone, setNewPhone] = useState(phone)
     const [newBio, setNewBio] = useState(null)
 
-    useEffect(() => {
+    useEffect(()  => {
         sessionCheck()
     }, [])
 
@@ -32,12 +33,15 @@ const BasicInfo = () => {
         if (res.success) {
             setName(res.user.name)
             setNewName(res.user.name)
-            setBusiness(res.user.business[0].business_name)
-            setCity(res.user.business[0].city)
-            setState(res.user.business[0].state)
+            if (res.user.business[0]) {
+                setBusiness(res.user.business[0].business_name)
+                setCity(res.user.business[0].city)
+                setState(res.user.business[0].state)
+                setBio(res.user.business[0].description)
+            }
+            
             const formatData = res.user.createdAt.split("T")
             setCreated_At(formatData[0])
-            setBio(res.user.business[0].description)
             setEmail(res.user.email)
             setPhone(res.user.phone)
             
@@ -56,9 +60,11 @@ const BasicInfo = () => {
         created_At,
     }
 
-    const handleUpdate = (field, input) => {
+    const handleUpdate = async (field, input) => {
         if(input){
-           console.log(`${field} has been updated to ${input}`); 
+           console.log(`${field} has been updated to ${input}`);
+           const res = await updateBusiness(field, input)
+            console.log(res) 
         } else {
             console.log("Feild is Empty")
         }
@@ -148,7 +154,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Name', newName)}
+                                    onClick={() => handleUpdate('name', newName)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Name
@@ -167,7 +173,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Email', newEmail)}
+                                    onClick={() => handleUpdate('email', newEmail)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Email
@@ -186,7 +192,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('Phone', newPhone)}
+                                    onClick={() => handleUpdate('phone', newPhone)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Phone
@@ -205,7 +211,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('About you', newBio)}
+                                    onClick={() => handleUpdate('about', newBio)}
                                     className="btn-blue-dashboard"
                                 >
                                     Update About you

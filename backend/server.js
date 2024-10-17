@@ -129,8 +129,9 @@ app.get('/auth/google/calendar', (req, res) => {
 // Routes
 // import appointment from './routes/appointmentRoutes.js';
 import auth from './routes/authRoutes.js';
-// import business from './routes/businessRoutes.js';
+import business from './routes/businessRoutes.js';
 // import contact from './routes/contactRoutes.js';
 
 
 app.use("/api/auth", auth);
+app.use("/api/business", business)
