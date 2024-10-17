@@ -80,58 +80,16 @@ if (process.env.REFRESH_TOKEN) {
     console.warn('No refresh token found. Please obtain a refresh token.');
 }
 
-// console.log('OAuth2 Client initialized with:', {
-//     clientId: process.env.CLIENT_ID,
-//     clientSecret: process.env.CLIENT_SECRET,
-//     redirectUri: process.env.REDIRECT_URI,
-//     refreshToken: process.env.REFRESH_TOKEN
-// });
-
-app.get('/auth/google', (req, res) => {
-    const url = oauth2Client.generateAuthUrl({
-        access_type: 'offline',
-        scope: ['https://www.googleapis.com/auth/calendar.readonly'],
-    });
-    res.redirect(url);
-});
-
-app.get('/auth/google/redirect', (req, res) => {
-    const {tokens} = oauth2Client.getToken(req.query.code);
-    oauth2Client.setCredentials(tokens);
-    res.redirect('/');
-});
-
-app.get('/auth/google/calendar', (req, res) => {
-    const calendar = google.calendar({version: 'v3', auth: oauth2Client});
-    calendar.events.list({
-        calendarId: 'primary',
-        timeMin: new Date().toISOString(),
-        maxResults: 10,
-        singleEvents: true,
-        orderBy: 'startTime',
-    }, (err, res) => {
-        if (err) return console.log('The API returned an error: ' + err);
-        const events = res.data.items;
-        if (events.length) {
-            console.log('Upcoming 10 events:');
-            events.map((event, i) => {
-                const start = event.start.dateTime || event.start.date;
-                console.log(`${start} - ${event.summary}`);
-            });
-        } else {
-            console.log('No upcoming events found.');
-        }
-    });
-    res.json(calendar);
-});
-
 
 // Routes
-// import appointment from './routes/appointmentRoutes.js';
+import appointment from './routes/appointmentRoutes.js';
 import auth from './routes/authRoutes.js';
 import business from './routes/businessRoutes.js';
 // import contact from './routes/contactRoutes.js';
+import googleRoutes from './routes/googleRoutes.js';
 
 
+app.use(googleRoutes);
+app.use("/api/appointments", appointment);
 app.use("/api/auth", auth);
 app.use("/api/business", business)
