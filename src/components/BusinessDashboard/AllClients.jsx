@@ -43,7 +43,7 @@ const AllClients = () => {
             animate="visible"
         >
             {/* Row 1 */}
-            <motion.div className="h-[33.33%] flex gap-4" variants={rowVariants}>
+            <motion.div className="h-[15%] flex gap-4" variants={rowVariants}>
                 <Card className="w-[25%]"><TotalClients /></Card>
                 <Card className="w-[25%]"><NewClients /></Card>
                 <Card className="w-[25%]"><TopClients /></Card>
@@ -51,13 +51,13 @@ const AllClients = () => {
             </motion.div>
 
             {/* Row 2 */}
-            <motion.div className="h-[33.33%] flex gap-4" variants={rowVariants}>
-                <Card className="w-[25%]"><RecentBookings /></Card>
-                <Card className="w-[75%]"><ClientList /></Card>
+            <motion.div className="h-[45%] flex gap-4" variants={rowVariants}>
+                <Card className="w-[32%]"><RecentBookings /></Card>
+                <Card className="w-[68%]"><ClientList /></Card>
             </motion.div>
 
             {/* Row 3 */}
-            <motion.div className="h-[33.33%] flex gap-4" variants={rowVariants}>
+            <motion.div className="h-[40%] flex gap-4" variants={rowVariants}>
                 <Card className="w-[33.33%]"><ReturningClients /></Card>
                 <Card className="w-[33.33%]"><ClientSatisfaction /></Card>
                 <Card className="w-[33.33%]"><ClientRetention /></Card>
