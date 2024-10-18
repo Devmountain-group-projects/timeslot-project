@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import { useState, useReducer } from 'react';
 import { FaPlus, FaTimes, FaChevronRight } from 'react-icons/fa';
+import axios from "axios";
+import clientReducer from "../../../reducers/clientReducer.js";
 import PlaceholderAvatar from '/src/assets/images/placeholderavatar.png';
 import User8 from '/src/assets/images/user8.png';
 import User9 from '/src/assets/images/user9.png';
 import User10 from '/src/assets/images/user10.png';
+
 
 const ClientItem = ({ client, onEdit }) => (
     <div className="border-b border-gray-300 last:border-b-0">
@@ -38,6 +41,7 @@ const AddClientModal = ({ onClose, onAddClient }) => {
         phone: '',
         photo: null
     });
+    const [error, setError] = useState(null);  // To handle errors
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -47,21 +51,35 @@ const AddClientModal = ({ onClose, onAddClient }) => {
     const handlePhotoUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setNewClient(prev => ({ ...prev, photo: reader.result }));
-            };
-            reader.readAsDataURL(file);
+            setNewClient(prev => ({ ...prev, photo: file }));  // Store the actual file
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onAddClient({
-            ...newClient,
-            dateCreated: new Date().toLocaleDateString()
-        });
-        onClose();
+
+        // Validate form fields
+        if (!newClient.name || !newClient.email || !newClient.phone) {
+            setError('Please fill in all required fields.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('clientName', newClient.name);
+        formData.append('clientEmail', newClient.email);
+        formData.append('clientPhone', newClient.phone);
+        if (newClient.photo) {
+            formData.append('photo', newClient.photo);
+        }
+
+        try {
+            const response = await axios.post('/api/appointments/createClient', formData);
+            onAddClient(response.data.client);
+            onClose();
+        } catch (error) {
+            console.error('Error adding client:', error);
+            setError('Failed to add client. Please try again.');
+        }
     };
 
     return (
@@ -73,6 +91,7 @@ const AddClientModal = ({ onClose, onAddClient }) => {
                         <FaTimes size={24} />
                     </button>
                 </div>
+                {error && <div className="text-red-500 mb-4">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -279,10 +298,33 @@ const ClientList = () => {
         }
     ]);
 
-    const handleAddClient = (newClient) => {
-        const newId = Math.max(...clients.map(c => c.id), 0) + 1;
-        setClients(prevClients => [...prevClients, { ...newClient, id: newId }]);
+    const handleAddClient = async (newClient) => {
+        try {
+            // The new client data will be sent to the backend and we expect a response with the created client
+            const formData = new FormData();
+            formData.append('name', newClient.name);
+            formData.append('email', newClient.email);
+            formData.append('phone', newClient.phone);
+            if (newClient.photo) {
+                formData.append('photo', newClient.photo);
+            }
+
+            // Make the POST request to add the client (adjust the endpoint as needed)
+            const response = await axios.post('/api/appointments/createClient', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            // Add the returned client (from the backend) to the local state
+            const createdClient = response.data.client;  // Assuming the response returns the created client object
+            setClients(prevClients => [...prevClients, createdClient]); // Add the new client from the backend
+
+        } catch (error) {
+            console.error('Error adding client:', error);
+        }
     };
+
 
     const handleUpdateClient = (updatedClient) => {
         setClients(prevClients => prevClients.map(client =>
