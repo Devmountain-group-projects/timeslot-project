@@ -7,31 +7,38 @@ import User8 from '/src/assets/images/user8.png';
 import User9 from '/src/assets/images/user9.png';
 import User10 from '/src/assets/images/user10.png';
 
-const ClientItem = ({ client, onEdit }) => (
-    <div className="border-b border-gray-300 last:border-b-0">
-        <div className="flex items-center py-4 px-3">
-            <div className="w-[20%] flex-shrink-0">
-                <div className="w-12 h-12 relative">
-                    <img
-                        src={client.photo || PlaceholderAvatar}
-                        alt={client.name}
-                        className="rounded-full object-cover absolute inset-0 w-full h-full"
-                    />
+const ClientItem = ({ client, onEdit }) => {
+    const defaultImage = PlaceholderAvatar;  // Fallback image
+
+    // Use client.photo if it exists, else fallback to default
+    const clientPhoto = client.profile_picture ? client.profile_picture : defaultImage;
+
+    return (
+        <div className="border-b border-gray-300 last:border-b-0">
+            <div className="flex items-center py-4 px-3">
+                <div className="w-[20%] flex-shrink-0">
+                    <div className="w-12 h-12 relative">
+                        <img
+                            src={clientPhoto}  // Display the correct profile picture
+                            alt={client.name}
+                            className="rounded-full object-cover absolute inset-0 w-full h-full"
+                        />
+                    </div>
+                </div>
+                <div className="w-[70%] flex flex-col justify-center items-start text-left">
+                    <h3 className="font-medium text-base">{client.name}</h3>
+                    <p className="text-xs text-gray-500">Since: {client.dateCreated}</p>
+                    <p className="text-xs text-gray-600">{client.email}</p>
+                </div>
+                <div className="w-[10%] flex justify-end items-center">
+                    <button onClick={() => onEdit(client)} className="text-gray-400 hover:text-gray-600">
+                        <FaChevronRight className="text-lg" />
+                    </button>
                 </div>
             </div>
-            <div className="w-[70%] flex flex-col justify-center items-start text-left">
-                <h3 className="font-medium text-base">{client.name}</h3>
-                <p className="text-xs text-gray-500">Since: {client.dateCreated}</p>
-                <p className="text-xs text-gray-600">{client.email}</p>
-            </div>
-            <div className="w-[10%] flex justify-end items-center">
-                <button onClick={() => onEdit(client)} className="text-gray-400 hover:text-gray-600">
-                    <FaChevronRight className="text-lg" />
-                </button>
-            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const AddClientModal = ({ onClose, onAddClient }) => {
     const [newClient, setNewClient] = useState({

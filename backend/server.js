@@ -6,6 +6,7 @@ import session from 'express-session';
 import ViteExpress from 'vite-express';
 import {google} from "googleapis";
 import dotenv from "dotenv";
+import fileUpload from 'express-fileupload';
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
+app.use(express.json());
+app.use(fileUpload());
 app.use(
     bodyParser.urlencoded({
         extended: true
@@ -87,10 +90,9 @@ import auth from './routes/authRoutes.js';
 import business from './routes/businessRoutes.js';
 // import contact from './routes/contactRoutes.js';
 import googleRoutes from './routes/googleRoutes.js';
-import fileUpload from 'express-fileupload';
+
 
 // Apply middleware in server.js or equivalent
-app.use(fileUpload());
 app.use(googleRoutes);
 app.use("/api/appointments", appointment);
 app.use("/api/auth", auth);

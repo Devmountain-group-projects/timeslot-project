@@ -1,51 +1,53 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// Photo path
-const photoPath = path.join(__dirname, "../../../public/photos");
+// Get the current directory of this file
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Define the photo path where images will be saved
+const photoPath = path.join(__dirname, "../../public/photos");
+
+// Ensure the photos directory exists, create it if it doesn't
 if (!fs.existsSync(photoPath)) {
     fs.mkdirSync(photoPath, { recursive: true });
 }
 
-
 export const createClient = async (req, res) => {
     const db = req.app.get("db");
 
-    // Log the request body and files to check the received fields
     console.log("Request Body:", req.body);
     console.log("Uploaded Files:", req.files);
 
     const { clientName, clientEmail, clientPhone } = req.body;
 
-    // Validate the required fields
     if (!clientName || !clientEmail || !clientPhone) {
-        console.error('Missing required client information:', { clientName, clientEmail, clientPhone });
         return res.status(400).send({
             message: "Client name, email, and phone are required.",
             success: false,
         });
     }
 
-    console.log("Processing client creation...");
-
     let photoUrl = null;
 
+    // Handle the photo if it's uploaded
     if (req.files && req.files.photo) {
         const photo = req.files.photo;
         const photoFileName = `${Date.now()}_${photo.name}`;
         const fullPath = path.join(photoPath, photoFileName);
 
+        console.log("Saving photo to:", fullPath);
+
         try {
+            // Write the file to the specified directory
             fs.writeFileSync(fullPath, photo.data);
-            photoUrl = `http://localhost:5539/photos/${photoFileName}`;
-            console.log("Photo URL:", photoUrl);
+            photoUrl = `http://localhost:5539/photos/${photoFileName}`;  // Construct the photo URL
+            console.log("Photo saved at:", photoUrl);
         } catch (err) {
             console.error("Error saving client photo:", err);
             return res.status(500).send({
@@ -57,15 +59,18 @@ export const createClient = async (req, res) => {
     }
 
     try {
+        // Create the client
         const newClient = await db.user.create({
             name: clientName,
             email: clientEmail,
             phone: clientPhone,
-            role_id: 2,
-            password_hash: await bcrypt.hash('default_password', 10),
+            role_id: 2,  // Assuming role_id 2 is for 'client'
+            profile_picture: photoUrl || null,  // Save the photo URL in the profile_picture field
+            password_hash: await bcrypt.hash('default_password', 10),  // Hash a default password
         });
 
         if (photoUrl) {
+            // Optionally, store the image in an image table for further tracking
             await db.image.create({
                 src: photoUrl,
                 user_id: newClient.user_id,
@@ -73,7 +78,6 @@ export const createClient = async (req, res) => {
             });
         }
 
-        console.log("Client created successfully:", newClient);
         res.status(201).send({
             message: "Client created successfully",
             success: true,
@@ -86,6 +90,8 @@ export const createClient = async (req, res) => {
             success: false,
             error: error.message,
         });
+
+
     }
 };
 
