@@ -98,8 +98,8 @@ const AddAppointment = () => {
     };
 
     return (
-        <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <header className="flex justify-between items-center py-2 px-3 bg-tertiary">
+        <div className="flex flex-col h-full overflow-hidden border-2 border-gray-300 rounded-xl">
+            <header className="flex-shrink-0 flex justify-between items-center py-2 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">Add Appointment</h2>
                 <button
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
@@ -138,38 +138,40 @@ const AddAppointment = () => {
                     ))}
                 </div>
 
-                <div className="w-[55%] p-4 overflow-y-auto">
-                    <h3 className="font-semibold text-base mb-4">Appointment Details</h3>
-                    <InfoItem label="Service Provider" value={clients[selectedClient].details.serviceProvider} />
-                    <InfoItem label="Created At" value={clients[selectedClient].details.createdAt} />
-                    <InfoItem label="Updated At" value={clients[selectedClient].details.updatedAt} />
-                    <InfoItem label="Price" value={`$${clients[selectedClient].details.price}`} />
-                    <InfoItem label="Description" value={clients[selectedClient].details.description} />
-                    <InfoItem label="Payment Status" value={clients[selectedClient].details.paymentStatus} />
+                <div className="w-[55%] overflow-y-auto">
+                    <div className="p-4">
+                        <h3 className="font-semibold text-base mb-4">Appointment Details</h3>
+                        <InfoItem label="Service Provider" value={clients[selectedClient]?.details.serviceProvider} />
+                        <InfoItem label="Created At" value={clients[selectedClient]?.details.createdAt} />
+                        <InfoItem label="Updated At" value={clients[selectedClient]?.details.updatedAt} />
+                        <InfoItem label="Price" value={`$${clients[selectedClient]?.details.price}`} />
+                        <InfoItem label="Description" value={clients[selectedClient]?.details.description} />
+                        <InfoItem label="Payment Status" value={clients[selectedClient]?.details.paymentStatus} />
 
-                    <div className="mt-4">
-                        <label htmlFor="notes" className="block text-xs font-medium text-secondary mb-1 uppercase">
-                            Appointment Notes
-                        </label>
-                        <textarea
-                            id="notes"
-                            rows={4}
-                            className="w-full border border-gray-300 rounded-md p-2 text-sm mb-4"
-                            placeholder="Enter appointment notes here..."
-                        />
-                        <div className="flex justify-start gap-4">
-                            <button
-                                onClick={() => setShowEditModal(true)}
-                                className="btn-blue-dashboard"
-                            >
-                                Edit Appointment
-                            </button>
-                            <button
-                                onClick={() => handleDelete(clients[selectedClient].id)}
-                                className="btn-red"
-                            >
-                                Delete Appointment
-                            </button>
+                        <div className="mt-4">
+                            <label htmlFor="notes" className="block text-xs font-medium text-secondary mb-1 uppercase">
+                                Appointment Notes
+                            </label>
+                            <textarea
+                                id="notes"
+                                rows={4}
+                                className="w-full border border-gray-300 rounded-md p-2 text-sm mb-4"
+                                placeholder="Enter appointment notes here..."
+                            />
+                            <div className="flex justify-start gap-4">
+                                <button
+                                    onClick={() => setShowEditModal(true)}
+                                    className="btn-blue-dashboard"
+                                >
+                                    Edit Appointment
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(clients[selectedClient]?.id)}
+                                    className="btn-red"
+                                >
+                                    Delete Appointment
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

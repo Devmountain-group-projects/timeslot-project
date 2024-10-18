@@ -35,7 +35,15 @@ const AllAnalytics = () => {
                 label: 'Appointments',
                 data: [12, 19, 3, 5, 2, 3, 8, 14, 11, 7],
                 borderColor: '#2264ba',
-                tension: 0.1
+                tension: 0.1,
+                fill: true,
+                backgroundColor: (context) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+                    gradient.addColorStop(0, 'rgba(34, 100, 186, 0.5)');
+                    gradient.addColorStop(1, 'rgba(34, 100, 186, 0.05)');
+                    return gradient;
+                }
             }
         ]
     };

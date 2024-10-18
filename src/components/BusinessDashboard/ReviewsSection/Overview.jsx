@@ -12,7 +12,8 @@ const Overview = () => {
                 </div>
             )
         },
-        { title: "Recent Reviews", value: "78", subtitle: "Last 30 days" }
+        { title: "Recent Reviews", value: "78", subtitle: "Last 30 days" },
+        // { title: "New This Month", value: "6", subtitle: "October Reviews" }
     ]
 
     return (

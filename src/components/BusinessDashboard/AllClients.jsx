@@ -37,37 +37,37 @@ const AllClients = () => {
 
     return (
         <motion.div
-            className="h-full flex flex-col gap-4 relative"
+            className="h-full flex flex-col gap-4 overflow-hidden"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
             {/* Row 1 */}
-            <motion.div className="h-[15%] flex gap-4" variants={rowVariants}>
-                <Card className="w-[25%]"><TotalClients /></Card>
-                <Card className="w-[25%]"><NewClients /></Card>
-                <Card className="w-[25%]"><TopClients /></Card>
-                <Card className="w-[25%]"><InactiveClients /></Card>
+            <motion.div className="flex-shrink-0 flex gap-4" variants={rowVariants}>
+                <Card className="w-1/4"><TotalClients /></Card>
+                <Card className="w-1/4"><NewClients /></Card>
+                <Card className="w-1/4"><TopClients /></Card>
+                <Card className="w-1/4"><InactiveClients /></Card>
             </motion.div>
 
             {/* Row 2 */}
-            <motion.div className="h-[55%] flex gap-4" variants={rowVariants}>
-                <Card className="w-[32%]"><ClientList /></Card>
-                <Card className="w-[68%]"><AddAppointment /></Card>
+            <motion.div className="flex-grow flex gap-4 min-h-0" variants={rowVariants}>
+                <Card className="w-1/3 overflow-hidden"><ClientList /></Card>
+                <Card className="w-2/3 overflow-hidden"><AddAppointment /></Card>
             </motion.div>
 
             {/* Row 3 */}
-            <motion.div className="h-[30%] flex gap-4" variants={rowVariants}>
-                <Card className="w-[33.33%]"><ReturningClients /></Card>
-                <Card className="w-[33.33%]"><ClientSatisfaction /></Card>
-                <Card className="w-[33.33%]"><ClientRetention /></Card>
+            <motion.div className="flex-shrink-0 flex gap-4" variants={rowVariants}>
+                <Card className="w-1/3"><ReturningClients /></Card>
+                <Card className="w-1/3"><ClientSatisfaction /></Card>
+                <Card className="w-1/3"><ClientRetention /></Card>
             </motion.div>
         </motion.div>
     )
 }
 
 const Card = ({ children, className = '' }) => (
-    <div className={`bg-white rounded-xl flex items-center justify-center shadow-sm overflow-hidden ${className}`}>
+    <div className={`bg-white rounded-xl shadow-sm ${className}`}>
         {children}
     </div>
 )

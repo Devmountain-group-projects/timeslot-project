@@ -1,9 +1,9 @@
 import React from 'react'
 import { FaChartArea } from 'react-icons/fa'
 import { Line } from 'react-chartjs-2'
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js'
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js'
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler)
 
 const ReviewHistoryTrend = () => {
     const data = {
@@ -13,7 +13,15 @@ const ReviewHistoryTrend = () => {
                 label: 'Reviews',
                 data: [12, 19, 3, 5, 2, 3],
                 borderColor: '#3cbd5b',
-                tension: 0.1
+                tension: 0.1,
+                fill: true,
+                backgroundColor: (context) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+                    gradient.addColorStop(0, 'rgba(60, 189, 91, 0.5)');
+                    gradient.addColorStop(1, 'rgba(60, 189, 91, 0.05)');
+                    return gradient;
+                }
             }
         ]
     }

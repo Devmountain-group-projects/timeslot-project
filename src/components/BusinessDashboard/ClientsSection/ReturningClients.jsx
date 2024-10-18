@@ -31,20 +31,17 @@ const ReturningClients = () => {
     };
 
     return (
-        <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
-                <h2 className="text-xs md:text-sm font-medium">Returning Clients</h2>
-            </section>
-            <hr className='border-t border-gray-300 w-full m-0' />
-            <section className="flex-grow p-4 flex flex-col items-center justify-center">
-                <div className="w-32 h-32 relative">
+        <div className="w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
+            <h2 className="text-xs md:text-sm font-medium p-3 bg-tertiary border-b-2 border-gray-30">Returning Clients</h2>
+            <div className="flex-grow flex flex-col items-center justify-center p-4">
+                <div className="w-24 h-24 md:w-32 md:h-32 relative">
                     <Doughnut data={data} options={options} />
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold">{returningClientsPercentage}%</span>
+                        <span className="text-xl md:text-2xl font-bold">{returningClientsPercentage}%</span>
                     </div>
                 </div>
-                <p className="mt-4 text-sm text-gray-600">of clients have returned for additional services</p>
-            </section>
+                <p className="mt-2 md:mt-4 text-xs md:text-sm text-gray-600 text-center">of clients have returned for additional services</p>
+            </div>
         </div>
     );
 };
