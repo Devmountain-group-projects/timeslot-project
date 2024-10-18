@@ -36,7 +36,6 @@ const BusinessDashboard = () => {
         }
     }, [location]);
 
-
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -86,28 +85,31 @@ const BusinessDashboard = () => {
         switch (currentView) {
             case 'dashboard':
                 return (
-                    <>
+                    <motion.div
+                        className="h-full flex flex-col gap-2 md:gap-4 overflow-hidden"
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
                         {/* Top 4 Cards */}
-                        <motion.div className="h-[15%] flex gap-2 md:gap-4" variants={rowVariants}>
-                            <Card className="w-[25%]"><UpcomingAppts onViewAllClients={handleViewAllClients} /></Card>
-                            <Card className="w-[25%]"><RevenueOverview onViewPaymentsInvoicing={handleViewPaymentsInvoicing} /></Card>
-                            <Card className="w-[25%]"><ClientReviews onViewAllReviews={handleViewAllReviews} /></Card>
-                            <Card className="w-[25%]"><Notifications onViewAllClients={handleViewAllClients} /></Card>
+                        <motion.div className="flex-shrink-0 h-[15%] flex gap-2 md:gap-4" variants={rowVariants}>
+                            <Card className="w-1/4"><UpcomingAppts onViewAllClients={handleViewAllClients} /></Card>
+                            <Card className="w-1/4"><RevenueOverview onViewPaymentsInvoicing={handleViewPaymentsInvoicing} /></Card>
+                            <Card className="w-1/4"><ClientReviews onViewAllReviews={handleViewAllReviews} /></Card>
+                            <Card className="w-1/4"><Notifications onViewAllClients={handleViewAllClients} /></Card>
                         </motion.div>
                         {/* Middle 2 Cards */}
-                        <motion.div className="h-[50%] flex gap-2 md:gap-4" variants={rowVariants}>
+                        <motion.div className="flex-grow flex gap-2 md:gap-4 min-h-0" variants={rowVariants}>
                             <Card className="w-[40%]"><CalendarOverview onViewCalendar={handleViewCalendar} /></Card>
-                            <div className="w-[60%] flex flex-col gap-2 md:gap-4">
-                                <Card className="h-[100%]"><OngoingAppts onViewAllClients={handleViewAllClients} onViewCalendar={handleViewCalendar} /></Card>
-                            </div>
+                            <Card className="w-[60%]"><OngoingAppts onViewAllClients={handleViewAllClients} onViewCalendar={handleViewCalendar} /></Card>
                         </motion.div>
                         {/* Bottom 3 Cards */}
-                        <motion.div className="h-[35%] flex gap-2 md:gap-4 overflow-hidden" variants={rowVariants}>
-                            <Card className="w-[33.33%] overflow-hidden"><Analytics onViewAllAnalytics={handleViewAnalytics} /></Card>
-                            <Card className="w-[33.33%] overflow-hidden"><FollowUp onViewFollowUp={handleViewFollowUp} /></Card>
-                            <Card className="w-[33.33%] overflow-hidden"><ReviewReport onViewAllReviews={handleViewAllReviews} /></Card>
+                        <motion.div className="flex-shrink-0 h-[35%] flex gap-2 md:gap-4" variants={rowVariants}>
+                            <Card className="w-1/3 overflow-hidden"><Analytics onViewAllAnalytics={handleViewAnalytics} /></Card>
+                            <Card className="w-1/3 overflow-hidden"><FollowUp onViewFollowUp={handleViewFollowUp} /></Card>
+                            <Card className="w-1/3 overflow-hidden"><ReviewReport onViewAllReviews={handleViewAllReviews} /></Card>
                         </motion.div>
-                    </>
+                    </motion.div>
                 )
             case 'appointments':
                 return <AllAppointments />
@@ -137,16 +139,11 @@ const BusinessDashboard = () => {
                 <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
             </div>
             {/* Right Main Container */}
-            <motion.div
-                className="w-[86%] py-2 md:py-4 pr-2 md:pr-4 overflow-hidden"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-            >
-                <div className="h-full flex flex-col gap-2 md:gap-4 rounded-xl p-4 bg-gradient-to-br from-gray-100 to-gray-300 overflow-hidden">
+            <div className="w-[86%] py-2 md:py-4 pr-2 md:pr-4 overflow-hidden">
+                <div className="h-full rounded-xl p-4 bg-gradient-to-br from-gray-100 to-gray-300 overflow-hidden">
                     {renderContent()}
                 </div>
-            </motion.div>
+            </div>
         </div>
     )
 }

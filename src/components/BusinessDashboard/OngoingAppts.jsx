@@ -59,14 +59,14 @@ const OngoingAppts = ({ onViewAllClients, onViewCalendar }) => {
                                 className="flex-grow border-2 border-gray-300 rounded-lg p-2 mb-2 text-xs md:text-sm"
                                 placeholder="Enter appointment notes here..."
                             />
-                            <div className="flex justify-end gap-2 mt-2">
+                            {/* <div className="flex justify-end gap-2 mt-2">
                                 <button className="text-sm bg-white text-secondary px-4 py-2 ring-2 ring-secondary rounded-full hover:bg-primary hover:text-white hover:ring-2 hover:ring-primary transition-colors duration-300">
                                     Reschedule
                                 </button>
                                 <button className="btn-blue ring-2 ring-secondary text-sm px-4 py-2">
                                     Finish Appointment
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
