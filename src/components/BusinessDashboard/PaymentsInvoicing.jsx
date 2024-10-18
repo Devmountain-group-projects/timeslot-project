@@ -9,7 +9,7 @@ const PaymentsInvoicing = () => {
                 alt="No Data Available"
                 className="max-w-md w-full h-auto"
             />
-            <p className="mt-4 text-lg text-gray-600">Payments & Invoicing data coming soon</p>
+            <p className="mt-4 text-lg text-gray-600">Revenue & Invoicing data coming soon</p>
         </div>
     )
 }
