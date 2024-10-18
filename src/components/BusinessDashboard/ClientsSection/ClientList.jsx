@@ -1,35 +1,44 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaPlus, FaTimes, FaChevronRight } from 'react-icons/fa';
+import { useAppointment } from '../../../context/ApptContext';  // Use context
+import axios from "axios";
 import PlaceholderAvatar from '/src/assets/images/placeholderavatar.png';
 import User8 from '/src/assets/images/user8.png';
 import User9 from '/src/assets/images/user9.png';
 import User10 from '/src/assets/images/user10.png';
 
-const ClientItem = ({ client, onEdit }) => (
-    <div className="border-b border-gray-300 last:border-b-0">
-        <div className="flex items-center py-4 px-3">
-            <div className="w-[20%] flex-shrink-0">
-                <div className="w-12 h-12 relative">
-                    <img
-                        src={client.photo || PlaceholderAvatar}
-                        alt={client.name}
-                        className="rounded-full object-cover absolute inset-0 w-full h-full"
-                    />
+const ClientItem = ({ client, onEdit }) => {
+    const defaultImage = PlaceholderAvatar;  // Fallback image
+
+    // Use client.photo if it exists, else fallback to default
+    const clientPhoto = client.profile_picture ? client.profile_picture : defaultImage;
+
+    return (
+        <div className="border-b border-gray-300 last:border-b-0">
+            <div className="flex items-center py-4 px-3">
+                <div className="w-[20%] flex-shrink-0">
+                    <div className="w-12 h-12 relative">
+                        <img
+                            src={clientPhoto}  // Display the correct profile picture
+                            alt={client.name}
+                            className="rounded-full object-cover absolute inset-0 w-full h-full"
+                        />
+                    </div>
+                </div>
+                <div className="w-[70%] flex flex-col justify-center items-start text-left">
+                    <h3 className="font-medium text-base">{client.name}</h3>
+                    <p className="text-xs text-gray-500">Since: {client.dateCreated}</p>
+                    <p className="text-xs text-gray-600">{client.email}</p>
+                </div>
+                <div className="w-[10%] flex justify-end items-center">
+                    <button onClick={() => onEdit(client)} className="text-gray-400 hover:text-gray-600">
+                        <FaChevronRight className="text-lg" />
+                    </button>
                 </div>
             </div>
-            <div className="w-[70%] flex flex-col justify-center items-start text-left">
-                <h3 className="font-medium text-base">{client.name}</h3>
-                <p className="text-xs text-gray-500">Since: {client.dateCreated}</p>
-                <p className="text-xs text-gray-600">{client.email}</p>
-            </div>
-            <div className="w-[10%] flex justify-end items-center">
-                <button onClick={() => onEdit(client)} className="text-gray-400 hover:text-gray-600">
-                    <FaChevronRight className="text-lg" />
-                </button>
-            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const AddClientModal = ({ onClose, onAddClient }) => {
     const [newClient, setNewClient] = useState({
@@ -38,29 +47,32 @@ const AddClientModal = ({ onClose, onAddClient }) => {
         phone: '',
         photo: null
     });
+    const [error, setError] = useState(null);  // To handle errors
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(`Input Changed: ${name} = ${value}`);
         setNewClient(prev => ({ ...prev, [name]: value }));
     };
 
     const handlePhotoUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setNewClient(prev => ({ ...prev, photo: reader.result }));
-            };
-            reader.readAsDataURL(file);
+            console.log('Photo Selected:', file);
+            setNewClient(prev => ({ ...prev, photo: file }));
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onAddClient({
-            ...newClient,
-            dateCreated: new Date().toLocaleDateString()
-        });
+
+        // Validate form fields
+        if (!newClient.name || !newClient.email || !newClient.phone) {
+            setError('Please fill in all required fields.');
+            return;
+        }
+
+        onAddClient(newClient);  // Use the passed onAddClient method
         onClose();
     };
 
@@ -73,6 +85,7 @@ const AddClientModal = ({ onClose, onAddClient }) => {
                         <FaTimes size={24} />
                     </button>
                 </div>
+                {error && <div className="text-red-500 mb-4">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -249,9 +262,12 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
 };
 
 const ClientList = () => {
+    const { createClient, updateClient, removeClient } = useAppointment();  // Use context
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
+
+    // Sample clients
     const [clients, setClients] = useState([
         {
             id: 1,
@@ -279,19 +295,48 @@ const ClientList = () => {
         }
     ]);
 
-    const handleAddClient = (newClient) => {
-        const newId = Math.max(...clients.map(c => c.id), 0) + 1;
-        setClients(prevClients => [...prevClients, { ...newClient, id: newId }]);
+    const handleAddClient = async (newClient) => {
+        try {
+            const formData = new FormData();
+            formData.append('clientName', newClient.name);
+            formData.append('clientEmail', newClient.email);
+            formData.append('clientPhone', newClient.phone);
+            if (newClient.photo) {
+                formData.append('photo', newClient.photo);
+            }
+
+            // Log the formData to see if the correct values are being appended
+            console.log('Form Data before sending:');
+            for (const pair of formData.entries()) {
+                console.log(`${pair[0]}: ${pair[1]}`);
+            }
+
+            // Send request
+            const response = await axios.post('/api/appointments/createClient', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            console.log('Client creation response:', response);
+
+            // Add the new client to local state
+            const createdClient = response.data.client;
+            setClients(prevClients => [...prevClients, createdClient]);
+        } catch (error) {
+            console.error('Error adding client:', error);
+            if (error.response) {
+                console.error('Server Response:', error.response.data);
+            }
+        }
     };
 
     const handleUpdateClient = (updatedClient) => {
-        setClients(prevClients => prevClients.map(client =>
-            client.id === updatedClient.id ? updatedClient : client
-        ));
+        updateClient(updatedClient.id, updatedClient);  // Call the updateClient method from context
     };
 
     const handleDeleteClient = (clientId) => {
-        setClients(prevClients => prevClients.filter(client => client.id !== clientId));
+        removeClient(clientId);  // Call the removeClient method from context
         setShowEditModal(false);
     };
 

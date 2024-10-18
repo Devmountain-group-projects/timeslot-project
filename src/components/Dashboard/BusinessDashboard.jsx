@@ -13,6 +13,7 @@ import ClientMgmt from '../BusinessDashboard/ClientMgmt'
 import CalendarOverview from '../BusinessDashboard/CalendarOverview'
 import FollowUp from '../BusinessDashboard/FollowUp'
 import ReviewReport from '../BusinessDashboard/ReviewReport'
+import { AppointmentProvider} from "../../context/ApptContext.jsx";
 
 // Sidebar Links
 import AccountSettings from '../BusinessDashboard/AccountSettings'
@@ -22,7 +23,7 @@ import AllReviews from '../BusinessDashboard/AllReviews'
 import AllClients from '../BusinessDashboard/AllClients'
 import AllAppointments from '../BusinessDashboard/AllAppointments'
 import PaymentsInvoicing from '../BusinessDashboard/PaymentsInvoicing'
-import AllAnalytics from '../BusinessDashboard/AllAnalytics'
+
 
 const BusinessDashboard = () => {
     const location = useLocation();
@@ -33,6 +34,7 @@ const BusinessDashboard = () => {
             setCurrentView('calendar');
         }
     }, [location]);
+
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -154,4 +156,12 @@ const Card = ({ children, className = '' }) => (
     </div>
 )
 
-export default BusinessDashboard
+const WrappedBusinessDashboard = () => {
+    return (
+        <AppointmentProvider>
+            <BusinessDashboard />
+        </AppointmentProvider>
+    )
+}
+
+export default WrappedBusinessDashboard

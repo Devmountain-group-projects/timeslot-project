@@ -1,5 +1,8 @@
 import express from "express";
 import {
+    createClient,
+    updateClient,
+    removeClient,
     addAppointment,
     removeAppointment,
     updateAppointment,
@@ -10,6 +13,9 @@ import {
 
 const router = express.Router()
 
+router.post("/createClient", createClient)
+router.post("/updateClient", updateClient);
+router.delete("/removeClient", removeClient);
 router.post("/addAppointment", addAppointment)
 router.delete("/removeAppointment", removeAppointment)
 router.post("/updateAppointment", updateAppointment)
