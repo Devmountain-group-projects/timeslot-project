@@ -3,7 +3,27 @@ import { BsCloudUpload } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
 
 
-const ImageUploadModal = ({ onClose, uploadType }) => {
+
+const ImageUploadModal = ({ onClose, uploadType, onSubmit }) => {
+    
+    const handlePhotoUpload = (e) => {
+        console.log("Hit handle Photo")
+        console.log(e.target)
+        // if (!e === undefined) {
+            const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const newPhoto = (prev => ({ ...prev, photo: reader.result }));
+            };
+            reader.readAsDataURL(file);
+            onSubmit(uploadType, file)
+        }
+        // }
+
+        
+    };
+
     return (
         <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-black before:opacity-60 before:rounded-lg overflow-auto font-[sans-serif]">
             <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6 relative">
@@ -20,7 +40,7 @@ const ImageUploadModal = ({ onClose, uploadType }) => {
                         <BsCloudUpload size={50} className="w-10 mb-4 text-gray-600" />
 
                         <h4 className="text-sm text-gray-600">Drag & Drop or <label htmlFor="chooseFile" className="text-secondary cursor-pointer">Choose file</label> to upload</h4>
-                        <input type="file" id="chooseFile" className="hidden" />
+                        <input type="file" id="chooseFile" className="" onChange={handlePhotoUpload} />
                     </div>
                 </section>
 
@@ -31,7 +51,7 @@ const ImageUploadModal = ({ onClose, uploadType }) => {
                         Cancel
                     </button>
                     <button type="button"
-                        className="btn-blue-dashboard">
+                        className="btn-blue-dashboard" onClick={onClose}>
                         Import
                     </button>
                 </section>
