@@ -49,7 +49,7 @@ const ReviewsByService = () => {
                 <div className="flex-grow">
                     <Bar data={data} options={options} />
                 </div>
-                <hr className='border-t border-gray-300 w-full my-4' />
+                <hr className='border-t border-gray-300 w-full my-2' />
                 <p className="text-xs text-gray-500 text-center">
                     This chart shows the average rating for each service.
                     It helps identify which services are performing well and which may need improvement based on client feedback.

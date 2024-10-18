@@ -7,11 +7,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const ReviewHistoryTrend = () => {
     const data = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
         datasets: [
             {
                 label: 'Reviews',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [12, 19, 3, 5, 2, 3, 8, 15, 20, 17],
                 borderColor: '#3cbd5b',
                 tension: 0.1,
                 fill: true,
@@ -32,12 +32,31 @@ const ReviewHistoryTrend = () => {
         plugins: {
             legend: {
                 display: false
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
             }
         },
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Number of Reviews'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Month'
+                }
             }
+        },
+        interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
         }
     }
 
@@ -54,8 +73,10 @@ const ReviewHistoryTrend = () => {
                 <div className="h-[70%]">
                     <Line data={data} options={options} />
                 </div>
-                <p className="text-xs text-gray-500 mt-4 text-center">
+                <hr className='border-t border-gray-300 w-full my-2' />
+                <p className="text-xs text-gray-500 text-center">
                     Track review volume over time to identify trends and correlate with business activities.
+                    The chart shows the number of reviews received each month from January to October.
                 </p>
             </section>
         </div>
