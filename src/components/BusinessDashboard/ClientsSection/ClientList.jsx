@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaPlus, FaTimes, FaChevronRight } from 'react-icons/fa';
 import { useAppointment } from '../../../context/ApptContext';  // Use context
+import axios from "axios";
 import PlaceholderAvatar from '/src/assets/images/placeholderavatar.png';
 import User8 from '/src/assets/images/user8.png';
 import User9 from '/src/assets/images/user9.png';
@@ -43,13 +44,15 @@ const AddClientModal = ({ onClose, onAddClient }) => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        console.log(`Input Changed: ${name} = ${value}`);
         setNewClient(prev => ({ ...prev, [name]: value }));
     };
 
     const handlePhotoUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setNewClient(prev => ({ ...prev, photo: file }));  // Store the actual file
+            console.log('Photo Selected:', file);
+            setNewClient(prev => ({ ...prev, photo: file }));
         }
     };
 
@@ -285,8 +288,40 @@ const ClientList = () => {
         }
     ]);
 
-    const handleAddClient = (newClient) => {
-        createClient(newClient);  // Call the createClient method from context
+    const handleAddClient = async (newClient) => {
+        try {
+            const formData = new FormData();
+            formData.append('clientName', newClient.name);
+            formData.append('clientEmail', newClient.email);
+            formData.append('clientPhone', newClient.phone);
+            if (newClient.photo) {
+                formData.append('photo', newClient.photo);
+            }
+
+            // Log the formData to see if the correct values are being appended
+            console.log('Form Data before sending:');
+            for (const pair of formData.entries()) {
+                console.log(`${pair[0]}: ${pair[1]}`);
+            }
+
+            // Send request
+            const response = await axios.post('/api/appointments/createClient', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            console.log('Client creation response:', response);
+
+            // Add the new client to local state
+            const createdClient = response.data.client;
+            setClients(prevClients => [...prevClients, createdClient]);
+        } catch (error) {
+            console.error('Error adding client:', error);
+            if (error.response) {
+                console.error('Server Response:', error.response.data);
+            }
+        }
     };
 
     const handleUpdateClient = (updatedClient) => {

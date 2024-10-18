@@ -87,8 +87,10 @@ import auth from './routes/authRoutes.js';
 import business from './routes/businessRoutes.js';
 // import contact from './routes/contactRoutes.js';
 import googleRoutes from './routes/googleRoutes.js';
+import fileUpload from 'express-fileupload';
 
-
+// Apply middleware in server.js or equivalent
+app.use(fileUpload());
 app.use(googleRoutes);
 app.use("/api/appointments", appointment);
 app.use("/api/auth", auth);

@@ -15,16 +15,18 @@ if (!fs.existsSync(photoPath)) {
 }
 
 
-
 export const createClient = async (req, res) => {
     const db = req.app.get("db");
 
-    // Log the request body to check the received fields
+    // Log the request body and files to check the received fields
     console.log("Request Body:", req.body);
+    console.log("Uploaded Files:", req.files);
 
     const { clientName, clientEmail, clientPhone } = req.body;
 
+    // Validate the required fields
     if (!clientName || !clientEmail || !clientPhone) {
+        console.error('Missing required client information:', { clientName, clientEmail, clientPhone });
         return res.status(400).send({
             message: "Client name, email, and phone are required.",
             success: false,
@@ -34,9 +36,6 @@ export const createClient = async (req, res) => {
     console.log("Processing client creation...");
 
     let photoUrl = null;
-
-    // Log the uploaded files
-    console.log("Uploaded Files:", req.files);
 
     if (req.files && req.files.photo) {
         const photo = req.files.photo;
