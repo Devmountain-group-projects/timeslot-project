@@ -1,60 +1,6 @@
-import bcryptjs from "bcryptjs";
+import { businesses } from "../data/businessMassSeed.js";  // Import the businesses array
 
-// Example data for seeding businesses, services, users, appointments, and notifications
-
-const businesses = [
-    {
-        business_name: "Business Name",
-        description: "Business Description",
-        address_line1: "Business Address",
-        address_line2: "Business Address 2",
-        city: "Business City",
-        state: "Business State",
-        zip_code: "Business Zip",
-        email: "Business Email",
-        phone: "Business Phone",
-        website: "Business Website",
-        availability: [
-            {
-                day_of_week: "Monday",
-                start_time: "09:00",
-                end_time: "17:00",
-            },
-            {
-                day_of_week: "Tuesday",
-                start_time: "09:00",
-                end_time: "17:00",
-            },
-        ],
-        services: [
-            {
-                service_name: "Service 1",
-                description: "Service 1 Description",
-                duration: "60 minutes",
-                price: 100.00,
-            },
-            {
-                service_name: "Service 2",
-                description: "Service 2 Description",
-                duration: "30 minutes",
-                price: 50.00,
-            }
-        ],
-        images: [
-            {
-                src: "https://example.com/profile.jpg",
-                image_type: 'business_profile',
-            },
-            {
-                src: "https://example.com/banner.jpg",
-                image_type: 'business_banner',
-            },
-        ],
-    }
-];
-
-// Seed logic for creating businesses, services, and appointments
-
+// Seed logic for creating businesses, services, and availability
 export const createBusiness = async function createBusiness(db) {
     for (const biz of businesses) {
         // Create the business
@@ -110,16 +56,14 @@ export const createBusiness = async function createBusiness(db) {
             ? biz.services
             : [biz.services];
 
-        const createdServices = [];
         for (const service of services) {
-            const createdService = await db.service.create({
+            await db.service.create({
                 business_id: createdBusiness.business_id,
                 name: service.service_name,
                 description: service.description,
                 duration: service.duration,
                 price: service.price,
             });
-            createdServices.push(createdService);
         }
     }
 };

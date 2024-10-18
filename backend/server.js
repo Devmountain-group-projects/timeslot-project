@@ -48,11 +48,11 @@ db.sequelize.sync({force: true}).then(async function () {
         await createRoles(db).then(() =>
             console.log("Roles successfully created"),
         );
-        await createUsers(db).then(() =>
-            console.log("Users successfully created"),
-        );
         await createBusiness(db).then(() =>
             console.log("Businesses successfully created"),
+        );
+        await createUsers(db).then(() =>
+            console.log("Users successfully created"),
         );
     } catch (err) {
         console.error("Error during seeding:", err);
