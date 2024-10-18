@@ -1,12 +1,10 @@
-import { useState, useReducer } from 'react';
+import React, { useState } from 'react';
 import { FaPlus, FaTimes, FaChevronRight } from 'react-icons/fa';
-import axios from "axios";
-import clientReducer from "../../../reducers/clientReducer.js";
+import { useAppointment } from '../../../context/ApptContext';  // Use context
 import PlaceholderAvatar from '/src/assets/images/placeholderavatar.png';
 import User8 from '/src/assets/images/user8.png';
 import User9 from '/src/assets/images/user9.png';
 import User10 from '/src/assets/images/user10.png';
-
 
 const ClientItem = ({ client, onEdit }) => (
     <div className="border-b border-gray-300 last:border-b-0">
@@ -64,22 +62,8 @@ const AddClientModal = ({ onClose, onAddClient }) => {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('clientName', newClient.name);
-        formData.append('clientEmail', newClient.email);
-        formData.append('clientPhone', newClient.phone);
-        if (newClient.photo) {
-            formData.append('photo', newClient.photo);
-        }
-
-        try {
-            const response = await axios.post('/api/appointments/createClient', formData);
-            onAddClient(response.data.client);
-            onClose();
-        } catch (error) {
-            console.error('Error adding client:', error);
-            setError('Failed to add client. Please try again.');
-        }
+        onAddClient(newClient);  // Use the passed onAddClient method
+        onClose();
     };
 
     return (
@@ -268,9 +252,12 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
 };
 
 const ClientList = () => {
+    const { createClient, updateClient, removeClient } = useAppointment();  // Use context
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
+
+    // Sample clients
     const [clients, setClients] = useState([
         {
             id: 1,
@@ -298,42 +285,16 @@ const ClientList = () => {
         }
     ]);
 
-    const handleAddClient = async (newClient) => {
-        try {
-            // The new client data will be sent to the backend and we expect a response with the created client
-            const formData = new FormData();
-            formData.append('name', newClient.name);
-            formData.append('email', newClient.email);
-            formData.append('phone', newClient.phone);
-            if (newClient.photo) {
-                formData.append('photo', newClient.photo);
-            }
-
-            // Make the POST request to add the client (adjust the endpoint as needed)
-            const response = await axios.post('/api/appointments/createClient', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-
-            // Add the returned client (from the backend) to the local state
-            const createdClient = response.data.client;  // Assuming the response returns the created client object
-            setClients(prevClients => [...prevClients, createdClient]); // Add the new client from the backend
-
-        } catch (error) {
-            console.error('Error adding client:', error);
-        }
+    const handleAddClient = (newClient) => {
+        createClient(newClient);  // Call the createClient method from context
     };
 
-
     const handleUpdateClient = (updatedClient) => {
-        setClients(prevClients => prevClients.map(client =>
-            client.id === updatedClient.id ? updatedClient : client
-        ));
+        updateClient(updatedClient.id, updatedClient);  // Call the updateClient method from context
     };
 
     const handleDeleteClient = (clientId) => {
-        setClients(prevClients => prevClients.filter(client => client.id !== clientId));
+        removeClient(clientId);  // Call the removeClient method from context
         setShowEditModal(false);
     };
 

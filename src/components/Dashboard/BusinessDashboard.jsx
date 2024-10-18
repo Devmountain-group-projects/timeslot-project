@@ -13,6 +13,7 @@ import ClientMgmt from '../BusinessDashboard/ClientMgmt'
 import CalendarOverview from '../BusinessDashboard/CalendarOverview'
 import FollowUp from '../BusinessDashboard/FollowUp'
 import ReviewReport from '../BusinessDashboard/ReviewReport'
+import { AppointmentProvider} from "../../context/ApptContext.jsx";
 
 // Sidebar Links
 import AccountSettings from '../BusinessDashboard/AccountSettings'
@@ -27,8 +28,6 @@ import AllServices from '../BusinessDashboard/AllServices'
 const BusinessDashboard = () => {
     const location = useLocation();
     const [currentView, setCurrentView] = useState('dashboard')
-
-
     useEffect(() => {
         if (location.state?.view === 'calendar') {
             setCurrentView('calendar');
@@ -45,7 +44,6 @@ const BusinessDashboard = () => {
             }
         }
     }
-
     const rowVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: {
@@ -56,7 +54,6 @@ const BusinessDashboard = () => {
             }
         }
     }
-
     const renderContent = () => {
         switch (currentView) {
             case 'dashboard':
@@ -104,7 +101,6 @@ const BusinessDashboard = () => {
                 return <div>404: Page not found</div>
         }
     }
-
     return (
         <div className="flex h-screen bg-secondary">
             {/* Sidebar Container */}
@@ -125,11 +121,18 @@ const BusinessDashboard = () => {
         </div>
     )
 }
-
 const Card = ({ children, className = '' }) => (
     <div className={`bg-white rounded-xl flex items-center justify-center shadow-sm overflow-hidden ${className}`}>
         {children}
     </div>
 )
 
-export default BusinessDashboard
+const WrappedBusinessDashboard = () => {
+    return (
+        <AppointmentProvider>
+            <BusinessDashboard />
+        </AppointmentProvider>
+    )
+}
+
+export default WrappedBusinessDashboard

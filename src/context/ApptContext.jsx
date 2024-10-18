@@ -12,6 +12,7 @@ export const useAppointment = () => {
 // Create the Appointment Provider
 export const AppointmentProvider = ({ children }) => {
     const [appointments, setAppointments] = useState([]);
+    const [clients, setClients] = useState([]);  // For managing client data
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -82,16 +83,72 @@ export const AppointmentProvider = ({ children }) => {
         }
     };
 
+    // --- USER (CLIENT) METHODS ---
+
+    // Create a new client
+    const createClient = async (clientData) => {
+        setLoading(true);
+        try {
+            const response = await axios.post("/api/appointments/createClient", clientData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",  // To handle image uploads
+                },
+            });
+            setClients((prev) => [...prev, response.data.client]);
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Update an existing client
+    const updateClient = async (clientId, updatedData) => {
+        setLoading(true);
+        try {
+            const response = await axios.post(`/api/appointments/updateClient`, {
+                clientId,
+                ...updatedData,
+            });
+            setClients((prev) =>
+                prev.map((client) =>
+                    client.user_id === clientId ? { ...client, ...updatedData } : client
+                )
+            );
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Remove a client
+    const removeClient = async (clientId) => {
+        setLoading(true);
+        try {
+            await axios.post(`/api/appointments/removeClient`, { clientId });
+            setClients((prev) => prev.filter((client) => client.user_id !== clientId));
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <AppointmentContext.Provider
             value={{
                 appointments,
+                clients,
                 loading,
                 error,
                 fetchAppointmentsByUser,
                 addAppointment,
                 updateAppointment,
                 removeAppointment,
+                createClient,
+                updateClient,
+                removeClient,
             }}
         >
             {children}
