@@ -71,8 +71,8 @@ const BusinessDashboard = () => {
                         </motion.div>
                         {/* Middle 2 Cards */}
                         <motion.div className="h-[50%] flex gap-2 md:gap-4" variants={rowVariants}>
-                            <Card className="w-[33.33%]"><CalendarOverview /></Card>
-                            <div className="w-[66.67%] flex flex-col gap-2 md:gap-4">
+                            <Card className="w-[40%]"><CalendarOverview /></Card>
+                            <div className="w-[60%] flex flex-col gap-2 md:gap-4">
                                 <Card className="h-[100%]"><OngoingAppts /></Card>
                             </div>
                         </motion.div>

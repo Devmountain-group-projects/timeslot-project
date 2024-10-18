@@ -37,14 +37,14 @@ const OngoingAppts = () => {
                 {/* Appointment Details */}
                 <div className="p-4">
                     <div className="flex gap-5">
-                        <div className="w-[25%] space-y-4">
+                        <div className="w-[20%] space-y-4">
                             <InfoItem label="Service Provider" value="John Doe" />
                             <InfoItem label="Service ID" value="#12345" />
                             <InfoItem label="Created at" value="10/14/2024" />
                             <InfoItem label="Updated at" value="10/14/2024" />
                             <InfoItem label="Price" value="$200" />
                         </div>
-                        <div className="w-[25%]">
+                        <div className="w-[30%]">
                             <InfoItem label="Description" value="Initial therapy session for stress management and anxiety reduction." />
                             <InfoItem label="Payment status" value="Paid" />
                             <InfoItem label="Status" value="On Time" />
