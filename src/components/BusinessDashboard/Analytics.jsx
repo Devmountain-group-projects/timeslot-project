@@ -5,7 +5,7 @@ import { FaChevronRight } from 'react-icons/fa';
 
 ChartJS.register(ArcElement, Tooltip);
 
-const Analytics = () => {
+const Analytics = ({ onViewAllAnalytics }) => {
     // Mock data for four different doughnut charts
     const appointmentTypesData = {
         labels: ['Haircut', 'Color', 'Style', 'Treat', 'Other'],
@@ -110,6 +110,7 @@ const Analytics = () => {
                 <div className="w-[10%] flex justify-end">
                     <FaChevronRight
                         className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                        onClick={onViewAllAnalytics}
                     />
                 </div>
             </section>

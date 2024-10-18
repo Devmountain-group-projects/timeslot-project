@@ -21,7 +21,7 @@ const ClientSection = ({ image, name, date, isLast }) => (
     </div>
 );
 
-const ReviewReport = () => {
+const ReviewReport = ({ onViewAllReviews }) => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
@@ -29,6 +29,7 @@ const ReviewReport = () => {
                 <div className="w-[10%] flex justify-end">
                     <FaChevronRight
                         className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                        onClick={onViewAllReviews}
                     />
                 </div>
             </section>

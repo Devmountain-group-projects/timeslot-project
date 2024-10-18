@@ -21,7 +21,7 @@ import SharedScheduler from './SharedScheduler';
 //     </div>
 // );
 
-const CalendarOverview = () => {
+const CalendarOverview = ({ onViewCalendar }) => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
@@ -29,8 +29,9 @@ const CalendarOverview = () => {
                 <button
                     className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
                     aria-label="Expand"
+                    onClick={onViewCalendar}
                 >
-                    <FaChevronRight className="text-lg" />
+                    <FaChevronRight className="text-lg" onClick={onViewCalendar} />
                 </button>
             </section>
             <hr className='border-t border-gray-300 w-full m-0' />

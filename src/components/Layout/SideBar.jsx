@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 // Sidebar Icons
 import { HiMiniSquares2X2 } from "react-icons/hi2";
 import { FaRegCalendarCheck } from "react-icons/fa6";
-import { MdHomeRepairService } from "react-icons/md";
+import { SiGoogleanalytics } from "react-icons/si";
 import { FaUsers } from "react-icons/fa";
 import { MdRateReview } from "react-icons/md";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
@@ -59,7 +59,6 @@ const SideBar = ({ currentView, setCurrentView }) => {
                 <MenuSection title="Main Menu">
                     <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView}>Dashboard</MenuItem>
                     {/* <MenuItem view="appointments" icon={<FaRegCalendarCheck />} currentView={currentView} setCurrentView={setCurrentView}>Appointments</MenuItem> */}
-                    {/* <MenuItem view="services" icon={<MdHomeRepairService />} currentView={currentView} setCurrentView={setCurrentView}>Services</MenuItem> */}
                     <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView}>Clients</MenuItem>
                     <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Schedule</MenuItem>
                     <MenuItem view="reviews" icon={<MdRateReview />} currentView={currentView} setCurrentView={setCurrentView}>Reviews & Feedback</MenuItem>
@@ -67,6 +66,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
 
                 <MenuSection title="Other Menu">
                     <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView}>Revenue & Invoicing</MenuItem>
+                    <MenuItem view="analytics" icon={<SiGoogleanalytics />} currentView={currentView} setCurrentView={setCurrentView}>Analytics</MenuItem>
                 </MenuSection>
 
                 <MenuSection title="Help & Settings">
@@ -106,9 +106,9 @@ const MenuItem = ({ view, icon, children, currentView, setCurrentView }) => {
         <li className="mb-1 text-sm">
             <button
                 onClick={() => setCurrentView(view)}
-                className={`flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors w-full text-left ${isActive ? 'bg-white bg-opacity-75 text-secondary' : ''}`}
+                className={`flex items-center py-2 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors w-full text-left ${isActive ? 'bg-white bg-opacity-75 text-secondary' : ''}`}
             >
-                {icon && <span className="mr-2 text-lg">{icon}</span>}
+                {icon && <span className="mr-2 text-base">{icon}</span>}
                 {children}
             </button>
         </li>

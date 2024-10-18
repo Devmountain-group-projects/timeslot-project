@@ -1,7 +1,7 @@
 import React from 'react'
 import NoDataImg from '../../assets/images/nodataimg.jpg'
 
-const PaymentsInvoicing = () => {
+const AllAnalytics = () => {
     return (
         <div className="flex flex-col items-center justify-center h-full w-full bg-white rounded-xl shadow-sm">
             <img
@@ -14,4 +14,4 @@ const PaymentsInvoicing = () => {
     )
 }
 
-export default PaymentsInvoicing
+export default AllAnalytics

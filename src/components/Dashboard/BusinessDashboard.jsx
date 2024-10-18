@@ -22,7 +22,7 @@ import AllReviews from '../BusinessDashboard/AllReviews'
 import AllClients from '../BusinessDashboard/AllClients'
 import AllAppointments from '../BusinessDashboard/AllAppointments'
 import PaymentsInvoicing from '../BusinessDashboard/PaymentsInvoicing'
-import AllServices from '../BusinessDashboard/AllServices'
+import AllAnalytics from '../BusinessDashboard/AllAnalytics'
 
 const BusinessDashboard = () => {
     const location = useLocation();
@@ -63,6 +63,22 @@ const BusinessDashboard = () => {
         setCurrentView('reviews');
     }
 
+    const handleViewPaymentsInvoicing = () => {
+        setCurrentView('payments');
+    }
+
+    const handleViewFollowUp = () => {
+        setCurrentView('clients');
+    }
+
+    const handleViewCalendar = () => {
+        setCurrentView('calendar');
+    }
+
+    const handleViewAnalytics = () => {
+        setCurrentView('analytics');
+    }
+
     const renderContent = () => {
         switch (currentView) {
             case 'dashboard':
@@ -71,29 +87,29 @@ const BusinessDashboard = () => {
                         {/* Top 4 Cards */}
                         <motion.div className="h-[15%] flex gap-2 md:gap-4" variants={rowVariants}>
                             <Card className="w-[25%]"><UpcomingAppts onViewAllClients={handleViewAllClients} /></Card>
-                            <Card className="w-[25%]"><RevenueOverview /></Card>
+                            <Card className="w-[25%]"><RevenueOverview onViewPaymentsInvoicing={handleViewPaymentsInvoicing} /></Card>
                             <Card className="w-[25%]"><ClientReviews onViewAllReviews={handleViewAllReviews} /></Card>
-                            <Card className="w-[25%]"><Notifications /></Card>
+                            <Card className="w-[25%]"><Notifications onViewAllClients={handleViewAllClients} /></Card>
                         </motion.div>
                         {/* Middle 2 Cards */}
                         <motion.div className="h-[50%] flex gap-2 md:gap-4" variants={rowVariants}>
-                            <Card className="w-[40%]"><CalendarOverview /></Card>
+                            <Card className="w-[40%]"><CalendarOverview onViewCalendar={handleViewCalendar} /></Card>
                             <div className="w-[60%] flex flex-col gap-2 md:gap-4">
-                                <Card className="h-[100%]"><OngoingAppts /></Card>
+                                <Card className="h-[100%]"><OngoingAppts onViewAllClients={handleViewAllClients} onViewCalendar={handleViewCalendar} /></Card>
                             </div>
                         </motion.div>
                         {/* Bottom 3 Cards */}
                         <motion.div className="h-[35%] flex gap-2 md:gap-4 overflow-hidden" variants={rowVariants}>
-                            <Card className="w-[33.33%] overflow-hidden"><Analytics /></Card>
-                            <Card className="w-[33.33%] overflow-hidden"><FollowUp /></Card>
-                            <Card className="w-[33.33%] overflow-hidden"><ReviewReport /></Card>
+                            <Card className="w-[33.33%] overflow-hidden"><Analytics onViewAllAnalytics={handleViewAnalytics} /></Card>
+                            <Card className="w-[33.33%] overflow-hidden"><FollowUp onViewFollowUp={handleViewFollowUp} /></Card>
+                            <Card className="w-[33.33%] overflow-hidden"><ReviewReport onViewAllReviews={handleViewAllReviews} /></Card>
                         </motion.div>
                     </>
                 )
             case 'appointments':
                 return <AllAppointments />
-            case 'services':
-                return <AllServices />
+            case 'analytics':
+                return <AllAnalytics />
             case 'clients':
                 return <AllClients />
             case 'reviews':
