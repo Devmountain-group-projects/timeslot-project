@@ -12,7 +12,7 @@ const ReviewHistoryTrend = () => {
             {
                 label: 'Reviews',
                 data: [12, 19, 3, 5, 2, 3],
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: '#3cbd5b',
                 tension: 0.1
             }
         ]
@@ -37,7 +37,7 @@ const ReviewHistoryTrend = () => {
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <section className="flex justify-between items-center p-3 bg-tertiary">
                 <div className="w-[10%]">
-                    <FaChartArea className="text-xl md:text-2xl text-primary" />
+                    <FaChartArea className="text-xl md:text-2xl text-[#3cbd5b]" />
                 </div>
                 <h2 className="w-[90%] text-sm text-center font-medium">Review History Trend</h2>
             </section>

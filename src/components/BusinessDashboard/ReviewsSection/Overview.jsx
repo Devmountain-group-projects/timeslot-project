@@ -47,7 +47,7 @@ const StatItem = ({ title, value, subtitle }) => (
             {subtitle && <p className="text-xs text-gray-400">{subtitle}</p>}
         </div>
         <div className="text-right">
-            <p className="text-xl font-bold text-primary">{value}</p>
+            <p className="text-3xl font-bold text-secondary">{value}</p>
         </div>
     </div>
 )

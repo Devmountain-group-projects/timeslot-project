@@ -27,7 +27,7 @@ const FeaturedReviews = () => {
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <section className="flex justify-between items-center p-3 bg-tertiary">
                 <div className="w-[10%]">
-                    <FaStar className="text-xl md:text-2xl text-primary" />
+                    <FaStar className="text-xl md:text-2xl text-[#cd942d]" />
                 </div>
                 <h2 className="w-[90%] text-sm text-center font-medium">Featured Reviews</h2>
             </section>
@@ -49,14 +49,14 @@ const ReviewCard = ({ review, isLast }) => (
     <div className={`${!isLast ? 'border-b border-gray-300' : ''}`}>
         <div className="flex items-center py-4 px-4">
             <div className="w-2/12">
-                <img src={review.image} alt={review.name} className="w-10 h-10 rounded-full" />
+                <img src={review.image} alt={review.name} className="w-14 h-14 rounded-full" />
             </div>
             <div className="w-10/12">
                 <div className="flex justify-between items-center">
                     <h3 className="font-semibold text-sm md:text-base">{review.name}</h3>
                     <div className="flex">
                         {[...Array(5)].map((_, i) => (
-                            <FaStar key={i} className={i < review.rating ? "text-yellow-400" : "text-gray-300"} />
+                            <FaStar key={i} className={i < review.rating ? "text-[#cd942d]" : "text-gray-300"} />
                         ))}
                     </div>
                 </div>
