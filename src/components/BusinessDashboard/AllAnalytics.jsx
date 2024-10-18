@@ -27,13 +27,13 @@ const AllAnalytics = () => {
         }
     };
 
-    // Dummy data for charts (unchanged)
+    // Updated data for charts (now including July through October)
     const lineChartData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
         datasets: [
             {
                 label: 'Appointments',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [12, 19, 3, 5, 2, 3, 8, 14, 11, 7],
                 borderColor: '#2264ba',
                 tension: 0.1
             }
@@ -41,11 +41,11 @@ const AllAnalytics = () => {
     };
 
     const barChartData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
         datasets: [
             {
                 label: 'Revenue',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [1200, 1900, 300, 500, 200, 300, 800, 1400, 1100, 700],
                 backgroundColor: '#007dfe'
             }
         ]
@@ -92,6 +92,26 @@ const AllAnalytics = () => {
         },
     };
 
+    // Chart options for larger graphs
+    const largeChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    maxRotation: 0,
+                    minRotation: 0
+                }
+            }
+        }
+    };
+
     return (
         <motion.div
             className="h-full flex flex-col gap-2 overflow-hidden"
@@ -101,7 +121,8 @@ const AllAnalytics = () => {
         >
             <div className="flex justify-between items-center mb-2">
                 <h1 className="text-lg font-bold text-gray-800">Analytics Dashboard</h1>
-                <div className="flex gap-4">
+                {/* This is the filter and download report button */}
+                {/* <div className="flex gap-4">
                     <select className="bg-white border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="last7days">Last 7 days</option>
                         <option value="last30days">Last 30 days</option>
@@ -111,10 +132,10 @@ const AllAnalytics = () => {
                     <button className="btn-blue-dashboard">
                         Download Report
                     </button>
-                </div>
+                </div> */}
             </div>
 
-            <div className="flex-grow flex flex-col gap-2 overflow-hidden">
+            <div className="flex-grow flex flex-col gap-4 overflow-hidden">
                 {/* Row 1 - Taller top cards */}
                 <motion.div className="h-[25%] flex gap-2 md:gap-4" variants={rowVariants}>
                     <Card className="w-1/2" title="Service Popularity & Client Retention">
@@ -135,20 +156,20 @@ const AllAnalytics = () => {
                 {/* Row 2 - Shorter middle cards */}
                 <motion.div className="h-[40%] flex gap-2 md:gap-4" variants={rowVariants}>
                     <Card className="w-1/2" title="Appointment Trends">
-                        <Line data={lineChartData} />
+                        <Line data={lineChartData} options={largeChartOptions} />
                     </Card>
                     <Card className="w-1/2" title="Revenue Breakdown">
-                        <Bar data={barChartData} />
+                        <Bar data={barChartData} options={largeChartOptions} />
                     </Card>
                 </motion.div>
 
                 {/* Row 3 */}
                 <motion.div className="h-[35%] flex gap-2 md:gap-4 overflow-hidden" variants={rowVariants}>
                     <Card className="w-1/2" title="No-Shows and Cancellations">
-                        <Bar data={barChartData} />
+                        <Bar data={barChartData} options={largeChartOptions} />
                     </Card>
                     <Card className="w-1/2" title="Average Appointment Duration">
-                        <Line data={lineChartData} />
+                        <Line data={lineChartData} options={largeChartOptions} />
                     </Card>
                 </motion.div>
             </div>
@@ -157,7 +178,7 @@ const AllAnalytics = () => {
 };
 
 const Card = ({ children, title, className = '' }) => (
-    <div className={`bg-white rounded-xl flex items-center justify-center shadow-sm overflow-hidden ${className}`}>
+    <div className={`bg-white rounded-xl border-2 border-gray-300 flex items-center justify-center shadow-sm overflow-hidden ${className}`}>
         <div className="w-full h-full flex flex-col">
             <div className="px-4 py-3 bg-tertiary border-b border-gray-200">
                 <h3 className="text-base font-medium text-gray-800">{title}</h3>
