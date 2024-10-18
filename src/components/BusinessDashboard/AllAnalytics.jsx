@@ -119,10 +119,11 @@ const AllAnalytics = () => {
             initial="hidden"
             animate="visible"
         >
-            <div className="flex justify-between items-center mb-2">
+            {/* Removed this section for now since we don't have the functionality for it yet */}
+            {/* <div className="flex justify-between items-center mb-2">
                 <h1 className="text-lg font-bold text-gray-800">Analytics Dashboard</h1>
-                {/* This is the filter and download report button */}
-                {/* <div className="flex gap-4">
+                This is the filter and download report button
+                <div className="flex gap-4">
                     <select className="bg-white border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <option value="last7days">Last 7 days</option>
                         <option value="last30days">Last 30 days</option>
@@ -132,8 +133,8 @@ const AllAnalytics = () => {
                     <button className="btn-blue-dashboard">
                         Download Report
                     </button>
-                </div> */}
-            </div>
+                </div>
+            </div> */}
 
             <div className="flex-grow flex flex-col gap-4 overflow-hidden">
                 {/* Row 1 - Taller top cards */}
