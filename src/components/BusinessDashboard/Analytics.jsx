@@ -1,11 +1,11 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { FaExpandAlt } from 'react-icons/fa';
+import { FaChevronRight } from 'react-icons/fa';
 
 ChartJS.register(ArcElement, Tooltip);
 
-const Analytics = () => {
+const Analytics = ({ onViewAllAnalytics }) => {
     // Mock data for four different doughnut charts
     const appointmentTypesData = {
         labels: ['Haircut', 'Color', 'Style', 'Treat', 'Other'],
@@ -18,6 +18,14 @@ const Analytics = () => {
                 'rgba(75, 192, 192, 0.8)',
                 'rgba(153, 102, 255, 0.8)',
             ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
@@ -31,6 +39,13 @@ const Analytics = () => {
                 'rgba(255, 205, 86, 0.8)',
                 'rgba(54, 162, 235, 0.8)',
             ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
@@ -45,6 +60,14 @@ const Analytics = () => {
                 'rgba(255, 159, 64, 0.8)',
                 'rgba(255, 99, 132, 0.8)',
             ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
@@ -57,10 +80,17 @@ const Analytics = () => {
                 'rgba(54, 162, 235, 0.8)',
                 'rgba(255, 99, 132, 0.8)',
             ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
     const chartOptions = {
+        cutout: '70%',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -75,39 +105,39 @@ const Analytics = () => {
 
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
+            <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">Analytics <span className="text-gray-400 text-[.70rem]">(Hover to Show)</span></h2>
-                <button
-                    className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
-                    aria-label="Expand"
-                >
-                    <FaExpandAlt className="text-lg" />
-                </button>
+                <div className="w-[10%] flex justify-end">
+                    <FaChevronRight
+                        className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                        onClick={onViewAllAnalytics}
+                    />
+                </div>
             </section>
             <hr className='border-t border-gray-300 w-full' />
             <section className="flex-grow overflow-y-auto p-4">
                 <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Appointment Types</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={appointmentTypesData} options={chartOptions} />
                         </div>
                     </div>
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Revenue Sources</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={revenueData} options={chartOptions} />
                         </div>
                     </div>
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Customer Satisfaction</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={customerSatisfactionData} options={chartOptions} />
                         </div>
                     </div>
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Client Retention</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={clientRetentionData} options={chartOptions} />
                         </div>
                     </div>

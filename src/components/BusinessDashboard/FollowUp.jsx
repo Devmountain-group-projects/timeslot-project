@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaExpandAlt, FaPhone, FaEnvelope, FaChevronRight } from 'react-icons/fa';
+import { FaChevronRight, FaPhone, FaEnvelope } from 'react-icons/fa';
 import User1Img from '../../assets/images/user1.png';
 import User2Img from '../../assets/images/user2.png';
 import User4Img from '../../assets/images/user4.png';
@@ -31,23 +31,22 @@ const ClientSection = ({ image, name, date, sessionType, notes, isLast }) => (
                 <button className="bg-gradient-gray text-primary p-1.5 md:p-2 rounded-full ring-1 ring-primary hover:bg-secondary hover:text-white hover:ring-1 hover:ring-secondary transition-colors duration-300">
                     <FaEnvelope className="text-base md:text-lg" />
                 </button>
-                <FaChevronRight className="text-gray-400 ml-2" />
             </div>
         </div>
     </div>
 );
 
-const FollowUp = () => {
+const FollowUp = ({ onViewFollowUp }) => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
+            <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">Follow-Up Clients</h2>
-                <button
-                    className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
-                    aria-label="Expand"
-                >
-                    <FaExpandAlt className="text-lg" />
-                </button>
+                <div className="w-[10%] flex justify-end">
+                    <FaChevronRight
+                        className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                        onClick={onViewFollowUp}
+                    />
+                </div>
             </section>
             <hr className='border-t border-gray-300 w-full m-0' />
             <section className="flex-grow overflow-y-auto">
