@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { FaExpandAlt } from 'react-icons/fa';
+import { FaChevronRight } from 'react-icons/fa';
 
 ChartJS.register(ArcElement, Tooltip);
 
@@ -105,14 +105,13 @@ const Analytics = () => {
 
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
+            <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">Analytics <span className="text-gray-400 text-[.70rem]">(Hover to Show)</span></h2>
-                <button
-                    className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
-                    aria-label="Expand"
-                >
-                    <FaExpandAlt className="text-lg" />
-                </button>
+                <div className="w-[10%] flex justify-end">
+                    <FaChevronRight
+                        className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                    />
+                </div>
             </section>
             <hr className='border-t border-gray-300 w-full' />
             <section className="flex-grow overflow-y-auto p-4">

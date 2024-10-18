@@ -28,13 +28,11 @@ const BusinessDashboard = () => {
     const location = useLocation();
     const [currentView, setCurrentView] = useState('dashboard')
 
-
     useEffect(() => {
         if (location.state?.view === 'calendar') {
             setCurrentView('calendar');
         }
     }, [location]);
-
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -57,6 +55,14 @@ const BusinessDashboard = () => {
         }
     }
 
+    const handleViewAllClients = () => {
+        setCurrentView('clients');
+    }
+
+    const handleViewAllReviews = () => {
+        setCurrentView('reviews');
+    }
+
     const renderContent = () => {
         switch (currentView) {
             case 'dashboard':
@@ -64,9 +70,9 @@ const BusinessDashboard = () => {
                     <>
                         {/* Top 4 Cards */}
                         <motion.div className="h-[15%] flex gap-2 md:gap-4" variants={rowVariants}>
-                            <Card className="w-[25%]"><UpcomingAppts /></Card>
+                            <Card className="w-[25%]"><UpcomingAppts onViewAllClients={handleViewAllClients} /></Card>
                             <Card className="w-[25%]"><RevenueOverview /></Card>
-                            <Card className="w-[25%]"><ClientReviews /></Card>
+                            <Card className="w-[25%]"><ClientReviews onViewAllReviews={handleViewAllReviews} /></Card>
                             <Card className="w-[25%]"><Notifications /></Card>
                         </motion.div>
                         {/* Middle 2 Cards */}

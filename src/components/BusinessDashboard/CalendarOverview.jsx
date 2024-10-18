@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCalendarPlus } from "react-icons/fa6";
+import { FaChevronRight } from "react-icons/fa6";
 import SharedScheduler from './SharedScheduler';
 // // Will look into later, focusing on calendar first
 // const ProgressBar = ({ value, max }) => {
@@ -24,13 +24,13 @@ import SharedScheduler from './SharedScheduler';
 const CalendarOverview = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
+            <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">Calendar Overview</h2>
                 <button
-                    className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
-                    aria-label="Add to calendar"
+                    className="text-gray-400 cursor-pointer hover:text-primary transition-colors duration-200"
+                    aria-label="Expand"
                 >
-                    <FaCalendarPlus className="text-lg" />
+                    <FaChevronRight className="text-lg" />
                 </button>
             </section>
             <hr className='border-t border-gray-300 w-full m-0' />

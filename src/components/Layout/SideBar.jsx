@@ -65,9 +65,9 @@ const SideBar = ({ currentView, setCurrentView }) => {
                     <MenuItem view="reviews" icon={<MdRateReview />} currentView={currentView} setCurrentView={setCurrentView}>Reviews & Feedback</MenuItem>
                 </MenuSection>
 
-                {/* <MenuSection title="Other Menu">
-                    <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView}>Payments & Invoicing</MenuItem>
-                </MenuSection> */}
+                <MenuSection title="Other Menu">
+                    <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView}>Revenue & Invoicing</MenuItem>
+                </MenuSection>
 
                 <MenuSection title="Help & Settings">
                     <MenuItem view="settings" icon={<IoMdSettings />} currentView={currentView} setCurrentView={setCurrentView}>Account Settings</MenuItem>
