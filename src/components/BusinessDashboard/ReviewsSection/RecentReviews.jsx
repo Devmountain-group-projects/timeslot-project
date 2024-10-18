@@ -11,7 +11,7 @@ const RecentReviews = () => {
     const reviews = [
         {
             id: 1,
-            clientName: "Alice Johnson",
+            clientName: "Jane Doe",
             service: "Haircut",
             rating: 5,
             date: "2024-10-15",
@@ -20,7 +20,7 @@ const RecentReviews = () => {
         },
         {
             id: 2,
-            clientName: "Bob Smith",
+            clientName: "Alex Johnson",
             service: "Haircut",
             rating: 4,
             date: "2024-10-14",
@@ -29,7 +29,7 @@ const RecentReviews = () => {
         },
         {
             id: 3,
-            clientName: "Carol Davis",
+            clientName: "Precious Smith",
             service: "Manicure",
             rating: 5,
             date: "2024-10-13",
@@ -100,12 +100,12 @@ const ResponseModal = ({ review, onClose }) => {
     }
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black rounded-xl bg-opacity-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-xl font-semibold">Respond to {review.clientName}</h2>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                        <FaTimes />
+                        <FaTimes size={24} />
                     </button>
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{review.comment}</p>
