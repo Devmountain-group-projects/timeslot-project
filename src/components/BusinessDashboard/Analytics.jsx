@@ -18,6 +18,14 @@ const Analytics = () => {
                 'rgba(75, 192, 192, 0.8)',
                 'rgba(153, 102, 255, 0.8)',
             ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
@@ -31,6 +39,13 @@ const Analytics = () => {
                 'rgba(255, 205, 86, 0.8)',
                 'rgba(54, 162, 235, 0.8)',
             ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(54, 162, 235, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
@@ -45,6 +60,14 @@ const Analytics = () => {
                 'rgba(255, 159, 64, 0.8)',
                 'rgba(255, 99, 132, 0.8)',
             ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 205, 86, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
@@ -57,10 +80,17 @@ const Analytics = () => {
                 'rgba(54, 162, 235, 0.8)',
                 'rgba(255, 99, 132, 0.8)',
             ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 99, 132, 1)',
+            ],
+            borderWidth: 1,
         }],
     };
 
     const chartOptions = {
+        cutout: '70%',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -89,25 +119,25 @@ const Analytics = () => {
                 <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Appointment Types</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={appointmentTypesData} options={chartOptions} />
                         </div>
                     </div>
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Revenue Sources</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={revenueData} options={chartOptions} />
                         </div>
                     </div>
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Customer Satisfaction</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={customerSatisfactionData} options={chartOptions} />
                         </div>
                     </div>
                     <div className="flex flex-col items-center">
                         <h3 className="text-xs font-medium mb-2 text-center">Client Retention</h3>
-                        <div className="w-full aspect-square">
+                        <div className="w-32 h-32 relative">
                             <Doughnut data={clientRetentionData} options={chartOptions} />
                         </div>
                     </div>
