@@ -6,7 +6,7 @@ import Graph1 from '../../assets/images/graph1.png'
 const UpcomingAppts = ({ onViewAllClients }) => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center p-3 bg-tertiary">
+            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
                 <div className="w-[10%]">
                     <BsCalendar2WeekFill className="text-xl md:text-2xl text-primary" />
                 </div>

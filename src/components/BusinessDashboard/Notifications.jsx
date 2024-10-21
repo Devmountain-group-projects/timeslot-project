@@ -6,7 +6,7 @@ import Graph4 from '../../assets/images/graph4.png'
 const Notifications = ({ onViewAllClients }) => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center p-3 bg-tertiary">
+            <section className="flex justify-between items-center py-2 px-3 bg-tertiary">
                 <div className="w-[10%]">
                     <FaUsers className="text-xl md:text-2xl text-[#3cbd5b]" />
                 </div>
