@@ -44,7 +44,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
 
     const sessionCheck = async () => {
         const res = await userCheck()
-        console.log("Test: ", res)
+        // console.log("Test: ", res)
         if (res.success) {
             setName(res.user.name)
             setBusiness(res.user.business[0].business_name)

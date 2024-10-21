@@ -10,7 +10,8 @@ const Dashboard = () => {
     return (
         <div>
             {/* {isLoggedIn} */}
-            {role === "user" && <ClientDashboard />}
+            {/* {role === "user" && <ClientDashboard />} */}
+            {role === "user" && <BusinessDashboard />}
             {role === "business" && <BusinessDashboard />}
             {role === null && <BusinessDashboard />}
 

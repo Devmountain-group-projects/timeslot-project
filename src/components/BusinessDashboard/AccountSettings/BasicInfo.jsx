@@ -5,7 +5,7 @@ import User6 from '../../../assets/images/placeholderavatar.png'
 import CoverImg from '../../../assets/images/placeholdercover.png'
 import ImageUploadModal from './ImageUploadModal';
 import { userCheck } from '../../../context/AuthContext';
-import { testing, updateBusiness, photoUpdate } from '../../../context/businessContext';
+import { updateBusiness, photoUpdate } from '../../../context/businessContext';
 
 
 const BasicInfo = () => {
@@ -15,6 +15,8 @@ const BasicInfo = () => {
     const [email, setEmail] = useState(null)
     const [phone, setPhone] = useState(null)
     const [bio, setBio] = useState("Tell us about yourself")
+    const [photo, setPhoto] = useState(User6)
+    const [cover, setCover] = useState(CoverImg)
     const [business, setBusiness] = useState(null)
     const [city, setCity] = useState("No")
     const [state, setState] = useState("Address")
@@ -23,6 +25,7 @@ const BasicInfo = () => {
     const [newEmail, setNewEmail] = useState(email)
     const [newPhone, setNewPhone] = useState(phone)
     const [newBio, setNewBio] = useState(null)
+    const [newPhoto, setNewPhoto] = useState(User6)
 
     useEffect(()  => {
         sessionCheck()
@@ -33,6 +36,14 @@ const BasicInfo = () => {
         if (res.success) {
             setName(res.user.name)
             setNewName(res.user.name)
+            console.log("TESTING", res.user.profile_picture)
+            if (res.user.profile_picture === "Default") {
+                setPhoto(User6)
+            } else {
+                setPhoto(res.user.profile_picture)
+            }
+            
+            
             if (res.user.business[0]) {
                 setBusiness(res.user.business[0].business_name)
                 setCity(res.user.business[0].city)
@@ -53,7 +64,7 @@ const BasicInfo = () => {
 
     const basicInfoData = {
         name,
-        profileImg: User6,
+        profileImg: photo,
         coverImg: CoverImg,
         city,
         state,
@@ -79,6 +90,8 @@ const BasicInfo = () => {
     const imageUpload = (type, image) => {
         console.log("Updating image")
         console.log(type, image)
+        setNewPhoto(image)
+        console.log("New Photo", newPhoto)
         photoUpdate(type, image)
     }
 
@@ -105,10 +118,10 @@ const BasicInfo = () => {
                         {/* Profile image placeholder */}
                         <div className="absolute -bottom-[45%] left-1/2 transform -translate-x-[50%] w-32 h-32">
                             <div className="relative w-full h-full">
-                                <img src={User6} alt="User6" className="w-full h-full rounded-full bg-gray-300 border-4 border-white" />
+                                <img src={basicInfoData.profileImg} alt="User6" className="w-full h-full rounded-full bg-gray-300 border-4 border-white" />
                                 <div
                                     className="absolute bottom-0 right-0 bg-blue-500 ring-4 ring-white rounded-full p-2 cursor-pointer text-white hover:bg-white hover:text-blue-500 hover:ring-4 hover:ring-blue-500 transition duration-300"
-                                    onClick={() => handleImageUpload('profile')}
+                                    onClick={() => handleImageUpload('photo', newPhoto)}
                                 >
                                     <BiSolidPencil className="" size={16} />
                                 </div>
