@@ -23,6 +23,7 @@ import AllReviews from '../BusinessDashboard/AllReviews'
 import AllClients from '../BusinessDashboard/AllClients'
 import AllAnalytics from '../BusinessDashboard/AllAnalytics.jsx'
 import AllAppointments from '../BusinessDashboard/AllAppointments'
+import AllAnalytics from '../BusinessDashboard/AllAnalytics'
 import PaymentsInvoicing from '../BusinessDashboard/PaymentsInvoicing'
 
 
