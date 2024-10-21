@@ -71,7 +71,7 @@ const AddClientModal = ({ onClose, onAddClient }) => {
             setError('Please fill in all required fields.');
             return;
         }
-
+        console.log(newClient)
         onAddClient(newClient);  // Use the passed onAddClient method
         onClose();
     };
@@ -317,8 +317,6 @@ const ClientList = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
-            console.log('Client creation response:', response);
 
             // Add the new client to local state
             const createdClient = response.data.client;
