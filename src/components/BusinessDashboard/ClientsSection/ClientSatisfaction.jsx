@@ -28,7 +28,7 @@ const ClientSatisfaction = () => {
     };
 
     const options = {
-        cutout: '70%',
+        cutout: '75%',
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -50,7 +50,7 @@ const ClientSatisfaction = () => {
         <div className="w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <h2 className="text-xs md:text-sm font-medium p-3 bg-tertiary border-b-2 border-gray-30">Client Satisfaction</h2>
             <div className="flex-grow flex flex-col items-center justify-center p-4">
-                <div className="w-24 h-24 md:w-32 md:h-32 relative">
+                <div className="w-24 h-24 md:w-30 md:h-30 relative">
                     <Doughnut data={customerSatisfactionData} options={options} />
                     <div className="absolute inset-0 flex items-center justify-center">
                         <span className="text-xl md:text-2xl font-bold">{averageSatisfaction}</span>

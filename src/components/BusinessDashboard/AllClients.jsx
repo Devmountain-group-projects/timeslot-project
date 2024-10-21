@@ -37,37 +37,37 @@ const AllClients = () => {
 
     return (
         <motion.div
-            className="h-full flex flex-col gap-4 overflow-hidden"
+            className="h-full flex flex-col gap-4 overflow-auto"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
             {/* Row 1 */}
-            <motion.div className="flex-shrink-0 flex gap-4" variants={rowVariants}>
-                <Card className="w-1/4"><TotalClients /></Card>
-                <Card className="w-1/4"><NewClients /></Card>
-                <Card className="w-1/4"><TopClients /></Card>
-                <Card className="w-1/4"><InactiveClients /></Card>
+            <motion.div className="flex-shrink-0 flex flex-col sm:flex-row flex-wrap gap-4" variants={rowVariants}>
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><TotalClients /></Card>
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><NewClients /></Card>
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><TopClients /></Card>
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><InactiveClients /></Card>
             </motion.div>
 
             {/* Row 2 */}
-            <motion.div className="flex-grow flex gap-4 min-h-0" variants={rowVariants}>
-                <Card className="w-1/3 overflow-hidden"><ClientList /></Card>
-                <Card className="w-2/3 overflow-hidden"><AddAppointment /></Card>
+            <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
+                <Card className="w-full md:w-[30%] h-[300px] md:h-auto"><ClientList /></Card>
+                <Card className="w-full md:w-[70%] h-[300px] md:h-auto"><AddAppointment /></Card>
             </motion.div>
 
             {/* Row 3 */}
-            <motion.div className="flex-shrink-0 flex gap-4" variants={rowVariants}>
-                <Card className="w-1/3"><ReturningClients /></Card>
-                <Card className="w-1/3"><ClientSatisfaction /></Card>
-                <Card className="w-1/3"><ClientRetention /></Card>
+            <motion.div className="flex-shrink-0 flex flex-col md:flex-row gap-4" variants={rowVariants}>
+                <Card className="w-full md:w-1/3 h-[300px] md:h-[230px]"><ReturningClients /></Card>
+                <Card className="w-full md:w-1/3 h-[300px] md:h-[230px]"><ClientSatisfaction /></Card>
+                <Card className="w-full md:w-1/3 h-[300px] md:h-[230px]"><ClientRetention /></Card>
             </motion.div>
         </motion.div>
     )
 }
 
 const Card = ({ children, className = '' }) => (
-    <div className={`bg-white rounded-xl shadow-sm ${className}`}>
+    <div className={`bg-white rounded-xl shadow-sm overflow-auto ${className}`}>
         {children}
     </div>
 )
