@@ -99,21 +99,21 @@ const BusinessDashboard = () => {
                     >
                         {/* Top 4 Cards */}
                         <motion.div className="flex-shrink-0 flex flex-col sm:flex-row flex-wrap gap-4" variants={rowVariants}>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px]"><UpcomingAppts onViewAllClients={handleViewAllClients} /></Card>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px]"><RevenueOverview onViewPaymentsInvoicing={handleViewPaymentsInvoicing} /></Card>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px]"><ClientReviews onViewAllReviews={handleViewAllReviews} /></Card>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px]"><Notifications onViewAllClients={handleViewAllClients} /></Card>
+                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><UpcomingAppts onViewAllClients={handleViewAllClients} /></Card>
+                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><RevenueOverview onViewPaymentsInvoicing={handleViewPaymentsInvoicing} /></Card>
+                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><ClientReviews onViewAllReviews={handleViewAllReviews} /></Card>
+                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><Notifications onViewAllClients={handleViewAllClients} /></Card>
                         </motion.div>
                         {/* Middle 2 Cards */}
                         <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                            <Card className="w-full md:w-[40%] h-full md:h-auto"><CalendarOverview onViewCalendar={handleViewCalendar} /></Card>
-                            <Card className="w-full md:w-[60%] h-full md:h-auto"><OngoingAppts onViewAllClients={handleViewAllClients} onViewCalendar={handleViewCalendar} /></Card>
+                            <Card className="w-full md:w-[40%] h-full md:h-[auto]"><CalendarOverview onViewCalendar={handleViewCalendar} /></Card>
+                            <Card className="w-full md:w-[60%] h-full md:h-[auto]"><OngoingAppts onViewAllClients={handleViewAllClients} onViewCalendar={handleViewCalendar} /></Card>
                         </motion.div>
                         {/* Bottom 3 Cards */}
-                        <motion.div className="flex-shrink-0 flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                            <Card className="w-full md:w-1/3 h-[300px]"><Analytics onViewAllAnalytics={handleViewAnalytics} /></Card>
-                            <Card className="w-full md:w-1/3 h-[300px]"><FollowUp onViewFollowUp={handleViewFollowUp} /></Card>
-                            <Card className="w-full md:w-1/3 h-[300px]"><ReviewReport onViewAllReviews={handleViewAllReviews} /></Card>
+                        <motion.div className="flex- flex flex-col md:flex-row gap-4" variants={rowVariants}>
+                            <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]"><Analytics onViewAllAnalytics={handleViewAnalytics} /></Card>
+                            <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]"><FollowUp onViewFollowUp={handleViewFollowUp} /></Card>
+                            <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]"><ReviewReport onViewAllReviews={handleViewAllReviews} /></Card>
                         </motion.div>
                     </motion.div>
                 );

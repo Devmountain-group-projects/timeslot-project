@@ -105,7 +105,7 @@ const Analytics = ({ onViewAllAnalytics }) => {
 
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center py-4 px-3 bg-tertiary">
+            <section className="flex justify-between items-center py-3 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">Analytics <span className="text-gray-400 text-[.70rem]">(Hover to Show)</span></h2>
                 <div className="w-[10%] flex justify-end">
                     <FaChevronRight
