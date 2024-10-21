@@ -18,11 +18,11 @@ const AllReviews = () => {
         }
     }
 
-    const columnVariants = {
-        hidden: { opacity: 0, x: -20 },
+    const rowVariants = {
+        hidden: { opacity: 0, y: 20 },
         visible: {
             opacity: 1,
-            x: 0,
+            y: 0,
             transition: {
                 duration: 0.5
             }
@@ -37,24 +37,32 @@ const AllReviews = () => {
             animate="visible"
         >
             {/* Column 1 - 60% width */}
-            <motion.div className="w-[60%] flex flex-col gap-4" variants={columnVariants}>
+            <div className="w-[60%] flex flex-col gap-4">
                 {/* Top row - 30% height */}
-                <div className="h-[30%] flex gap-4">
+                <motion.div className="h-[30%] flex gap-4" variants={rowVariants}>
                     <Card className="w-1/3"><Overview /></Card>
                     <Card className="w-2/3"><FeaturedReviews /></Card>
-                </div>
+                </motion.div>
                 {/* Bottom row - 70% height */}
-                <Card className="h-[70%] overflow-hidden">
-                    <ReviewMgmt />
-                </Card>
-            </motion.div>
+                <motion.div className="h-[70%]" variants={rowVariants}>
+                    <Card className="h-full overflow-hidden">
+                        <ReviewMgmt />
+                    </Card>
+                </motion.div>
+            </div>
 
             {/* Column 2 - 40% width */}
-            <motion.div className="w-[40%] flex flex-col gap-4" variants={columnVariants}>
-                <Card className="h-1/3 overflow-hidden"><ReviewHistoryTrend /></Card>
-                <Card className="h-1/3 overflow-hidden"><ClientSentiment /></Card>
-                <Card className="h-1/3 overflow-hidden"><ReviewsByService /></Card>
-            </motion.div>
+            <div className="w-[40%] flex flex-col gap-4">
+                <motion.div className="h-1/3" variants={rowVariants}>
+                    <Card className="h-full overflow-hidden"><ReviewHistoryTrend /></Card>
+                </motion.div>
+                <motion.div className="h-1/3" variants={rowVariants}>
+                    <Card className="h-full overflow-hidden"><ClientSentiment /></Card>
+                </motion.div>
+                <motion.div className="h-1/3" variants={rowVariants}>
+                    <Card className="h-full overflow-hidden"><ReviewsByService /></Card>
+                </motion.div>
+            </div>
         </motion.div>
     )
 }
