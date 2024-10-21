@@ -15,6 +15,7 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { MdLiveHelp } from "react-icons/md";
 import { RiLogoutBoxFill } from "react-icons/ri";
+import { IoMdMenu } from "react-icons/io";
 import { userLogout, userCheck } from '../../context/AuthContext';
 
 const SideBar = ({ currentView, setCurrentView }) => {
@@ -22,9 +23,18 @@ const SideBar = ({ currentView, setCurrentView }) => {
     const [name, setName] = useState(null)
     const [business, setBusiness] = useState(null)
     const [loggedIn, setloggedIn] = useState(isLoggedIn)
+    const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
         sessionCheck()
+        const handleResize = () => {
+            if (window.innerWidth >= 1280) {
+                setIsOpen(false)
+            }
+        }
+        window.addEventListener('resize', handleResize)
+        handleResize()
+        return () => window.removeEventListener('resize', handleResize)
     }, [])
 
     const logoutTrigger = () => {
@@ -45,17 +55,13 @@ const SideBar = ({ currentView, setCurrentView }) => {
         }
     }
 
-    return (
-        <div className="flex flex-col h-full">
-            {/* Logo */}
-            <div className="py-4 px-3">
-                <Link to="/">
-                    <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
-                </Link>
-            </div>
+    const toggleMenu = () => {
+        setIsOpen(!isOpen)
+    }
 
-            {/* Scrollable Menu Items */}
-            <nav className="flex-grow overflow-y-auto py-4 px-3">
+    const SidebarContent = () => (
+        <>
+            <nav className="py-4 px-3">
                 <MenuSection title="Main Menu">
                     <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView}>Dashboard</MenuItem>
                     <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView}>Clients</MenuItem>
@@ -77,18 +83,51 @@ const SideBar = ({ currentView, setCurrentView }) => {
                     </button>
                 </MenuSection>
             </nav>
+        </>
+    )
 
-            {/* User Profile */}
-            <div className="py-4 px-3">
-                <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
-                    <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
-                    <div>
-                        <div className="text-sm font-semibold">{name}</div>
-                        <div className="text-xs opacity-75">{business}</div>
-                    </div>
+    const UserProfile = () => (
+        <div className="py-4 px-3">
+            <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
+                <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
+                <div>
+                    <div className="text-sm font-semibold">{name}</div>
+                    <div className="text-xs opacity-75">{business}</div>
                 </div>
             </div>
         </div>
+    )
+
+    return (
+        <>
+            {/* Hamburger menu at the top */}
+            <div className="xl:hidden fixed top-0 left-0 right-0 z-50 bg-secondary p-4 flex justify-between items-center">
+                <button onClick={toggleMenu} className="text-white">
+                    <IoMdMenu size={24} />
+                </button>
+                <img src={LogoWhite} alt="Logo" className="h-8" />
+            </div>
+
+            {/* Dropdown menu for small to large screens */}
+            <div className={`xl:hidden fixed top-16 left-0 right-0 bg-secondary text-white overflow-y-auto transition-all duration-300 ease-in-out z-40 ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
+                <SidebarContent />
+                <UserProfile />
+            </div>
+
+            {/* Sidebar for extra large screens */}
+            <div className="hidden xl:flex flex-col h-full w-[14%] bg-secondary text-white">
+                {/* Logo */}
+                <div className="py-4 px-3">
+                    <Link to="/">
+                        <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
+                    </Link>
+                </div>
+                <div className="flex flex-col flex-grow justify-between">
+                    <SidebarContent />
+                    <UserProfile />
+                </div>
+            </div>
+        </>
     )
 }
 

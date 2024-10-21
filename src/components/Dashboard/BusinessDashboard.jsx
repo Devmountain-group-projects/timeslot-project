@@ -25,15 +25,21 @@ import AllAnalytics from '../BusinessDashboard/AllAnalytics.jsx'
 import AllAppointments from '../BusinessDashboard/AllAppointments'
 import PaymentsInvoicing from '../BusinessDashboard/PaymentsInvoicing'
 
-
 const BusinessDashboard = () => {
     const location = useLocation();
     const [currentView, setCurrentView] = useState('dashboard')
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
     useEffect(() => {
         if (location.state?.view === 'calendar') {
             setCurrentView('calendar');
         }
+        const handleResize = () => {
+            setIsSidebarOpen(window.innerWidth >= 1280)
+        }
+        window.addEventListener('resize', handleResize)
+        handleResize()
+        return () => window.removeEventListener('resize', handleResize)
     }, [location]);
 
     const containerVariants = {
@@ -133,13 +139,12 @@ const BusinessDashboard = () => {
     }
 
     return (
-        <div className="flex h-screen bg-secondary">
-            {/* Sidebar Container */}
-            <div className="w-[14%] text-white">
-                <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
-            </div>
-            {/* Right Main Container */}
-            <div className="w-[86%] py-2 md:py-4 pr-2 md:pr-4 overflow-hidden">
+        <div className="flex flex-col xl:flex-row h-screen bg-secondary">
+            {/* Sidebar */}
+            <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
+
+            {/* Main Content */}
+            <div className="flex-grow pt-0 xl:pt-4 pb-4 px-4 xl:pl-0 overflow-hidden xl:w-[86%] mt-16 xl:mt-0">
                 <div className="h-full rounded-xl p-4 bg-gradient-to-br from-gray-100 to-gray-300 overflow-hidden">
                     {renderContent()}
                 </div>
