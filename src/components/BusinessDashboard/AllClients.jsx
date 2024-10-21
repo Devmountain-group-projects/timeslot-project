@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 // Row 1
 import TotalClients from './ClientsSection/TotalClients'
@@ -12,8 +12,15 @@ import AddAppointment from './ClientsSection/AddAppointment'
 import ReturningClients from './ClientsSection/ReturningClients'
 import ClientSatisfaction from './ClientsSection/ClientSatisfaction'
 import ClientRetention from './ClientsSection/ClientRetention'
+// Modals
+import AddClientModal from './ClientsSection/AddClientModal'
+import EditClientModal from './ClientsSection/EditClientModal'
 
 const AllClients = () => {
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedClient, setSelectedClient] = useState(null);
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -35,9 +42,24 @@ const AllClients = () => {
         }
     }
 
+    const handleAddClient = (newClient) => {
+        // Implement add client logic here
+        setShowAddModal(false);
+    }
+
+    const handleUpdateClient = (updatedClient) => {
+        // Implement update client logic here
+        setShowEditModal(false);
+    }
+
+    const handleDeleteClient = (clientId) => {
+        // Implement delete client logic here
+        setShowEditModal(false);
+    }
+
     return (
         <motion.div
-            className="h-full flex flex-col gap-4 overflow-auto"
+            className="h-full flex flex-col gap-4 overflow-auto relative"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -52,7 +74,15 @@ const AllClients = () => {
 
             {/* Row 2 */}
             <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                <Card className="w-full md:w-[30%] h-auto md:h-auto"><ClientList /></Card>
+                <Card className="w-full md:w-[30%] h-auto md:h-auto">
+                    <ClientList
+                        onAddClient={() => setShowAddModal(true)}
+                        onEditClient={(client) => {
+                            setSelectedClient(client);
+                            setShowEditModal(true);
+                        }}
+                    />
+                </Card>
                 <Card className="w-full md:w-[70%] h-auto md:h-auto"><AddAppointment /></Card>
             </motion.div>
 
@@ -62,6 +92,22 @@ const AllClients = () => {
                 <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ClientSatisfaction /></Card>
                 <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ClientRetention /></Card>
             </motion.div>
+
+            {showAddModal && (
+                <AddClientModal
+                    onClose={() => setShowAddModal(false)}
+                    onAddClient={handleAddClient}
+                />
+            )}
+
+            {showEditModal && selectedClient && (
+                <EditClientModal
+                    client={selectedClient}
+                    onClose={() => setShowEditModal(false)}
+                    onUpdateClient={handleUpdateClient}
+                    onDeleteClient={handleDeleteClient}
+                />
+            )}
         </motion.div>
     )
 }

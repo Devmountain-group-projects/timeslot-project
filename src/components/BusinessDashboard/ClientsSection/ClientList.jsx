@@ -40,7 +40,7 @@ const ClientItem = ({ client, onEdit }) => {
     );
 };
 
-const ClientList = () => {
+const ClientList = ({ onAddClient, onEditClient }) => {
     const { createClient, updateClient, removeClient } = useAppointment();
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -120,7 +120,7 @@ const ClientList = () => {
             <section className="flex-shrink-0 flex justify-between items-center py-2 px-3 bg-tertiary">
                 <h2 className="text-xs md:text-sm font-medium">Client List</h2>
                 <button
-                    onClick={() => setShowAddModal(true)}
+                    onClick={onAddClient}
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                     aria-label="Add client"
                 >
@@ -131,24 +131,10 @@ const ClientList = () => {
             <section className="flex-grow overflow-y-auto">
                 <div className="min-h-full">
                     {clients.map((client) => (
-                        <ClientItem key={client.id} client={client} onEdit={handleEditClick} />
+                        <ClientItem key={client.id} client={client} onEdit={() => onEditClient(client)} />
                     ))}
                 </div>
             </section>
-            {showAddModal && (
-                <AddClientModal
-                    onClose={() => setShowAddModal(false)}
-                    onAddClient={handleAddClient}
-                />
-            )}
-            {showEditModal && selectedClient && (
-                <EditClientModal
-                    client={selectedClient}
-                    onClose={() => setShowEditModal(false)}
-                    onUpdateClient={handleUpdateClient}
-                    onDeleteClient={handleDeleteClient}
-                />
-            )}
         </div>
     );
 };
