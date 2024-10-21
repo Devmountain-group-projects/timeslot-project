@@ -39,7 +39,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
 
     const logoutTrigger = () => {
         console.log("logging user out")
-        setIsOpen(false)  // Close menu on logout
+        setIsOpen(false)
         userLogout()
     }
 
@@ -60,8 +60,8 @@ const SideBar = ({ currentView, setCurrentView }) => {
     }
 
     const SidebarContent = () => (
-        <>
-            <nav className="py-4 px-3">
+        <nav className="flex-1 overflow-y-auto">
+            <div className="py-4 px-3">
                 <MenuSection title="Main Menu">
                     <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Dashboard</MenuItem>
                     <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Clients</MenuItem>
@@ -82,12 +82,12 @@ const SideBar = ({ currentView, setCurrentView }) => {
                         Logout
                     </button>
                 </MenuSection>
-            </nav>
-        </>
+            </div>
+        </nav>
     )
 
     const UserProfile = () => (
-        <div className="py-4 px-3">
+        <div className="flex-shrink-0 py-4 px-3">
             <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
                 <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
                 <div>
@@ -113,7 +113,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
                 className={`xl:hidden fixed top-16 left-0 right-0 bg-secondary text-white overflow-hidden transition-all duration-300 ease-in-out z-40 ${isOpen ? 'max-h-[calc(100vh-4rem)] opacity-100' : 'max-h-0 opacity-0'
                     }`}
             >
-                <div className={`transition-all duration-300 transform ${isOpen ? 'translate-y-0' : '-translate-y-4'}`}>
+                <div className={`h-full flex flex-col transition-all duration-300 transform ${isOpen ? 'translate-y-0' : '-translate-y-4'}`}>
                     <SidebarContent />
                     <UserProfile />
                 </div>
@@ -122,12 +122,12 @@ const SideBar = ({ currentView, setCurrentView }) => {
             {/* Sidebar for extra large screens */}
             <div className="hidden xl:flex flex-col h-full w-[14%] bg-secondary text-white">
                 {/* Logo */}
-                <div className="py-4 px-3">
+                <div className="flex-shrink-0 py-4 px-3">
                     <Link to="/">
                         <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
                     </Link>
                 </div>
-                <div className="flex flex-col flex-grow justify-between">
+                <div className="flex flex-col min-h-0 flex-1">
                     <SidebarContent />
                     <UserProfile />
                 </div>
