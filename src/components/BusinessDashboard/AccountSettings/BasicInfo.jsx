@@ -5,7 +5,7 @@ import User6 from '../../../assets/images/placeholderavatar.png'
 import CoverImg from '../../../assets/images/placeholdercover.png'
 import ImageUploadModal from './ImageUploadModal';
 import { userCheck } from '../../../context/AuthContext';
-import { testing, updateBusiness } from '../../../context/businessContext';
+import { testing, updateBusiness, photoUpdate } from '../../../context/businessContext';
 
 
 const BasicInfo = () => {
@@ -74,6 +74,12 @@ const BasicInfo = () => {
     const handleImageUpload = (type) => {
         setUploadType(type);
         setShowModal(true);
+    }
+
+    const imageUpload = (type, image) => {
+        console.log("Updating image")
+        console.log(type, image)
+        photoUpdate(type, image)
     }
 
     return (
@@ -224,7 +230,8 @@ const BasicInfo = () => {
 
             {showModal && (
                 <ImageUploadModal
-                    onClose={() => setShowModal(false)}
+                    onClose={() => {setShowModal(false)}}
+                    onSubmit={imageUpload}
                     uploadType={uploadType}
                 />
             )}

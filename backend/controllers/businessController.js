@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+import fs from "fs";
 
 export const test = async (req, res) => {
   console.log("TESTING");
@@ -166,6 +167,48 @@ export const update = async (req, res) => {
   }
 };
 
+
+export const updatePhoto = async (req, res) => {
+    // const db = req.app.get("db");
+    const { type, image } = req.body
+    // if (req.session.userId) [
+
+
+    console.log("type: ", type)
+    console.log("image: ", image)
+    console.log("req.body: ", req.body)
+    console.log("Req.files: ", req.files)
+    let photos = [];
+    if (req.files) {
+        let reqPhotos = req.files.photos;
+
+        console.log("req.files: ", req.files)
+
+        if (!(reqPhotos instanceof Array)) {
+        reqPhotos = [reqPhotos];
+        }
+
+        reqPhotos.forEach((file, index) => {
+        fs.writeFile(photoPath + "/" + file.name, file.data, () => {});
+
+        photos.push({
+            src: `http://localhost:5539/photos/${file.name}`,
+            propertyImage: {
+            isPrimary: index === 0,
+            },
+        });
+        });
+    }
+        
+        console.log("########################################UpdatePhoto########################################")
+
+    // ]
+
+    return res.send({
+        message: "Hit updatePhoto",
+        success: true
+    })
+}
 
 
 

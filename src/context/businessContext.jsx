@@ -8,6 +8,12 @@ export async function testing() {
 
 export async function updateBusiness(field, input) {
     console.log(`Sending package E`, {field, input})
-    const res = await axios.post("api/business/businessUpdate", { field, input})
+    const res = await axios.post("api/business/businessUpdate", { field, input })
+    return res.data
+}
+
+export async function photoUpdate(type, image) {
+    console.log("Context: ", {type, image})
+    const res = await axios.post("api/business/updatePhoto", { type, image })
     return res.data
 }
