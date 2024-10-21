@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) => {
@@ -6,6 +6,11 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         ...appointment,
         details: { ...appointment.details }
     });
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -22,8 +27,8 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 rounded-xl flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-4xl w-full relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 rounded-xl flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 max-w-4xl w-full relative">
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -32,8 +37,8 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                 </button>
                 <h2 className="text-base font-semibold mb-4">Edit Appointment</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="flex space-x-4">
-                        <div className="w-1/2 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:space-x-4">
+                        <div className="w-full sm:w-1/2 space-y-4">
                             <div>
                                 <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
                                     Appointment Date
@@ -94,7 +99,7 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                                 />
                             </div>
                         </div>
-                        <div className="w-1/2 space-y-4">
+                        <div className="w-full sm:w-1/2 space-y-4">
                             <div>
                                 <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
                                     Price
@@ -139,17 +144,17 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-between mt-6">
+                    <div className="flex flex-col sm:flex-row justify-between mt-6 space-y-4 sm:space-y-0">
                         <button
                             type="submit"
-                            className="btn-blue-dashboard"
+                            className="btn-blue-dashboard w-full sm:w-auto"
                         >
                             Update Appointment
                         </button>
                         <button
                             type="button"
                             onClick={() => onDelete(appointment.id)}
-                            className="btn-red"
+                            className="btn-red w-full sm:w-auto"
                         >
                             Delete Appointment
                         </button>

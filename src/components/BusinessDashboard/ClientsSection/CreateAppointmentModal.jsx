@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
@@ -13,6 +13,10 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
         description: '',
         paymentStatus: '',
     });
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -39,8 +43,8 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 rounded-xl flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-4xl w-full relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 rounded-xl flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 max-w-4xl w-full relative">
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -49,8 +53,8 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                 </button>
                 <h2 className="text-base font-semibold mb-4">Create New Appointment</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="flex space-x-4">
-                        <div className="w-1/2 space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:space-x-4">
+                        <div className="w-full sm:w-1/2 space-y-4">
                             <div>
                                 <label htmlFor="clientId" className="block text-sm font-medium text-gray-700 mb-1">
                                     Client Name
@@ -83,7 +87,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                     className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                 />
                             </div>
-                            <div className="flex space-x-4">
+                            <div className="flex flex-row space-x-4">
                                 <div className="w-1/2">
                                     <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-1">
                                         Start Time
@@ -132,8 +136,8 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                 </select>
                             </div>
                         </div>
-                        <div className="w-1/2 space-y-4">
-                            <div className="flex space-x-4">
+                        <div className="w-full sm:w-1/2 space-y-4 mt-4 sm:mt-0">
+                            <div className="flex flex-row space-x-4">
                                 <div className="w-1/2">
                                     <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
                                         Status
@@ -195,7 +199,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                     </div>
                     <button
                         type="submit"
-                        className="btn-blue-dashboard mt-4"
+                        className="btn-blue-dashboard mt-4 w-full sm:w-auto"
                     >
                         Create Appointment
                     </button>
