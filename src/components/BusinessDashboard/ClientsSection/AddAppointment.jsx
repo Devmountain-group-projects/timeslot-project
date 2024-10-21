@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import { FaPlus, FaCalendarAlt, FaClock, FaClipboardList, FaCheckCircle, FaChevronDown, FaChevronUp, FaChevronRight } from 'react-icons/fa';
-import EditDeleteAppointmentModal from './EditDeleteAppointmentModal';
-import CreateAppointmentModal from './CreateAppointmentModal';
 import User8 from '/src/assets/images/user8.png';
 import User9 from '/src/assets/images/user9.png';
 import User10 from '/src/assets/images/user10.png';
-import User11 from '/src/assets/images/user11.png';
-import User12 from '/src/assets/images/user12.png';
 
-const AddAppointment = () => {
+const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
     const [selectedClient, setSelectedClient] = useState(0);
-    const [showEditModal, setShowEditModal] = useState(false);
-    const [showCreateModal, setShowCreateModal] = useState(false);
     const [clients, setClients] = useState([
         {
             id: 1,
@@ -66,37 +60,6 @@ const AddAppointment = () => {
         },
     ]);
 
-    const mockClients = [
-        { id: 1, name: 'John Doe', photo: User9 },
-        { id: 2, name: 'Jane Smith', photo: User8 },
-        { id: 3, name: 'Yasmin Abdulaziz', photo: User10 },
-        { id: 4, name: 'Michael Johnson', photo: User11 },
-        { id: 5, name: 'Emily Chen', photo: User12 },
-    ];
-
-    const handleEditAppointment = (updatedAppointment) => {
-        const updatedClients = clients.map(client =>
-            client.id === updatedAppointment.id
-                ? { ...client, ...updatedAppointment, details: { ...client.details, ...updatedAppointment.details, updatedAt: new Date().toLocaleDateString() } }
-                : client
-        );
-        setClients(updatedClients);
-        setShowEditModal(false);
-    };
-
-    const handleDelete = (id) => {
-        const updatedClients = clients.filter(client => client.id !== id);
-        setClients(updatedClients);
-        setSelectedClient(0);
-        setShowEditModal(false);
-    };
-
-    const handleCreateAppointment = (newAppointment) => {
-        const updatedClients = [...clients, { ...newAppointment, id: clients.length + 1 }];
-        setClients(updatedClients);
-        setShowCreateModal(false);
-    };
-
     const toggleAccordion = (index) => {
         if (selectedClient === index) {
             setSelectedClient(null);
@@ -112,7 +75,7 @@ const AddAppointment = () => {
                 <button
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                     aria-label="Add Appointment"
-                    onClick={() => setShowCreateModal(true)}
+                    onClick={onCreateAppointment}
                 >
                     <FaPlus className="text-lg" />
                 </button>
@@ -141,7 +104,7 @@ const AddAppointment = () => {
                             </div>
                             {selectedClient === index && (
                                 <div className="p-4 bg-gray-50">
-                                    <AppointmentDetails client={client} onEdit={() => setShowEditModal(true)} onDelete={() => handleDelete(client.id)} />
+                                    <AppointmentDetails client={client} onEdit={() => onEditAppointment(client)} />
                                 </div>
                             )}
                         </div>
@@ -179,35 +142,17 @@ const AddAppointment = () => {
                         {clients[selectedClient] && (
                             <AppointmentDetails
                                 client={clients[selectedClient]}
-                                onEdit={() => setShowEditModal(true)}
-                                onDelete={() => handleDelete(clients[selectedClient].id)}
+                                onEdit={() => onEditAppointment(clients[selectedClient])}
                             />
                         )}
                     </div>
                 </div>
             </div>
-
-            {showEditModal && (
-                <EditDeleteAppointmentModal
-                    appointment={clients[selectedClient]}
-                    onClose={() => setShowEditModal(false)}
-                    onEdit={handleEditAppointment}
-                    onDelete={handleDelete}
-                />
-            )}
-
-            {showCreateModal && (
-                <CreateAppointmentModal
-                    onClose={() => setShowCreateModal(false)}
-                    onCreate={handleCreateAppointment}
-                    clients={mockClients}
-                />
-            )}
         </div>
     );
 };
 
-const AppointmentDetails = ({ client, onEdit, onDelete }) => (
+const AppointmentDetails = ({ client, onEdit }) => (
     <div className="p-4">
         <h3 className="font-semibold text-base mb-4">Appointment Details</h3>
         <InfoItem label="Service Provider" value={client.details.serviceProvider} />
@@ -233,12 +178,6 @@ const AppointmentDetails = ({ client, onEdit, onDelete }) => (
                     className="btn-blue-dashboard"
                 >
                     Edit Appointment
-                </button>
-                <button
-                    onClick={onDelete}
-                    className="btn-red"
-                >
-                    Delete Appointment
                 </button>
             </div>
         </div>

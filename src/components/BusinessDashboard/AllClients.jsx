@@ -15,11 +15,25 @@ import ClientRetention from './ClientsSection/ClientRetention'
 // Modals
 import AddClientModal from './ClientsSection/AddClientModal'
 import EditClientModal from './ClientsSection/EditClientModal'
+import CreateAppointmentModal from './ClientsSection/CreateAppointmentModal'
+import EditDeleteAppointmentModal from './ClientsSection/EditDeleteAppointmentModal'
 
 const AllClients = () => {
-    const [showAddModal, setShowAddModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
+    const [showAddClientModal, setShowAddClientModal] = useState(false);
+    const [showEditClientModal, setShowEditClientModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
+
+    const [showCreateAppointmentModal, setShowCreateAppointmentModal] = useState(false);
+    const [showEditAppointmentModal, setShowEditAppointmentModal] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
+
+    // Add clients state
+    const [clients, setClients] = useState([
+        { id: 1, name: 'John Doe' },
+        { id: 2, name: 'Jane Smith' },
+        { id: 3, name: 'Alice Johnson' },
+        { id: 4, name: 'Bob Brown' },
+    ]);
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -44,17 +58,41 @@ const AllClients = () => {
 
     const handleAddClient = (newClient) => {
         // Implement add client logic here
-        setShowAddModal(false);
+        console.log('Adding new client:', newClient);
+        setClients([...clients, newClient]);
+        setShowAddClientModal(false);
     }
 
     const handleUpdateClient = (updatedClient) => {
         // Implement update client logic here
-        setShowEditModal(false);
+        console.log('Updating client:', updatedClient);
+        setClients(clients.map(client => client.id === updatedClient.id ? updatedClient : client));
+        setShowEditClientModal(false);
     }
 
     const handleDeleteClient = (clientId) => {
         // Implement delete client logic here
-        setShowEditModal(false);
+        console.log('Deleting client:', clientId);
+        setClients(clients.filter(client => client.id !== clientId));
+        setShowEditClientModal(false);
+    }
+
+    const handleAddAppointment = (newAppointment) => {
+        // Implement add appointment logic here
+        console.log('Adding new appointment:', newAppointment);
+        setShowCreateAppointmentModal(false);
+    }
+
+    const handleEditAppointment = (updatedAppointment) => {
+        // Implement update appointment logic here
+        console.log('Updating appointment:', updatedAppointment);
+        setShowEditAppointmentModal(false);
+    }
+
+    const handleDeleteAppointment = (appointmentId) => {
+        // Implement delete appointment logic here
+        console.log('Deleting appointment:', appointmentId);
+        setShowEditAppointmentModal(false);
     }
 
     return (
@@ -76,14 +114,22 @@ const AllClients = () => {
             <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
                 <Card className="w-full md:w-[30%] h-auto md:h-auto">
                     <ClientList
-                        onAddClient={() => setShowAddModal(true)}
+                        onAddClient={() => setShowAddClientModal(true)}
                         onEditClient={(client) => {
                             setSelectedClient(client);
-                            setShowEditModal(true);
+                            setShowEditClientModal(true);
                         }}
                     />
                 </Card>
-                <Card className="w-full md:w-[70%] h-auto md:h-auto"><AddAppointment /></Card>
+                <Card className="w-full md:w-[70%] h-auto md:h-auto">
+                    <AddAppointment
+                        onCreateAppointment={() => setShowCreateAppointmentModal(true)}
+                        onEditAppointment={(appointment) => {
+                            setSelectedAppointment(appointment);
+                            setShowEditAppointmentModal(true);
+                        }}
+                    />
+                </Card>
             </motion.div>
 
             {/* Row 3 */}
@@ -93,19 +139,36 @@ const AllClients = () => {
                 <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ClientRetention /></Card>
             </motion.div>
 
-            {showAddModal && (
+            {showAddClientModal && (
                 <AddClientModal
-                    onClose={() => setShowAddModal(false)}
+                    onClose={() => setShowAddClientModal(false)}
                     onAddClient={handleAddClient}
                 />
             )}
 
-            {showEditModal && selectedClient && (
+            {showEditClientModal && selectedClient && (
                 <EditClientModal
                     client={selectedClient}
-                    onClose={() => setShowEditModal(false)}
+                    onClose={() => setShowEditClientModal(false)}
                     onUpdateClient={handleUpdateClient}
                     onDeleteClient={handleDeleteClient}
+                />
+            )}
+
+            {showCreateAppointmentModal && (
+                <CreateAppointmentModal
+                    onClose={() => setShowCreateAppointmentModal(false)}
+                    onCreate={handleAddAppointment}
+                    clients={clients}
+                />
+            )}
+
+            {showEditAppointmentModal && selectedAppointment && (
+                <EditDeleteAppointmentModal
+                    appointment={selectedAppointment}
+                    onClose={() => setShowEditAppointmentModal(false)}
+                    onEdit={handleEditAppointment}
+                    onDelete={handleDeleteAppointment}
                 />
             )}
         </motion.div>
