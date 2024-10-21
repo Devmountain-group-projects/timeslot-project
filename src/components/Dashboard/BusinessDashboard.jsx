@@ -13,7 +13,7 @@ import ClientMgmt from '../BusinessDashboard/ClientMgmt'
 import CalendarOverview from '../BusinessDashboard/CalendarOverview'
 import FollowUp from '../BusinessDashboard/FollowUp'
 import ReviewReport from '../BusinessDashboard/ReviewReport'
-import { AppointmentProvider} from "../../context/ApptContext.jsx";
+import { AppointmentProvider } from "../../context/ApptContext.jsx";
 
 // Sidebar Links
 import AccountSettings from '../BusinessDashboard/AccountSettings'
@@ -22,6 +22,7 @@ import Schedule from '../BusinessDashboard/Schedule'
 import AllReviews from '../BusinessDashboard/AllReviews'
 import AllClients from '../BusinessDashboard/AllClients'
 import AllAppointments from '../BusinessDashboard/AllAppointments'
+import AllAnalytics from '../BusinessDashboard/AllAnalytics'
 import PaymentsInvoicing from '../BusinessDashboard/PaymentsInvoicing'
 
 
