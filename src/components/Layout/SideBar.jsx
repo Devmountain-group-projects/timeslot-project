@@ -46,19 +46,18 @@ const SideBar = ({ currentView, setCurrentView }) => {
     }
 
     return (
-        <div className="flex flex-col h-full py-4 px-3">
+        <div className="flex flex-col h-full">
             {/* Logo */}
-            <div className="mb-14 mt-4">
+            <div className="py-4 px-3">
                 <Link to="/">
                     <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
                 </Link>
             </div>
 
-            {/* Menu Items */}
-            <nav className="flex-grow">
+            {/* Scrollable Menu Items */}
+            <nav className="flex-grow overflow-y-auto py-4 px-3">
                 <MenuSection title="Main Menu">
                     <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView}>Dashboard</MenuItem>
-                    {/* <MenuItem view="appointments" icon={<FaRegCalendarCheck />} currentView={currentView} setCurrentView={setCurrentView}>Appointments</MenuItem> */}
                     <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView}>Clients</MenuItem>
                     <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Schedule</MenuItem>
                     <MenuItem view="reviews" icon={<MdRateReview />} currentView={currentView} setCurrentView={setCurrentView}>Reviews & Feedback</MenuItem>
@@ -80,7 +79,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
             </nav>
 
             {/* User Profile */}
-            <div className="mt-auto">
+            <div className="py-4 px-3">
                 <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
                     <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
                     <div>
