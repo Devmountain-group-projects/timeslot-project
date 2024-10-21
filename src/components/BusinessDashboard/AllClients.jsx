@@ -52,15 +52,15 @@ const AllClients = () => {
 
             {/* Row 2 */}
             <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                <Card className="w-full md:w-[30%] h-[300px] md:h-auto"><ClientList /></Card>
-                <Card className="w-full md:w-[70%] h-[300px] md:h-auto"><AddAppointment /></Card>
+                <Card className="w-full md:w-[30%] h-auto md:h-auto"><ClientList /></Card>
+                <Card className="w-full md:w-[70%] h-auto md:h-auto"><AddAppointment /></Card>
             </motion.div>
 
             {/* Row 3 */}
             <motion.div className="flex-shrink-0 flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                <Card className="w-full md:w-1/3 h-[300px] md:h-[230px]"><ReturningClients /></Card>
-                <Card className="w-full md:w-1/3 h-[300px] md:h-[230px]"><ClientSatisfaction /></Card>
-                <Card className="w-full md:w-1/3 h-[300px] md:h-[230px]"><ClientRetention /></Card>
+                <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ReturningClients /></Card>
+                <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ClientSatisfaction /></Card>
+                <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ClientRetention /></Card>
             </motion.div>
         </motion.div>
     )
