@@ -45,7 +45,6 @@ export const login = async (req, res) => {
     });
   } else {
     req.session.userId = user.user_id;
-    req.session.businessId = business.business_id;
     req.session.name = user.name;
 
     return res.send({
@@ -165,7 +164,7 @@ export const register = async (req, res) => {
 
       req.session.userId = newUser.user_id;
       req.session.name = newUser.name;
-      req.session.businessId = newBusiness.business_id
+      req.session.businessId = newBusiness.business_id;
 
       console.log("Connecting Business and User");
 

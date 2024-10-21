@@ -1,27 +1,20 @@
 import React from 'react'
 import { BsCloudUpload } from "react-icons/bs";
 import { MdClose } from "react-icons/md";
+import { useState } from 'react';
 
 
 
 const ImageUploadModal = ({ onClose, uploadType, onSubmit }) => {
     
     const handlePhotoUpload = (e) => {
-        console.log("Hit handle Photo")
-        console.log(e.target)
-        // if (!e === undefined) {
-            const file = e.target.files[0];
+        const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const newPhoto = (prev => ({ ...prev, photo: reader.result }));
-            };
-            reader.readAsDataURL(file);
-            onSubmit(uploadType, file)
+            console.log('Photo Selected:', file);
+            console.log(prev => ({ ...prev, photo: file }));
         }
-        // }
-
-        
+        // console.log(newPhoto)
+        onSubmit(uploadType, file)
     };
 
     return (
