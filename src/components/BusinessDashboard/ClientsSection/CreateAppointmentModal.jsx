@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { createPortal } from 'react-dom';
 import { appointmentService } from '../../../services/appointmentService';
 import { useAppointment } from '../../../context/ApptContext';
 
@@ -37,14 +38,12 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
         setIsSubmitting(true);
 
         try {
-            // Find the selected client from the clients array
             const selectedClient = clients.find(client => client.id === parseInt(newAppointment.clientId));
 
             if (!selectedClient) {
                 throw new Error('No client selected');
             }
 
-            // Log the selected client info for debugging
             console.log('Selected client:', selectedClient);
             console.log('Client email:', selectedClient.email);
 
@@ -64,18 +63,10 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
 
             //Adds tha appointment to the data base
             addAppointment(newAppointment)
-            // console.log("TESTING: ", test)
-
-            // Send email using the client's email from the clients array
-            // const result = await appointmentService.createAppointment(
-            //     appointmentData,
-            //     selectedClient  // Pass the entire client object which includes email
-            // );
 
             // console.log('Email sent to:', selectedClient.email);
             // console.log('Appointment created and email sent:', result);
 
-            // Call onCreate and close modal if successful
             onCreate(appointmentData);
             onClose();
 
@@ -87,8 +78,8 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
         }
     };
 
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 rounded-xl flex items-center justify-center z-50 p-4">
+    const modalContent = (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] px-4">
             <div className="bg-white rounded-lg p-4 sm:p-6 max-w-4xl w-full relative">
                 <button
                     onClick={onClose}
@@ -121,8 +112,6 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                     ))}
                                 </select>
                             </div>
-
-
                             <div>
                                 <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
                                     Appointment Date
@@ -266,8 +255,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`btn-blue-dashboard mt-4 w-full sm:w-auto ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                            }`}
+                        className={`btn-blue-dashboard mt-4 w-full sm:w-auto ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isSubmitting ? 'Creating Appointment...' : 'Create Appointment'}
                     </button>
@@ -275,6 +263,8 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 };
 
 export default CreateAppointmentModal;

@@ -1,16 +1,16 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
 
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Get the current directory of this file
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the photo path where images will be saved
-const photoPath = path.join(__dirname, "../../public/photos");
+const photoPath = path.join(__dirname, '../../public/photos');
 
 // Ensure the photos directory exists, create it if it doesn't
 if (!fs.existsSync(photoPath)) {
@@ -18,9 +18,9 @@ if (!fs.existsSync(photoPath)) {
 }
 
 export const test = async (req, res) => {
-  console.log("TESTING");
+  console.log('TESTING');
   return res.send({
-    message: "Test successful",
+    message: 'Test successful',
     success: true,
   });
 };
@@ -190,36 +190,39 @@ export const update = async (req, res) => {
         message: "User not signed in",
         success: false
     })
+
   }
 };
 
 
 export const updatePhoto = async (req, res) => {
-    const db = req.app.get("db");
-    let photoUrl = null
-    // Handle the photo if it's uploaded
-    console.log("req.files: ", req.files)
-    console.log("req.data.image: ", req.files.image)
-    if (req.files && req.files.image) {
-        const photo = req.files.image;
-        const photoFileName = `${Date.now()}_${req.files.image.name}`;
-        const fullPath = path.join(photoPath, photoFileName);
 
-        console.log("Saving photo to:", fullPath);
+  const db = req.app.get('db');
+  let photoUrl = null;
+  // Handle the photo if it's uploaded
+  console.log('req.files: ', req.files);
+  console.log('req.data.image: ', req.files.image);
+  if (req.files && req.files.image) {
+    const photo = req.files.image;
+    const photoFileName = `${Date.now()}_${req.files.image.name}`;
+    const fullPath = path.join(photoPath, photoFileName);
 
-        try {
-            // Write the file to the specified directory
-            fs.writeFileSync(fullPath, photo.data);
-            photoUrl = `http://localhost:5539/photos/${photoFileName}`;  // Construct the photo URL
-            console.log("Photo saved at:", photoUrl);
-        } catch (err) {
-            console.error("Error saving client photo:", err);
-            return res.status(500).send({
-                message: "Error saving client photo",
-                success: false,
-                error: err.message,
-            });
-        }
+    console.log('Saving photo to:', fullPath);
+
+    try {
+      // Write the file to the specified directory
+      fs.writeFileSync(fullPath, photo.data);
+      photoUrl = `http://localhost:5539/photos/${photoFileName}`; // Construct the photo URL
+      console.log('Photo saved at:', photoUrl);
+    } catch (err) {
+      console.error('Error saving client photo:', err);
+      return res.status(500).send({
+        message: 'Error saving client photo',
+        success: false,
+        error: err.message,
+      });
+    }
+
     // Handle updated photos
     let photos = [];
     if (req.files) {
@@ -239,6 +242,12 @@ export const updatePhoto = async (req, res) => {
                     imageType: index === 0 ? 'profile' : 'banner',  // First image is profile, second is banner
                 },
             });
+
+      if (photoUrl) {
+        await db.image.create({
+          src: photoUrl,
+          user_id: req.session.userId,
+          imageType: 'profile',
         });
     
         if (photoUrl) {

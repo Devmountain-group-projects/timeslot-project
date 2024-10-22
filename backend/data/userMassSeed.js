@@ -1,5 +1,28 @@
 export const users = [
     {
+        name: "test",
+        email: "test@test.com",
+        phone: "1234567890",
+        role_id: 1,
+        password_hash: "test",
+        profile_picture: "/src/assets/images/user1.png",
+        images: [
+            {
+                src: "/src/assets/images/user1.png",
+                image_type: 'user_profile',
+            },
+            {
+                src: "/src/assets/images/alice_banner.jpg",
+                image_type: 'user_banner',
+            },
+        ],
+        review: {
+            business_id: 1,
+            rating: 5,
+            comment: "Excellent service! Very satisfied."
+        },
+    },
+    {
         name: "Alice Johnson",
         email: "alice.johnson@test.com",
         phone: "1234567890",

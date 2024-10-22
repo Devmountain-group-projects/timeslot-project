@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { createPortal } from 'react-dom';
 
 const AddClientModal = ({ onClose, onAddClient }) => {
     const [newClient, setNewClient] = useState({
@@ -34,20 +35,19 @@ const AddClientModal = ({ onClose, onAddClient }) => {
         onClose();
     };
 
-
-
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 rounded-xl">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold">Add New Client</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                        <FaTimes size={24} />
-                    </button>
-                </div>
+    const modalContent = (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] px-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 max-w-md w-full relative">
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                >
+                    <FaTimes size={24} />
+                </button>
+                <h2 className="text-base font-semibold mb-4">Add New Client</h2>
                 {error && <div className="text-red-500 mb-4">{error}</div>}
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Client Picture
                         </label>
@@ -58,7 +58,7 @@ const AddClientModal = ({ onClose, onAddClient }) => {
                             className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-2 file:border-transparent file:text-sm file:font-semibold file:bg-secondary file:text-white hover:file:bg-white hover:file:border-2 hover:file:border-secondary hover:file:text-secondary file:transition file:duration-300"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                             Client Name
                         </label>
@@ -72,7 +72,7 @@ const AddClientModal = ({ onClose, onAddClient }) => {
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                             Client Email
                         </label>
@@ -86,7 +86,7 @@ const AddClientModal = ({ onClose, onAddClient }) => {
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div>
                         <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                             Client Phone
                         </label>
@@ -100,16 +100,20 @@ const AddClientModal = ({ onClose, onAddClient }) => {
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                         />
                     </div>
-                    <button
-                        type="submit"
-                        className="btn-blue-dashboard"
-                    >
-                        Add Client
-                    </button>
+                    <div className="pt-4">
+                        <button
+                            type="submit"
+                            className="btn-blue-dashboard w-full"
+                        >
+                            Add Client
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 };
 
 export default AddClientModal;
