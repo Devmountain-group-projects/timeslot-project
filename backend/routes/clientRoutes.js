@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.get("/getClients", getClients);
 router.post("/createClient", createClient)
-router.put("/updateClient", updateClient);
+router.put("/updateClient/:clientId", updateClient);
 router.delete('/removeClient/:clientId', removeClient);
 
 export default router;

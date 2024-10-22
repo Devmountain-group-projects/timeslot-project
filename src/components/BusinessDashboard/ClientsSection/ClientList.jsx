@@ -13,6 +13,7 @@ const ClientItem = ({ client, onEdit }) => {
     const defaultImage = PlaceholderAvatar;
     const clientPhoto = client.profile_picture ? client.profile_picture : defaultImage;
 
+
     return (
         <div className="border-b border-gray-300 last:border-b-0">
             <div className="flex items-center justify-between py-4 px-3">
@@ -26,13 +27,22 @@ const ClientItem = ({ client, onEdit }) => {
                     </div>
                     <div className="flex flex-col flex-grow">
                         <h3 className="font-medium text-base">{client.name}</h3>
-                        <p className="text-xs text-gray-500">Since: {client.dateCreated}</p>
+                        <p className="text-xs text-gray-500">
+                            Since: {new Date(client.createdAt).toLocaleString('en-US', {
+                            month: '2-digit',
+                            day: '2-digit',
+                            year: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: false
+                        })}
+                        </p>
                         <p className="text-xs text-gray-600">{client.email}</p>
                     </div>
                 </div>
                 <div className="flex-shrink-0 ml-4">
                     <button onClick={() => onEdit(client)} className="text-gray-400 hover:text-gray-600">
-                        <FaPlus className="text-lg" />
+                        <FaPlus className="text-lg"/>
                     </button>
                 </div>
             </div>
@@ -81,6 +91,7 @@ const ClientList = () => {
             formData.append("clientName", newClient.name);
             formData.append("clientEmail", newClient.email);
             formData.append("clientPhone", newClient.phone);
+            formData.append("clientDateCreated", newClient.createdAt);
             if (newClient.photo) {
                 formData.append("photo", newClient.photo);
             }
@@ -112,7 +123,7 @@ const ClientList = () => {
 
         try {
             const formData = new FormData();
-            formData.append("clientId", updatedClient.id);  // Assuming `id` is the identifier
+            formData.append("clientId", updatedClient.user_id);
             formData.append("clientName", updatedClient.name);
             formData.append("clientEmail", updatedClient.email);
             formData.append("clientPhone", updatedClient.phone);
@@ -122,7 +133,7 @@ const ClientList = () => {
 
             console.log("Form data to be sent:", formData);
 
-            const response = await axios.put(`/api/client/updateClient/${updatedClient.id}`, formData, {
+            const response = await axios.put(`/api/client/updateClient/${updatedClient.user_id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -135,7 +146,7 @@ const ClientList = () => {
                 // Update state with the modified client
                 setClients((prevClients) =>
                     prevClients.map((client) =>
-                        client.id === updatedClientData.id ? updatedClientData : client
+                        client.user_id === updatedClientData.user_id ? updatedClientData : client
                     )
                 );
                 setShowEditModal(false); // Close the modal after updating
@@ -158,7 +169,7 @@ const ClientList = () => {
 
             if (response.data.success) {
                 // Remove the client from the state
-                setClients((prevClients) => prevClients.filter((client) => client.id !== clientId));
+                setClients((prevClients) => prevClients.filter((client) => client.user_id !== clientId));
                 setShowEditModal(false);  // Close modal after deletion
             }
         } catch (error) {
@@ -192,7 +203,7 @@ const ClientList = () => {
             <section className="flex-grow overflow-y-auto">
                 <div className="min-h-full">
                     {clients.map((client) => (
-                        <ClientItem key={client.id} client={client} onEdit={handleEditClick}/>
+                        <ClientItem key={client.user_id} client={client} onEdit={handleEditClick}/>
                     ))}
                 </div>
             </section>

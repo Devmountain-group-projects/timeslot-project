@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, {createContext, useState, useContext} from "react";
 
 import axios from "axios";
 
@@ -11,7 +11,7 @@ export const useAppointment = () => {
 };
 
 // Create the Appointment Provider
-export const AppointmentProvider = ({ children }) => {
+export const AppointmentProvider = ({children}) => {
     const [appointments, setAppointments] = useState([]);
     const [clients, setClients] = useState([]);  // For managing client data
     const [loading, setLoading] = useState(false);
@@ -22,7 +22,7 @@ export const AppointmentProvider = ({ children }) => {
         setLoading(true);
         try {
             const response = await axios.get(`/api/appointments/getAppointmentByUser`, {
-                params: { userId },
+                params: {userId},
             });
             setAppointments(response.data.appointments);
         } catch (err) {
@@ -56,7 +56,7 @@ export const AppointmentProvider = ({ children }) => {
             setAppointments((prev) =>
                 prev.map((appointment) =>
                     appointment.appointment_id === appointmentId
-                        ? { ...appointment, ...updatedData }
+                        ? {...appointment, ...updatedData}
                         : appointment
                 )
             );
@@ -72,7 +72,7 @@ export const AppointmentProvider = ({ children }) => {
         setLoading(true);
         try {
             await axios.delete(`/api/appointments/removeAppointment`, {
-                data: { appointmentId },
+                data: {appointmentId},
             });
             setAppointments((prev) =>
                 prev.filter((appointment) => appointment.appointment_id !== appointmentId)
@@ -103,19 +103,25 @@ export const AppointmentProvider = ({ children }) => {
         }
     };
 
-    // Update an existing client
+// Update an existing client
     const updateClient = async (clientId, updatedData) => {
         setLoading(true);
         try {
-            const response = await axios.post(`/api/client/updateClient`, {
-                clientId,
+            const response = await axios.put(`/api/client/updateClient/${clientId}`, {
                 ...updatedData,
             });
-            setClients((prev) =>
-                prev.map((client) =>
-                    client.user_id === clientId ? { ...client, ...updatedData } : client
-                )
-            );
+
+            // Ensure the response was successful before updating state
+            if (response.data.success) {
+                const updatedClient = response.data.client;  // Assuming the server returns the updated client
+
+                // Update the state with the new client data
+                setClients((prev) =>
+                    prev.map((client) =>
+                        client.user_id === clientId ? {...client, ...updatedClient} : client
+                    )
+                );
+            }
         } catch (err) {
             setError(err.message);
         } finally {
@@ -123,11 +129,13 @@ export const AppointmentProvider = ({ children }) => {
         }
     };
 
-    // Remove a client
+// Remove a client
     const removeClient = async (clientId) => {
         setLoading(true);
         try {
-            await axios.post(`/api/client/removeClient`, { clientId });
+            await axios.delete(`/api/client/removeClient/${clientId}`);  // Use DELETE method and pass clientId in the URL
+
+            // Update the state by filtering out the deleted client
             setClients((prev) => prev.filter((client) => client.user_id !== clientId));
         } catch (err) {
             setError(err.message);

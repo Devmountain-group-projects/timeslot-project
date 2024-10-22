@@ -79,7 +79,7 @@ export const createClient = async (req, res) => {
             name: clientName,
             email: clientEmail,
             phone: clientPhone,
-            role_id: 2,  // Assuming role_id 2 is for 'client'
+            role_id: 1,  // Assuming role_id 1 is for 'client'
             profile_picture: photoUrl || null,  // Save the photo URL in the profile_picture field
             password_hash: await bcrypt.hash('default_password', 10),  // Hash a default password
         });
@@ -181,11 +181,10 @@ export const updateClient = async (req, res) => {
     }
 };
 
-// Function to delete client
 // Function to remove client
 export const removeClient = async (req, res) => {
     const db = req.app.get("db");
-    const clientId = req.params.clientId;
+    const clientId = req.params.user_id;
 
     if (!clientId) {
         return res.status(400).send({ message: "Client ID is required" });
