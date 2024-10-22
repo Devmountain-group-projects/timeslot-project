@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import { createPortal } from "react-dom";
 
 const EditClientModal = ({
-                             client,
-                             onClose,
-                             onUpdateClient,
-                             onDeleteClient,
-                         }) => {
+    client,
+    onClose,
+    onUpdateClient,
+    onDeleteClient,
+}) => {
     const [editedClient, setEditedClient] = useState(client);
     const [profileImage, setProfileImage] = useState(
         editedClient.profile_picture,
@@ -36,23 +37,21 @@ const EditClientModal = ({
         onClose();
     };
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 rounded-xl">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-semibold">Edit Client</h2>
-                    <button
-                        onClick={onClose}
-                        className="text-gray-500 hover:text-gray-700"
-                    >
-                        <FaTimes size={24} />
-                    </button>
-                </div>
-                <form onSubmit={handleUpdate}>
-                    <div className="mb-4">
+    const modalContent = (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] px-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 max-w-md w-full relative">
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                >
+                    <FaTimes size={24} />
+                </button>
+                <h2 className="text-base font-semibold mb-4">Edit Client</h2>
+                <form onSubmit={handleUpdate} className="space-y-4">
+                    <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Client Picture
-                            <div className="w-12 h-12 relative flex-shrink-0 mr-4">
+                            <div className="w-12 h-12 relative flex-shrink-0 mr-4 mt-1">
                                 <img
                                     id="profile-img"
                                     src={profileImage}
@@ -65,10 +64,10 @@ const EditClientModal = ({
                             type="file"
                             accept="image/*"
                             onChange={handlePhotoUpload}
-                            className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-2 file:border-transparent file:text-sm file:font-semibold file:bg-secondary file:text-white hover:file:bg-white hover:file:border-2 hover:file:border-secondary hover:file:text-secondary file:transition file:duration-300"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div>
                         <label
                             htmlFor="name"
                             className="block text-sm font-medium text-gray-700 mb-1"
@@ -85,7 +84,7 @@ const EditClientModal = ({
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div>
                         <label
                             htmlFor="email"
                             className="block text-sm font-medium text-gray-700 mb-1"
@@ -102,7 +101,7 @@ const EditClientModal = ({
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                         />
                     </div>
-                    <div className="mb-4">
+                    <div>
                         <label
                             htmlFor="phone"
                             className="block text-sm font-medium text-gray-700 mb-1"
@@ -119,13 +118,13 @@ const EditClientModal = ({
                             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                         />
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between pt-4">
                         <button type="submit" className="btn-blue-dashboard">
                             Update Client
                         </button>
                         <button
                             type="button"
-                            onClick={() => onDeleteClient(editedClient.user_id)} // Use the `client.id` from props
+                            onClick={() => onDeleteClient(editedClient.user_id)}
                             className="btn-red"
                         >
                             Delete Client
@@ -135,6 +134,8 @@ const EditClientModal = ({
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 };
 
 export default EditClientModal;
