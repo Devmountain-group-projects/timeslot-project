@@ -96,48 +96,63 @@ const AllClients = () => {
 
     return (
         <motion.div
-            className="h-full flex flex-col gap-4 overflow-auto relative"
+            className="h-screen flex flex-col gap-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
-            {/* Row 1 */}
-            <motion.div className="flex-shrink-0 flex flex-col sm:flex-row flex-wrap gap-4" variants={rowVariants}>
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><TotalClients /></Card>
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><NewClients /></Card>
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><TopClients /></Card>
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><InactiveClients /></Card>
+            {/* Row 1 - Using vh for height */}
+            <motion.div
+                className="flex-shrink-0 flex flex-col sm:flex-row flex-wrap gap-4"
+                variants={rowVariants}
+            >
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[15vh]"><TotalClients /></Card>
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[15vh]"><NewClients /></Card>
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[15vh]"><TopClients /></Card>
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[15vh]"><InactiveClients /></Card>
             </motion.div>
 
-            {/* Row 2 */}
-            <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                <Card className="w-full md:w-[30%] h-auto md:h-auto">
-                    <ClientList
-                        onAddClient={() => setShowAddClientModal(true)}
-                        onEditClient={(client) => {
-                            setSelectedClient(client);
-                            setShowEditClientModal(true);
-                        }}
-                    />
+            {/* Row 2 - Flexible height with min/max in vh */}
+            <motion.div
+                className="flex-1 flex flex-col md:flex-row gap-4 min-h-[45vh] max-h-[60vh]"
+                variants={rowVariants}
+            >
+                <Card className="w-full md:w-[30%] h-full">
+                    <div className="h-full">
+                        <ClientList
+                            onAddClient={() => setShowAddClientModal(true)}
+                            onEditClient={(client) => {
+                                setSelectedClient(client);
+                                setShowEditClientModal(true);
+                            }}
+                        />
+                    </div>
                 </Card>
-                <Card className="w-full md:w-[70%] h-auto md:h-auto">
-                    <AddAppointment
-                        onCreateAppointment={() => setShowCreateAppointmentModal(true)}
-                        onEditAppointment={(appointment) => {
-                            setSelectedAppointment(appointment);
-                            setShowEditAppointmentModal(true);
-                        }}
-                    />
+                <Card className="w-full md:w-[70%] h-full">
+                    <div className="h-full">
+                        <AddAppointment
+                            onCreateAppointment={() => setShowCreateAppointmentModal(true)}
+                            onEditAppointment={(appointment) => {
+                                setSelectedAppointment(appointment);
+                                setShowEditAppointmentModal(true);
+                            }}
+                        />
+                    </div>
                 </Card>
             </motion.div>
 
-            {/* Row 3 */}
-            <motion.div className="flex-shrink-0 flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ReturningClients /></Card>
-                <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ClientSatisfaction /></Card>
-                <Card className="w-full md:w-1/3 h-[200px] md:h-[230px]"><ClientRetention /></Card>
+            {/* Row 3 - Using vh for height */}
+            <motion.div
+                className="flex-shrink-0 flex flex-col md:flex-row gap-4"
+                variants={rowVariants}
+            >
+                <Card className="w-full md:w-1/3 h-[24vh]"><ReturningClients /></Card>
+                <Card className="w-full md:w-1/3 h-[24vh]"><ClientSatisfaction /></Card>
+                <Card className="w-full md:w-1/3 h-[24vh]"><ClientRetention /></Card>
             </motion.div>
 
+
+            {/* Modals remain the same */}
             {showAddClientModal && (
                 <AddClientModal
                     onClose={() => setShowAddClientModal(false)}
@@ -175,7 +190,7 @@ const AllClients = () => {
 }
 
 const Card = ({ children, className = '' }) => (
-    <div className={`bg-white rounded-xl shadow-sm overflow-auto ${className}`}>
+    <div className={`bg-white rounded-xl shadow-sm overflow-hidden ${className}`}>
         {children}
     </div>
 )
