@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { createPortal } from 'react-dom';
 import { appointmentService } from '../../../services/appointmentService';
+import { useAppointment } from '../../../context/ApptContext';
 
 const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
+        const {
+            appointments,
+            addAppointment,
+            fetchClients,
+        } = useAppointment();
     const [newAppointment, setNewAppointment] = useState({
         clientId: '',
         date: '',
@@ -19,6 +25,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        // fetchClients()
     }, []);
 
     const handleInputChange = (e) => {
@@ -54,13 +61,11 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                 }
             };
 
-            const result = await appointmentService.createAppointment(
-                appointmentData,
-                selectedClient
-            );
+            //Adds tha appointment to the data base
+            addAppointment(newAppointment)
 
-            console.log('Email sent to:', selectedClient.email);
-            console.log('Appointment created and email sent:', result);
+            // console.log('Email sent to:', selectedClient.email);
+            // console.log('Appointment created and email sent:', result);
 
             onCreate(appointmentData);
             onClose();

@@ -30,7 +30,7 @@ const AllClients = () => {
     // Add clients state
     const [clients, setClients] = useState([
         { id: 1, name: 'Jane Smith', email: 'rodrigomcobos@gmail.com' },
-        { id: 2, name: 'Alice Johnson', email: 'rodrigomcobos@gmail.com' },
+        { id: 2, name: 'Alice Johnson', email: 'Jarethcarp@gmail.com' },
         { id: 3, name: 'Bob Brown', email: 'rodrigomcobos@gmail.com' },
     ]);
 

@@ -40,6 +40,7 @@ export const AppointmentProvider = ({ children }) => {
         setLoading(true);
         try {
             const response = await axios.get(`/api/client/getClients`, {});
+            console.log("Fetched Users: ", response)
             setClients(response.data.clients);
         } catch (err) {
             setError(err.message);
@@ -51,6 +52,7 @@ export const AppointmentProvider = ({ children }) => {
     // Add a new appointment
     const addAppointment = async (appointmentData) => {
         setLoading(true);
+        console.log("AppointmentData", appointmentData)
         try {
             const response = await axios.post(
                 `/api/appointments/addAppointment`,

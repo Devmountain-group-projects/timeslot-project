@@ -193,7 +193,6 @@ export const register = async (req, res) => {
       });
       console.log("New Service: ", newService);
 
-      console.log("Availability", availability.monday);
       for (const day in availability) {
         if (
           !(availability[day].start === "") &&

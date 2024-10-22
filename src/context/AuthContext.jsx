@@ -43,6 +43,7 @@ export async function businessRegister({ userData, registerData, detailsData }) 
 
 export async function userCheck() {
   const res = await axios.get("api/auth/userCheck")
+  console.log("AuthContext: ", res)
   return res.data
 }
 

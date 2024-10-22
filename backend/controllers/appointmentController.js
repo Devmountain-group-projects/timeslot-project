@@ -2,14 +2,15 @@
 
 // Add an appointment
 export const addAppointment = async (req, res) => {
+    console.log("req.body", req.body)
     const db = req.app.get("db");
-    const { userId, serviceId, appointmentDate, startTime, endTime, notes } = req.body;
+    const { userId, serviceId, date, startTime, endTime, notes } = req.body;
 
     try {
         const newAppointment = await db.appointment.create({
-            user_id: userId,
+            user_id: req.session.userId,
             service_id: serviceId,
-            appointment_date: appointmentDate,
+            appointment_date: date,
             appointment_start: startTime,
             appointment_end: endTime,
             notes: notes || "No additional notes",
