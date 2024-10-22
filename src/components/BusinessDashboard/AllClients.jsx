@@ -29,10 +29,9 @@ const AllClients = () => {
 
     // Add clients state
     const [clients, setClients] = useState([
-        { id: 1, name: 'John Doe' },
-        { id: 2, name: 'Jane Smith' },
-        { id: 3, name: 'Alice Johnson' },
-        { id: 4, name: 'Bob Brown' },
+        { id: 1, name: 'Jane Smith', email: 'rodrigomcobos@gmail.com' },
+        { id: 2, name: 'Alice Johnson', email: 'rodrigomcobos@gmail.com' },
+        { id: 3, name: 'Bob Brown', email: 'rodrigomcobos@gmail.com' },
     ]);
 
     const containerVariants = {
