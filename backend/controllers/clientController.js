@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import bcrypt from "bcryptjs";
 import { fileURLToPath } from "url";
 
 // Get the current directory of this file
@@ -13,6 +14,24 @@ const photoPath = path.join(__dirname, "../../public/photos");
 if (!fs.existsSync(photoPath)) {
     fs.mkdirSync(photoPath, { recursive: true });
 }
+
+export const getClients = async (req, res) => {
+    const db = req.app.get("db");
+
+    try {
+        const clients = await db.user.findAll();
+        res.status(200).send({
+            success: true,
+            clients,
+        });
+    } catch (error) {
+        console.error("Error fetching clients:", error);
+        res.status(500).send({
+            success: false,
+            message: "Failed to fetch clients",
+        });
+    }
+};
 
 export const createClient = async (req, res) => {
     const db = req.app.get("db");
@@ -66,11 +85,16 @@ export const createClient = async (req, res) => {
         });
 
         if (photoUrl) {
-            // Optionally, store the image in an image table for further tracking
-            await db.image.create({
-                src: photoUrl,
-                user_id: newClient.user_id,
-                imageType: 'profile',
+            // Store the image in the `image` table
+            const newImage = await db.image.create({
+                src: photoUrl,  // Save the photo URL
+            });
+
+            // Associate the image with the user in the `image_user` table
+            await db.image_user.create({
+                user_id: newClient.user_id,  // Link the image to the user
+                image_id: newImage.image_id,  // Link the image from the image table
+                image_type: 'user_profile',  // Define the image type
             });
         }
 
@@ -86,8 +110,6 @@ export const createClient = async (req, res) => {
             success: false,
             error: error.message,
         });
-
-
     }
 };
 
