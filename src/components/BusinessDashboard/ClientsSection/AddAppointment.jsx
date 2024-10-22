@@ -10,6 +10,7 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
         {
             id: 1,
             name: 'John Doe',
+            email: 'rodrigomcobos@gmail.com',
             date: '2024-10-20',
             time: '10:00',
             serviceType: 'Consultation',
@@ -27,6 +28,7 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
         {
             id: 2,
             name: 'Jane Smith',
+            email: 'rodrigomcobos@gmail.com',
             date: '2024-10-21',
             time: '14:00',
             serviceType: 'Follow-up',
@@ -44,6 +46,7 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
         {
             id: 3,
             name: 'Yasmin Abdulaziz',
+            email: 'rodrigomcobos@gmail.com',
             date: '2024-10-22',
             time: '11:30',
             serviceType: 'Therapy',
