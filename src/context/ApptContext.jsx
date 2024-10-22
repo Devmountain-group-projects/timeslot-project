@@ -90,7 +90,7 @@ export const AppointmentProvider = ({ children }) => {
     const createClient = async (clientData) => {
         setLoading(true);
         try {
-            const response = await axios.post("/api/appointments/createClient", clientData, {
+            const response = await axios.post("/api/client/createClient", clientData, {
                 headers: {
                     "Content-Type": "multipart/form-data",  // To handle image uploads
                 },
@@ -107,7 +107,7 @@ export const AppointmentProvider = ({ children }) => {
     const updateClient = async (clientId, updatedData) => {
         setLoading(true);
         try {
-            const response = await axios.post(`/api/appointments/updateClient`, {
+            const response = await axios.post(`/api/client/updateClient`, {
                 clientId,
                 ...updatedData,
             });
@@ -127,7 +127,7 @@ export const AppointmentProvider = ({ children }) => {
     const removeClient = async (clientId) => {
         setLoading(true);
         try {
-            await axios.post(`/api/appointments/removeClient`, { clientId });
+            await axios.post(`/api/client/removeClient`, { clientId });
             setClients((prev) => prev.filter((client) => client.user_id !== clientId));
         } catch (err) {
             setError(err.message);

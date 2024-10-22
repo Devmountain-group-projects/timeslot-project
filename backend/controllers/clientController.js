@@ -181,34 +181,39 @@ export const updateClient = async (req, res) => {
     }
 };
 
+// Function to delete client
+// Function to remove client
 export const removeClient = async (req, res) => {
     const db = req.app.get("db");
-    const { clientId } = req.body;
+    const clientId = req.params.clientId;
 
-    try {
-        const client = await db.user.findByPk(clientId);
-        if (!client) {
-            return res.status(404).send({
-                message: "Client not found",
-                success: false,
-            });
-        }
-
-        // Remove associated images
-        await db.image.destroy({ where: { user_id: clientId } });
-
-        // Remove the client
-        await client.destroy();
-
-        res.send({
-            message: "Client removed successfully",
-            success: true,
-        });
-    } catch (error) {
-        res.status(500).send({
-            message: "Failed to remove client",
-            success: false,
-            error: error.message,
-        });
+    if (!clientId) {
+        return res.status(400).send({ message: "Client ID is required" });
     }
+
+    // Fetch the client and its associated images
+    const client = await db.user.findOne({
+        include: [
+            { model: db.image, through: db.image.user }, // Assuming you have a client-image relationship
+        ],
+        where: {
+            user_id: clientId,  // Assuming 'user_id' is the foreign key for clients
+        },
+    });
+
+    if (!client) {
+        res.status(404).send({
+            message: "Client not found",
+            success: false,
+        });
+        return;
+    }
+
+    // Destroy the client (this will cascade and delete associated records if configured)
+    await client.destroy();
+
+    res.status(200).send({
+        message: "Client removed successfully",
+        success: true,
+    });
 };

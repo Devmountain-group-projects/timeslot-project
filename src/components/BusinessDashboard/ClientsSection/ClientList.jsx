@@ -72,6 +72,7 @@ const ClientList = () => {
         },
     ]);
 
+    // 1. Handle Adding Client
     const handleAddClient = async (newClient) => {
         console.log("handleAddClient triggered with new client:", newClient);
 
@@ -97,6 +98,7 @@ const ClientList = () => {
             const createdClient = response.data.client;
             console.log("New client created on the server:", createdClient);
 
+            // Update state with new client
             setClients((prevClients) => [...prevClients, createdClient]);
             setShowAddModal(false); // Close the modal after adding
         } catch (error) {
@@ -104,24 +106,69 @@ const ClientList = () => {
         }
     };
 
-    const handleUpdateClient = (updatedClient) => {
+    // 2. Handle Updating Client
+    const handleUpdateClient = async (updatedClient) => {
         console.log("handleUpdateClient triggered with updated client:", updatedClient);
-        updateClient(updatedClient.id, updatedClient);
-        setClients((prevClients) =>
-            prevClients.map((client) => (client.id === updatedClient.id ? updatedClient : client))
-        );
-        setShowEditModal(false); // Close modal after editing
+
+        try {
+            const formData = new FormData();
+            formData.append("clientId", updatedClient.id);  // Assuming `id` is the identifier
+            formData.append("clientName", updatedClient.name);
+            formData.append("clientEmail", updatedClient.email);
+            formData.append("clientPhone", updatedClient.phone);
+            if (updatedClient.photo) {
+                formData.append("photo", updatedClient.photo);
+            }
+
+            console.log("Form data to be sent:", formData);
+
+            const response = await axios.put(`/api/client/updateClient/${updatedClient.id}`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            console.log("Response from server:", response);
+
+            if (response.data.success) {
+                const updatedClientData = response.data.client;
+                // Update state with the modified client
+                setClients((prevClients) =>
+                    prevClients.map((client) =>
+                        client.id === updatedClientData.id ? updatedClientData : client
+                    )
+                );
+                setShowEditModal(false); // Close the modal after updating
+            }
+        } catch (error) {
+            console.error("Error updating client:", error);
+        }
     };
 
-    const handleDeleteClient = (clientId) => {
-        console.log("handleDeleteClient triggered for clientId:", clientId);
-        removeClient(clientId);
-        setClients((prevClients) => prevClients.filter((client) => client.id !== clientId));
-        setShowEditModal(false);
+    // 3. Handle Deleting Client
+    const handleDeleteClient = async (clientId) => {
+        console.log("handleDeleteClient triggered for clientId:", clientId);  // Log clientId
+
+        try {
+            const response = await axios.delete("/api/client/removeClient", {
+                data: { clientId },  // Pass clientId in the request body
+            });
+
+            console.log("Response from server:", response);
+
+            if (response.data.success) {
+                // Remove the client from the state
+                setClients((prevClients) => prevClients.filter((client) => client.id !== clientId));
+                setShowEditModal(false);  // Close modal after deletion
+            }
+        } catch (error) {
+            console.error("Error deleting client:", error);
+        }
     };
 
+    // 4. Handle Editing Client
     const handleEditClick = (client) => {
-        console.log("handleEditClick triggered for client:", client);
+        console.log("handleEditClick triggered for client:", client);  // Log the selected client
         setSelectedClient(client);
         setShowEditModal(true);
     };
@@ -138,14 +185,14 @@ const ClientList = () => {
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                     aria-label="Add client"
                 >
-                    <FaPlus className="text-lg" />
+                    <FaPlus className="text-lg"/>
                 </button>
             </section>
-            <hr className="border-t border-gray-300 w-full m-0" />
+            <hr className="border-t border-gray-300 w-full m-0"/>
             <section className="flex-grow overflow-y-auto">
                 <div className="min-h-full">
                     {clients.map((client) => (
-                        <ClientItem key={client.id} client={client} onEdit={handleEditClick} />
+                        <ClientItem key={client.id} client={client} onEdit={handleEditClick}/>
                     ))}
                 </div>
             </section>
@@ -166,7 +213,7 @@ const ClientList = () => {
                 <EditClientModal
                     client={selectedClient}
                     onUpdateClient={handleUpdateClient}
-                    onDeleteClient={handleDeleteClient}
+                    onDeleteClient={handleDeleteClient}  // Pass the delete handler here
                     onClose={() => {
                         console.log("Edit Client Modal closed");
                         setShowEditModal(false);

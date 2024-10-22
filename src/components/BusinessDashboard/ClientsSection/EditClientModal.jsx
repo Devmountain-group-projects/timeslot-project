@@ -98,7 +98,7 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
                         </button>
                         <button
                             type="button"
-                            onClick={() => onDeleteClient(client.id)}
+                            onClick={() => onDeleteClient(client.id)}  // Use the `client.id` from props
                             className="btn-red"
                         >
                             Delete Client
