@@ -25,3 +25,9 @@ export async function photoUpdate(type, image) {
   const res = await axios.post("api/business/updatePhoto", formData);
   return res.data;
 }
+
+export async function getPhotos() {
+    const res = await axios.post("api/business/getPhoto")
+    console.log("Photos", res)
+    return res.data
+}

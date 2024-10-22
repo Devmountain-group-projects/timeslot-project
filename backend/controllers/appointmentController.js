@@ -2,6 +2,9 @@
 
 // Add an appointment
 export const addAppointment = async (req, res) => {
+    console.log("req", req)
+    console.log("req", req.form)
+    console.log("req.app", req.app)
     const db = req.app.get("db");
     const { userId, serviceId, appointmentDate, startTime, endTime, notes } = req.body;
 

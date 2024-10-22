@@ -5,7 +5,8 @@ import User6 from '../../../assets/images/placeholderavatar.png'
 import CoverImg from '../../../assets/images/placeholdercover.png'
 import ImageUploadModal from './ImageUploadModal';
 import { userCheck } from '../../../context/AuthContext';
-import { updateBusiness, photoUpdate } from '../../../context/businessContext';
+import { updateBusiness, photoUpdate, getPhotos } from '../../../context/businessContext';
+import axios from 'axios';
 
 
 const BasicInfo = () => {
@@ -29,6 +30,7 @@ const BasicInfo = () => {
 
     useEffect(()  => {
         sessionCheck()
+        photoCheck()
     }, [])
 
     const sessionCheck = async () => {
@@ -36,7 +38,7 @@ const BasicInfo = () => {
         if (res.success) {
             setName(res.user.name)
             setNewName(res.user.name)
-            console.log("TESTING", res.user.profile_picture)
+            
             if (res.user.profile_picture === "Default") {
                 setPhoto(User6)
             } else {
@@ -60,6 +62,19 @@ const BasicInfo = () => {
             setName("User Not logged in")
             setBusiness("No business")
         }
+
+
+    }
+
+    const photoCheck = async () => {
+        // const resPhoto = await getPhotos()
+        // if (res.success) {
+            console.log("resPhoto.photos[0].scr", resPhoto.photos[0].scr)
+            setPhoto("Default")
+            // setPhoto(resPhoto.photos[0].scr)
+        // } else {
+        //     console.log("failed")
+        // }
     }
 
     const basicInfoData = {
