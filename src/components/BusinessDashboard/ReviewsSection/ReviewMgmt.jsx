@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaStar, FaTimes, FaFlag, FaChevronRight } from 'react-icons/fa'
+import { FaStar, FaTimes, FaFlag, FaChevronRight, FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import { MdOutlineRateReview } from "react-icons/md";
 import user1 from '../../../assets/images/user1.png'
 import user2 from '../../../assets/images/user2.png'
@@ -8,6 +8,7 @@ import user4 from '../../../assets/images/user4.png'
 const ReviewMgmt = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedReview, setSelectedReview] = useState(null)
+    const [expandedReview, setExpandedReview] = useState(null)
 
     const reviews = [
         {
@@ -39,7 +40,7 @@ const ReviewMgmt = () => {
         },
     ]
 
-    // Set the first review as selected by default
+    // Set the first review as selected by default for desktop view
     React.useEffect(() => {
         if (reviews.length > 0 && !selectedReview) {
             setSelectedReview(reviews[0])
@@ -51,8 +52,16 @@ const ReviewMgmt = () => {
         setIsModalOpen(true)
     }
 
+    const toggleAccordion = (index) => {
+        if (expandedReview === index) {
+            setExpandedReview(null)
+        } else {
+            setExpandedReview(index)
+        }
+    }
+
     return (
-        <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
+        <div className="w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
             <section className="flex justify-between items-center p-3 bg-tertiary">
                 <div className="w-[10%]">
                     <MdOutlineRateReview className="text-xl md:text-2xl text-primary" />
@@ -60,26 +69,67 @@ const ReviewMgmt = () => {
                 <h2 className="w-[90%] text-sm text-center font-medium">Review Management</h2>
             </section>
             <hr className='border-t border-gray-300 w-full m-0' />
-            <section className="flex-grow flex overflow-hidden">
-                <div className="w-[45%] overflow-y-auto border-r border-gray-300">
-                    {reviews.map((review) => (
-                        <ReviewCard
-                            key={review.id}
-                            review={review}
-                            isSelected={selectedReview && selectedReview.id === review.id}
-                            onClick={() => setSelectedReview(review)}
-                        />
+
+            <section className="flex-grow overflow-hidden">
+                {/* Mobile View */}
+                <div className="lg:hidden overflow-y-auto h-full">
+                    {reviews.map((review, index) => (
+                        <div key={review.id} className="border-b border-gray-300 last:border-b-0">
+                            <div
+                                className="flex items-start justify-between p-4 cursor-pointer"
+                                onClick={() => toggleAccordion(index)}
+                            >
+                                <div className="flex items-start">
+                                    <img src={review.image} alt={review.clientName} className="w-12 h-12 rounded-full mr-3 object-cover" />
+                                    <div className="flex-grow">
+                                        <h3 className="font-semibold text-sm md:text-base">{review.clientName}</h3>
+                                        <p className="text-xs text-gray-500">Review Date: {new Date(review.date).toLocaleDateString()}</p>
+                                        <div className="flex mt-1">
+                                            {[...Array(5)].map((_, i) => (
+                                                <FaStar key={i} className={`text-xs ${i < review.rating ? "text-[#cd942d]" : "text-gray-300"}`} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                                {expandedReview === index ? <FaChevronUp /> : <FaChevronDown />}
+                            </div>
+                            {expandedReview === index && (
+                                <div className="p-4 bg-gray-50">
+                                    <ReviewDetails
+                                        review={review}
+                                        onRespond={() => handleRespond(review)}
+                                    />
+                                </div>
+                            )}
+                        </div>
                     ))}
                 </div>
-                <div className="w-[55%] p-4 overflow-y-auto">
-                    {selectedReview && (
-                        <ReviewDetails
-                            review={selectedReview}
-                            onRespond={() => handleRespond(selectedReview)}
-                        />
-                    )}
+
+                {/* Desktop View */}
+                <div className="hidden lg:flex h-full">
+                    <div className="w-[45%] overflow-y-auto border-r border-gray-300">
+                        {reviews.map((review) => (
+                            <ReviewCard
+                                key={review.id}
+                                review={review}
+                                isSelected={selectedReview && selectedReview.id === review.id}
+                                onClick={() => setSelectedReview(review)}
+                            />
+                        ))}
+                    </div>
+                    <div className="w-[55%] overflow-y-auto">
+                        {selectedReview && (
+                            <div className="p-4">
+                                <ReviewDetails
+                                    review={selectedReview}
+                                    onRespond={() => handleRespond(selectedReview)}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
+
             {isModalOpen && <ResponseModal review={selectedReview} onClose={() => setIsModalOpen(false)} />}
         </div>
     )

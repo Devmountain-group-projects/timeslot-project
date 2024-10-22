@@ -5,7 +5,41 @@ import { Chart as ChartJS, registerables } from 'chart.js';
 
 ChartJS.register(...registerables);
 
+// TODO: Replace this with actual data fetching from the database
+const fetchAnalyticsData = () => {
+    // Simulated data - replace with actual API call
+    return {
+        appointmentTrends: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            data: [12, 19, 3, 5, 2, 3, 8, 14, 11, 7],
+        },
+        revenue: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            data: [1200, 1900, 300, 500, 200, 300, 800, 1400, 1100, 700],
+        },
+        servicePopularity: {
+            labels: ['Haircuts', 'Massages', 'Consultations'],
+            data: [300, 50, 100],
+        },
+        clientRetention: {
+            labels: ['Returning Clients', 'New Clients'],
+            data: [65, 35],
+        },
+        noShowsCancellations: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            data: [5, 8, 2, 3, 1, 2, 4, 6, 5, 3],
+        },
+        avgAppointmentDuration: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            data: [45, 50, 48, 52, 47, 49, 51, 53, 50, 48],
+        },
+    };
+};
+
 const AllAnalytics = () => {
+    // TODO: Use React Query or similar for data fetching and caching
+    const analyticsData = fetchAnalyticsData();
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -27,13 +61,13 @@ const AllAnalytics = () => {
         }
     };
 
-    // Updated data for charts (now including July through October)
+    // Chart data
     const lineChartData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        labels: analyticsData.appointmentTrends.labels,
         datasets: [
             {
                 label: 'Appointments',
-                data: [12, 19, 3, 5, 2, 3, 8, 14, 11, 7],
+                data: analyticsData.appointmentTrends.data,
                 borderColor: '#2264ba',
                 tension: 0.1,
                 fill: true,
@@ -49,37 +83,60 @@ const AllAnalytics = () => {
     };
 
     const barChartData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        labels: analyticsData.revenue.labels,
         datasets: [
             {
                 label: 'Revenue',
-                data: [1200, 1900, 300, 500, 200, 300, 800, 1400, 1100, 700],
+                data: analyticsData.revenue.data,
                 backgroundColor: '#007dfe'
             }
         ]
     };
 
     const pieChartData = {
-        labels: ['Haircuts', 'Massages', 'Consultations'],
+        labels: analyticsData.servicePopularity.labels,
         datasets: [
             {
-                data: [300, 50, 100],
+                data: analyticsData.servicePopularity.data,
                 backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)']
             }
         ]
     };
 
     const doughnutChartData = {
-        labels: ['Returning Clients', 'New Clients'],
+        labels: analyticsData.clientRetention.labels,
         datasets: [
             {
-                data: [65, 35],
+                data: analyticsData.clientRetention.data,
                 backgroundColor: ['rgb(54, 162, 235)', 'rgb(255, 99, 132)']
             }
         ]
     };
 
-    // Chart options for smaller graphs
+    const noShowsCancellationsData = {
+        labels: analyticsData.noShowsCancellations.labels,
+        datasets: [
+            {
+                label: 'No-Shows and Cancellations',
+                data: analyticsData.noShowsCancellations.data,
+                backgroundColor: '#ffa500'
+            }
+        ]
+    };
+
+    const avgAppointmentDurationData = {
+        labels: analyticsData.avgAppointmentDuration.labels,
+        datasets: [
+            {
+                label: 'Average Appointment Duration (minutes)',
+                data: analyticsData.avgAppointmentDuration.data,
+                borderColor: '#4caf50',
+                tension: 0.1,
+            }
+        ]
+    };
+
+    // Chart options
     const smallChartOptions = {
         maintainAspectRatio: false,
         responsive: true,
@@ -100,7 +157,6 @@ const AllAnalytics = () => {
         },
     };
 
-    // Chart options for larger graphs
     const largeChartOptions = {
         maintainAspectRatio: false,
         responsive: true,
@@ -122,79 +178,58 @@ const AllAnalytics = () => {
 
     return (
         <motion.div
-            className="h-full flex flex-col gap-2 overflow-hidden"
+            className="h-full flex flex-col gap-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
-            {/* Removed this section for now since we don't have the functionality for it yet */}
-            {/* <div className="flex justify-between items-center mb-2">
-                <h1 className="text-lg font-bold text-gray-800">Analytics Dashboard</h1>
-                This is the filter and download report button
-                <div className="flex gap-4">
-                    <select className="bg-white border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="last7days">Last 7 days</option>
-                        <option value="last30days">Last 30 days</option>
-                        <option value="last3months">Last 3 months</option>
-                        <option value="lastyear">Last year</option>
-                    </select>
-                    <button className="btn-blue-dashboard">
-                        Download Report
-                    </button>
-                </div>
-            </div> */}
-
-            <div className="flex-grow flex flex-col gap-4 overflow-hidden">
-                {/* Row 1 - Taller top cards */}
-                <motion.div className="h-[25%] flex gap-2 md:gap-4" variants={rowVariants}>
-                    <Card className="w-1/2" title="Service Popularity & Client Retention">
-                        <div className="flex h-full">
-                            <div className="w-1/2 h-full">
-                                <Pie data={pieChartData} options={smallChartOptions} />
-                            </div>
-                            <div className="w-1/2 h-full">
-                                <Doughnut data={doughnutChartData} options={smallChartOptions} />
-                            </div>
+            {/* Row 1 - Taller top cards */}
+            <motion.div className="flex flex-col sm:flex-row gap-4 h-[45%] sm:h-[30%]" variants={rowVariants}>
+                <Card className="w-full sm:w-1/2 h-1/2 sm:h-full" title="Service Popularity & Client Retention">
+                    <div className="flex h-full flex-row sm:flex-row">
+                        <div className="w-1/2 h-full">
+                            <Pie data={pieChartData} options={smallChartOptions} />
                         </div>
-                    </Card>
-                    <Card className="w-1/2" title="Client Growth">
-                        <Bar data={barChartData} options={smallChartOptions} />
-                    </Card>
-                </motion.div>
+                        <div className="w-1/2 h-full">
+                            <Doughnut data={doughnutChartData} options={smallChartOptions} />
+                        </div>
+                    </div>
+                </Card>
+                <Card className="w-full sm:w-1/2 h-1/2 sm:h-full" title="Client Growth">
+                    <Bar data={barChartData} options={smallChartOptions} />
+                </Card>
+            </motion.div>
 
-                {/* Row 2 - Shorter middle cards */}
-                <motion.div className="h-[40%] flex gap-2 md:gap-4" variants={rowVariants}>
-                    <Card className="w-1/2" title="Appointment Trends">
-                        <Line data={lineChartData} options={largeChartOptions} />
-                    </Card>
-                    <Card className="w-1/2" title="Revenue Breakdown">
-                        <Bar data={barChartData} options={largeChartOptions} />
-                    </Card>
-                </motion.div>
+            {/* Row 2 - Middle cards */}
+            <motion.div className="flex flex-col sm:flex-row gap-4 h-[50%] sm:h-[35%]" variants={rowVariants}>
+                <Card className="w-full sm:w-1/2 h-[300px] sm:h-full" title="Appointment Trends">
+                    <Line data={lineChartData} options={largeChartOptions} />
+                </Card>
+                <Card className="w-full sm:w-1/2 h-[300px] sm:h-full" title="Revenue Breakdown">
+                    <Bar data={barChartData} options={largeChartOptions} />
+                </Card>
+            </motion.div>
 
-                {/* Row 3 */}
-                <motion.div className="h-[35%] flex gap-2 md:gap-4 overflow-hidden" variants={rowVariants}>
-                    <Card className="w-1/2" title="No-Shows and Cancellations">
-                        <Bar data={barChartData} options={largeChartOptions} />
-                    </Card>
-                    <Card className="w-1/2" title="Average Appointment Duration">
-                        <Line data={lineChartData} options={largeChartOptions} />
-                    </Card>
-                </motion.div>
-            </div>
+            {/* Row 3 */}
+            <motion.div className="flex flex-col sm:flex-row gap-4 h-[50%] sm:h-[35%]" variants={rowVariants}>
+                <Card className="w-full sm:w-1/2 h-[300px] sm:h-full" title="No-Shows and Cancellations">
+                    <Bar data={noShowsCancellationsData} options={largeChartOptions} />
+                </Card>
+                <Card className="w-full sm:w-1/2 h-[300px] sm:h-full" title="Average Appointment Duration">
+                    <Line data={avgAppointmentDurationData} options={largeChartOptions} />
+                </Card>
+            </motion.div>
         </motion.div>
     );
 };
 
 const Card = ({ children, title, className = '' }) => (
-    <div className={`bg-white rounded-xl border-2 border-gray-300 flex items-center justify-center shadow-sm overflow-hidden ${className}`}>
-        <div className="w-full h-full flex flex-col">
-            <div className="px-4 py-3 bg-tertiary border-b border-gray-200">
-                <h3 className="text-base font-medium text-gray-800">{title}</h3>
-            </div>
-            <div className="p-4 flex-grow overflow-hidden">
-                {children}
-            </div>
+    <div className={`bg-white rounded-xl border-2 border-gray-300 flex flex-col shadow-sm overflow-hidden ${className}`}>
+        <div className="px-4 py-3 bg-tertiary border-b border-gray-200">
+            <h3 className="text-base font-medium text-gray-800">{title}</h3>
+        </div>
+        <div className="p-4 flex-grow overflow-hidden">
+            {children}
         </div>
     </div>
 );

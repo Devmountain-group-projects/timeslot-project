@@ -75,7 +75,7 @@ const DeleteAccount = () => {
             </div>
 
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+                <div className="fixed inset-0 bg-black rounded-xl bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center p-4">
                     <div ref={modalRef} className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full relative">
                         <button
                             onClick={closeModal}

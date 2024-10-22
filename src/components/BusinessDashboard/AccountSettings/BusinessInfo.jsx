@@ -38,7 +38,7 @@ const BusinessInfo = () => {
             console.log("Testing: ", res.user.business[0].city)
             setBusiness(res.user.business[0].business_name)
             setAddress(res.user.business[0].address_line1)
-            if(res.user.business[0].address_line2){
+            if (res.user.business[0].address_line2) {
                 setAddress2(res.user.business[0].address_line2)
             } else {
                 setAddress2("Enter New Unit or Suite Number")
@@ -76,11 +76,11 @@ const BusinessInfo = () => {
     };
 
     const handleUpdate = (field, input) => {
-        if(input){
-            console.log(`${field} has been updated to ${input}`); 
-         } else {
-             console.log("Feild is Empty")
-         }
+        if (input) {
+            console.log(`${field} has been updated to ${input}`);
+        } else {
+            console.log("Feild is Empty")
+        }
     };
 
     const [availability, setAvailability] = useState({
@@ -280,9 +280,9 @@ const BusinessInfo = () => {
                     {services.map((service) => (
                         <div key={service.id} className="mb-4 p-4 border rounded-md text-sm">
                             {editingService === service.id ? (
-                                <>
+                                <div className="space-y-3">
                                     <input
-                                        className="text-sm block w-full px-3 py-2 mb-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         value={service.description}
                                         onChange={(e) => {
                                             const updatedServices = services.map(s =>
@@ -293,7 +293,7 @@ const BusinessInfo = () => {
                                         placeholder="Service description"
                                     />
                                     <input
-                                        className="text-sm block w-full px-3 py-2 mb-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         value={service.duration}
                                         onChange={(e) => {
                                             const updatedServices = services.map(s =>
@@ -304,7 +304,7 @@ const BusinessInfo = () => {
                                         placeholder="Service duration"
                                     />
                                     <input
-                                        className="text-sm block w-full px-3 py-2 mb-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        className="text-sm block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                         value={service.price}
                                         onChange={(e) => {
                                             const updatedServices = services.map(s =>
@@ -315,25 +315,28 @@ const BusinessInfo = () => {
                                         placeholder="Service price"
                                     />
                                     <div className="text-right">
-                                        <button onClick={() => handleUpdateService(service.id)} className="btn-blue-dashboard">
+                                        <button onClick={() => handleUpdateService(service.id)} className="btn-blue-dashboard w-full sm:w-auto">
                                             Submit Update
                                         </button>
                                     </div>
-                                </>
+                                </div>
                             ) : (
-                                <div className="flex justify-between items-start">
-                                    <div>
+                                <div className="flex flex-col sm:flex-row justify-between sm:items-start space-y-3 sm:space-y-0">
+                                    <div className="space-y-1">
                                         <p className="text-sm font-medium">Description: {service.description}</p>
                                         <p className="text-sm">Duration: {service.duration}</p>
                                         <p className="text-sm">Price: {service.price}</p>
                                     </div>
-                                    <div className="flex space-x-2">
-                                        <button onClick={() => handleEditService(service.id)} className="btn-blue-dashboard flex items-center">
+                                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
+                                        <button
+                                            onClick={() => handleEditService(service.id)}
+                                            className="btn-blue-dashboard flex items-center justify-center w-full sm:w-auto"
+                                        >
                                             <FaEdit className="mr-2" /> Edit
                                         </button>
                                         <button
                                             onClick={() => handleDeleteService(service.id)}
-                                            className="border-2 border-secondary text-secondary px-2 py-1 rounded-full flex items-center hover:ring-2 hover:ring-red-600 hover:text-red-600 hover:border-transparent transition duration-300"
+                                            className="border-2 border-secondary text-secondary px-2 py-1 rounded-full flex items-center justify-center w-full sm:w-auto hover:ring-2 hover:ring-red-600 hover:text-red-600 hover:border-transparent transition duration-300"
                                         >
                                             <FaTrash className="mr-2" /> Delete
                                         </button>
@@ -350,28 +353,36 @@ const BusinessInfo = () => {
                 <div className="p-4">
                     <h3 className="text-lg font-semibold mb-4">Business Availability</h3>
                     {Object.entries(availability).map(([day, times]) => (
-                        <div key={day} className="mb-4">
+                        <div key={day} className="mb-6">
                             <label className="block text-sm font-medium text-gray-700 mb-2">{day}</label>
-                            <div className="flex items-center space-x-4">
-                                <input
-                                    type="time"
-                                    value={times.start}
-                                    onChange={(e) => handleAvailabilityChange(day, 'start', e.target.value)}
-                                    className="text-sm px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <span>to</span>
-                                <input
-                                    type="time"
-                                    value={times.end}
-                                    onChange={(e) => handleAvailabilityChange(day, 'end', e.target.value)}
-                                    className="text-sm px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                />
-                                <button
-                                    onClick={() => handleUpdateAvailability(day)}
-                                    className="btn-blue-dashboard"
-                                >
-                                    Update
-                                </button>
+                            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4 sm:items-center">
+                                <div className="flex items-center flex-1 space-x-2">
+                                    <div className="flex-1">
+                                        <input
+                                            type="time"
+                                            value={times.start}
+                                            onChange={(e) => handleAvailabilityChange(day, 'start', e.target.value)}
+                                            className="w-full text-sm px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        />
+                                    </div>
+                                    <span className="text-sm">to</span>
+                                    <div className="flex-1">
+                                        <input
+                                            type="time"
+                                            value={times.end}
+                                            onChange={(e) => handleAvailabilityChange(day, 'end', e.target.value)}
+                                            className="w-full text-sm px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="w-full sm:w-auto">
+                                    <button
+                                        onClick={() => handleUpdateAvailability(day)}
+                                        className="w-full sm:w-auto btn-blue-dashboard"
+                                    >
+                                        Update
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}

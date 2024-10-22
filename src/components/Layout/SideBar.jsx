@@ -39,12 +39,12 @@ const SideBar = ({ currentView, setCurrentView }) => {
 
     const logoutTrigger = () => {
         console.log("logging user out")
+        setIsOpen(false)
         userLogout()
     }
 
     const sessionCheck = async () => {
         const res = await userCheck()
-        // console.log("Test: ", res)
         if (res.success) {
             setName(res.user.name)
             setBusiness(res.user.business[0].business_name)
@@ -60,34 +60,34 @@ const SideBar = ({ currentView, setCurrentView }) => {
     }
 
     const SidebarContent = () => (
-        <>
-            <nav className="py-4 px-3">
+        <nav className="flex-1 overflow-y-auto">
+            <div className="py-4 px-3">
                 <MenuSection title="Main Menu">
-                    <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView}>Dashboard</MenuItem>
-                    <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView}>Clients</MenuItem>
-                    <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView}>Schedule</MenuItem>
-                    <MenuItem view="reviews" icon={<MdRateReview />} currentView={currentView} setCurrentView={setCurrentView}>Reviews & Feedback</MenuItem>
+                    <MenuItem view="dashboard" icon={<HiMiniSquares2X2 />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Dashboard</MenuItem>
+                    <MenuItem view="clients" icon={<FaUsers />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Clients</MenuItem>
+                    <MenuItem view="calendar" icon={<FaRegCalendarAlt />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Schedule</MenuItem>
+                    <MenuItem view="reviews" icon={<MdRateReview />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Reviews & Feedback</MenuItem>
                 </MenuSection>
 
                 <MenuSection title="Other Menu">
-                    <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView}>Revenue & Invoicing</MenuItem>
-                    <MenuItem view="analytics" icon={<SiGoogleanalytics />} currentView={currentView} setCurrentView={setCurrentView}>Analytics</MenuItem>
+                    <MenuItem view="payments" icon={<RiMoneyDollarCircleFill />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Revenue & Invoicing</MenuItem>
+                    <MenuItem view="analytics" icon={<SiGoogleanalytics />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Analytics</MenuItem>
                 </MenuSection>
 
                 <MenuSection title="Help & Settings">
-                    <MenuItem view="settings" icon={<IoMdSettings />} currentView={currentView} setCurrentView={setCurrentView}>Account Settings</MenuItem>
-                    <MenuItem view="help" icon={<MdLiveHelp />} currentView={currentView} setCurrentView={setCurrentView}>Help & Support</MenuItem>
+                    <MenuItem view="settings" icon={<IoMdSettings />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Account Settings</MenuItem>
+                    <MenuItem view="help" icon={<MdLiveHelp />} currentView={currentView} setCurrentView={setCurrentView} closeMenu={() => setIsOpen(false)}>Help & Support</MenuItem>
                     <button onClick={logoutTrigger} className="flex items-center py-1 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors mb-1 text-sm w-full">
                         <RiLogoutBoxFill className="mr-2 text-lg" />
                         Logout
                     </button>
                 </MenuSection>
-            </nav>
-        </>
+            </div>
+        </nav>
     )
 
     const UserProfile = () => (
-        <div className="py-4 px-3">
+        <div className="flex-shrink-0 py-4 px-3">
             <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
                 <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
                 <div>
@@ -109,20 +109,25 @@ const SideBar = ({ currentView, setCurrentView }) => {
             </div>
 
             {/* Dropdown menu for small to large screens */}
-            <div className={`xl:hidden fixed top-16 left-0 right-0 bg-secondary text-white overflow-y-auto transition-all duration-300 ease-in-out z-40 ${isOpen ? 'max-h-screen' : 'max-h-0'}`}>
-                <SidebarContent />
-                <UserProfile />
+            <div
+                className={`xl:hidden fixed top-16 left-0 right-0 bg-secondary text-white overflow-hidden transition-all duration-300 ease-in-out z-40 ${isOpen ? 'max-h-[calc(100vh-4rem)] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+            >
+                <div className={`h-full flex flex-col transition-all duration-300 transform ${isOpen ? 'translate-y-0' : '-translate-y-4'}`}>
+                    <SidebarContent />
+                    <UserProfile />
+                </div>
             </div>
 
             {/* Sidebar for extra large screens */}
             <div className="hidden xl:flex flex-col h-full w-[14%] bg-secondary text-white">
                 {/* Logo */}
-                <div className="py-4 px-3">
+                <div className="flex-shrink-0 py-4 px-3">
                     <Link to="/">
                         <img src={LogoWhite} alt="Logo" className="w-[75%] mx-auto" />
                     </Link>
                 </div>
-                <div className="flex flex-col flex-grow justify-between">
+                <div className="flex flex-col min-h-0 flex-1">
                     <SidebarContent />
                     <UserProfile />
                 </div>
@@ -138,12 +143,18 @@ const MenuSection = ({ title, children }) => (
     </div>
 )
 
-const MenuItem = ({ view, icon, children, currentView, setCurrentView }) => {
+const MenuItem = ({ view, icon, children, currentView, setCurrentView, closeMenu }) => {
     const isActive = currentView === view;
+
+    const handleClick = () => {
+        setCurrentView(view)
+        closeMenu()
+    }
+
     return (
         <li className="mb-1 text-sm">
             <button
-                onClick={() => setCurrentView(view)}
+                onClick={handleClick}
                 className={`flex items-center py-2 px-2 rounded hover:bg-white hover:bg-opacity-10 transition-colors w-full text-left ${isActive ? 'bg-white bg-opacity-75 text-secondary' : ''}`}
             >
                 {icon && <span className="mr-2 text-base">{icon}</span>}
