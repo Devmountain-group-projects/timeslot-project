@@ -4,39 +4,37 @@ import { IoMdHelpCircle } from "react-icons/io";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import IntroImage from '../../../assets/images/placeholdercover.png';
 
-const Intro = () => {
+const Intro = ({ onNavigateToFAQ }) => {
     const faqItems = [
         {
             id: 1,
             question: "How do I set up my business profile?",
             description: "Learn how to create and optimize your business profile to attract more clients.",
-            section: "profile-setup"
+            link: "/help/business-profile-setup"
         },
         {
             id: 2,
             question: "How do I manage my appointments?",
             description: "Master the appointment management system to keep your schedule organized.",
-            section: "appointments"
+            link: "/help/appointment-management"
         },
         {
             id: 3,
             question: "How do I integrate Google Calendar?",
             description: "Sync your Timeline Slot schedule with Google Calendar for better time management.",
-            section: "calendar"
+            link: "/help/google-calendar-integration"
         },
         {
             id: 4,
             question: "How do I send automated email reminders?",
             description: "Set up automated reminders to keep your clients informed and reduce no-shows.",
-            section: "reminders"
+            link: "/help/email-reminders"
         }
     ];
 
-    const handleFaqClick = (section) => {
-        // Navigate to FAQ section with the specific section as a parameter
-        window.location.hash = `faq-${section}`;
-        // You might want to use your app's router here instead
-        // For example with react-router: navigate(`/help/faq#${section}`)
+    const handleLearnMoreClick = (e) => {
+        e.preventDefault();
+        onNavigateToFAQ();
     };
 
     return (
@@ -71,7 +69,7 @@ const Intro = () => {
                 </div>
             </div>
 
-            {/* FAQ Card */}
+            {/* FAQ Preview Card */}
             <div className="w-full bg-white rounded-xl shadow-sm overflow-hidden border-2 border-gray-300">
                 <div className="p-6">
                     <div className="flex items-center space-x-2 mb-6">
@@ -94,13 +92,14 @@ const Intro = () => {
                                         <p className="text-sm text-gray-600 mb-3">
                                             {item.description}
                                         </p>
-                                        <button
-                                            onClick={() => handleFaqClick(item.section)}
+                                        <a
+                                            href="#"
+                                            onClick={handleLearnMoreClick}
                                             className="inline-flex items-center text-sm text-blue-500 hover:text-blue-700"
                                         >
                                             Learn more
                                             <FaArrowRight size={12} className="ml-1" />
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -109,8 +108,8 @@ const Intro = () => {
 
                     <div className="mt-6 text-center">
                         <button
-                            onClick={() => handleFaqClick('all')}
                             className="btn-blue-dashboard"
+                            onClick={onNavigateToFAQ}
                         >
                             View All FAQs
                         </button>

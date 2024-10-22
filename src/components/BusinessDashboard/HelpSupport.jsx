@@ -1,55 +1,60 @@
-import React, { useState, useEffect } from 'react'
-import Intro from './HelpAndSupport/Intro'
-import Tutorials from './HelpAndSupport/Tutorials'
-import Troubleshooting from './HelpAndSupport/Troubleshooting'
-import SupportChannels from './HelpAndSupport/SupportChannels'
-import LiveSupportHours from './HelpAndSupport/LiveSupportHours'
-import FAQ from './HelpAndSupport/FAQ'
-import ContactUs from './HelpAndSupport/ContactUs'
-import { IoMdMenu, IoMdHelpCircle } from "react-icons/io"
-import { FaBook, FaQuestion } from "react-icons/fa"
-import { BiSupport } from "react-icons/bi"
-import { MdOutlineContactSupport, MdAccessTime, MdContactPhone } from "react-icons/md"
+import React, { useState, useEffect } from 'react';
+import Intro from './HelpAndSupport/Intro';
+import Tutorials from './HelpAndSupport/Tutorials';
+import Troubleshooting from './HelpAndSupport/Troubleshooting';
+import SupportChannels from './HelpAndSupport/SupportChannels';
+import LiveSupportHours from './HelpAndSupport/LiveSupportHours';
+import FAQ from './HelpAndSupport/FAQ';
+import ContactUs from './HelpAndSupport/ContactUs';
+import { IoMdMenu, IoMdHelpCircle } from "react-icons/io";
+import { FaBook, FaQuestion } from "react-icons/fa";
+import { BiSupport } from "react-icons/bi";
+import { MdOutlineContactSupport, MdAccessTime, MdContactPhone } from "react-icons/md";
 
 const HelpSupport = () => {
-    const [activeView, setActiveView] = useState('intro')
-    const [isOpen, setIsOpen] = useState(false)
+    const [activeView, setActiveView] = useState('intro');
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1280) {
-                setIsOpen(false)
+                setIsOpen(false);
             }
-        }
-        window.addEventListener('resize', handleResize)
-        handleResize()
-        return () => window.removeEventListener('resize', handleResize)
-    }, [])
+        };
+        window.addEventListener('resize', handleResize);
+        handleResize();
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const toggleMenu = () => {
-        setIsOpen(!isOpen)
-    }
+        setIsOpen(!isOpen);
+    };
+
+    const navigateToFAQ = () => {
+        setActiveView('faq');
+        setIsOpen(false);
+    };
 
     const renderContent = () => {
         switch (activeView) {
             case 'intro':
-                return <Intro />
+                return <Intro onNavigateToFAQ={navigateToFAQ} />;
             case 'tutorials':
-                return <Tutorials />
+                return <Tutorials />;
             case 'troubleshooting':
-                return <Troubleshooting />
+                return <Troubleshooting />;
             case 'supportChannels':
-                return <SupportChannels />
+                return <SupportChannels />;
             case 'faq':
-                return <FAQ />
+                return <FAQ />;
             case 'liveSupportHours':
-                return <LiveSupportHours />
+                return <LiveSupportHours />;
             case 'contactUs':
-                return <ContactUs />
+                return <ContactUs />;
             default:
-                return <Intro />
+                return <Intro onNavigateToFAQ={navigateToFAQ} />;
         }
-    }
+    };
 
     const SidebarContent = () => (
         <nav className="space-y-2">
@@ -117,11 +122,10 @@ const HelpSupport = () => {
                 Contact Us
             </MenuItem>
         </nav>
-    )
+    );
 
     return (
         <div className="h-full">
-            {/* Mobile header */}
             <div className="xl:hidden mb-4 flex justify-between items-center">
                 <button onClick={toggleMenu} className="text-gray-800">
                     <IoMdMenu size={24} />
@@ -134,7 +138,6 @@ const HelpSupport = () => {
             </div>
 
             <div className="flex relative">
-                {/* Sidebar for xl screens */}
                 <div className="hidden xl:block w-[17%] pr-3">
                     <h2 className="text-lg font-bold mb-4 flex items-center">
                         <IoMdHelpCircle size={24} className="mr-2" />
@@ -143,9 +146,7 @@ const HelpSupport = () => {
                     <SidebarContent />
                 </div>
 
-                {/* Content Area */}
                 <div className="w-full xl:w-[83%]">
-                    {/* Dropdown menu for small to large screens */}
                     <div className={`xl:hidden bg-white border-2 border-gray-300 overflow-hidden transition-all duration-300 ease-in-out rounded-lg shadow-lg mb-4 ${isOpen ? 'max-h-[400px] p-4' : 'max-h-0 p-0 border-0'
                         }`}>
                         <SidebarContent />
@@ -157,29 +158,29 @@ const HelpSupport = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 const MenuItem = ({ view, icon, children, currentView, setCurrentView, closeMenu }) => {
     const isActive = currentView === view;
 
     const handleClick = () => {
-        setCurrentView(view)
-        closeMenu()
-    }
+        setCurrentView(view);
+        closeMenu();
+    };
 
     return (
         <button
             onClick={handleClick}
             className={`flex items-center w-full text-left text-xs md:text-sm py-2 px-3 mb-2 rounded transition-colors duration-200 ${isActive
-                ? 'bg-secondary text-white'
-                : 'hover:bg-gray-200'
+                    ? 'bg-secondary text-white'
+                    : 'hover:bg-gray-200'
                 }`}
         >
             <span className="mr-2">{icon}</span>
             {children}
         </button>
-    )
-}
+    );
+};
 
-export default HelpSupport
+export default HelpSupport;
