@@ -30,13 +30,13 @@ const ClientItem = ({ client, onEdit }) => {
                         <h3 className="font-medium text-base">{client.name}</h3>
                         <p className="text-xs text-gray-500">
                             Since: {new Date(client.createdAt).toLocaleString('en-US', {
-                            month: '2-digit',
-                            day: '2-digit',
-                            year: '2-digit',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                            hour12: false
-                        })}
+                                month: '2-digit',
+                                day: '2-digit',
+                                year: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                hour12: false
+                            })}
                         </p>
                         <p className="text-xs text-gray-600">{client.email}</p>
                     </div>
@@ -46,7 +46,7 @@ const ClientItem = ({ client, onEdit }) => {
                         onClick={() => onEdit(client)}
                         className="text-gray-400 hover:text-gray-600"
                     >
-                        <FaPlus className="text-lg"/>
+                        <FaPlus className="text-lg" />
                     </button>
                 </div>
             </div>
@@ -196,10 +196,10 @@ const ClientList = () => {
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                     aria-label="Add client"
                 >
-                    <FaPlus className="text-lg"/>
+                    <FaPlus className="text-lg" />
                 </button>
             </section>
-            <hr className="border-t border-gray-300 w-full m-0"/>
+            <hr className="border-t border-gray-300 w-full m-0" />
             <section className="flex-grow overflow-y-auto">
                 <div className="min-h-full">
                     {clients.sort((a, b) => a.name.localeCompare(b.name)).map((client) => (

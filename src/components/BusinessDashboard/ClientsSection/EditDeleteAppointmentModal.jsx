@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { createPortal } from 'react-dom';
 import { appointmentService } from '../../../services/appointmentService';
 
 const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) => {
@@ -27,10 +28,9 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         setIsSubmitting(true);
 
         try {
-            // Send update notification email
             await appointmentService.updateAppointment(
                 updatedAppointment,
-                updatedAppointment.email // Email from the appointment data
+                updatedAppointment.email
             );
 
             onEdit(updatedAppointment);
@@ -46,7 +46,6 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         setIsSubmitting(true);
 
         try {
-            // Send cancellation notification email
             await appointmentService.deleteAppointment(
                 appointment,
                 appointment.email
@@ -61,8 +60,8 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         }
     };
 
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 rounded-xl flex items-center justify-center z-50 p-4">
+    const modalContent = (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] px-4">
             <div className="bg-white rounded-lg p-4 sm:p-6 max-w-4xl w-full relative">
                 <button
                     onClick={onClose}
@@ -198,8 +197,7 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className={`btn-blue-dashboard w-full sm:w-auto ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                                }`}
+                            className={`btn-blue-dashboard w-full sm:w-auto ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             {isSubmitting ? 'Updating...' : 'Update Appointment'}
                         </button>
@@ -207,8 +205,7 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                             type="button"
                             onClick={handleDelete}
                             disabled={isSubmitting}
-                            className={`btn-red w-full sm:w-auto ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                                }`}
+                            className={`btn-red w-full sm:w-auto ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             {isSubmitting ? 'Deleting...' : 'Delete Appointment'}
                         </button>
@@ -217,6 +214,8 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 };
 
 export default EditDeleteAppointmentModal;
