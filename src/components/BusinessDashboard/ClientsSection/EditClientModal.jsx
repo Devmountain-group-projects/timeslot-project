@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import React, { useState } from "react";
+import { FaTimes } from "react-icons/fa";
 
-const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) => {
+const EditClientModal = ({
+                             client,
+                             onClose,
+                             onUpdateClient,
+                             onDeleteClient,
+                         }) => {
     const [editedClient, setEditedClient] = useState(client);
+    const [profileImage, setProfileImage] = useState(
+        editedClient.profile_picture,
+    );
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setEditedClient(prev => ({ ...prev, [name]: value }));
+        setEditedClient((prev) => ({ ...prev, [name]: value }));
     };
 
     const handlePhotoUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setEditedClient(prev => ({ ...prev, photo: reader.result }));
+            setEditedClient((prev) => ({ ...prev, photo: file }));
+
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                setProfileImage(e.target.result);
             };
             reader.readAsDataURL(file);
         }
@@ -31,7 +41,10 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
             <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-semibold">Edit Client</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+                    <button
+                        onClick={onClose}
+                        className="text-gray-500 hover:text-gray-700"
+                    >
                         <FaTimes size={24} />
                     </button>
                 </div>
@@ -39,6 +52,14 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Client Picture
+                            <div className="w-12 h-12 relative flex-shrink-0 mr-4">
+                                <img
+                                    id="profile-img"
+                                    src={profileImage}
+                                    alt={editedClient.name}
+                                    className="rounded-full object-cover absolute inset-0 w-full h-full"
+                                />
+                            </div>
                         </label>
                         <input
                             type="file"
@@ -48,7 +69,10 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label
+                            htmlFor="name"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                             Client Name
                         </label>
                         <input
@@ -62,7 +86,10 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label
+                            htmlFor="email"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                             Client Email
                         </label>
                         <input
@@ -76,7 +103,10 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label
+                            htmlFor="phone"
+                            className="block text-sm font-medium text-gray-700 mb-1"
+                        >
                             Client Phone
                         </label>
                         <input
@@ -90,15 +120,12 @@ const EditClientModal = ({ client, onClose, onUpdateClient, onDeleteClient }) =>
                         />
                     </div>
                     <div className="flex justify-between">
-                        <button
-                            type="submit"
-                            className="btn-blue-dashboard"
-                        >
+                        <button type="submit" className="btn-blue-dashboard">
                             Update Client
                         </button>
                         <button
                             type="button"
-                            onClick={() => onDeleteClient(client.id)}  // Use the `client.id` from props
+                            onClick={() => onDeleteClient(editedClient.user_id)} // Use the `client.id` from props
                             className="btn-red"
                         >
                             Delete Client
