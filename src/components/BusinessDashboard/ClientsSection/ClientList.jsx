@@ -196,13 +196,13 @@ const ClientList = () => {
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                     aria-label="Add client"
                 >
-                    <FaPlus className="text-lg" />
+                    <FaPlus className="text-lg"/>
                 </button>
             </section>
-            <hr className="border-t border-gray-300 w-full m-0" />
+            <hr className="border-t border-gray-300 w-full m-0"/>
             <section className="flex-grow overflow-y-auto">
                 <div className="min-h-full">
-                    {clients.map((client) => (
+                    {clients.sort((a, b) => a.name.localeCompare(b.name)).map((client) => (
                         <ClientItem
                             key={client.id}
                             client={client}

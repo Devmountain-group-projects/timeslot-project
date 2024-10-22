@@ -11,7 +11,7 @@ for (const user of users) {
 
     // Create the user with the role
     const createdUser = await db.user.create({
-        name: user.name.toLowerCase(),
+        name: user.name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' '),
         email: user.email.toLowerCase(),
         phone: user.phone,
         role_id: user.role_id,
