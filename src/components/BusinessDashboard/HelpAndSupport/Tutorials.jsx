@@ -81,9 +81,9 @@ const Tutorials = () => {
                 <div className="p-6">
                     <div className="flex items-center space-x-2 mb-6">
                         <FaRocket className="text-blue-500" size={24} />
-                        <h2 className="text-xl font-semibold">Getting Started</h2>
+                        <h2 className="text-lg font-semibold">Getting Started</h2>
                     </div>
-                    <p className="text-gray-600 mb-6">
+                    <p className="text-gray-600 mb-6 text-sm">
                         Follow our step-by-step guide to set up your account and start managing bookings efficiently.
                     </p>
                     <div className="space-y-4">
@@ -93,7 +93,7 @@ const Tutorials = () => {
                                     {step.id}
                                 </div>
                                 <div className="ml-4 flex-1">
-                                    <h3 className="font-medium text-gray-800">{step.title}</h3>
+                                    <h3 className="font-medium text-secondary text-sm">{step.title}</h3>
                                     <p className="text-sm text-gray-600">{step.description}</p>
                                 </div>
                                 <div className="text-sm text-gray-500">{step.duration}</div>
@@ -108,12 +108,12 @@ const Tutorials = () => {
                 <div className="p-6">
                     <div className="flex items-center space-x-2 mb-6">
                         <FaVideo className="text-blue-500" size={24} />
-                        <h2 className="text-xl font-semibold">Video Tutorials</h2>
+                        <h2 className="text-lg font-semibold">Video Tutorials</h2>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
                         {videoTutorials.map(video => (
                             <div key={video.id} className="group">
-                                <div className="relative rounded-lg overflow-hidden mb-3 aspect-video bg-gray-100">
+                                <div className="relative rounded-lg border-2 border-gray-300 overflow-hidden mb-3 aspect-video bg-gray-100">
                                     <img
                                         src={video.thumbnail}
                                         alt={video.title}
@@ -128,7 +128,7 @@ const Tutorials = () => {
                                         {video.duration}
                                     </div>
                                 </div>
-                                <h3 className="font-medium text-gray-800 mb-2 text-lg">{video.title}</h3>
+                                <h3 className="font-medium text-secondary mb-2 text-base">{video.title}</h3>
                                 <p className="text-sm text-gray-600 leading-relaxed">{video.description}</p>
                             </div>
                         ))}
@@ -141,7 +141,7 @@ const Tutorials = () => {
                 <div className="p-6">
                     <div className="flex items-center space-x-2 mb-6">
                         <BsCollectionPlay className="text-blue-500" size={24} />
-                        <h2 className="text-xl font-semibold">Popular Guides</h2>
+                        <h2 className="text-lg font-semibold">Popular Guides</h2>
                     </div>
                     <div className="grid md:grid-cols-3 gap-6">
                         {popularGuides.map(guide => (
@@ -154,7 +154,7 @@ const Tutorials = () => {
                                     <div className="text-blue-500">
                                         {guide.icon}
                                     </div>
-                                    <h3 className="font-medium text-gray-800">{guide.title}</h3>
+                                    <h3 className="font-medium text-secondary">{guide.title}</h3>
                                 </div>
                                 <p className="text-sm text-gray-600">{guide.description}</p>
                             </a>
