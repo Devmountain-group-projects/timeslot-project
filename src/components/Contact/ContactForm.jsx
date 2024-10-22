@@ -1,11 +1,19 @@
-import React from 'react'
-import ContactImg from '../../assets/images/contactimg.jpg'
+import React, { useState } from 'react';
+import ContactImg from '../../assets/images/contactimg.jpg';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-// import dotenv from "dotenv";
-// dotenv.config();
+import { contactService } from '../../services/contactServices.js';  // Ensure to import ContactService
 
 const ContactForm = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -28,25 +36,44 @@ const ContactForm = () => {
         }
     };
 
-    // const sendCustomEmail = (details) => {
-    //     emailjs.init(import.meta.env.VITE_EMAILJS_USER_ID);
-    //     emailjs.send(
-    //         import.meta.env.VITE_EMAILJS_SERVICE_ID,
-    //         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-    //         {
-    //             to_email: details.to_email,
-    //             subject: details.subject,
-    //             message: details.message
-    //         }
-    //     )
-    //         .then((response) => {
-    //             console.log(response);
-    //             alert("Email sent successfully!");
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+
+        // Basic validation
+        if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+            setError('Please fill in all the fields.');
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const response = await contactService.createContact({
+                toName: 'Business Owner',  // Replace with the recipient's name
+                fromName: formData.name,
+                email: formData.email,
+                subject: formData.subject,
+                message: formData.message,
+            });
+
+            setSuccess(response.message);
+            setFormData({ name: '', email: '', subject: '', message: '' });
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <motion.div
@@ -59,32 +86,42 @@ const ContactForm = () => {
                 <div className="grid lg:grid-cols-2 items-center gap-24">
                     <motion.div className="max-lg:text-center" variants={itemVariants}>
                         <motion.h2 className="title-text mb-4" variants={itemVariants}>Get in Touch with Us<span className='text-primary text-3xl sm:text-5xl'>.</span></motion.h2>
-                        <motion.p className="text-sm text-gray-600 mb-8 leading-relaxed" variants={itemVariants}>Have questions or need assistance? We're here to help! Whether you're a current user or just exploring Timeline Slot, feel free to reach out to our team. We're committed to providing you with the support you need to make the most of our platform.</motion.p>
+                        <motion.p className="text-sm text-gray-600 mb-8 leading-relaxed" variants={itemVariants}>Have questions or need assistance? We're here to help! Feel free to reach out.</motion.p>
 
-                        <motion.form className="bg-gradient-gray rounded-xl p-6 space-y-4" variants={containerVariants}>
-                            {['Name', 'Email', 'Subject'].map((placeholder, index) => (
+                        {error && <p className="text-red-500">{error}</p>}
+                        {success && <p className="text-green-500">{success}</p>}
+
+                        <motion.form className="bg-gradient-gray rounded-xl p-6 space-y-4" onSubmit={handleSubmit} variants={containerVariants}>
+                            {['name', 'email', 'subject'].map((field, index) => (
                                 <motion.input
                                     key={index}
-                                    type={placeholder.toLowerCase() === 'email' ? 'email' : 'text'}
-                                    placeholder={placeholder}
+                                    type={field === 'email' ? 'email' : 'text'}
+                                    name={field}
+                                    value={formData[field]}
+                                    onChange={handleInputChange}
+                                    placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
                                     className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-primary transition duration-300"
                                     variants={itemVariants}
                                 />
                             ))}
                             <motion.textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={handleInputChange}
                                 placeholder='Message'
                                 rows="6"
                                 className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-primary transition duration-300"
                                 variants={itemVariants}
                             ></motion.textarea>
                             <motion.button
-                                type='button'
+                                type='submit'
                                 className="btn-blue m-auto block"
+                                disabled={isSubmitting}
                                 variants={itemVariants}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                Send Message
+                                {isSubmitting ? 'Sending...' : 'Send Message'}
                             </motion.button>
                         </motion.form>
                     </motion.div>
@@ -108,7 +145,7 @@ const ContactForm = () => {
                 </div>
             </div>
         </motion.div>
-    )
-}
+    );
+};
 
-export default ContactForm
+export default ContactForm;
