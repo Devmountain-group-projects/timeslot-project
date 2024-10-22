@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { appointmentService } from '../../../services/appointmentService';
+import { useAppointment } from '../../../context/ApptContext';
 
 const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
+        const {
+            appointments,
+            addAppointment,
+            fetchClients,
+        } = useAppointment();
     const [newAppointment, setNewAppointment] = useState({
         clientId: '',
         date: '',
@@ -18,6 +24,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        // fetchClients()
     }, []);
 
     const handleInputChange = (e) => {
@@ -55,14 +62,18 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                 }
             };
 
-            // Send email using the client's email from the clients array
-            const result = await appointmentService.createAppointment(
-                appointmentData,
-                selectedClient  // Pass the entire client object which includes email
-            );
+            //Adds tha appointment to the data base
+            addAppointment(newAppointment)
+            // console.log("TESTING: ", test)
 
-            console.log('Email sent to:', selectedClient.email);
-            console.log('Appointment created and email sent:', result);
+            // Send email using the client's email from the clients array
+            // const result = await appointmentService.createAppointment(
+            //     appointmentData,
+            //     selectedClient  // Pass the entire client object which includes email
+            // );
+
+            // console.log('Email sent to:', selectedClient.email);
+            // console.log('Appointment created and email sent:', result);
 
             // Call onCreate and close modal if successful
             onCreate(appointmentData);
