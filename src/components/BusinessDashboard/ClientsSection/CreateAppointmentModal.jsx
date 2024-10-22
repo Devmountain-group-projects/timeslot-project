@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import { appointmentService } from '../../../services/appointmentService';
 
 const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
     const [newAppointment, setNewAppointment] = useState({
@@ -13,6 +14,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
         description: '',
         paymentStatus: '',
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -23,23 +25,55 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
         setNewAppointment(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const selectedClient = clients.find(client => client.id === parseInt(newAppointment.clientId));
-        onCreate({
-            ...newAppointment,
-            name: selectedClient.name,
-            photo: selectedClient.photo,
-            time: newAppointment.startTime,
-            details: {
-                serviceProvider: 'TBD',
-                createdAt: new Date().toLocaleDateString(),
-                updatedAt: new Date().toLocaleDateString(),
-                price: newAppointment.price,
-                description: newAppointment.description,
-                paymentStatus: newAppointment.paymentStatus,
+        setIsSubmitting(true);
+
+        try {
+            // Find the selected client from the clients array
+            const selectedClient = clients.find(client => client.id === parseInt(newAppointment.clientId));
+
+            if (!selectedClient) {
+                throw new Error('No client selected');
             }
-        });
+
+            // Log the selected client info for debugging
+            console.log('Selected client:', selectedClient);
+            console.log('Client email:', selectedClient.email);
+
+            const appointmentData = {
+                ...newAppointment,
+                name: selectedClient.name,
+                time: newAppointment.startTime,
+                details: {
+                    serviceProvider: 'TBD',
+                    createdAt: new Date().toLocaleDateString(),
+                    updatedAt: new Date().toLocaleDateString(),
+                    price: newAppointment.price,
+                    description: newAppointment.description,
+                    paymentStatus: newAppointment.paymentStatus,
+                }
+            };
+
+            // Send email using the client's email from the clients array
+            const result = await appointmentService.createAppointment(
+                appointmentData,
+                selectedClient  // Pass the entire client object which includes email
+            );
+
+            console.log('Email sent to:', selectedClient.email);
+            console.log('Appointment created and email sent:', result);
+
+            // Call onCreate and close modal if successful
+            onCreate(appointmentData);
+            onClose();
+
+        } catch (error) {
+            console.error('Error creating appointment:', error);
+            alert('Failed to create appointment. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -48,6 +82,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                    disabled={isSubmitting}
                 >
                     <FaTimes size={24} />
                 </button>
@@ -69,10 +104,14 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                 >
                                     <option value="">Select a client</option>
                                     {clients.map(client => (
-                                        <option key={client.id} value={client.id}>{client.name}</option>
+                                        <option key={client.id} value={client.id}>
+                                            {client.name} ({client.email})
+                                        </option>
                                     ))}
                                 </select>
                             </div>
+
+
                             <div>
                                 <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
                                     Appointment Date
@@ -84,6 +123,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                     value={newAppointment.date}
                                     onChange={handleInputChange}
                                     required
+                                    disabled={isSubmitting}
                                     className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                 />
                             </div>
@@ -99,6 +139,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                         value={newAppointment.startTime}
                                         onChange={handleInputChange}
                                         required
+                                        disabled={isSubmitting}
                                         className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                     />
                                 </div>
@@ -113,6 +154,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                         value={newAppointment.endTime}
                                         onChange={handleInputChange}
                                         required
+                                        disabled={isSubmitting}
                                         className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                     />
                                 </div>
@@ -127,6 +169,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                     value={newAppointment.serviceType}
                                     onChange={handleInputChange}
                                     required
+                                    disabled={isSubmitting}
                                     className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                 >
                                     <option value="">Select a service type</option>
@@ -142,27 +185,33 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                     <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-1">
                                         Status
                                     </label>
-                                    <input
-                                        type="text"
+                                    <select
                                         id="status"
                                         name="status"
                                         value={newAppointment.status}
                                         onChange={handleInputChange}
                                         required
+                                        disabled={isSubmitting}
                                         className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                                    />
+                                    >
+                                        <option value="">Select status</option>
+                                        <option value="Scheduled">Scheduled</option>
+                                        <option value="Confirmed">Confirmed</option>
+                                        <option value="Pending">Pending</option>
+                                    </select>
                                 </div>
                                 <div className="w-1/2">
                                     <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
                                         Price
                                     </label>
                                     <input
-                                        type="text"
+                                        type="number"
                                         id="price"
                                         name="price"
                                         value={newAppointment.price}
                                         onChange={handleInputChange}
                                         required
+                                        disabled={isSubmitting}
                                         className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                     />
                                 </div>
@@ -177,6 +226,7 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                     value={newAppointment.description}
                                     onChange={handleInputChange}
                                     required
+                                    disabled={isSubmitting}
                                     rows={3}
                                     className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
                                 />
@@ -185,23 +235,30 @@ const CreateAppointmentModal = ({ onClose, onCreate, clients }) => {
                                 <label htmlFor="paymentStatus" className="block text-sm font-medium text-gray-700 mb-1">
                                     Payment Status
                                 </label>
-                                <input
-                                    type="text"
+                                <select
                                     id="paymentStatus"
                                     name="paymentStatus"
                                     value={newAppointment.paymentStatus}
                                     onChange={handleInputChange}
                                     required
+                                    disabled={isSubmitting}
                                     className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-                                />
+                                >
+                                    <option value="">Select payment status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Paid">Paid</option>
+                                    <option value="Overdue">Overdue</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     <button
                         type="submit"
-                        className="btn-blue-dashboard mt-4 w-full sm:w-auto"
+                        disabled={isSubmitting}
+                        className={`btn-blue-dashboard mt-4 w-full sm:w-auto ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                            }`}
                     >
-                        Create Appointment
+                        {isSubmitting ? 'Creating Appointment...' : 'Create Appointment'}
                     </button>
                 </form>
             </div>
