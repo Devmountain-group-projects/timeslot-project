@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import LogoWhite from '../../assets/images/logowhite.png'
 import User6 from '../../assets/images/user6.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 // Sidebar Icons
 import { HiMiniSquares2X2 } from "react-icons/hi2";
@@ -24,6 +24,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
     const [business, setBusiness] = useState(null)
     const [loggedIn, setloggedIn] = useState(isLoggedIn)
     const [isOpen, setIsOpen] = useState(false)
+    const nav = useNavigate()
 
     useEffect(() => {
         sessionCheck()
@@ -41,6 +42,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
         console.log("logging user out")
         setIsOpen(false)
         userLogout()
+        nav("/")
     }
 
     const sessionCheck = async () => {
