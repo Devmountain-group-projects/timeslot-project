@@ -124,7 +124,7 @@ const BusinessInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('businessName', newBusiness)}
+                                    onClick={() => {handleUpdate('businessName', newBusiness), setBusiness(newBusiness)}}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Business Name

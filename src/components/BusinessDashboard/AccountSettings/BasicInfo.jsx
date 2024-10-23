@@ -67,14 +67,18 @@ const BasicInfo = () => {
     }
 
     const photoCheck = async () => {
-        // const resPhoto = await getPhotos()
-        // if (res.success) {
-            console.log("resPhoto.photos[0].scr", resPhoto.photos[0].scr)
-            setPhoto("Default")
-            // setPhoto(resPhoto.photos[0].scr)
-        // } else {
-        //     console.log("failed")
-        // }
+        const res = await userCheck()
+        if (res.success) {
+            console.log("res.user.profile_picture: ", res.user.profile_picture)
+            if (res.user.profile_picture === "Default") {
+                setPhoto(User6)
+            } else {
+                setPhoto(res.user.profile_picture)
+            }
+            console.log("Is this updating", photo)
+        } else {
+            setPhoto(User6)
+        }
     }
 
     const basicInfoData = {
@@ -90,16 +94,20 @@ const BasicInfo = () => {
         if(input){
            console.log(`${field} has been updated to ${input}`);
            const res = await updateBusiness(field, input)
-            console.log(res) 
+           console.log(res) 
+           
         } else {
             console.log("Feild is Empty")
         }
         
     }
 
-    const handleImageUpload = (type) => {
+    const handleImageUpload = async (type, input) => {
         setUploadType(type);
         setShowModal(true);
+        console.log("handleImageUpload-type: ", type)
+        console.log("handleImageUpload-input: ", input)
+        photoCheck()
     }
 
     const imageUpload = (type, image) => {
@@ -136,7 +144,7 @@ const BasicInfo = () => {
                                 <img src={basicInfoData.profileImg} alt="User6" className="w-full h-full rounded-full bg-gray-300 border-4 border-white" />
                                 <div
                                     className="absolute bottom-0 right-0 bg-blue-500 ring-4 ring-white rounded-full p-2 cursor-pointer text-white hover:bg-white hover:text-blue-500 hover:ring-4 hover:ring-blue-500 transition duration-300"
-                                    onClick={() => handleImageUpload('photo', newPhoto)}
+                                    onClick={() => {handleImageUpload('photo', newPhoto)}}
                                 >
                                     <BiSolidPencil className="" size={16} />
                                 </div>
@@ -188,7 +196,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('name', newName)}
+                                    onClick={() =>{ handleUpdate('name', newName), setName(newName)}}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Name
@@ -207,7 +215,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('email', newEmail)}
+                                    onClick={() => {handleUpdate('email', newEmail), setEmail(newEmail)}}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Email
@@ -226,7 +234,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('phone', newPhone)}
+                                    onClick={() => {handleUpdate('phone', newPhone), setPhone(newPhone)}}
                                     className="btn-blue-dashboard"
                                 >
                                     Update Phone
@@ -245,7 +253,7 @@ const BasicInfo = () => {
                             <div className="text-right mt-2">
                                 <button
                                     type="button"
-                                    onClick={() => handleUpdate('about', newBio)}
+                                    onClick={() => {handleUpdate('about', newBio), setBio(newBio)}}
                                     className="btn-blue-dashboard"
                                 >
                                     Update About you
