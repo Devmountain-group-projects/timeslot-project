@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../Layout/SideBar';
 import UpcomingAppts from '../BusinessDashboard/UpcomingAppts';
@@ -42,8 +42,38 @@ const BusinessDashboard = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, [location]);
 
+    // Animation variants for page transitions
+    const pageVariants = {
+        initial: {
+            opacity: 0,
+            x: 20,
+            scale: 0.98
+        },
+        animate: {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            transition: {
+                duration: 0.4,
+                ease: "easeOut"
+            }
+        },
+        exit: {
+            opacity: 0,
+            x: -20,
+            scale: 0.98,
+            transition: {
+                duration: 0.3,
+                ease: "easeIn"
+            }
+        }
+    };
+
+    // Animation variants for dashboard content
     const containerVariants = {
-        hidden: { opacity: 0 },
+        hidden: {
+            opacity: 0
+        },
         visible: {
             opacity: 1,
             transition: {
@@ -53,7 +83,10 @@ const BusinessDashboard = () => {
     };
 
     const rowVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: {
+            opacity: 0,
+            y: 20
+        },
         visible: {
             opacity: 1,
             y: 0,
@@ -88,54 +121,94 @@ const BusinessDashboard = () => {
     };
 
     const renderContent = () => {
-        switch (currentView) {
-            case 'dashboard':
-                return (
-                    <motion.div
-                        className="h-full flex flex-col gap-4 overflow-auto"
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible"
-                    >
-                        {/* Top 4 Cards */}
-                        <motion.div className="flex-shrink-0 flex flex-col sm:flex-row flex-wrap gap-4" variants={rowVariants}>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><UpcomingAppts onViewAllClients={handleViewAllClients} /></Card>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><RevenueOverview onViewPaymentsInvoicing={handleViewPaymentsInvoicing} /></Card>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><ClientReviews onViewAllReviews={handleViewAllReviews} /></Card>
-                            <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]"><Notifications onViewAllClients={handleViewAllClients} /></Card>
+        const content = (() => {
+            switch (currentView) {
+                case 'dashboard':
+                    return (
+                        <motion.div
+                            className="h-full flex flex-col gap-4 overflow-auto"
+                            variants={containerVariants}
+                            initial="hidden"
+                            animate="visible"
+                        >
+                            {/* Top 4 Cards */}
+                            <motion.div className="flex-shrink-0 flex flex-col sm:flex-row flex-wrap gap-4" variants={rowVariants}>
+                                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                                    <UpcomingAppts onViewAllClients={handleViewAllClients} />
+                                </Card>
+                                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                                    <RevenueOverview onViewPaymentsInvoicing={handleViewPaymentsInvoicing} />
+                                </Card>
+                                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                                    <ClientReviews onViewAllReviews={handleViewAllReviews} />
+                                </Card>
+                                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                                    <Notifications onViewAllClients={handleViewAllClients} />
+                                </Card>
+                            </motion.div>
+
+                            {/* Middle 2 Cards */}
+                            <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
+                                <Card className="w-full md:w-[40%] h-full md:h-[auto]">
+                                    <CalendarOverview onViewCalendar={handleViewCalendar} />
+                                </Card>
+                                <Card className="w-full md:w-[60%] h-full md:h-[auto]">
+                                    <OngoingAppts
+                                        onViewAllClients={handleViewAllClients}
+                                        onViewCalendar={handleViewCalendar}
+                                    />
+                                </Card>
+                            </motion.div>
+
+                            {/* Bottom 3 Cards */}
+                            <motion.div className="flex-shrink-0 flex flex-col md:flex-row gap-4" variants={rowVariants}>
+                                <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]">
+                                    <Analytics onViewAllAnalytics={handleViewAnalytics} />
+                                </Card>
+                                <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]">
+                                    <FollowUp onViewFollowUp={handleViewFollowUp} />
+                                </Card>
+                                <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]">
+                                    <ReviewReport onViewAllReviews={handleViewAllReviews} />
+                                </Card>
+                            </motion.div>
                         </motion.div>
-                        {/* Middle 2 Cards */}
-                        <motion.div className="flex-grow flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                            <Card className="w-full md:w-[40%] h-full md:h-[auto]"><CalendarOverview onViewCalendar={handleViewCalendar} /></Card>
-                            <Card className="w-full md:w-[60%] h-full md:h-[auto]"><OngoingAppts onViewAllClients={handleViewAllClients} onViewCalendar={handleViewCalendar} /></Card>
-                        </motion.div>
-                        {/* Bottom 3 Cards */}
-                        <motion.div className="flex- flex flex-col md:flex-row gap-4" variants={rowVariants}>
-                            <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]"><Analytics onViewAllAnalytics={handleViewAnalytics} /></Card>
-                            <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]"><FollowUp onViewFollowUp={handleViewFollowUp} /></Card>
-                            <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]"><ReviewReport onViewAllReviews={handleViewAllReviews} /></Card>
-                        </motion.div>
-                    </motion.div>
-                );
-            case 'appointments':
-                return <AllAppointments />;
-            case 'analytics':
-                return <AllAnalytics />;
-            case 'clients':
-                return <AllClients />;
-            case 'reviews':
-                return <AllReviews />;
-            case 'payments':
-                return <PaymentsInvoicing />;
-            case 'calendar':
-                return <Schedule selectedDate={location.state?.selectedDate} />;
-            case 'settings':
-                return <AccountSettings />;
-            case 'help':
-                return <HelpSupport />;
-            default:
-                return <div>404: Page not found</div>;
-        }
+                    );
+                case 'appointments':
+                    return <AllAppointments />;
+                case 'analytics':
+                    return <AllAnalytics />;
+                case 'clients':
+                    return <AllClients />;
+                case 'reviews':
+                    return <AllReviews />;
+                case 'payments':
+                    return <PaymentsInvoicing />;
+                case 'calendar':
+                    return <Schedule selectedDate={location.state?.selectedDate} />;
+                case 'settings':
+                    return <AccountSettings />;
+                case 'help':
+                    return <HelpSupport />;
+                default:
+                    return <div>404: Page not found</div>;
+            }
+        })();
+
+        return (
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={currentView}
+                    variants={pageVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="h-full"
+                >
+                    {content}
+                </motion.div>
+            </AnimatePresence>
+        );
     };
 
     return (
