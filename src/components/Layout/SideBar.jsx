@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import LogoWhite from '../../assets/images/logowhite.png'
-import User6 from '../../assets/images/user6.png'
+import User6 from '../../assets/images/placeholderavatar.png'
 import { Link, useNavigate } from 'react-router-dom'
 
 // Sidebar Icons
@@ -22,6 +22,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
     const isLoggedIn = useSelector((state) => state.loggedIn)
     const [name, setName] = useState(null)
     const [business, setBusiness] = useState(null)
+    const [photo, setPhoto] = useState(User6)
     const [loggedIn, setloggedIn] = useState(isLoggedIn)
     const [isOpen, setIsOpen] = useState(false)
     const nav = useNavigate()
@@ -51,6 +52,11 @@ const SideBar = ({ currentView, setCurrentView }) => {
             setName(res.user.name)
             setBusiness(res.user.business[0].business_name)
             setloggedIn(res.success)
+            if (res.user.profile_picture === "Default") {
+                setPhoto(User6)
+            } else {
+                setPhoto(res.user.profile_picture)
+            }
         } else {
             setName("User Not logged in")
             setloggedIn(res.success)
@@ -91,7 +97,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
     const UserProfile = () => (
         <div className="flex-shrink-0 py-4 px-3">
             <div className="flex items-center bg-white bg-opacity-10 rounded-full gap-4 py-1 px-2">
-                <img src={User6} alt="User" className="w-10 h-10 rounded-full" />
+                <img src={photo} alt="User" className="w-10 h-10 rounded-full" />
                 <div>
                     <div className="text-sm font-semibold">{name}</div>
                     <div className="text-xs opacity-75">{business}</div>
