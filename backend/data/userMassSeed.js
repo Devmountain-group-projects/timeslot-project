@@ -44,6 +44,17 @@ export const users = [
             rating: 5,
             comment: "Excellent service! Very satisfied."
         },
+        appointments: [
+            {
+                service_id: 1, // Example service ID
+                appointment_date: "2024-11-01",
+                appointment_start: "09:00",
+                appointment_end: "10:00",
+                status: "confirmed",
+                notes: "Initial consultation",
+                payment_status: "pending",
+            },
+        ],
     },
     {
         name: "Barbara Smith",
@@ -67,6 +78,17 @@ export const users = [
             rating: 4,
             comment: "Great service, but room for improvement."
         },
+        appointments: [
+            {
+                service_id: 3, // Example service ID
+                appointment_date: "2024-11-05",
+                appointment_start: "11:00",
+                appointment_end: "12:00",
+                status: "completed",
+                notes: "Routine checkup",
+                payment_status: "sent",
+            },
+        ],
     },
     {
         name: "Charlie Davis",
@@ -113,6 +135,17 @@ export const users = [
             rating: 4,
             comment: "Good overall experience."
         },
+        appointments: [
+            {
+                service_id: 2, // Example service ID
+                appointment_date: "2024-11-10",
+                appointment_start: "14:00",
+                appointment_end: "15:00",
+                status: "pending",
+                notes: "Follow-up appointment",
+                payment_status: "pending",
+            },
+        ],
     },
     {
         name: "Edward King",

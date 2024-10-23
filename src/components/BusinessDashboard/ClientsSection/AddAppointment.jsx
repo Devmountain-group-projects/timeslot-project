@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { FaPlus, FaCalendarAlt, FaClock, FaClipboardList, FaCheckCircle, FaChevronDown, FaChevronUp, FaChevronRight } from 'react-icons/fa';
-import User8 from '/src/assets/images/user8.png';
 import User9 from '/src/assets/images/user9.png';
-import User10 from '/src/assets/images/user10.png';
 
 
 const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
-    
+
     const [selectedClient, setSelectedClient] = useState(0);
     const [clients, setClients] = useState([
         {
@@ -25,42 +23,6 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
                 price: '150',
                 description: 'Initial consultation for new patient',
                 paymentStatus: 'Paid',
-            }
-        },
-        {
-            id: 2,
-            name: 'Jane Smith',
-            email: 'rodrigomcobos@gmail.com',
-            date: '2024-10-21',
-            time: '14:00',
-            serviceType: 'Follow-up',
-            status: 'Pending',
-            photo: User8,
-            details: {
-                serviceProvider: 'Dr. Michael Lee',
-                createdAt: '2024-10-18',
-                updatedAt: '2024-10-19',
-                price: '100',
-                description: 'Follow-up appointment for medication review',
-                paymentStatus: 'Pending',
-            }
-        },
-        {
-            id: 3,
-            name: 'Yasmin Abdulaziz',
-            email: 'rodrigomcobos@gmail.com',
-            date: '2024-10-22',
-            time: '11:30',
-            serviceType: 'Therapy',
-            status: 'Confirmed',
-            photo: User10,
-            details: {
-                serviceProvider: 'Dr. Sarah Wilson',
-                createdAt: '2024-10-17',
-                updatedAt: '2024-10-17',
-                price: '200',
-                description: 'Weekly therapy session for anxiety management',
-                paymentStatus: 'Insured',
             }
         },
     ]);
