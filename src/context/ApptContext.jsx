@@ -17,16 +17,26 @@ export const AppointmentProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Fetch appointments by user
+
+    // Function to fetch appointments by user ID
+    const fetchAppointments = async (userId) => {
+        try {
+            const response = await axios.get(`/getAppointmentByUser?userId=${userId}`);
+            if (response.data.success) {
+                setAppointments(response.data.appointments);
+            } else {
+                console.error("Failed to fetch appointments");
+            }
+        } catch (error) {
+            console.error("Error fetching appointments:", error);
+        }
+    };
+
+    // Fetch appointments by user ID
     const fetchAppointmentsByUser = async (userId) => {
         setLoading(true);
         try {
-            const response = await axios.get(
-                `/api/appointments/getAppointmentByUser`,
-                {
-                    params: { userId },
-                },
-            );
+            const response = await axios.get(`/api/appointments/getAppointmentByUser?userId=${userId}`, { params: { userId } });
             setAppointments(response.data.appointments);
         } catch (err) {
             setError(err.message);
@@ -34,6 +44,8 @@ export const AppointmentProvider = ({ children }) => {
             setLoading(false);
         }
     };
+
+
 
     // Fetch appointments by user
     const fetchClients = async () => {
@@ -180,6 +192,7 @@ export const AppointmentProvider = ({ children }) => {
                 loading,
                 error,
                 appointments,
+                fetchAppointments,
                 fetchAppointmentsByUser,
                 addAppointment,
                 updateAppointment,
