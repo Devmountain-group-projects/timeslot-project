@@ -6,16 +6,21 @@ import { useState } from 'react';
 
 
 const ImageUploadModal = ({ onClose, uploadType, onSubmit }) => {
+    const [savePhoto, setSavePhoto] = useState(null)
     
-    const handlePhotoUpload = (e) => {
+    const savePhotoUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
             console.log('Photo Selected:', file);
             console.log(prev => ({ ...prev, photo: file }));
         }
-        // console.log(newPhoto)
-        onSubmit(uploadType, file)
+        setSavePhoto({uploadType, file})
     };
+    
+    const setPhotoUpdate = () => {
+        onSubmit(savePhoto.uploadType, savePhoto.file)
+        onClose()
+    }
 
     return (
         <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-black before:opacity-60 before:rounded-lg overflow-auto font-[sans-serif]">
@@ -33,7 +38,7 @@ const ImageUploadModal = ({ onClose, uploadType, onSubmit }) => {
                         <BsCloudUpload size={50} className="w-10 mb-4 text-gray-600" />
 
                         <h4 className="text-sm text-gray-600">Drag & Drop or <label htmlFor="chooseFile" className="text-secondary cursor-pointer">Choose file</label> to upload</h4>
-                        <input type="file" id="chooseFile" className="" onChange={handlePhotoUpload} />
+                        <input type="file" id="chooseFile" className="" onChange={savePhotoUpload} />
                     </div>
                 </section>
 
@@ -44,7 +49,7 @@ const ImageUploadModal = ({ onClose, uploadType, onSubmit }) => {
                         Cancel
                     </button>
                     <button type="button"
-                        className="btn-blue-dashboard" onClick={onClose}>
+                        className="btn-blue-dashboard" onClick={setPhotoUpdate}>
                         Import
                     </button>
                 </section>
