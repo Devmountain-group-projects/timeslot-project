@@ -29,8 +29,7 @@ const MonthlyRevenue = () => {
             {
                 label: 'Revenue',
                 data: mockData.monthlyRevenue.map(item => item.revenue),
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: '#007dfe',
                 borderWidth: 1,
                 barThickness: 20  // Make bars thinner
             }

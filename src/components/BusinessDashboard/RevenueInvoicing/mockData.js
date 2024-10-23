@@ -15,14 +15,14 @@ export const mockData = {
     },
     {
       id: 2,
-      name: 'John Doe',
+      name: 'Joshua Simmons',
       revenue: 3500,
       appointments: 8,
       image: '/src/assets/images/user3.png',
     },
     {
       id: 3,
-      name: 'Sarah Johnson',
+      name: 'James Smith',
       revenue: 2800,
       appointments: 6,
       image: '/src/assets/images/user5.png',
