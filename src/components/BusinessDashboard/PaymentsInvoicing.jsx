@@ -23,16 +23,16 @@ const PaymentsInvoicing = () => {
         <div className="h-full flex flex-col gap-4 overflow-auto">
             {/* Row 1 - Four equal-width cards */}
             <div className="flex-shrink-0 flex flex-col sm:flex-row flex-wrap gap-4">
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px] md:h-[200px]">
                     <TotalRevenue />
                 </Card>
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px] md:h-[200px]">
                     <MonthlyRevenue />
                 </Card>
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px] md:h-[200px]">
                     <AveragePaymentTime />
                 </Card>
-                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[150px] md:h-[150px]">
+                <Card className="w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(25%-0.75rem)] h-[200px] md:h-[200px]">
                     <TopClients />
                 </Card>
             </div>
@@ -49,13 +49,13 @@ const PaymentsInvoicing = () => {
 
             {/* Row 3 - Three equal-width cards */}
             <div className="flex-shrink-0 flex flex-col md:flex-row gap-4">
-                <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]">
+                <Card className="w-full md:w-1/3 h-[300px] md:h-[250px]">
                     <PaymentMethods />
                 </Card>
-                <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]">
+                <Card className="w-full md:w-1/3 h-[300px] md:h-[250px]">
                     <TaxSummary />
                 </Card>
-                <Card className="w-full md:w-1/3 h-[300px] md:h-[350px]">
+                <Card className="w-full md:w-1/3 h-[300px] md:h-[250px]">
                     <RevenueBreakdown />
                 </Card>
             </div>
