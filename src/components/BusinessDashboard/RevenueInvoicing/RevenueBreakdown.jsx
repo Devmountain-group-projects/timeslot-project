@@ -28,9 +28,7 @@ const RevenueBreakdown = () => {
         datasets: [{
             label: 'Revenue',
             data: mockData.serviceRevenue.map(item => item.amount),
-            backgroundColor: 'rgba(75, 192, 192, 0.8)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
+            backgroundColor: '#3cbd5b',
             barThickness: 20
         }]
     };

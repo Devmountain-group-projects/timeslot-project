@@ -53,10 +53,10 @@ export const mockData = {
     percentageChange: 11.1,
   },
   serviceRevenue: [
-    { service: 'Haircuts', amount: 4000 },
+    { service: 'New Clients', amount: 4000 },
     { service: 'Consultations', amount: 3500 },
-    { service: 'Hair Coloring', amount: 2800 },
-    { service: 'Styling', amount: 1700 },
+    { service: 'Follow-Up', amount: 2800 },
+    { service: 'Extras', amount: 1700 },
   ],
   invoicingHistory: [
     {
@@ -100,4 +100,45 @@ export const mockData = {
       dueDate: '2024-11-02',
     },
   ],
+  outstandingInvoices: {
+    total: 1200,
+    summary: {
+      pending: 675,
+      overdue: 525,
+    },
+    invoices: [
+      {
+        id: 'INV-128',
+        client: 'Emma Wilson',
+        amount: 325,
+        status: 'pending',
+        dueDate: '2024-11-05',
+        daysOverdue: 0,
+      },
+      {
+        id: 'INV-124',
+        client: 'Sarah Johnson',
+        amount: 275,
+        status: 'overdue',
+        dueDate: '2024-10-29',
+        daysOverdue: 7,
+      },
+      {
+        id: 'INV-127',
+        client: 'James Wilson',
+        amount: 350,
+        status: 'pending',
+        dueDate: '2024-11-02',
+        daysOverdue: 0,
+      },
+      {
+        id: 'INV-122',
+        client: 'Michael Brown',
+        amount: 250,
+        status: 'overdue',
+        dueDate: '2024-10-25',
+        daysOverdue: 11,
+      },
+    ],
+  },
 };
