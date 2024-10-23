@@ -6,9 +6,9 @@ import { mockData } from './mockData';
 const TopClients = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center p-3 bg-tertiary">
+            <section className="flex justify-between items-center p-2 bg-tertiary">
                 <div className="w-[10%]">
-                    <FaStar className="text-xl md:text-2xl text-[#cd942d]" />
+                    <FaStar className="text-xl md:text-xl text-[#cd942d]" />
                 </div>
                 <h2 className="w-[90%] text-sm text-center font-medium">Top Clients</h2>
             </section>

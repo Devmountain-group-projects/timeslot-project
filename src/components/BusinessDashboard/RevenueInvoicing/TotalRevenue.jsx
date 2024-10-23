@@ -7,9 +7,9 @@ import { mockData } from './mockData';
 const TotalRevenue = () => {
     return (
         <div className="bg-white w-full h-full flex flex-col rounded-xl border-2 border-gray-300 overflow-hidden">
-            <section className="flex justify-between items-center p-3 bg-tertiary">
+            <section className="flex justify-between items-center p-2 bg-tertiary">
                 <div className="w-[10%]">
-                    <FaDollarSign className="text-xl md:text-2xl text-green-600" />
+                    <FaDollarSign className="text-xl md:text-xl text-green-600" />
                 </div>
                 <h2 className="w-[90%] text-sm text-center font-medium">Total Revenue</h2>
             </section>

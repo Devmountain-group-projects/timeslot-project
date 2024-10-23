@@ -41,4 +41,21 @@ export const mockData = {
     trend: 'decreasing',
     percentageChange: -15,
   },
+  paymentMethods: [
+    { method: 'Credit Card', percentage: 60, amount: 7200 },
+    { method: 'PayPal', percentage: 30, amount: 3600 },
+    { method: 'Bank Transfer', percentage: 10, amount: 1200 },
+  ],
+  taxSummary: {
+    currentMonth: 500,
+    previousMonth: 450,
+    yearToDate: 5600,
+    percentageChange: 11.1,
+  },
+  serviceRevenue: [
+    { service: 'Haircuts', amount: 4000 },
+    { service: 'Consultations', amount: 3500 },
+    { service: 'Hair Coloring', amount: 2800 },
+    { service: 'Styling', amount: 1700 },
+  ],
 };
