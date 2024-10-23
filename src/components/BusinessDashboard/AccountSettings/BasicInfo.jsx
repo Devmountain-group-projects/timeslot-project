@@ -70,7 +70,11 @@ const BasicInfo = () => {
         const res = await userCheck()
         if (res.success) {
             console.log("res.user.profile_picture: ", res.user.profile_picture)
-            setPhoto(res.user.profile_picture)
+            if (res.user.profile_picture === "Default") {
+                setPhoto(User6)
+            } else {
+                setPhoto(res.user.profile_picture)
+            }
             console.log("Is this updating", photo)
         } else {
             setPhoto(User6)
