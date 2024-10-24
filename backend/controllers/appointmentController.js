@@ -89,8 +89,8 @@ export const removeAppointment = async (req, res) => {
 // Update an appointment
 export const updateAppointment = async (req, res) => {
     const db = req.app.get("db");
-    const { appointmentId, appointmentDate, startTime, endTime, notes, status } =
-        req.body;
+    const { appointmentId } = req.params;
+    const updatedData = req.body;
 
     try {
         const appointment = await db.appointment.findByPk(appointmentId);
@@ -101,19 +101,19 @@ export const updateAppointment = async (req, res) => {
             });
         }
 
-        appointment.appointment_date =
-            appointmentDate || appointment.appointment_date;
-        appointment.appointment_start = startTime || appointment.appointment_start;
-        appointment.appointment_end = endTime || appointment.appointment_end;
-        appointment.notes = notes || appointment.notes;
-        appointment.status = status || appointment.status;
+        await appointment.update(updatedData);
 
-        await appointment.save();
+        const updatedAppointment = await db.appointment.findByPk(appointmentId, {
+            include: [
+                { model: db.user, as: "user" },
+                { model: db.service, as: "service" },
+            ],
+        });
 
-        res.send({
+        res.status(200).send({
             message: "Appointment updated successfully",
             success: true,
-            appointment,
+            appointment: updatedAppointment,
         });
     } catch (error) {
         console.error("Error updating appointment:", error);

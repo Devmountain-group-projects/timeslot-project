@@ -134,7 +134,10 @@ const AllClients = () => {
                                     setSelectedAppointment(appointment);
                                     setShowEditAppointmentModal(true);
                                 }}
-                                onDeleteAppointment={handleDeleteAppointment} // Add this line
+                                onDeleteAppointment={(appointmentId) => {
+                                    handleDeleteAppointment(appointmentId);
+                                    // Optionally, you might want to close any modals or update UI here
+                                }}
                             />
                         </div>
                     </Card>

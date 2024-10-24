@@ -10,7 +10,7 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         details: { ...appointment.details }
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { removeAppointment } = useAppointment();
+    const { updateAppointment, removeAppointment } = useAppointment();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -18,11 +18,10 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (name in updatedAppointment) {
-            setUpdatedAppointment(prev => ({ ...prev, [name]: value }));
-        } else {
-            setUpdatedAppointment(prev => ({ ...prev, details: { ...prev.details, [name]: value } }));
-        }
+        setUpdatedAppointment(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     const handleSubmit = async (e) => {
@@ -30,12 +29,9 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         setIsSubmitting(true);
 
         try {
-            await appointmentService.updateAppointment(
-                updatedAppointment,
-                updatedAppointment.email
-            );
-
-            onEdit(updatedAppointment);
+            const updatedAppointmentData = await updateAppointment(updatedAppointment.appointment_id, updatedAppointment);
+            onEdit(updatedAppointmentData);
+            onClose();
         } catch (error) {
             console.error('Error updating appointment:', error);
             alert('Failed to update appointment. Please try again.');
@@ -45,17 +41,19 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
     };
 
     const handleDelete = async () => {
-        setIsSubmitting(true);
+        if (window.confirm('Are you sure you want to delete this appointment?')) {
+            setIsSubmitting(true);
 
-        try {
-            await removeAppointment(appointment.appointment_id);
-            onDelete(appointment.appointment_id);
-            onClose();
-        } catch (error) {
-            console.error('Error deleting appointment:', error);
-            alert('Failed to delete appointment. Please try again.');
-        } finally {
-            setIsSubmitting(false);
+            try {
+                await removeAppointment(appointment.appointment_id);
+                onDelete(appointment.appointment_id);
+                onClose();
+            } catch (error) {
+                console.error('Error deleting appointment:', error);
+                alert('Failed to delete appointment. Please try again.');
+            } finally {
+                setIsSubmitting(false);
+            }
         }
     };
 
@@ -79,9 +77,9 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                                 </label>
                                 <input
                                     type="date"
-                                    id="date"
-                                    name="date"
-                                    value={updatedAppointment.date}
+                                    id="appointment_date"
+                                    name="appointment_date"
+                                    value={updatedAppointment.appointment_date}
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}
@@ -94,9 +92,9 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                                 </label>
                                 <input
                                     type="time"
-                                    id="time"
-                                    name="time"
-                                    value={updatedAppointment.time}
+                                    id="appointment_start"
+                                    name="appointment_start"
+                                    value={updatedAppointment.appointment_start}
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}
