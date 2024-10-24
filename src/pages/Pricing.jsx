@@ -6,6 +6,7 @@ import { FaQuestion, FaRocket } from 'react-icons/fa';
 import { TbTableOptions } from 'react-icons/tb';
 import { BsCreditCard, BsCalendarCheck, BsShieldCheck } from 'react-icons/bs';
 import { MdSupport, MdApi } from 'react-icons/md';
+import QuestionsImg from '../assets/images/questionsimg.jpg';
 
 const Pricing = () => {
     return (
@@ -56,14 +57,14 @@ const Pricing = () => {
                             <span className='text-primary text-xl sm:text-3xl lg:text-5xl'>.</span>
                         </h2>
                     </div>
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
+                    <div className="overflow-x-auto rounded-xl shadow-lg">
+                        <table className="w-full bg-white">
                             <thead>
-                                <tr className="border-b-2">
-                                    <th className="p-4 text-left">Feature</th>
-                                    <th className="p-4 text-center">Free</th>
-                                    <th className="p-4 text-center">Professional</th>
-                                    <th className="p-4 text-center">Enterprise</th>
+                                <tr className="bg-gradient-to-r from-primary/10 to-secondary/10">
+                                    <th className="p-6 text-left text-gray-800 font-bold">Feature</th>
+                                    <th className="p-6 text-center text-gray-800 font-bold">Free</th>
+                                    <th className="p-6 text-center text-gray-800 font-bold">Professional</th>
+                                    <th className="p-6 text-center text-gray-800 font-bold">Enterprise</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,14 +76,29 @@ const Pricing = () => {
                                     { feature: "Custom Branding", icon: <BsCreditCard className="inline mr-2" />, free: "✗", pro: "✓", enterprise: "✓" },
                                     { feature: "API Access", icon: <MdApi className="inline mr-2" />, free: "✗", pro: "✗", enterprise: "✓" },
                                 ].map((row, index) => (
-                                    <tr key={index} className="border-b">
-                                        <td className="p-4 font-medium flex items-center">
-                                            {row.icon}
+                                    <tr key={index}
+                                        className={`border-b hover:bg-gray-50 transition-colors ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'
+                                            }`}
+                                    >
+                                        <td className="p-6 font-medium flex items-center">
+                                            <span className="text-primary">{row.icon}</span>
                                             {row.feature}
                                         </td>
-                                        <td className="p-4 text-center">{row.free}</td>
-                                        <td className="p-4 text-center">{row.pro}</td>
-                                        <td className="p-4 text-center">{row.enterprise}</td>
+                                        <td className="p-6 text-center">
+                                            <span className={`${row.free === "✗" ? 'text-red-500' : row.free === "✓" ? 'text-green-500 font-medium' : ''}`}>
+                                                {row.free}
+                                            </span>
+                                        </td>
+                                        <td className="p-6 text-center">
+                                            <span className={`${row.pro === "✗" ? 'text-red-500' : row.pro === "✓" ? 'text-green-500 font-medium' : ''}`}>
+                                                {row.pro}
+                                            </span>
+                                        </td>
+                                        <td className="p-6 text-center">
+                                            <span className={`${row.enterprise === "✗" ? 'text-red-500' : row.enterprise === "✓" ? 'text-green-500 font-medium' : ''}`}>
+                                                {row.enterprise}
+                                            </span>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -105,36 +121,50 @@ const Pricing = () => {
                             <span className='text-primary text-xl sm:text-3xl lg:text-5xl'>.</span>
                         </h2>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                        {[
-                            {
-                                question: "Can I upgrade or downgrade my plan at any time?",
-                                answer: "Yes, you can change your plan at any time. Changes take effect at the start of your next billing cycle."
-                            },
-                            {
-                                question: "Is there a contract or commitment?",
-                                answer: "No long-term contracts required. You can cancel your subscription at any time."
-                            },
-                            {
-                                question: "Do you offer a free trial?",
-                                answer: "Yes, all paid plans come with a 14-day free trial, no credit card required."
-                            },
-                            {
-                                question: "What payment methods do you accept?",
-                                answer: "We accept all major credit cards, PayPal, and bank transfers for Enterprise plans."
-                            }
-                        ].map((faq, index) => (
-                            <motion.div
-                                key={index}
-                                className="bg-gray-50 p-6 rounded-lg"
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.6 + index * 0.1 }}
-                            >
-                                <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
-                                <p className="text-gray-600">{faq.answer}</p>
-                            </motion.div>
-                        ))}
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="hidden lg:block"
+                        >
+                            <img
+                                src={QuestionsImg}
+                                alt="FAQ Illustration"
+                                className="w-full h-auto"
+                            />
+                        </motion.div>
+                        <div className="grid gap-8">
+                            {[
+                                {
+                                    question: "Can I upgrade or downgrade my plan at any time?",
+                                    answer: "Yes, you can change your plan at any time. Changes take effect at the start of your next billing cycle."
+                                },
+                                {
+                                    question: "Is there a contract or commitment?",
+                                    answer: "No long-term contracts required. You can cancel your subscription at any time."
+                                },
+                                {
+                                    question: "Do you offer a free trial?",
+                                    answer: "Yes, all paid plans come with a 14-day free trial, no credit card required."
+                                },
+                                {
+                                    question: "What payment methods do you accept?",
+                                    answer: "We accept all major credit cards, PayPal, and bank transfers for Enterprise plans."
+                                }
+                            ].map((faq, index) => (
+                                <motion.div
+                                    key={index}
+                                    className="bg-gradient-gray p-6 rounded-lg hover:shadow-md transition-shadow"
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.6 + index * 0.1 }}
+                                >
+                                    <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
+                                    <p className="text-gray-600">{faq.answer}</p>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </motion.div>
