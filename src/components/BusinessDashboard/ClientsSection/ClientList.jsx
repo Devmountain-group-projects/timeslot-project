@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaChevronRight } from "react-icons/fa";
 import { useAppointment } from "../../../context/ApptContext";
 import axios from "axios";
 import PlaceholderAvatar from "/src/assets/images/placeholderavatar.png";
@@ -44,7 +44,7 @@ const ClientItem = ({ client, onEdit }) => {
                         onClick={() => onEdit(client)}
                         className="text-gray-400 hover:text-gray-600"
                     >
-                        <FaPlus className="text-lg" />
+                        <FaChevronRight className="text-lg" />
                     </button>
                 </div>
             </div>
