@@ -12,7 +12,7 @@ import {
 import { useAppointment } from "../../../context/ApptContext.jsx";
 import dayjs from "dayjs";
 
-const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
+const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppointment }) => {
     const { appointments, isAppointmentsLoaded } = useAppointment();
 
     const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -103,7 +103,8 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
                         {isAppointmentsLoaded && selectedAppointment !== null && (
                             <AppointmentDetails
                                 appointment={appointments[selectedAppointment]}
-                                onEdit={() => onEditAppointment(selectedAppointment)}
+                                onEdit={() => onEditAppointment(appointments[selectedAppointment])}
+                                onDelete={() => onDeleteAppointment(appointments[selectedAppointment].appointment_id)}
                             />
                         )}
                     </div>
@@ -113,7 +114,7 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
     );
 };
 
-const AppointmentDetails = ({ appointment, onEdit }) => (
+const AppointmentDetails = ({ appointment, onEdit, onDelete }) => (
     <div className="p-4">
         <h3 className="font-semibold text-base mb-4">Appointment Details</h3>
         <InfoItem label="Service Provider" value="" />
@@ -146,6 +147,9 @@ const AppointmentDetails = ({ appointment, onEdit }) => (
                 <button onClick={onEdit} className="btn-blue-dashboard">
                     Edit Appointment
                 </button>
+                <button onClick={onDelete} className="btn-red">
+                    Delete Appointment
+                </button>
             </div>
         </div>
     </div>
@@ -155,8 +159,8 @@ const InfoItem = ({ icon: Icon, label, value }) => (
     <div className="flex items-center text-xs md:text-sm mb-1">
         {Icon && <Icon size={12} className="mr-1 text-secondary" />}
         <span className="font-medium mr-1 uppercase text-xs text-secondary">
-      {label}:
-    </span>
+            {label}:
+        </span>
         <span className="text-gray-600 text-sm">{value}</span>
     </div>
 );
