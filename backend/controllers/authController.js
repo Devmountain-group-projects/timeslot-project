@@ -1,29 +1,29 @@
-import bcryptjs from "bcryptjs";
-import * as crypto from "node:crypto";
-import dotenv from "dotenv";
+import bcryptjs from 'bcryptjs';
+import * as crypto from 'node:crypto';
+import dotenv from 'dotenv';
 dotenv.config();
 
 // User check Route
 export const userCheck = async (req, res) => {
-  const db = req.app.get("db");
+  const db = req.app.get('db');
   const id = req.session.userId;
-  console.log("Session: ", req.session);
+  console.log('Session: ', req.session);
   if (req.session.userId) {
     const user = await db.user.findOne({
       where: { user_id: id },
       include: {
         model: db.business,
-        as: "business",
+        as: 'business',
       },
     });
     res.send({
-      message: "User logged in",
+      message: 'User logged in',
       success: true,
       user,
     });
   } else {
     res.send({
-      message: "No user logged in",
+      message: 'No user logged in',
       success: false,
     });
   }
@@ -31,7 +31,7 @@ export const userCheck = async (req, res) => {
 
 // Login Route
 export const login = async (req, res) => {
-  const db = req.app.get("db");
+  const db = req.app.get('db');
 
   const { email, password } = req.body;
 
@@ -40,7 +40,7 @@ export const login = async (req, res) => {
 
   if (!user || !bcryptjs.compareSync(password, user.password_hash)) {
     return res.send({
-      message: "Bad login",
+      message: 'Bad login',
       success: false,
     });
   } else {
@@ -48,7 +48,7 @@ export const login = async (req, res) => {
     req.session.name = user.name;
 
     return res.send({
-      message: "Hit login",
+      message: 'Hit login',
       userId: user.id,
       success: true,
       userinfo: user,
@@ -58,9 +58,9 @@ export const login = async (req, res) => {
 
 // Register Route
 export const register = async (req, res) => {
-  const db = req.app.get("db");
-  console.log("Req.body: ", req.body);
-  console.log("Req: ", req.body.userData);
+  const db = req.app.get('db');
+  console.log('Req.body: ', req.body);
+  console.log('Req: ', req.body.userData);
 
   const { name, email, phoneNumber, password } = req.body.userData;
   const hashedPassword = bcryptjs.hashSync(password, bcryptjs.genSaltSync(10));
@@ -70,13 +70,13 @@ export const register = async (req, res) => {
     // user
 
     if (await db.user.findOne({ where: { email: email } })) {
-      console.log("Email aready exists");
+      console.log('Email aready exists');
       return res.send({
-        message: "Email already exists",
+        message: 'Email already exists',
         success: false,
       });
     } else {
-      console.log("Creating a new User");
+      console.log('Creating a new User');
 
       const newUser = await db.user.create({
         name,
@@ -84,7 +84,7 @@ export const register = async (req, res) => {
         phone: phoneNumber,
         role_id: 1,
         password_hash: hashedPassword,
-        profile_picture: "Default",
+        profile_picture: 'Default',
       });
 
       console.log(newUser);
@@ -92,7 +92,7 @@ export const register = async (req, res) => {
       req.session.name = newUser.name;
 
       return res.send({
-        message: "New User created",
+        message: 'New User created',
         success: true,
         newUserInfo: newUser,
       });
@@ -116,9 +116,9 @@ export const register = async (req, res) => {
       servicePrice,
       availability,
     } = req.body.detailsData;
-    console.log("businessName: ", businessName);
-    console.log("registerData", req.body.registerData);
-    console.log("detailsData", req.body.detailsData);
+    console.log('businessName: ', businessName);
+    console.log('registerData', req.body.registerData);
+    console.log('detailsData', req.body.detailsData);
     console.log(
       await db.business.findOne({ where: { business_name: businessName } })
     );
@@ -130,13 +130,13 @@ export const register = async (req, res) => {
       })) === null &&
       (await db.user.findOne({ where: { email: email } })) === null
     ) {
-      console.log("Business Already exists");
+      console.log('Business Already exists');
       return res.send({
-        message: "Failed to create New Business",
+        message: 'Failed to create New Business',
         success: false,
       });
     } else {
-      console.log("Creating a new User and Business");
+      console.log('Creating a new User and Business');
 
       const newUser = await db.user.create({
         name,
@@ -144,9 +144,9 @@ export const register = async (req, res) => {
         phone: phoneNumber,
         role_id: 3,
         password_hash: hashedPassword,
-        profile_picture: "Default",
+        profile_picture: 'Default',
       });
-      console.log("New User: ", newUser);
+      console.log('New User: ', newUser);
 
       const newBusiness = await db.business.create({
         business_name: businessName,
@@ -160,29 +160,29 @@ export const register = async (req, res) => {
         phone: contactInfo,
         website,
       });
-      console.log("New Business: ", newBusiness);
+      console.log('New Business: ', newBusiness);
 
       req.session.userId = newUser.user_id;
       req.session.name = newUser.name;
       req.session.businessId = newBusiness.business_id;
 
-      console.log("Connecting Business and User");
+      console.log('Connecting Business and User');
 
       const user = await db.user.findOne({ where: { email: email } });
       const business = await db.business.findOne({
         where: { business_name: businessName },
       });
-      console.log("user", user);
-      console.log("user_id", user.user_id);
-      console.log("business", business);
-      console.log("businessName", businessName);
-      console.log("business_id", business.business_id);
+      console.log('user', user);
+      console.log('user_id', user.user_id);
+      console.log('business', business);
+      console.log('businessName', businessName);
+      console.log('business_id', business.business_id);
 
       const connectBusiness = await db.user_business.create({
         user_id: user.user_id,
         business_id: business.business_id,
       });
-      console.log("DB connection: ", connectBusiness);
+      console.log('DB connection: ', connectBusiness);
 
       const newService = await db.service.create({
         business_id: business.business_id,
@@ -191,12 +191,12 @@ export const register = async (req, res) => {
         duration: serviceDuration,
         price: servicePrice,
       });
-      console.log("New Service: ", newService);
+      console.log('New Service: ', newService);
 
       for (const day in availability) {
         if (
-          !(availability[day].start === "") &&
-          !(availability[day].end === "")
+          !(availability[day].start === '') &&
+          !(availability[day].end === '')
         ) {
           const newAvailability = await db.availability.create({
             business_id: business.business_id,
@@ -204,12 +204,12 @@ export const register = async (req, res) => {
             start_time: availability[day].start,
             end_time: availability[day].end,
           });
-          console.log("Added ", day);
+          console.log('Added ', day);
         }
       }
 
       return res.send({
-        message: "New Business created",
+        message: 'New Business created',
         success: true,
       });
     }
@@ -220,13 +220,13 @@ export const register = async (req, res) => {
 // Register Logout
 export const logout = async (req, res) => {
   if (!req.session.userId) {
-    res.status(401).json({ error: "Unauthorized" });
-    console.log("Logout Failed");
-    console.log("req.session.userId: ", req.session.userId);
+    res.status(401).json({ error: 'Unauthorized' });
+    console.log('Logout Failed');
+    console.log('req.session.userId: ', req.session.userId);
   } else {
     req.session.destroy();
     res.send({
-      message: "User Logged out",
+      message: 'User Logged out',
       success: true,
     });
   }
