@@ -3,9 +3,6 @@ import { FaPlus } from "react-icons/fa";
 import { useAppointment } from "../../../context/ApptContext";
 import axios from "axios";
 import PlaceholderAvatar from "/src/assets/images/placeholderavatar.png";
-import User8 from "/src/assets/images/user8.png";
-import User9 from "/src/assets/images/user9.png";
-import User10 from "/src/assets/images/user10.png";
 import AddClientModal from "./AddClientModal";
 import EditClientModal from "./EditClientModal";
 
@@ -29,13 +26,14 @@ const ClientItem = ({ client, onEdit }) => {
                     <div className="flex flex-col flex-grow">
                         <h3 className="font-medium text-base">{client.name}</h3>
                         <p className="text-xs text-gray-500">
-                            Since: {new Date(client.createdAt).toLocaleString('en-US', {
-                                month: '2-digit',
-                                day: '2-digit',
-                                year: '2-digit',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                hour12: false
+                            Since:{" "}
+                            {new Date(client.createdAt).toLocaleString("en-US", {
+                                month: "2-digit",
+                                day: "2-digit",
+                                year: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false,
                             })}
                         </p>
                         <p className="text-xs text-gray-600">{client.email}</p>
@@ -55,22 +53,10 @@ const ClientItem = ({ client, onEdit }) => {
 };
 
 const ClientList = () => {
-    const {
-        createClient,
-        updateClient,
-        removeClient,
-        fetchClients,
-        clients,
-        setClients,
-    } = useAppointment();
+    const { clients, setClients } = useAppointment();
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
-    // const [clients, setClients] = useState([]);
-
-    useEffect(() => {
-        fetchClients();
-    }, []);
 
     // 1. Handle Adding Client
     const handleAddClient = async (newClient) => {
@@ -202,13 +188,15 @@ const ClientList = () => {
             <hr className="border-t border-gray-300 w-full m-0" />
             <section className="flex-grow overflow-y-auto">
                 <div className="min-h-full">
-                    {clients.sort((a, b) => a.name.localeCompare(b.name)).map((client) => (
-                        <ClientItem
-                            key={client.id}
-                            client={client}
-                            onEdit={handleEditClick}
-                        />
-                    ))}
+                    {clients
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((client) => (
+                            <ClientItem
+                                key={client.user_id}
+                                client={client}
+                                onEdit={handleEditClick}
+                            />
+                        ))}
                 </div>
             </section>
 

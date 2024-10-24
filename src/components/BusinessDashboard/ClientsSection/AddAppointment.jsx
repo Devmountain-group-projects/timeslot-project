@@ -1,39 +1,29 @@
-import React, { useState } from 'react';
-import { FaPlus, FaCalendarAlt, FaClock, FaClipboardList, FaCheckCircle, FaChevronDown, FaChevronUp, FaChevronRight } from 'react-icons/fa';
-import User9 from '/src/assets/images/user9.png';
-
+import { useEffect, useState } from "react";
+import {
+    FaPlus,
+    FaCalendarAlt,
+    FaClock,
+    FaClipboardList,
+    FaCheckCircle,
+    FaChevronDown,
+    FaChevronUp,
+    FaChevronRight,
+} from "react-icons/fa";
+import { useAppointment } from "../../../context/ApptContext.jsx";
+import dayjs from "dayjs";
 
 const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
+    const { appointments, isAppointmentsLoaded } = useAppointment();
 
-    const [selectedClient, setSelectedClient] = useState(0);
-    const [clients, setClients] = useState([
-        {
-            id: 1,
-            name: 'John Doe',
-            email: 'rodrigomcobos@gmail.com',
-            date: '2024-10-20',
-            time: '10:00',
-            serviceType: 'Consultation',
-            status: 'Scheduled',
-            photo: User9,
-            details: {
-                serviceProvider: 'Dr. Emily Brown',
-                createdAt: '2024-10-15',
-                updatedAt: '2024-10-16',
-                price: '150',
-                description: 'Initial consultation for new patient',
-                paymentStatus: 'Paid',
-            }
-        },
-    ]);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
 
     const toggleAccordion = (index) => {
-        if (selectedClient === index) {
-            setSelectedClient(null);
-        } else {
-            setSelectedClient(index);
-        }
+        setSelectedAppointment(index === selectedAppointment ? null : index);
     };
+
+    useEffect(() => {
+        setSelectedAppointment(0);
+    }, [isAppointmentsLoaded]);
 
     return (
         <div className="flex flex-col h-full overflow-hidden border-2 border-gray-300 rounded-xl">
@@ -50,66 +40,70 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
             <hr className="border-t border-gray-300 w-full m-0" />
 
             <div className="flex-grow overflow-hidden">
-                <div className="lg:hidden overflow-y-auto h-full">
-                    {clients.map((client, index) => (
-                        <div key={client.id} className="border-b border-gray-300 last:border-b-0">
-                            <div
-                                className="flex items-start justify-between p-4 cursor-pointer"
-                                onClick={() => toggleAccordion(index)}
-                            >
-                                <div className="flex items-start">
-                                    <img src={client.photo} alt={client.name} className="w-12 h-12 rounded-full mr-3 object-cover" />
-                                    <div>
-                                        <h3 className="font-semibold text-sm md:text-base">{client.name}</h3>
-                                        <InfoItem icon={FaCalendarAlt} label="Appointment Date" value={client.date} />
-                                        <InfoItem icon={FaClock} label="Appointment Time" value={client.time} />
-                                        <InfoItem icon={FaClipboardList} label="Service Type" value={client.serviceType} />
-                                        <InfoItem icon={FaCheckCircle} label="Status" value={client.status} />
-                                    </div>
-                                </div>
-                                {selectedClient === index ? <FaChevronUp /> : <FaChevronDown />}
-                            </div>
-                            {selectedClient === index && (
-                                <div className="p-4 bg-gray-50">
-                                    <AppointmentDetails client={client} onEdit={() => onEditAppointment(client)} />
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
-
-                <div className="hidden lg:flex h-full">
+                <div className="lg:flex h-full">
                     <div className="w-[45%] overflow-y-auto border-r border-gray-300 h-full">
-                        {clients.map((client, index) => (
-                            <div
-                                key={client.id}
-                                className={`border-b border-gray-300 last:border-b-0 p-4 cursor-pointer ${selectedClient === index ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
-                                onClick={() => setSelectedClient(index)}
-                            >
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-start">
-                                        <img src={client.photo} alt={client.name} className="w-12 h-12 rounded-full mr-3 object-cover" />
-                                        <div>
-                                            <h3 className="font-semibold text-sm md:text-base">{client.name}</h3>
-                                            <InfoItem icon={FaCalendarAlt} label="Appointment Date" value={client.date} />
-                                            <InfoItem icon={FaClock} label="Appointment Time" value={client.time} />
-                                            <InfoItem icon={FaClipboardList} label="Service Type" value={client.serviceType} />
-                                            <InfoItem icon={FaCheckCircle} label="Status" value={client.status} />
+                        {appointments.map(function (appointment, index) {
+                            const client = appointment.user;
+
+                            return (
+                                <div
+                                    key={appointment.appointment_id}
+                                    className="border-b border-gray-300 last:border-b-0"
+                                >
+                                    <div
+                                        className="flex items-start justify-between p-4 cursor-pointer"
+                                        onClick={() => toggleAccordion(index)}
+                                    >
+                                        <div className="flex items-start">
+                                            <img
+                                                src={client.profile_picture}
+                                                alt={client.name}
+                                                className="w-12 h-12 rounded-full mr-3 object-cover"
+                                            />
+                                            <div>
+                                                <h3 className="font-semibold text-sm md:text-base">
+                                                    {client.name}
+                                                </h3>
+                                                <InfoItem
+                                                    icon={FaCalendarAlt}
+                                                    label="Appointment Date"
+                                                    value={dayjs(appointment.appointment_date).format(
+                                                        "YYYY-MM-DD",
+                                                    )}
+                                                />
+                                                <InfoItem
+                                                    icon={FaClock}
+                                                    label="Appointment Time"
+                                                    value={appointment.appointment_start}
+                                                />
+                                                <InfoItem
+                                                    icon={FaClipboardList}
+                                                    label="Service Type"
+                                                    value={appointment.service.name}
+                                                />
+                                                <InfoItem
+                                                    icon={FaCheckCircle}
+                                                    label="Status"
+                                                    value={appointment.status}
+                                                />
+                                            </div>
                                         </div>
+                                        {selectedAppointment === index ? (
+                                            <FaChevronUp />
+                                        ) : (
+                                            <FaChevronDown />
+                                        )}
                                     </div>
-                                    {selectedClient === index && (
-                                        <FaChevronRight className="text-gray-400 text-lg" />
-                                    )}
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     <div className="w-[55%] overflow-y-auto h-full">
-                        {clients[selectedClient] && (
+                        {isAppointmentsLoaded && selectedAppointment !== null && (
                             <AppointmentDetails
-                                client={clients[selectedClient]}
-                                onEdit={() => onEditAppointment(clients[selectedClient])}
+                                appointment={appointments[selectedAppointment]}
+                                onEdit={() => onEditAppointment(selectedAppointment)}
                             />
                         )}
                     </div>
@@ -119,18 +113,27 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
     );
 };
 
-const AppointmentDetails = ({ client, onEdit }) => (
+const AppointmentDetails = ({ appointment, onEdit }) => (
     <div className="p-4">
         <h3 className="font-semibold text-base mb-4">Appointment Details</h3>
-        <InfoItem label="Service Provider" value={client.details.serviceProvider} />
-        <InfoItem label="Created At" value={client.details.createdAt} />
-        <InfoItem label="Updated At" value={client.details.updatedAt} />
-        <InfoItem label="Price" value={`$${client.details.price}`} />
-        <InfoItem label="Description" value={client.details.description} />
-        <InfoItem label="Payment Status" value={client.details.paymentStatus} />
+        <InfoItem label="Service Provider" value="" />
+        <InfoItem
+            label="Created At"
+            value={dayjs(appointment.createdAt).format("YYYY-MM-DD")}
+        />
+        <InfoItem
+            label="Updated At"
+            value={dayjs(appointment.updateAt).format("YYYY-MM-DD")}
+        />
+        <InfoItem label="Price" value={`$${appointment.service.price}`} />
+        <InfoItem label="Description" value={appointment.service.description} />
+        <InfoItem label="Payment Status" value={appointment.payment_status} />
 
         <div className="mt-4">
-            <label htmlFor="notes" className="block text-xs font-medium text-secondary mb-1 uppercase">
+            <label
+                htmlFor="notes"
+                className="block text-xs font-medium text-secondary mb-1 uppercase"
+            >
                 Appointment Notes
             </label>
             <textarea
@@ -140,10 +143,7 @@ const AppointmentDetails = ({ client, onEdit }) => (
                 placeholder="Enter appointment notes here..."
             />
             <div className="flex justify-start gap-4">
-                <button
-                    onClick={onEdit}
-                    className="btn-blue-dashboard"
-                >
+                <button onClick={onEdit} className="btn-blue-dashboard">
                     Edit Appointment
                 </button>
             </div>
@@ -154,7 +154,9 @@ const AppointmentDetails = ({ client, onEdit }) => (
 const InfoItem = ({ icon: Icon, label, value }) => (
     <div className="flex items-center text-xs md:text-sm mb-1">
         {Icon && <Icon size={12} className="mr-1 text-secondary" />}
-        <span className="font-medium mr-1 uppercase text-xs text-secondary">{label}:</span>
+        <span className="font-medium mr-1 uppercase text-xs text-secondary">
+      {label}:
+    </span>
         <span className="text-gray-600 text-sm">{value}</span>
     </div>
 );

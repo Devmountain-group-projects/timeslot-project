@@ -1,4 +1,4 @@
-import { businesses } from "../data/businessMassSeed.js";  // Import the businesses array
+import { businesses } from "../data/businessMassSeed.js"; // Import the businesses array
 
 // Seed logic for creating businesses, services, and availability
 export const createBusiness = async function createBusiness(db) {
@@ -59,7 +59,7 @@ export const createBusiness = async function createBusiness(db) {
         for (const service of services) {
             await db.service.create({
                 business_id: createdBusiness.business_id,
-                name: service.service_name,
+                name: service.name,
                 description: service.description,
                 duration: service.duration,
                 price: service.price,

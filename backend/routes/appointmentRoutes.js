@@ -4,17 +4,17 @@ import {
     removeAppointment,
     updateAppointment,
     getAppointment,
-    getAppointmentByBusiness,
-    getAppointmentByUser,
-} from "../controllers/appointmentController.js"
+    getAppointments,
+} from "../controllers/appointmentController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/addAppointment", addAppointment)
-router.delete("/removeAppointment", removeAppointment)
-router.put("/updateAppointment", updateAppointment)
-router.get("/getAppointment", getAppointment)
-router.get("/getAppointmentByBusiness/:businessId", getAppointmentByBusiness)
-router.get("/getAppointmentByUser/:userId", getAppointmentByUser)
+router.post("/addAppointment", addAppointment);
+router.delete("/removeAppointment", removeAppointment);
+router.put("/updateAppointment", updateAppointment);
+router.get("/getAppointment", getAppointment);
+router.get("/getAppointments", getAppointments);
+router.get("/getAppointments/user/:userId", getAppointments);
+router.get("/getAppointments/business/:businessId", getAppointments);
 
 export default router;

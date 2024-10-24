@@ -41,6 +41,7 @@ export const Appointment = (sequelize, Sequelize) => {
                     "confirmed",
                     "completed",
                     "cancelled",
+                    "Scheduled",
                     "test"
                 ),
                 defaultValue: "pending",
@@ -59,8 +60,8 @@ export const Appointment = (sequelize, Sequelize) => {
                 onDelete: "RESTRICT",
             },
             payment_status: {
-                type: Sequelize.ENUM("sent", "pending", "failed", "test"),
-                defaultValue: "pending",
+                type: Sequelize.ENUM("sent", "Pending", "pending","failed", "test", ),
+                defaultValue: "Pending",
                 allowNull: false,
             },
         },
