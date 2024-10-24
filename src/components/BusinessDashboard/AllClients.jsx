@@ -116,17 +116,17 @@ const AllClients = () => {
                     </Card>
                 </motion.div>
 
-                {/* Row 2 - Flexible height with min/max in vh */}
+                {/* Row 2 - Responsive height adjustments */}
                 <motion.div
-                    className="flex-1 flex flex-col md:flex-row gap-4 min-h-[45vh] max-h-[60vh]"
+                    className="flex-1 flex flex-col md:flex-row gap-4 min-h-[100vh] md:min-h-[45vh] max-h-[50vh] md:max-h-[60vh]"
                     variants={rowVariants}
                 >
-                    <Card className="w-full md:w-[30%] h-full">
+                    <Card className="w-full md:w-[30%] h-[500px] md:h-full">
                         <div className="h-full">
                             <ClientList />
                         </div>
                     </Card>
-                    <Card className="w-full md:w-[70%] h-full">
+                    <Card className="w-full md:w-[70%] h-auto md:h-full">
                         <div className="h-full">
                             <AddAppointment
                                 onCreateAppointment={() => setShowCreateAppointmentModal(true)}
