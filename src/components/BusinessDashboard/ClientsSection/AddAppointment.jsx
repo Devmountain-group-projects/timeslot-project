@@ -30,7 +30,7 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
 
     return (
         <div className="flex flex-col h-full overflow-hidden border-2 border-gray-300 rounded-xl">
-            <header className="flex justify-between items-center py-2 px-3 bg-tertiary">
+            <section className="flex justify-between items-center px-3 py-2 bg-tertiary">
                 <h2 className="w-[90%] text-sm text-left font-medium">Add Appointment</h2>
                 <button
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
@@ -39,10 +39,10 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                 >
                     <FaPlus className="text-lg" />
                 </button>
-            </header>
+            </section>
             <hr className="border-t border-gray-300 w-full m-0" />
 
-            <div className="flex-grow overflow-hidden">
+            <section className="flex-grow overflow-hidden">
                 {/* Mobile View */}
                 <div className="lg:hidden overflow-y-auto h-full">
                     {appointments.map((appointment, index) => {
@@ -66,12 +66,22 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                                             <h3 className="font-semibold text-sm md:text-base">
                                                 {client.name}
                                             </h3>
-                                            <p className="text-xs text-gray-500">
-                                                Date: {dayjs(appointment.appointment_date).format("YYYY-MM-DD")}
-                                            </p>
-                                            <p className="text-xs text-gray-500">
-                                                Service: {appointment.service.name}
-                                            </p>
+                                            <InfoItem
+                                                icon={FaCalendarAlt}
+                                                value={dayjs(appointment.appointment_date).format("YYYY-MM-DD")}
+                                            />
+                                            <InfoItem
+                                                icon={FaClock}
+                                                value={appointment.appointment_start}
+                                            />
+                                            <InfoItem
+                                                icon={FaClipboardList}
+                                                value={appointment.service.name}
+                                            />
+                                            <InfoItem
+                                                icon={FaCheckCircle}
+                                                value={appointment.status}
+                                            />
                                         </div>
                                     </div>
                                     {expandedAppointment === index ? <FaChevronUp /> : <FaChevronDown />}
@@ -114,7 +124,7 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                         )}
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     );
 };
@@ -135,9 +145,16 @@ const AppointmentCard = ({ appointment, isSelected, onClick }) => {
                 <div className="flex justify-between items-center">
                     <div>
                         <h3 className="font-semibold text-sm md:text-base">{client.name}</h3>
-                        <p className="text-xs text-gray-500">
-                            Date: {dayjs(appointment.appointment_date).format("YYYY-MM-DD")}
-                        </p>
+                        <InfoItem
+                            icon={FaCalendarAlt}
+                            value={dayjs(appointment.appointment_date).format("YYYY-MM-DD")}
+                            className="text-xs text-gray-500"
+                        />
+                        <InfoItem
+                            icon={FaClock}
+                            value={appointment.appointment_start}
+                            className="text-xs text-gray-500"
+                        />
                         <InfoItem
                             icon={FaClipboardList}
                             value={appointment.service.name}
