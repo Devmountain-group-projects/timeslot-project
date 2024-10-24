@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { createPortal } from 'react-dom';
 import { appointmentService } from '../../../services/appointmentService';
 import { useAppointment } from '../../../context/ApptContext';
+import dayjs from 'dayjs';
 
 const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) => {
     const [updatedAppointment, setUpdatedAppointment] = useState({
@@ -29,7 +30,13 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         setIsSubmitting(true);
 
         try {
-            const updatedAppointmentData = await updateAppointment(updatedAppointment.appointment_id, updatedAppointment);
+            // Ensure the date is in ISO format
+            const formattedAppointment = {
+                ...updatedAppointment,
+                appointment_date: dayjs(updatedAppointment.appointment_date).format('YYYY-MM-DD'),
+            };
+
+            const updatedAppointmentData = await updateAppointment(formattedAppointment.appointment_id, formattedAppointment);
             onEdit(updatedAppointmentData);
             onClose();
         } catch (error) {

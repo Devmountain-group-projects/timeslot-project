@@ -101,6 +101,11 @@ export const updateAppointment = async (req, res) => {
             });
         }
 
+        // Ensure the date is parsed correctly
+        if (updatedData.appointment_date) {
+            updatedData.appointment_date = new Date(updatedData.appointment_date);
+        }
+
         await appointment.update(updatedData);
 
         const updatedAppointment = await db.appointment.findByPk(appointmentId, {
@@ -124,7 +129,6 @@ export const updateAppointment = async (req, res) => {
         });
     }
 };
-
 // Get appointment by ID
 export const getAppointment = async (req, res) => {
     const db = req.app.get("db");
