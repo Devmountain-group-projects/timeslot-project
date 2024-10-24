@@ -134,6 +134,7 @@ const AllClients = () => {
                                     setSelectedAppointment(appointment);
                                     setShowEditAppointmentModal(true);
                                 }}
+                                onDeleteAppointment={handleDeleteAppointment} // Add this line
                             />
                         </div>
                     </Card>

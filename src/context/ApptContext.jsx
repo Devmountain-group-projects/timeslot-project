@@ -125,9 +125,7 @@ export const AppointmentProvider = ({ children }) => {
                 data: { appointmentId },
             });
             setAppointments((prev) =>
-                prev.filter(
-                    (appointment) => appointment.appointment_id !== appointmentId,
-                ),
+                prev.filter((appointment) => appointment.appointment_id !== appointmentId)
             );
         } catch (err) {
             setError(err.message);

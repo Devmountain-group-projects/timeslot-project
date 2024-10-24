@@ -13,11 +13,11 @@ import { useAppointment } from "../../../context/ApptContext.jsx";
 import dayjs from "dayjs";
 
 const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppointment }) => {
-    const { appointments, isAppointmentsLoaded } = useAppointment();
+    const { appointments, isAppointmentsLoaded, removeAppointment } = useAppointment();
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     const [expandedAppointment, setExpandedAppointment] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Set the first appointment as selected by default for desktop view
     useEffect(() => {
         if (isAppointmentsLoaded && appointments.length > 0 && !selectedAppointment) {
             setSelectedAppointment(appointments[0]);
@@ -27,6 +27,35 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
     const toggleAccordion = (index) => {
         setExpandedAppointment(expandedAppointment === index ? null : index);
     };
+
+    const handleDeleteAppointment = async (appointmentId) => {
+        setIsSubmitting(true);
+
+        try {
+            await removeAppointment(appointmentId);
+
+            // Check if onDeleteAppointment is a function before calling it
+            if (typeof onDeleteAppointment === 'function') {
+                onDeleteAppointment(appointmentId);
+            } else {
+                console.warn('onDeleteAppointment is not a function. Appointment deleted, but parent component not notified.');
+            }
+
+            // Remove the appointment from the local state
+            const updatedAppointments = appointments.filter(app => app.appointment_id !== appointmentId);
+            setSelectedAppointment(updatedAppointments[0] || null);
+
+            // If you're using a state setter from useAppointment to update appointments, use it here
+            // For example: setAppointments(updatedAppointments);
+
+        } catch (error) {
+            console.error('Error deleting appointment:', error);
+            alert('Failed to delete appointment. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
 
     return (
         <div className="flex flex-col h-full overflow-hidden border-2 border-gray-300 rounded-xl">
@@ -41,7 +70,6 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                 </button>
             </section>
             <hr className="border-t border-gray-300 w-full m-0" />
-
             <section className="flex-grow overflow-hidden">
                 {/* Mobile View */}
                 <div className="lg:hidden overflow-y-auto h-full">
@@ -91,7 +119,8 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                                         <AppointmentDetails
                                             appointment={appointment}
                                             onEdit={() => onEditAppointment(appointment)}
-                                            onDelete={() => onDeleteAppointment(appointment.appointment_id)}
+                                            onDelete={() => handleDeleteAppointment(appointment.appointment_id)}
+                                            isSubmitting={isSubmitting}
                                         />
                                     </div>
                                 )}
@@ -99,7 +128,6 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                         );
                     })}
                 </div>
-
                 {/* Desktop View */}
                 <div className="hidden lg:flex h-full">
                     <div className="w-[45%] overflow-y-auto border-r border-gray-300">
@@ -118,7 +146,8 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                                 <AppointmentDetails
                                     appointment={selectedAppointment}
                                     onEdit={() => onEditAppointment(selectedAppointment)}
-                                    onDelete={() => onDeleteAppointment(selectedAppointment.appointment_id)}
+                                    onDelete={() => handleDeleteAppointment(selectedAppointment.appointment_id)}
+                                    isSubmitting={isSubmitting}
                                 />
                             </div>
                         )}
@@ -173,7 +202,7 @@ const AppointmentCard = ({ appointment, isSelected, onClick }) => {
     );
 };
 
-const AppointmentDetails = ({ appointment, onEdit, onDelete }) => (
+const AppointmentDetails = ({ appointment, onEdit, onDelete, isSubmitting }) => (
     <div>
         <h3 className="font-semibold text-base mb-2">Appointment Details</h3>
         <InfoItem label="Service Provider" value={appointment.service.name} />
@@ -188,7 +217,6 @@ const AppointmentDetails = ({ appointment, onEdit, onDelete }) => (
         <InfoItem label="Price" value={`$${appointment.service.price}`} />
         <InfoItem label="Description" value={appointment.service.description} />
         <InfoItem label="Payment Status" value={appointment.payment_status} />
-
         <div className="mt-4">
             <label
                 htmlFor="notes"
@@ -203,11 +231,15 @@ const AppointmentDetails = ({ appointment, onEdit, onDelete }) => (
                 placeholder="Enter appointment notes here..."
             />
             <div className="flex justify-start gap-4">
-                <button onClick={onEdit} className="btn-blue-dashboard">
+                <button onClick={onEdit} className="btn-blue-dashboard" disabled={isSubmitting}>
                     Edit Appointment
                 </button>
-                <button onClick={onDelete} className="btn-red">
-                    Delete Appointment
+                <button
+                    onClick={onDelete}
+                    className="btn-red"
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? 'Deleting...' : 'Delete Appointment'}
                 </button>
             </div>
         </div>

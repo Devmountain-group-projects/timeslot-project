@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { createPortal } from 'react-dom';
 import { appointmentService } from '../../../services/appointmentService';
+import { useAppointment } from '../../../context/ApptContext';
 
 const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) => {
     const [updatedAppointment, setUpdatedAppointment] = useState({
@@ -9,6 +10,7 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         details: { ...appointment.details }
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { removeAppointment } = useAppointment();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -46,12 +48,9 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         setIsSubmitting(true);
 
         try {
-            await appointmentService.deleteAppointment(
-                appointment,
-                appointment.email
-            );
-
-            onDelete(appointment.id);
+            await removeAppointment(appointment.appointment_id);
+            onDelete(appointment.appointment_id);
+            onClose();
         } catch (error) {
             console.error('Error deleting appointment:', error);
             alert('Failed to delete appointment. Please try again.');
