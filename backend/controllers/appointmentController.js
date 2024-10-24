@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 // Add an appointment
 export const addAppointment = async (req, res) => {
     console.log("req.body", req.body);
@@ -92,18 +94,23 @@ export const updateAppointment = async (req, res) => {
     const { appointmentId } = req.params;
     const updatedData = req.body;
 
+    // Log the incoming data
+    console.log('Incoming request data:', updatedData);
+
     try {
         const appointment = await db.appointment.findByPk(appointmentId);
         if (!appointment) {
+            console.log('Appointment not found');
             return res.status(404).send({
                 message: "Appointment not found",
                 success: false,
             });
         }
 
-        // Ensure the date is parsed correctly
+        // Log data after any backend adjustments
         if (updatedData.appointment_date) {
-            updatedData.appointment_date = new Date(updatedData.appointment_date);
+            updatedData.appointment_date = dayjs(updatedData.appointment_date).format('YYYY-MM-DD');
+            console.log('Formatted date for database update:', updatedData.appointment_date);
         }
 
         await appointment.update(updatedData);
@@ -114,6 +121,9 @@ export const updateAppointment = async (req, res) => {
                 { model: db.service, as: "service" },
             ],
         });
+
+        // Log the updated appointment object
+        console.log('Updated appointment from database:', updatedAppointment);
 
         res.status(200).send({
             message: "Appointment updated successfully",
@@ -129,6 +139,7 @@ export const updateAppointment = async (req, res) => {
         });
     }
 };
+
 // Get appointment by ID
 export const getAppointment = async (req, res) => {
     const db = req.app.get("db");

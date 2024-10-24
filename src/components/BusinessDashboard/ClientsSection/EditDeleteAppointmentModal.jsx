@@ -19,10 +19,24 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setUpdatedAppointment(prev => ({
-            ...prev,
-            [name]: value
-        }));
+
+        // Log input changes
+        console.log(`Input change - Field: ${name}, Value: ${value}`);
+
+        setUpdatedAppointment((prev) => {
+            if (name === 'appointment_date') {
+                const localDate = dayjs(value).format('YYYY-MM-DD');
+                console.log(`Formatted local date for ${name}: ${localDate}`); // Debugging
+                return {
+                    ...prev,
+                    [name]: localDate,
+                };
+            }
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
     };
 
     const handleSubmit = async (e) => {
@@ -30,13 +44,19 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         setIsSubmitting(true);
 
         try {
-            // Ensure the date is in ISO format
+            // Ensure the date is in the correct format before sending
             const formattedAppointment = {
                 ...updatedAppointment,
                 appointment_date: dayjs(updatedAppointment.appointment_date).format('YYYY-MM-DD'),
             };
 
-            const updatedAppointmentData = await updateAppointment(formattedAppointment.appointment_id, formattedAppointment);
+            // Log the formatted appointment object before sending
+            console.log('Submitting formatted appointment data to backend:', formattedAppointment);
+
+            const updatedAppointmentData = await updateAppointment(
+                formattedAppointment.appointment_id,
+                formattedAppointment
+            );
             onEdit(updatedAppointmentData);
             onClose();
         } catch (error) {
