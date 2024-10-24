@@ -14,6 +14,11 @@ const sequelize = new Sequelize(
     dbConfig.database,
     dbConfig.email,
     dbConfig.password_hash,
+    {
+        ...dbConfig,
+        timezone: '-06:00', // Set to MDT (UTC-6)
+        logging: console.log, // This will log all SQL queries
+    },
     dbConfig,
 );
 

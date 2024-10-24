@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 // Add an appointment
 export const addAppointment = async (req, res) => {
     console.log("req.body", req.body);
@@ -89,31 +91,44 @@ export const removeAppointment = async (req, res) => {
 // Update an appointment
 export const updateAppointment = async (req, res) => {
     const db = req.app.get("db");
-    const { appointmentId, appointmentDate, startTime, endTime, notes, status } =
-        req.body;
+    const { appointmentId } = req.params;
+    const updatedData = req.body;
+
+    // Log the incoming data
+    console.log('Incoming request data:', updatedData);
 
     try {
         const appointment = await db.appointment.findByPk(appointmentId);
         if (!appointment) {
+            console.log('Appointment not found');
             return res.status(404).send({
                 message: "Appointment not found",
                 success: false,
             });
         }
 
-        appointment.appointment_date =
-            appointmentDate || appointment.appointment_date;
-        appointment.appointment_start = startTime || appointment.appointment_start;
-        appointment.appointment_end = endTime || appointment.appointment_end;
-        appointment.notes = notes || appointment.notes;
-        appointment.status = status || appointment.status;
+        // Log data after any backend adjustments
+        if (updatedData.appointment_date) {
+            updatedData.appointment_date = dayjs(updatedData.appointment_date).format('YYYY-MM-DD');
+            console.log('Formatted date for database update:', updatedData.appointment_date);
+        }
 
-        await appointment.save();
+        await appointment.update(updatedData);
 
-        res.send({
+        const updatedAppointment = await db.appointment.findByPk(appointmentId, {
+            include: [
+                { model: db.user, as: "user" },
+                { model: db.service, as: "service" },
+            ],
+        });
+
+        // Log the updated appointment object
+        console.log('Updated appointment from database:', updatedAppointment);
+
+        res.status(200).send({
             message: "Appointment updated successfully",
             success: true,
-            appointment,
+            appointment: updatedAppointment,
         });
     } catch (error) {
         console.error("Error updating appointment:", error);

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { createPortal } from 'react-dom';
 import { appointmentService } from '../../../services/appointmentService';
+import { useAppointment } from '../../../context/ApptContext';
+import dayjs from 'dayjs';
 
 const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) => {
     const [updatedAppointment, setUpdatedAppointment] = useState({
@@ -9,6 +11,7 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         details: { ...appointment.details }
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const { updateAppointment, removeAppointment } = useAppointment();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -16,11 +19,24 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        if (name in updatedAppointment) {
-            setUpdatedAppointment(prev => ({ ...prev, [name]: value }));
-        } else {
-            setUpdatedAppointment(prev => ({ ...prev, details: { ...prev.details, [name]: value } }));
-        }
+
+        // Log input changes
+        console.log(`Input change - Field: ${name}, Value: ${value}`);
+
+        setUpdatedAppointment((prev) => {
+            if (name === 'appointment_date') {
+                const localDate = dayjs(value).format('YYYY-MM-DD');
+                console.log(`Formatted local date for ${name}: ${localDate}`); // Debugging
+                return {
+                    ...prev,
+                    [name]: localDate,
+                };
+            }
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
     };
 
     const handleSubmit = async (e) => {
@@ -28,12 +44,21 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
         setIsSubmitting(true);
 
         try {
-            await appointmentService.updateAppointment(
-                updatedAppointment,
-                updatedAppointment.email
-            );
+            // Ensure the date is in the correct format before sending
+            const formattedAppointment = {
+                ...updatedAppointment,
+                appointment_date: dayjs(updatedAppointment.appointment_date).format('YYYY-MM-DD'),
+            };
 
-            onEdit(updatedAppointment);
+            // Log the formatted appointment object before sending
+            console.log('Submitting formatted appointment data to backend:', formattedAppointment);
+
+            const updatedAppointmentData = await updateAppointment(
+                formattedAppointment.appointment_id,
+                formattedAppointment
+            );
+            onEdit(updatedAppointmentData);
+            onClose();
         } catch (error) {
             console.error('Error updating appointment:', error);
             alert('Failed to update appointment. Please try again.');
@@ -43,20 +68,19 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
     };
 
     const handleDelete = async () => {
-        setIsSubmitting(true);
+        if (window.confirm('Are you sure you want to delete this appointment?')) {
+            setIsSubmitting(true);
 
-        try {
-            await appointmentService.deleteAppointment(
-                appointment,
-                appointment.email
-            );
-
-            onDelete(appointment.id);
-        } catch (error) {
-            console.error('Error deleting appointment:', error);
-            alert('Failed to delete appointment. Please try again.');
-        } finally {
-            setIsSubmitting(false);
+            try {
+                await removeAppointment(appointment.appointment_id);
+                onDelete(appointment.appointment_id);
+                onClose();
+            } catch (error) {
+                console.error('Error deleting appointment:', error);
+                alert('Failed to delete appointment. Please try again.');
+            } finally {
+                setIsSubmitting(false);
+            }
         }
     };
 
@@ -80,9 +104,9 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                                 </label>
                                 <input
                                     type="date"
-                                    id="date"
-                                    name="date"
-                                    value={updatedAppointment.date}
+                                    id="appointment_date"
+                                    name="appointment_date"
+                                    value={updatedAppointment.appointment_date}
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}
@@ -95,9 +119,9 @@ const EditDeleteAppointmentModal = ({ appointment, onClose, onEdit, onDelete }) 
                                 </label>
                                 <input
                                     type="time"
-                                    id="time"
-                                    name="time"
-                                    value={updatedAppointment.time}
+                                    id="appointment_start"
+                                    name="appointment_start"
+                                    value={updatedAppointment.appointment_start}
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}

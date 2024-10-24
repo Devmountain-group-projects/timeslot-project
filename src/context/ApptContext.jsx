@@ -95,23 +95,23 @@ export const AppointmentProvider = ({ children }) => {
         }
     };
 
+
     // Update an existing appointment
     const updateAppointment = async (appointmentId, updatedData) => {
         setLoading(true);
         try {
-            await axios.post(`/api/appointments/updateAppointment`, {
-                appointmentId,
-                ...updatedData,
-            });
-            setAppointments((prev) =>
-                prev.map((appointment) =>
-                    appointment.appointment_id === appointmentId
-                        ? { ...appointment, ...updatedData }
-                        : appointment,
-                ),
-            );
+            const response = await axios.put(`/api/appointments/updateAppointment/${appointmentId}`, updatedData);
+            if (response.data.success) {
+                setAppointments(prev => prev.map(app =>
+                    app.appointment_id === appointmentId ? response.data.appointment : app
+                ));
+                return response.data.appointment;
+            } else {
+                throw new Error(response.data.message || 'Failed to update appointment');
+            }
         } catch (err) {
             setError(err.message);
+            throw err;
         } finally {
             setLoading(false);
         }
@@ -125,9 +125,7 @@ export const AppointmentProvider = ({ children }) => {
                 data: { appointmentId },
             });
             setAppointments((prev) =>
-                prev.filter(
-                    (appointment) => appointment.appointment_id !== appointmentId,
-                ),
+                prev.filter((appointment) => appointment.appointment_id !== appointmentId)
             );
         } catch (err) {
             setError(err.message);
