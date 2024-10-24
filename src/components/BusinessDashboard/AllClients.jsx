@@ -21,7 +21,6 @@ import { useAppointment } from "../../context/ApptContext.jsx";
 
 const AllClients = () => {
     const { fetchClients, fetchAppointments, fetchServices } = useAppointment();
-
     const [showAddClientModal, setShowAddClientModal] = useState(false);
     const [showEditClientModal, setShowEditClientModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);

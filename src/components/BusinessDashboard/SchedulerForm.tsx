@@ -23,7 +23,7 @@ const SchedulerForm = ({ scheduler }: CustomEditorProps) => {
         new Date(new Date().setHours(new Date().getHours() + 1));
 
     const [state, setState] = useState({
-        user: event?.user || "",
+        user: event?.name || "",
         notes: event?.notes || "",
         start: defaultStart.toISOString().slice(0, 16), // Format for datetime-local input
         end: defaultEnd.toISOString().slice(0, 16), // Format for datetime-local input
@@ -82,7 +82,7 @@ const SchedulerForm = ({ scheduler }: CustomEditorProps) => {
                 <TextField
                     label="User"
                     value={state.user}
-                    onChange={(e) => handleChange(e.target.value, "user")}
+                    onChange={(e) => handleChange(e.target.value, "name")}
                     disabled={true}
                     fullWidth
                 />
