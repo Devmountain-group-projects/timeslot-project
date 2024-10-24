@@ -147,21 +147,25 @@ const AppointmentCard = ({ appointment, isSelected, onClick }) => {
                         <h3 className="font-semibold text-sm md:text-base">{client.name}</h3>
                         <InfoItem
                             icon={FaCalendarAlt}
+                            label="Date"
                             value={dayjs(appointment.appointment_date).format("YYYY-MM-DD")}
                             className="text-xs text-gray-500"
                         />
                         <InfoItem
                             icon={FaClock}
+                            label="Start Time"
                             value={appointment.appointment_start}
                             className="text-xs text-gray-500"
                         />
                         <InfoItem
                             icon={FaClipboardList}
+                            label="Service"
                             value={appointment.service.name}
                             className="text-xs text-gray-500"
                         />
                         <InfoItem
                             icon={FaCheckCircle}
+                            label="Status"
                             value={appointment.status}
                             className="text-xs text-gray-500"
                         />
