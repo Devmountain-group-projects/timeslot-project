@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext } from "react";
 
 import axios from "axios";
 
@@ -12,18 +12,34 @@ export const useAppointment = () => {
 
 // Create the Appointment Provider
 export const AppointmentProvider = ({ children }) => {
+    const businessId = 1; //static for one business now
     const [appointments, setAppointments] = useState([]);
     const [clients, setClients] = useState([]); // For managing client data
+    const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isAppointmentsLoaded, setIsAppointmentsLoaded] = useState(false);
 
+    const fetchServices = async () => {
+        try {
+            const response = await axios.get(`/api/business/services/${businessId}`);
+            if (response.data.success) {
+                setServices(response.data.services);
+            } else {
+                console.error("Failed to fetch services");
+            }
+        } catch (error) {
+            console.error("Error fetching services:", error);
+        }
+    };
 
     // Function to fetch appointments by user ID
-    const fetchAppointments = async (userId) => {
+    const fetchAppointments = async () => {
         try {
-            const response = await axios.get(`/getAppointmentByUser?userId=${userId}`);
+            const response = await axios.get("/api/appointments/getAppointments");
             if (response.data.success) {
                 setAppointments(response.data.appointments);
+                setIsAppointmentsLoaded(true);
             } else {
                 console.error("Failed to fetch appointments");
             }
@@ -36,7 +52,10 @@ export const AppointmentProvider = ({ children }) => {
     const fetchAppointmentsByUser = async (userId) => {
         setLoading(true);
         try {
-            const response = await axios.get(`/api/appointments/getAppointmentByUser?userId=${userId}`, { params: { userId } });
+            const response = await axios.get(
+                `/api/appointments/getAppointments/user/${userId}`,
+                { params: { userId } },
+            );
             setAppointments(response.data.appointments);
         } catch (err) {
             setError(err.message);
@@ -45,14 +64,12 @@ export const AppointmentProvider = ({ children }) => {
         }
     };
 
-
-
     // Fetch appointments by user
     const fetchClients = async () => {
         setLoading(true);
         try {
             const response = await axios.get(`/api/client/getClients`, {});
-            console.log("Fetched Users: ", response)
+            console.log("Fetched Users: ", response);
             setClients(response.data.clients);
         } catch (err) {
             setError(err.message);
@@ -64,7 +81,7 @@ export const AppointmentProvider = ({ children }) => {
     // Add a new appointment
     const addAppointment = async (appointmentData) => {
         setLoading(true);
-        console.log("AppointmentData", appointmentData)
+        console.log("AppointmentData", appointmentData);
         try {
             const response = await axios.post(
                 `/api/appointments/addAppointment`,
@@ -191,7 +208,10 @@ export const AppointmentProvider = ({ children }) => {
             value={{
                 loading,
                 error,
+                services,
+                fetchServices,
                 appointments,
+                isAppointmentsLoaded,
                 fetchAppointments,
                 fetchAppointmentsByUser,
                 addAppointment,

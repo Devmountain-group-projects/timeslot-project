@@ -34,10 +34,10 @@ export const update = async (req, res) => {
         console.log(input);
         console.log(req.session.userId);
         db.user.update(
-          {
-            name: input,
-          },
-          { where: { user_id: req.session.userId } }
+            {
+              name: input,
+            },
+            { where: { user_id: req.session.userId } },
         );
         return res.send({
           message: "Name updated",
@@ -47,10 +47,10 @@ export const update = async (req, res) => {
       case "email": {
         console.log(input);
         db.user.update(
-          {
-            email: input,
-          },
-          { where: { user_id: req.session.userId } }
+            {
+              email: input,
+            },
+            { where: { user_id: req.session.userId } },
         );
         return res.send({
           message: "Email updated",
@@ -60,10 +60,10 @@ export const update = async (req, res) => {
       case "phone": {
         console.log(input);
         db.user.update(
-          {
-            phone: input,
-          },
-          { where: { user_id: req.session.userId } }
+            {
+              phone: input,
+            },
+            { where: { user_id: req.session.userId } },
         );
         return res.send({
           message: "Phone updated",
@@ -74,10 +74,10 @@ export const update = async (req, res) => {
         console.log(input);
         console.log(req.session.businessId);
         db.business.update(
-          {
-            description: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              description: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "About updated",
@@ -88,10 +88,10 @@ export const update = async (req, res) => {
         console.log(input);
         console.log(req.session.userId);
         db.business.update(
-          {
-            business_name: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              business_name: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "Business Name updated",
@@ -101,10 +101,10 @@ export const update = async (req, res) => {
       case "address1": {
         console.log(input);
         db.business.update(
-          {
-            address_line1: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              address_line1: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "Address Line 1 updated",
@@ -114,10 +114,10 @@ export const update = async (req, res) => {
       case "address2": {
         console.log(input);
         db.business.update(
-          {
-            address_line2: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              address_line2: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "Address Line 2 updated",
@@ -127,10 +127,10 @@ export const update = async (req, res) => {
       case "city": {
         console.log(input);
         db.business.update(
-          {
-            city: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              city: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "City updated",
@@ -141,10 +141,10 @@ export const update = async (req, res) => {
         console.log(input);
         console.log(req.session.userId);
         db.business.update(
-          {
-            state: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              state: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "State updated",
@@ -154,10 +154,10 @@ export const update = async (req, res) => {
       case "zip": {
         console.log(input);
         db.business.update(
-          {
-            zip_code: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              zip_code: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "Zip updated",
@@ -167,10 +167,10 @@ export const update = async (req, res) => {
       case "businessPhone": {
         console.log(input);
         db.business.update(
-          {
-            phone: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              phone: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "Business Phone updated",
@@ -180,10 +180,10 @@ export const update = async (req, res) => {
       case "website": {
         console.log(input);
         db.business.update(
-          {
-            website: input,
-          },
-          { where: { business_id: req.session.businessId } }
+            {
+              website: input,
+            },
+            { where: { business_id: req.session.businessId } },
         );
         return res.send({
           message: "Website updated",
@@ -193,10 +193,10 @@ export const update = async (req, res) => {
       case "photo": {
         console.log(input);
         db.user.update(
-          {
-            profile_picture: input,
-          },
-          { where: { user_id: req.session.userId } }
+            {
+              profile_picture: input,
+            },
+            { where: { user_id: req.session.userId } },
         );
         return res.send({
           message: "photo updated",
@@ -284,10 +284,10 @@ export const updatePhoto = async (req, res) => {
 
         console.log(photoUrl);
         db.user.update(
-          {
-            profile_picture: photoUrl,
-          },
-          { where: { user_id: req.session.userId } }
+            {
+              profile_picture: photoUrl,
+            },
+            { where: { user_id: req.session.userId } },
         );
       }
     }
@@ -307,13 +307,13 @@ export const getPhoto = async (req, res) => {
   console.log(userImages);
 
   if (
-    !(
-      (await db.image.findOne({
-        where: {
-          src: `http://localhost:5539/src/assets/images/placeholderavatar.png`,
-        },
-      })) === false
-    )
+      !(
+          (await db.image.findOne({
+            where: {
+              src: `http://localhost:5539/src/assets/images/placeholderavatar.png`,
+            },
+          })) === false
+      )
   ) {
     console.log("Create placeholder Avater");
     await db.image.create({
@@ -327,4 +327,28 @@ export const getPhoto = async (req, res) => {
     success: true,
     photos: userImages,
   });
+};
+
+export const getServices = async (req, res) => {
+  const db = req.app.get("db");
+  const businessId = req.params.businessId;
+
+  try {
+    const services = await db.service.findAll({
+      where: { business_id: businessId },
+    });
+
+    res.send({
+      message: "Services retrieved successfully",
+      success: true,
+      services,
+    });
+  } catch (error) {
+    console.error("Error retrieving services:", error);
+    res.status(500).send({
+      message: "Failed to retrieve services",
+      success: false,
+      error: error.message,
+    });
+  }
 };

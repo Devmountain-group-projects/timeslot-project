@@ -39,26 +39,35 @@ export const businesses = [
         ],
         services: [
             {
-                service_name: "Espresso",
-                description: "A strong shot of espresso.",
-                duration: "5 minutes",
-                price: 3.50,
+                name: "Consultation",
+                business_id: 1, // defaulting to 1 business
+                description: "",
+                duration: 60,
+                price: 100,
             },
             {
-                service_name: "Cappuccino",
-                description: "Espresso with steamed milk and foam.",
-                duration: "10 minutes",
-                price: 4.50,
-            }
+                name: "Follow-up",
+                business_id: 1, // defaulting to 1 business
+                description: "",
+                duration: 90,
+                price: 150,
+            },
+            {
+                name: "Therapy",
+                business_id: 1, // defaulting to 1 business
+                description: "",
+                duration: 120,
+                price: 220,
+            },
         ],
         images: [
             {
                 src: "https://example.com/sunshinecafe_profile.jpg",
-                image_type: 'business_profile',
+                image_type: "business_profile",
             },
             {
                 src: "https://example.com/sunshinecafe_banner.jpg",
-                image_type: 'business_banner',
+                image_type: "business_banner",
             },
         ],
     },
@@ -102,26 +111,35 @@ export const businesses = [
         ],
         services: [
             {
-                service_name: "Latte",
-                description: "Espresso with steamed milk.",
-                duration: "10 minutes",
-                price: 4.00,
+                name: "Consultation",
+                business_id: 1, // defaulting to 1 business
+                description: "",
+                duration: 60,
+                price: 100,
             },
             {
-                service_name: "Mocha",
-                description: "Espresso with chocolate and steamed milk.",
-                duration: "10 minutes",
-                price: 4.75,
-            }
+                name: "Follow-up",
+                business_id: 1, // defaulting to 1 business
+                description: "",
+                duration: 90,
+                price: 150,
+            },
+            {
+                name: "Therapy",
+                business_id: 1, // defaulting to 1 business
+                description: "",
+                duration: 120,
+                price: 220,
+            },
         ],
         images: [
             {
                 src: "https://example.com/booknook_profile.jpg",
-                image_type: 'business_profile',
+                image_type: "business_profile",
             },
             {
                 src: "https://example.com/booknook_banner.jpg",
-                image_type: 'business_banner',
+                image_type: "business_banner",
             },
         ],
     },
@@ -165,26 +183,26 @@ export const businesses = [
         ],
         services: [
             {
-                service_name: "Personal Training",
+                name: "Personal Training",
                 description: "One-on-one training with a certified trainer.",
-                duration: "60 minutes",
-                price: 50.00,
+                duration: 60,
+                price: 50.0,
             },
             {
-                service_name: "Yoga Class",
+                name: "Yoga Class",
                 description: "Group yoga class for all levels.",
-                duration: "60 minutes",
-                price: 20.00,
-            }
+                duration: 60,
+                price: 20.0,
+            },
         ],
         images: [
             {
                 src: "https://example.com/fitnesshub_profile.jpg",
-                image_type: 'business_profile',
+                image_type: "business_profile",
             },
             {
                 src: "https://example.com/fitnesshub_banner.jpg",
-                image_type: 'business_banner',
+                image_type: "business_banner",
             },
         ],
     },
@@ -228,26 +246,26 @@ export const businesses = [
         ],
         services: [
             {
-                service_name: "Grocery Delivery",
+                name: "Grocery Delivery",
                 description: "Same-day grocery delivery service.",
-                duration: "30 minutes",
-                price: 5.00,
+                duration: 30,
+                price: 5.0,
             },
             {
-                service_name: "Meal Prep Kits",
+                name: "Meal Prep Kits",
                 description: "Weekly meal prep kits with organic ingredients.",
-                duration: "10 minutes",
-                price: 25.00,
-            }
+                duration: 10,
+                price: 25.0,
+            },
         ],
         images: [
             {
                 src: "https://example.com/greengrocers_profile.jpg",
-                image_type: 'business_profile',
+                image_type: "business_profile",
             },
             {
                 src: "https://example.com/greengrocers_banner.jpg",
-                image_type: 'business_banner',
+                image_type: "business_banner",
             },
         ],
     },
@@ -291,26 +309,26 @@ export const businesses = [
         ],
         services: [
             {
-                service_name: "Phone Repair",
+                name: "Phone Repair",
                 description: "Fast phone repair services.",
-                duration: "30 minutes",
-                price: 100.00,
+                duration: 30,
+                price: 100.0,
             },
             {
-                service_name: "Laptop Repair",
+                name: "Laptop Repair",
                 description: "Quick laptop repair services.",
-                duration: "60 minutes",
-                price: 150.00,
-            }
+                duration: 60,
+                price: 150.0,
+            },
         ],
         images: [
             {
                 src: "https://example.com/techworld_profile.jpg",
-                image_type: 'business_profile',
+                image_type: "business_profile",
             },
             {
                 src: "https://example.com/techworld_banner.jpg",
-                image_type: 'business_banner',
+                image_type: "business_banner",
             },
         ],
     },
@@ -354,27 +372,27 @@ export const businesses = [
         ],
         services: [
             {
-                service_name: "Swedish Massage",
+                name: "Swedish Massage",
                 description: "A relaxing full-body massage.",
-                duration: "60 minutes",
-                price: 80.00,
+                duration: 60,
+                price: 80.0,
             },
             {
-                service_name: "Deep Tissue Massage",
+                name: "Deep Tissue Massage",
                 description: "A massage targeting deeper layers of muscle.",
-                duration: "60 minutes",
-                price: 90.00,
-            }
+                duration: 60,
+                price: 90.0,
+            },
         ],
         images: [
             {
                 src: "https://example.com/spa_serenity_profile.jpg",
-                image_type: 'business_profile',
+                image_type: "business_profile",
             },
             {
                 src: "https://example.com/spa_serenity_banner.jpg",
-                image_type: 'business_banner',
+                image_type: "business_banner",
             },
         ],
-    }
+    },
 ];
