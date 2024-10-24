@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import AppointmentImg from '../../assets/images/appointment.jpg'
+import AppointmentImg from '../../assets/images/appointment.png'
 import { BsClipboardCheck } from "react-icons/bs"
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia"
 import { TbUsersGroup } from "react-icons/tb"
@@ -69,7 +69,7 @@ const PowerfulFeatures = () => {
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
                         >
-                            <img src={AppointmentImg} className="w-full h-full object-cover rounded-lg mb-8 sm:mb-0" alt="a dog at a vet" />
+                            <img src={AppointmentImg} className="w-full h-full object-fill rounded-lg mb-8 sm:mb-0" alt="a dog at a vet" />
                         </motion.div>
                     </div>
 

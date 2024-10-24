@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import FeaturesImg1 from '../../assets/images/featuresheadimg.jpg'
+import FeaturesImg1 from '../../assets/images/featuresheadimg.png'
 import Google from '../../assets/images/google.png'
 import Hubspot from '../../assets/images/hubspot.png'
 import Zapier from '../../assets/images/zapier.svg'
@@ -20,7 +20,7 @@ const Intro = () => {
                             transition={{ duration: 0.5 }}
                         >
                             <motion.h1
-                                className="title-text  text-3xl sm:text-5xl"
+                                className="title-text  text-3xl sm:text-4xl"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.2, duration: 0.5 }}
