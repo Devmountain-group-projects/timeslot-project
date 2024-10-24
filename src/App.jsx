@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
+import ScrollToTop from './components/ScrollToTop' // Add this import
 import Dashboard from './pages/Dashboard'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -60,6 +61,7 @@ const DashboardLayout = ({ children }) => {
 const App = () => {
   return (
     <Provider store={store}>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainLayout><Home /></MainLayout>} />
         <Route path="/dashboard" element={<DashboardLayout><Dashboard /></DashboardLayout>} />

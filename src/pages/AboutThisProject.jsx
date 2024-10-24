@@ -160,7 +160,7 @@ const AboutUs = () => {
                         className='text-md text-center'
                         variants={fadeInUp}
                     >
-                        View our complete service features <a href="#">here</a>.
+                        View our complete service features <Link className='text-secondary' to="/features">here</Link>.
                     </motion.p>
                     <br />
                     <motion.p
@@ -176,7 +176,7 @@ const AboutUs = () => {
                         <p className='text-md text-center'>
                             Read our full terms of service&nbsp;
                         </p>
-                        <Link to="/terms-of-service" className='text-secondary'>
+                        <Link to="/terms-and-conditions" className='text-secondary'>
                             here.
                         </Link>
                     </motion.div>
