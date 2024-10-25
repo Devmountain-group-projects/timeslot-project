@@ -39,6 +39,7 @@ export const AppointmentProvider = ({ children }) => {
     const fetchAppointments = async () => {
         try {
             const response = await axios.get("/api/appointments/getAppointments");
+            console.log("Testing: ", response.data)
             if (response.data.success) {
                 setAppointments(response.data.appointments);
                 setIsAppointmentsLoaded(true);

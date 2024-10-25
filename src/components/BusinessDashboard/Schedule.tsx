@@ -113,6 +113,7 @@ const Schedule = () => {
                             weekStartOn: 1,
                             startHour: 9,
                             endHour: 22,
+
                         }}
                         hourFormat="12"
                     />
