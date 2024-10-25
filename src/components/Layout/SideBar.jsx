@@ -28,7 +28,6 @@ const SideBar = ({ currentView, setCurrentView }) => {
     const nav = useNavigate()
 
     useEffect(() => {
-        sessionCheck()
         const handleResize = () => {
             if (window.innerWidth >= 1280) {
                 setIsOpen(false)
@@ -36,6 +35,7 @@ const SideBar = ({ currentView, setCurrentView }) => {
         }
         window.addEventListener('resize', handleResize)
         handleResize()
+        sessionCheck()
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 

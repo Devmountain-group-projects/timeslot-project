@@ -7,17 +7,17 @@ import { TbWorldWww } from "react-icons/tb";
 const BusinessDetails = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
         description: '',
-        website: '',
-        serviceName: '',
-        serviceDescription: '',
-        serviceDuration: '',
-        servicePrice: '',
+        website: 'https://www.google.com/',
+        serviceName: 'Big Money',
+        serviceDescription: 'We help you make big money',
+        serviceDuration: '60',
+        servicePrice: '200',
         availability: {
-            monday: { start: '', end: '' },
-            tuesday: { start: '', end: '' },
-            wednesday: { start: '', end: '' },
-            thursday: { start: '', end: '' },
-            friday: { start: '', end: '' },
+            monday: { start: '10:00', end: '11:00' },
+            tuesday: { start: '10:00', end: '11:00' },
+            wednesday: { start: '10:00', end: '11:00' },
+            thursday: { start: '10:00', end: '11:00' },
+            friday: { start: '10:00', end: '11:00' },
             saturday: { start: '', end: '' },
             sunday: { start: '', end: '' },
         }
