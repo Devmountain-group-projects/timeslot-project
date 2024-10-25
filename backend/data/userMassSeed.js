@@ -9,17 +9,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user1.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/alice_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 1,
             rating: 5,
-            comment: "Excellent service! Very satisfied."
+            comment: "Excellent service! Very satisfied.",
         },
     },
     {
@@ -32,17 +32,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user1.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/alice_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 1,
             rating: 5,
-            comment: "Excellent service! Very satisfied."
+            comment: "Excellent service! Very satisfied.",
         },
         appointments: [
             {
@@ -50,9 +50,9 @@ export const users = [
                 appointment_date: "2024-11-01",
                 appointment_start: "09:00",
                 appointment_end: "10:00",
-                status: "confirmed",
+                status: "Confirmed",
                 notes: "Initial consultation",
-                payment_status: "pending",
+                payment_status: "Paid",
             },
         ],
     },
@@ -66,17 +66,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user12.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/bob_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 2,
             rating: 4,
-            comment: "Great service, but room for improvement."
+            comment: "Great service, but room for improvement.",
         },
         appointments: [
             {
@@ -84,9 +84,9 @@ export const users = [
                 appointment_date: "2024-11-05",
                 appointment_start: "11:00",
                 appointment_end: "12:00",
-                status: "completed",
+                status: "Completed",
                 notes: "Routine checkup",
-                payment_status: "sent",
+                payment_status: "Overdue",
             },
         ],
     },
@@ -100,17 +100,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user3.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/charlie_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 3,
             rating: 3,
-            comment: "Decent experience, could be better."
+            comment: "Decent experience, could be better.",
         },
     },
     {
@@ -123,17 +123,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user4.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/diana_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 4,
             rating: 4,
-            comment: "Good overall experience."
+            comment: "Good overall experience.",
         },
         appointments: [
             {
@@ -141,9 +141,9 @@ export const users = [
                 appointment_date: "2024-11-10",
                 appointment_start: "14:00",
                 appointment_end: "15:00",
-                status: "pending",
+                status: "Pending",
                 notes: "Follow-up appointment",
-                payment_status: "pending",
+                payment_status: "Pending",
             },
         ],
     },
@@ -157,17 +157,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user5.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/edward_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 5,
             rating: 5,
-            comment: "Amazing experience! Highly recommended."
+            comment: "Amazing experience! Highly recommended.",
         },
     },
     {
@@ -180,17 +180,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user6.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/fiona_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 6,
             rating: 5,
-            comment: "Wonderful experience! Will come again."
+            comment: "Wonderful experience! Will come again.",
         },
     },
     {
@@ -203,17 +203,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user7.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/george_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 1,
             rating: 4,
-            comment: "Good service, but could improve in some areas."
+            comment: "Good service, but could improve in some areas.",
         },
     },
     {
@@ -226,17 +226,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user8.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/hannah_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 2,
             rating: 5,
-            comment: "Exceptional service! Very happy."
+            comment: "Exceptional service! Very happy.",
         },
     },
     {
@@ -249,17 +249,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user9.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/ian_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 3,
             rating: 4,
-            comment: "Very good, but there’s room for improvement."
+            comment: "Very good, but there’s room for improvement.",
         },
     },
     {
@@ -272,17 +272,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user10.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/jasmine_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 4,
             rating: 3,
-            comment: "Average experience. Could be better."
+            comment: "Average experience. Could be better.",
         },
     },
     {
@@ -295,17 +295,17 @@ export const users = [
         images: [
             {
                 src: "/src/assets/images/user2.png",
-                image_type: 'user_profile',
+                image_type: "user_profile",
             },
             {
                 src: "/src/assets/images/jasmine_banner.jpg",
-                image_type: 'user_banner',
+                image_type: "user_banner",
             },
         ],
         review: {
             business_id: 4,
             rating: 3,
-            comment: "Average experience. Could be better."
+            comment: "Average experience. Could be better.",
         },
     },
 ];

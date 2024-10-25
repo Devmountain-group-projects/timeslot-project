@@ -10,16 +10,16 @@ export const Appointment = (sequelize, Sequelize) => {
             user_id: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'user',
-                    key: 'user_id',
+                    model: "user",
+                    key: "user_id",
                 },
                 onDelete: "RESTRICT",
             },
             service_id: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'service',
-                    key: 'service_id',
+                    model: "service",
+                    key: "service_id",
                 },
                 onDelete: "RESTRICT",
             },
@@ -36,15 +36,8 @@ export const Appointment = (sequelize, Sequelize) => {
                 allowNull: false,
             },
             status: {
-                type: Sequelize.ENUM(
-                    "pending",
-                    "confirmed",
-                    "completed",
-                    "cancelled",
-                    "Scheduled",
-                    "test"
-                ),
-                defaultValue: "pending",
+                type: Sequelize.ENUM("Pending", "Confirmed", "Scheduled", "Completed"),
+                defaultValue: "Pending",
                 allowNull: false,
             },
             notes: {
@@ -54,20 +47,20 @@ export const Appointment = (sequelize, Sequelize) => {
             user_id_created: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'user',
-                    key: 'user_id',
+                    model: "user",
+                    key: "user_id",
                 },
                 onDelete: "RESTRICT",
             },
             payment_status: {
-                type: Sequelize.ENUM("sent", "Pending", "pending","failed", "test", ),
+                type: Sequelize.ENUM("Pending", "Paid", "Overdue"),
                 defaultValue: "Pending",
                 allowNull: false,
             },
         },
         {
             timestamps: true,
-        }
+        },
     );
 
     // Relations
@@ -80,7 +73,7 @@ export const Appointment = (sequelize, Sequelize) => {
         appointment.belongsTo(models.user, {
             foreignKey: "user_id",
             onDelete: "RESTRICT",
-        })
+        });
         // Appointment belongs to service
         appointment.belongsTo(models.service, {
             foreignKey: "service_id",

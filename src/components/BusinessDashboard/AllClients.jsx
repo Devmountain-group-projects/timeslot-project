@@ -15,8 +15,7 @@ import ClientRetention from "./ClientsSection/ClientRetention";
 // Modals
 import AddClientModal from "./ClientsSection/AddClientModal";
 import EditClientModal from "./ClientsSection/EditClientModal";
-import CreateAppointmentModal from "./ClientsSection/CreateAppointmentModal";
-import EditDeleteAppointmentModal from "./ClientsSection/EditDeleteAppointmentModal";
+import AppointmentModal from "./ClientsSection/AppointmentModal.jsx";
 import { useAppointment } from "../../context/ApptContext.jsx";
 
 const AllClients = () => {
@@ -25,11 +24,9 @@ const AllClients = () => {
     const [showEditClientModal, setShowEditClientModal] = useState(false);
     const [selectedClient, setSelectedClient] = useState(null);
 
-    const [showCreateAppointmentModal, setShowCreateAppointmentModal] =
-        useState(false);
-    const [showEditAppointmentModal, setShowEditAppointmentModal] =
-        useState(false);
+    const [showAppointmentModal, setShowAppointmentModal] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState(null);
+    const [editAppointment, setEditAppointment] = useState(null);
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -67,19 +64,8 @@ const AllClients = () => {
         setShowEditClientModal(false);
     };
 
-    const handleAddAppointment = (newAppointment) => {
-        console.log("Adding new appointment:", newAppointment);
-        setShowCreateAppointmentModal(false);
-    };
-
-    const handleEditAppointment = (updatedAppointment) => {
-        console.log("Updating appointment:", updatedAppointment);
-        setShowEditAppointmentModal(false);
-    };
-
-    const handleDeleteAppointment = (appointmentId) => {
-        console.log("Deleting appointment:", appointmentId);
-        setShowEditAppointmentModal(false);
+    const handleToggleModal = (show) => {
+        setShowAppointmentModal(show);
     };
 
     useEffect(() => {
@@ -128,14 +114,16 @@ const AllClients = () => {
                     <Card className="w-full md:w-[70%] h-auto md:h-full">
                         <div className="h-full">
                             <AddAppointment
-                                onCreateAppointment={() => setShowCreateAppointmentModal(true)}
-                                onEditAppointment={(appointment) => {
-                                    setSelectedAppointment(appointment);
-                                    setShowEditAppointmentModal(true);
+                                onCreateAppointment={() => {
+                                    setEditAppointment(null);
+                                    handleToggleModal(true);
                                 }}
-                                onDeleteAppointment={(appointmentId) => {
-                                    handleDeleteAppointment(appointmentId);
-                                    // Optionally, you might want to close any modals or update UI here
+                                onEditAppointment={(appointment) => {
+                                    setEditAppointment(appointment);
+                                    handleToggleModal(true);
+                                }}
+                                onDeleteAppointment={() => {
+                                    handleToggleModal(true);
                                 }}
                             />
                         </div>
@@ -176,19 +164,10 @@ const AllClients = () => {
                 />
             )}
 
-            {showCreateAppointmentModal && (
-                <CreateAppointmentModal
-                    onClose={() => setShowCreateAppointmentModal(false)}
-                    onCreate={handleAddAppointment}
-                />
-            )}
-
-            {showEditAppointmentModal && selectedAppointment && (
-                <EditDeleteAppointmentModal
-                    appointment={selectedAppointment}
-                    onClose={() => setShowEditAppointmentModal(false)}
-                    onEdit={handleEditAppointment}
-                    onDelete={handleDeleteAppointment}
+            {showAppointmentModal && (
+                <AppointmentModal
+                    appt={editAppointment}
+                    closeModal={() => handleToggleModal(false)}
                 />
             )}
         </>

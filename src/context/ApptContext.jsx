@@ -1,6 +1,8 @@
 import { createContext, useState, useContext } from "react";
 
 import axios from "axios";
+import { contactService } from "../services/contactServices.js";
+import { appointmentService } from "../services/appointmentService.js";
 
 // Create the Appointment Context
 const AppointmentContext = createContext();
@@ -41,6 +43,8 @@ export const AppointmentProvider = ({ children }) => {
             if (response.data.success) {
                 setAppointments(response.data.appointments);
                 setIsAppointmentsLoaded(true);
+
+                return response.data.appointments;
             } else {
                 console.error("Failed to fetch appointments");
             }
@@ -81,6 +85,8 @@ export const AppointmentProvider = ({ children }) => {
 
     // Add a new appointment
     const addAppointment = async (appointmentData) => {
+        let newAppointment = null;
+
         setLoading(true);
         console.log("AppointmentData", appointmentData);
         try {
@@ -88,27 +94,56 @@ export const AppointmentProvider = ({ children }) => {
                 `/api/appointments/addAppointment`,
                 appointmentData,
             );
-            setAppointments((prev) => [...prev, response.data.appointment]);
+
+            newAppointment = response.data.appointment;
+            setAppointments((prev) => [...prev, newAppointment]);
         } catch (err) {
             setError(err.message);
         } finally {
             setLoading(false);
+
+            // Send email
+            try {
+                await appointmentService.createAppointment(newAppointment);
+            } catch (error) {
+                setError(error.message || "Failed to send message. Please try again.");
+            }
         }
     };
 
-
     // Update an existing appointment
     const updateAppointment = async (appointmentId, updatedData) => {
+        let updatedAppointment = null;
+
         setLoading(true);
         try {
-            const response = await axios.put(`/api/appointments/updateAppointment/${appointmentId}`, updatedData);
+            const response = await axios.put(
+                `/api/appointments/updateAppointment/${appointmentId}`,
+                updatedData,
+            );
             if (response.data.success) {
-                setAppointments(prev => prev.map(app =>
-                    app.appointment_id === appointmentId ? response.data.appointment : app
-                ));
+                updatedAppointment = response.data.appointment;
+
+                setAppointments((prev) =>
+                    prev.map((app) =>
+                        app.appointment_id === appointmentId ? updatedAppointment : app,
+                    ),
+                );
+
+                // Send email
+                try {
+                    await appointmentService.updateAppointment(updatedAppointment);
+                } catch (error) {
+                    setError(
+                        error.message || "Failed to send message. Please try again.",
+                    );
+                }
+
                 return response.data.appointment;
             } else {
-                throw new Error(response.data.message || 'Failed to update appointment');
+                throw new Error(
+                    response.data.message || "Failed to update appointment",
+                );
             }
         } catch (err) {
             setError(err.message);
@@ -125,9 +160,25 @@ export const AppointmentProvider = ({ children }) => {
             await axios.delete(`/api/appointments/removeAppointment`, {
                 data: { appointmentId },
             });
+
+            let removedAppt = null;
             setAppointments((prev) =>
-                prev.filter((appointment) => appointment.appointment_id !== appointmentId)
+                prev.filter((appointment) => {
+                    if (appointment.appointment_id !== appointmentId) {
+                        return true;
+                    }
+
+                    removedAppt = appointment;
+                    return false;
+                }),
             );
+
+            // Send email
+            try {
+                await appointmentService.deleteAppointment(removedAppt);
+            } catch (error) {
+                setError(error.message || "Failed to send message. Please try again.");
+            }
         } catch (err) {
             setError(err.message);
         } finally {
