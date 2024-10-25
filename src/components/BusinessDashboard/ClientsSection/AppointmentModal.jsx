@@ -2,19 +2,18 @@ import { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
 import { createPortal } from "react-dom";
 import { useAppointment } from "../../../context/ApptContext";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
-const CreateAppointmentModal = ({ onClose, onCreate }) => {
-    const { addAppointment, clients, services } = useAppointment();
-    const [newAppointment, setNewAppointment] = useState({
-        user_id: "2",
-        appointment_date: "2024-10-25",
-        appointment_start: "15:00:00",
-        appointment_end: "16:00:00",
-        service_id: "2",
-        status: "Scheduled",
-        notes: "Test appt",
-        payment_status: "Pending",
-    });
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("America/New_York");
+
+const AppointmentModal = ({ appt, closeModal }) => {
+    const { addAppointment, updateAppointment, clients, services } =
+        useAppointment();
+    const [appointment, setAppointment] = useState(appt);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -23,7 +22,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewAppointment((prev) => ({ ...prev, [name]: value }));
+        setAppointment((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
@@ -32,7 +31,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
 
         try {
             const selectedClient = clients.find(
-                (client) => client.user_id === parseInt(newAppointment.user_id),
+                (client) => client.user_id === parseInt(appointment.user_id),
             );
 
             if (!selectedClient) {
@@ -43,19 +42,18 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
             console.log("Client email:", selectedClient.email);
 
             const appointmentData = {
-                ...newAppointment,
+                ...appointment,
                 createdAt: new Date().toLocaleDateString(),
                 updatedAt: new Date().toLocaleDateString(),
             };
 
-            //Adds tha appointment to the database
-            addAppointment(newAppointment);
+            if (appt) {
+                updateAppointment(appt.appointment_id, appointmentData);
+            } else {
+                addAppointment(appointmentData);
+            }
 
-            // console.log('Email sent to:', selectedClient.email);
-            // console.log('Appointment created and email sent:', result);
-
-            onCreate(appointmentData);
-            onClose();
+            closeModal();
         } catch (error) {
             console.error("Error creating appointment:", error);
             alert("Failed to create appointment. Please try again.");
@@ -68,13 +66,15 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999] px-4">
             <div className="bg-white rounded-lg p-4 sm:p-6 max-w-4xl w-full relative">
                 <button
-                    onClick={onClose}
+                    onClick={closeModal}
                     className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
                     disabled={isSubmitting}
                 >
                     <FaTimes size={24} />
                 </button>
-                <h2 className="text-base font-semibold mb-4">Create New Appointment</h2>
+                <h2 className="text-base font-semibold mb-4">
+                    {appt ? "Update" : "Create New"} Appointment
+                </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="flex flex-col sm:flex-row sm:space-x-4">
                         <div className="w-full sm:w-1/2 space-y-4">
@@ -88,7 +88,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                 <select
                                     id="user_id"
                                     name="user_id"
-                                    value={newAppointment.user_id}
+                                    value={appointment?.user_id}
                                     onChange={handleInputChange}
                                     required
                                     className="text-sm w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
@@ -112,7 +112,13 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                     type="date"
                                     id="appointment_date"
                                     name="appointment_date"
-                                    value={newAppointment.appointment_date}
+                                    value={
+                                        appointment
+                                            ? dayjs
+                                                .tz(appointment.appointment_date)
+                                                .format("YYYY-MM-DD")
+                                            : ""
+                                    }
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}
@@ -131,7 +137,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                         type="time"
                                         id="appointment_start"
                                         name="appointment_start"
-                                        value={newAppointment.appointment_start}
+                                        value={appointment?.appointment_start}
                                         onChange={handleInputChange}
                                         required
                                         disabled={isSubmitting}
@@ -149,7 +155,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                         type="time"
                                         id="appointment_end"
                                         name="appointment_end"
-                                        value={newAppointment.appointment_end}
+                                        value={appointment?.appointment_end}
                                         onChange={handleInputChange}
                                         required
                                         disabled={isSubmitting}
@@ -167,7 +173,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                 <select
                                     id="service_id"
                                     name="service_id"
-                                    value={newAppointment.service_id}
+                                    value={appointment?.service_id}
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}
@@ -194,7 +200,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                     <select
                                         id="status"
                                         name="status"
-                                        value={newAppointment.status}
+                                        value={appointment?.status}
                                         onChange={handleInputChange}
                                         required
                                         disabled={isSubmitting}
@@ -204,6 +210,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                         <option value="Scheduled">Scheduled</option>
                                         <option value="Confirmed">Confirmed</option>
                                         <option value="Pending">Pending</option>
+                                        <option value="Completed">Completed</option>
                                     </select>
                                 </div>
                             </div>
@@ -217,7 +224,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                 <textarea
                                     id="notes"
                                     name="notes"
-                                    value={newAppointment.notes}
+                                    value={appointment?.notes}
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}
@@ -235,7 +242,7 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                                 <select
                                     id="payment_status"
                                     name="payment_status"
-                                    value={newAppointment.payment_status}
+                                    value={appointment?.payment_status}
                                     onChange={handleInputChange}
                                     required
                                     disabled={isSubmitting}
@@ -254,7 +261,9 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
                         disabled={isSubmitting}
                         className={`btn-blue-dashboard mt-4 w-full sm:w-auto ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
-                        {isSubmitting ? "Creating Appointment..." : "Create Appointment"}
+                        {isSubmitting
+                            ? `${appt ? "Updating" : "Creating"} Appointment...`
+                            : `${appt ? "Update" : "Create"} Appointment`}
                     </button>
                 </form>
             </div>
@@ -264,4 +273,4 @@ const CreateAppointmentModal = ({ onClose, onCreate }) => {
     return createPortal(modalContent, document.body);
 };
 
-export default CreateAppointmentModal;
+export default AppointmentModal;

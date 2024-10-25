@@ -11,15 +11,26 @@ import {
 } from "react-icons/fa";
 import { useAppointment } from "../../../context/ApptContext.jsx";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
-const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppointment }) => {
-    const { appointments, isAppointmentsLoaded, removeAppointment } = useAppointment();
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("America/New_York");
+
+const AddAppointment = ({ onCreateAppointment, onEditAppointment }) => {
+    const { appointments, isAppointmentsLoaded, removeAppointment } =
+        useAppointment();
     const [selectedAppointment, setSelectedAppointment] = useState(null);
     const [expandedAppointment, setExpandedAppointment] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (isAppointmentsLoaded && appointments.length > 0 && !selectedAppointment) {
+        if (
+            isAppointmentsLoaded &&
+            appointments.length > 0 &&
+            !selectedAppointment
+        ) {
             setSelectedAppointment(appointments[0]);
         }
     }, [isAppointmentsLoaded, appointments]);
@@ -31,36 +42,18 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
     const handleDeleteAppointment = async (appointmentId) => {
         setIsSubmitting(true);
 
-        try {
-            await removeAppointment(appointmentId);
-
-            // Check if onDeleteAppointment is a function before calling it
-            if (typeof onDeleteAppointment === 'function') {
-                onDeleteAppointment(appointmentId);
-            } else {
-                console.warn('onDeleteAppointment is not a function. Appointment deleted, but parent component not notified.');
-            }
-
-            // Remove the appointment from the local state
-            const updatedAppointments = appointments.filter(app => app.appointment_id !== appointmentId);
-            setSelectedAppointment(updatedAppointments[0] || null);
-
-            // If you're using a state setter from useAppointment to update appointments, use it here
-            // For example: setAppointments(updatedAppointments);
-
-        } catch (error) {
-            console.error('Error deleting appointment:', error);
-            alert('Failed to delete appointment. Please try again.');
-        } finally {
+        await removeAppointment(appointmentId).finally(() => {
+            setSelectedAppointment(appointments[0] || null);
             setIsSubmitting(false);
-        }
+        });
     };
-
 
     return (
         <div className="flex flex-col h-full overflow-hidden border-2 border-gray-300 rounded-xl">
             <section className="flex justify-between items-center px-3 py-2 bg-tertiary">
-                <h2 className="w-[90%] text-sm text-left font-medium">Add Appointment</h2>
+                <h2 className="w-[90%] text-sm text-left font-medium">
+                    Add Appointment
+                </h2>
                 <button
                     className="p-2 bg-gradient-gray ring-1 ring-secondary rounded-lg hover:bg-secondary text-secondary hover:text-white transition-colors duration-300"
                     aria-label="Add Appointment"
@@ -96,7 +89,9 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                                             </h3>
                                             <InfoItem
                                                 icon={FaCalendarAlt}
-                                                value={dayjs(appointment.appointment_date).format("YYYY-MM-DD")}
+                                                value={dayjs
+                                                    .tz(appointment.appointment_date)
+                                                    .format("YYYY-MM-DD")}
                                             />
                                             <InfoItem
                                                 icon={FaClock}
@@ -112,14 +107,20 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                                             />
                                         </div>
                                     </div>
-                                    {expandedAppointment === index ? <FaChevronUp /> : <FaChevronDown />}
+                                    {expandedAppointment === index ? (
+                                        <FaChevronUp />
+                                    ) : (
+                                        <FaChevronDown />
+                                    )}
                                 </div>
                                 {expandedAppointment === index && (
                                     <div className="p-4 bg-gray-50">
                                         <AppointmentDetails
                                             appointment={appointment}
                                             onEdit={() => onEditAppointment(appointment)}
-                                            onDelete={() => handleDeleteAppointment(appointment.appointment_id)}
+                                            onDelete={() =>
+                                                handleDeleteAppointment(appointment.appointment_id)
+                                            }
                                             isSubmitting={isSubmitting}
                                         />
                                     </div>
@@ -135,7 +136,11 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                             <AppointmentCard
                                 key={appointment.appointment_id}
                                 appointment={appointment}
-                                isSelected={selectedAppointment && selectedAppointment.appointment_id === appointment.appointment_id}
+                                isSelected={
+                                    selectedAppointment &&
+                                    selectedAppointment.appointment_id ===
+                                    appointment.appointment_id
+                                }
                                 onClick={() => setSelectedAppointment(appointment)}
                             />
                         ))}
@@ -146,7 +151,9 @@ const AddAppointment = ({ onCreateAppointment, onEditAppointment, onDeleteAppoin
                                 <AppointmentDetails
                                     appointment={selectedAppointment}
                                     onEdit={() => onEditAppointment(selectedAppointment)}
-                                    onDelete={() => handleDeleteAppointment(selectedAppointment.appointment_id)}
+                                    onDelete={() =>
+                                        handleDeleteAppointment(selectedAppointment.appointment_id)
+                                    }
                                     isSubmitting={isSubmitting}
                                 />
                             </div>
@@ -162,7 +169,7 @@ const AppointmentCard = ({ appointment, isSelected, onClick }) => {
     const client = appointment.user;
     return (
         <div
-            className={`p-4 flex items-start cursor-pointer ${isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
+            className={`p-4 flex items-start cursor-pointer ${isSelected ? "bg-blue-50" : "hover:bg-gray-50"}`}
             onClick={onClick}
         >
             <img
@@ -173,11 +180,15 @@ const AppointmentCard = ({ appointment, isSelected, onClick }) => {
             <div className="flex-grow">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h3 className="font-semibold text-sm md:text-base">{client.name}</h3>
+                        <h3 className="font-semibold text-sm md:text-base">
+                            {client.name}
+                        </h3>
                         <InfoItem
                             icon={FaCalendarAlt}
                             label="Date"
-                            value={dayjs(appointment.appointment_date).format("YYYY-MM-DD")}
+                            value={dayjs
+                                .tz(appointment.appointment_date)
+                                .format("YYYY-MM-DD")}
                             className="text-xs text-gray-500"
                         />
                         <InfoItem
@@ -206,17 +217,22 @@ const AppointmentCard = ({ appointment, isSelected, onClick }) => {
     );
 };
 
-const AppointmentDetails = ({ appointment, onEdit, onDelete, isSubmitting }) => (
+const AppointmentDetails = ({
+                                appointment,
+                                onEdit,
+                                onDelete,
+                                isSubmitting,
+                            }) => (
     <div>
         <h3 className="font-semibold text-base mb-2">Appointment Details</h3>
         <InfoItem label="Service Provider" value={appointment.service.name} />
         <InfoItem
             label="Created At"
-            value={dayjs(appointment.createdAt).format("YYYY-MM-DD")}
+            value={dayjs.tz(appointment.createdAt).format("YYYY-MM-DD")}
         />
         <InfoItem
             label="Updated At"
-            value={dayjs(appointment.updateAt).format("YYYY-MM-DD")}
+            value={dayjs.tz(appointment.updatedAt).format("YYYY-MM-DD")}
         />
         <InfoItem label="Price" value={`$${appointment.service.price}`} />
         <InfoItem label="Description" value={appointment.service.description} />
@@ -235,15 +251,15 @@ const AppointmentDetails = ({ appointment, onEdit, onDelete, isSubmitting }) => 
                 placeholder="Enter appointment notes here..."
             />
             <div className="flex justify-start gap-4">
-                <button onClick={onEdit} className="btn-blue-dashboard" disabled={isSubmitting}>
-                    Edit Appointment
-                </button>
                 <button
-                    onClick={onDelete}
-                    className="btn-red"
+                    onClick={onEdit}
+                    className="btn-blue-dashboard"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? 'Deleting...' : 'Delete Appointment'}
+                    Edit Appointment
+                </button>
+                <button onClick={onDelete} className="btn-red" disabled={isSubmitting}>
+                    {isSubmitting ? "Deleting..." : "Delete Appointment"}
                 </button>
             </div>
         </div>
@@ -255,8 +271,8 @@ const InfoItem = ({ icon: Icon, label, value, className = "" }) => (
         {Icon && <Icon size={12} className="mr-1 text-secondary" />}
         {label && (
             <span className="font-medium mr-1 uppercase text-xs text-secondary">
-                {label}:
-            </span>
+        {label}:
+      </span>
         )}
         <span className="text-gray-600">{value}</span>
     </div>
