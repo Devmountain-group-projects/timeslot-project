@@ -8,11 +8,11 @@ import { MdAlternateEmail } from "react-icons/md";
 
 const ClientRegister = ({ onRegister }) => {
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        confirmPassword: ''
+        name: 'Rich Man',
+        email: 'BigBusiness@business.com',
+        phoneNumber: '5555555555',
+        password: 'a',
+        confirmPassword: 'a'
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -47,13 +47,6 @@ const ClientRegister = ({ onRegister }) => {
         e.preventDefault();
         if (validatePasswords()) {
             console.log('Form submitted:', formData);
-            // register(formData.name, formData.email, formData.phoneNumber, formData.password).then((res) => {
-            //     const { message, success } = res.data
-            //     if (success) {
-            //         console.log("Registered")
-            //         console.log(message)
-            //     }
-            // })
             onRegister(formData);
         }
     };

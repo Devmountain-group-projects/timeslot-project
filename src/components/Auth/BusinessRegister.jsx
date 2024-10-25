@@ -7,15 +7,15 @@ import { FaLocationDot } from "react-icons/fa6";
 
 const BusinessRegister = ({ onContinue }) => {
     const [formData, setFormData] = useState({
-        businessName: '',
-        address_line1: '',
+        businessName: 'Big Business',
+        address_line1: '1550 Digital Dr #400',
         address_line2: '',
-        city: '',
-        state: '',
-        zipCode: '',
-        contactInfo: '',
+        city: 'Lehi',
+        state: 'UT',
+        zipCode: '84043',
+        contactInfo: '1011011010',
     });
-
+    // , ,  
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({

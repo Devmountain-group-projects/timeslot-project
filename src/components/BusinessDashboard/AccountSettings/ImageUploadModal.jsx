@@ -38,7 +38,7 @@ const ImageUploadModal = ({ onClose, uploadType, onSubmit }) => {
                         <BsCloudUpload size={50} className="w-10 mb-4 text-gray-600" />
 
                         <h4 className="text-sm text-gray-600">Drag & Drop or <label htmlFor="chooseFile" className="text-secondary cursor-pointer">Choose file</label> to upload</h4>
-                        <input type="file" id="chooseFile" className="" onChange={savePhotoUpload} />
+                        <input type="file" id="chooseFile" className="hidden" onChange={savePhotoUpload} />
                     </div>
                 </section>
 

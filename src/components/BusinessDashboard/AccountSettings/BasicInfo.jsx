@@ -116,6 +116,7 @@ const BasicInfo = () => {
         setNewPhoto(image)
         console.log("New Photo", newPhoto)
         photoUpdate(type, image)
+        window.location.reload();
     }
 
     return (
